@@ -1,4 +1,4 @@
-{
+module.exports = {
   "env": {
     "browser": true,
     "builtin": true,
@@ -61,4 +61,4 @@
     "wrap-iife": [2, "inside"]
   },
   "root": true
-}
+};

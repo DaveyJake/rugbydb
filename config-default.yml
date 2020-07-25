@@ -1,7 +1,7 @@
 ---
 # Change `usardb` to the name of your project's root directory (i.e. the name of the folder that contains ALL wordpress files).
 PROXY:
-  &hostname "usardb"
+  &hostname "stats"
 
 # Browsersync config.
 BROWSERSYNC:
@@ -32,7 +32,6 @@ PATHS:
   # Entries of main files.
   entries:
     - "src/js/usardb.js"
-    - "src/js/usardb-admin.js"
   # Paths to admin-specific files.
   admin:
     - "src/**/admin/*"
@@ -47,6 +46,7 @@ PATHS:
   # Paths to the main JavaScript directory.
   js:
     - "src/js/**/*"
+    - "!src/js/admin/*"
   # Paths for the package task to include/exclude in .zip archive.
   package:
     - "**/*"

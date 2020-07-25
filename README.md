@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/Automattic/_s.svg?branch=master)](https://travis-ci.org/Automattic/_s)
 
-# The official TRIBUS theme for USARDB, Smith & Frampton.
+# The OFFICIAL Theme for the USA Rugby Database
 
 Installation Steps In Order
 ---------------------------
