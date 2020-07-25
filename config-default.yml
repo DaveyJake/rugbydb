@@ -1,0 +1,71 @@
+---
+# Change `usardb` to the name of your project's root directory (i.e. the name of the folder that contains ALL wordpress files).
+PROXY:
+  &hostname "usardb"
+
+# Browsersync config.
+BROWSERSYNC:
+  # Protocol, hostname and TLD of local development server URL. Grunt converts this to a URL.
+  url:
+    - "http://"
+    - *hostname
+    - ".test:8080"
+  # Files for BrowserSync to watch.
+  watch:
+    - "**/*.scss"
+    - "**/*.js"
+    - "**/*.php"
+
+# Autoprefixer will make sure your CSS works with these browsers.
+COMPATIBILITY:
+  - "last 2 versions"
+  - "> 1%"
+  - "ios >= 9"
+
+# Set to true if you want static asset revisioning; helpful for cache busting.
+REVISIONING: true
+
+# Grunt will reference these paths when it copies files.
+PATHS:
+  # Path to dist folders.
+  dist: "dist"
+  # Entries of main files.
+  entries:
+    - "src/js/usardb.js"
+    - "src/js/usardb-admin.js"
+  # Paths to admin-specific files.
+  admin:
+    - "src/**/admin/*"
+  # Paths to static assets that aren't images, CSS, or JavaScript.
+  assets:
+    - "src/**/*"
+    - "!src/{img,js,sass}"
+  # Paths to Sass libraries, which can then be loaded with @import.
+  sass:
+    - "src/sass/**/*"
+    - "!src/sass/admin/*"
+  # Paths to the main JavaScript directory.
+  js:
+    - "src/js/**/*"
+  # Paths for the package task to include/exclude in .zip archive.
+  package:
+    - "**/*"
+    - "!**/node_modules/**"
+    - "!**/packaged/**"
+    - "!**/src/**"
+    - "!**/codesniffer.ruleset.xml"
+    - "!**/composer.json"
+    - "!**/composer.lock"
+    - "!**/config.yml"
+    - "!**/config-cssmin.yml"
+    - "!**/config-default.yml"
+    - "!**/config-terser.yml"
+    - "!**/Gruntfile.js"
+    - "!**/package.json"
+    - "!**/package-lock.json"
+    - "!**/webpack.config.js"
+  # Paths for PHP CodeSniffer.
+  phpcs:
+    - "**/*.php"
+    - "!wpcs"
+    - "!wpcs/**"

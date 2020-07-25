@@ -1,0 +1,4 @@
+node_modules
+vendor
+*.sublime-*
+.DS_Store

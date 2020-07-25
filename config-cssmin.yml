@@ -1,0 +1,97 @@
+---
+sourceMap: true
+compatibility:
+  colors:
+    opacity: true
+  properties:
+    backgroundClipMerging: true
+    backgroundOriginMerging: true
+    backgroundSizeMerging: true
+    colors: true
+    ieBangHack: false
+    ieFilters: false
+    iePrefixHack: false
+    ieSuffixHack: false
+    merging: true
+    shorterLengthUnits: false
+    spaceAfterClosingBrace: true
+    urlQuotes: false
+    zeroUnits: true
+  selectors:
+    adjacentSpace: false
+    ie7Hack: true
+    mergeablePseudoClasses:
+      - ":active"
+    mergeablePseudoElements:
+      - "::after"
+    mergeLimit: 8191
+    multiplePseudoMerging: true
+  units:
+    ch: true
+    in: true
+    pc: true
+    pt: true
+    rem: true
+    vh: true
+    vm: true
+    vmax: true
+    vmin: true
+format:
+  breaks:
+    afterAtRule: false
+    afterBlockBegins: false
+    afterBlockEnds: false
+    afterComment: false
+    afterProperty: false
+    afterRuleBegins: false
+    afterRuleEnds: false
+    beforeBlockEnds: false
+    betweenSelectors: false
+  breakWith: "\n"
+  indentBy: 1
+  indentWith: space
+  spaces:
+    aroundSelectorRelation: false
+    beforeBlockBegins: false
+    beforeValue: false
+  wrapAt: false
+  semicolonAfterLastProperty: false
+level:
+  '1':
+    cleanupCharsets: true
+    normalizeUrls: true
+    optimizeBackground: true
+    optimizeBorderRadius: true
+    optimizeFilter: true
+    optimizeFont: true
+    optimizeFontWeight: true
+    optimizeOutline: true
+    removeEmpty: true
+    removeNegativePaddings: true
+    removeQuotes: true
+    removeWhitespace: true
+    replaceMultipleZeros: true
+    replaceTimeUnits: true
+    replaceZeroUnits: true
+    roundingPrecision: false
+    selectorsSortingMethod: standard
+    specialComments: false
+    tidyAtRules: true
+    tidyBlockScopes: true
+    tidySelectors: true
+    semicolonAfterLastProperty: false
+  '2':
+    mergeAdjacentRules: true
+    mergeIntoShorthands: true
+    mergeMedia: true
+    mergeNonAdjacentRules: true
+    mergeSemantically: false
+    overrideProperties: true
+    removeEmpty: true
+    reduceNonAdjacentRules: true
+    removeDuplicateFontRules: true
+    removeDuplicateMediaBlocks: true
+    removeDuplicateRules: true
+    removeUnusedAtRules: false
+    restructureRules: false
+    skipProperties: []

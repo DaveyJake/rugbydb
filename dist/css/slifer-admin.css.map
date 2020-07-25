@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "usardb-admin.css",
+	"sources": [
+		"../../src/sass/usardb-admin.scss",
+		"../../src/sass/admin/_admin.scss"
+	],
+	"names": [],
+	"mappings": "ACAA,AAAA,UAAU,CAAC;CACV,KAAK,EAAE,OAAO;CACd"
+}
