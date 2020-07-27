@@ -1,5 +1,6 @@
 node_modules
 vendor
 *.sublime-*
+*.zip
 .DS_Store
 WR
