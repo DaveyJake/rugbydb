@@ -6,8 +6,9 @@
 
 import fs            from 'fs';
 import path          from 'path';
-import gulp          from 'gulp';
 import plugins       from 'gulp-load-plugins';
+import gulp          from 'gulp';
+import autoprefixer  from 'autoprefixer';
 import browser       from 'browser-sync';
 import colors        from 'ansi-colors';
 import log           from 'fancy-log';
@@ -16,8 +17,7 @@ import named         from 'vinyl-named';
 import webpack2      from 'webpack';
 import webpackStream from 'webpack-stream';
 import yaml          from 'js-yaml';
-
-const $ = plugins();
+import yargs         from 'yargs';
 
 // Load all Gulp plugins into one variable
 const $ = plugins();
@@ -50,13 +50,13 @@ function loadConfig() {
 
     if ( checkFileExists( 'config.yml' ) ) {
         // config.yml exists, load it
-        log( colors.bold( colors.cyan( 'config.yml' ) ), 'exists, loading', colors.bold( colors.cyan( 'config.yml' ) ) );
+        log( colors.bold.cyan( 'config.yml' ), 'exists, loading', colors.bold.cyan( 'config.yml' ) );
         let ymlFile = fs.readFileSync( 'config.yml', 'utf8' );
 
         return yaml.load( ymlFile );
     } else if ( checkFileExists( 'config-default.yml' ) ) {
         // config-default.yml exists, load it
-        log( colors.bold( colors.cyan( 'config.yml' ) ), 'does not exist, loading', colors.bold( colors.cyan( 'config-default.yml' ) ) );
+        log( colors.bold.cyan( 'config.yml' ), 'does not exist, loading', colors.bold.cyan( 'config-default.yml' ) );
         let ymlFile = fs.readFileSync( 'config-default.yml', 'utf8' );
 
         return yaml.load( ymlFile );
@@ -84,12 +84,13 @@ function copy() {
 // Compile Sass into CSS
 // In production, the CSS is compressed
 function sass() {
-    return gulp.src( ['src/sass/usardb.scss'] )
+    $.run( 'npm run lint:scss' ).exec();
+
+    return gulp.src( PATHS.sass )
         .pipe( $.sourcemaps.init() )
         .pipe( $.sass({ includePaths: PATHS.sass }).on( 'error', $.sass.logError ) )
-        .pipe( $.autoprefixer({ overrideBrowserslist: COMPATIBILITY }) )
-        .pipe( $.if( PRODUCTION, $.cleanCss({ compatibility: 'edge' }) ) )
-        .pipe( $.if( ! PRODUCTION, $.sourcemaps.write() ) )
+        .pipe( $.postcss( [ autoprefixer({ overrideBrowserslist: COMPATIBILITY }) ] ) )
+        .pipe( $.if( PRODUCTION, $.cleanCss({ compatibility: 'edge' }), $.sourcemaps.write() ) )
         .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
         .pipe( gulp.dest( PATHS.dist + '/css' ) )
         .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() ) )
@@ -129,18 +130,8 @@ const webpack = {
 
         browser.reload();
     },
-    admin() {
-        return gulp.src( ['src/js/admin/usardb-admin.js'] )
-            .pipe( named() )
-            .pipe( webpackStream( webpack.config, webpack2 ) )
-            .pipe( $.if( PRODUCTION, $.uglify().on( 'error', e => console.log( e ) ) ) )
-            .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
-            .pipe( gulp.dest( 'admin' ) )
-            .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() ) )
-            .pipe( gulp.dest( 'admin' ) );
-    },
     build() {
-        this.admin();
+        $.run( 'npm run lint:js' ).exec();
 
         return gulp.src( PATHS.entries )
             .pipe( named() )
@@ -172,9 +163,9 @@ gulp.task( 'webpack:watch', webpack.watch );
 // Copy images to the "dist" folder
 // In production, the images are compressed
 function images() {
-    return gulp.src( [ 'src/img/*', 'src/img/**/*' ] )
+    return gulp.src( ['src/img/*', 'src/img/**/*'] )
         .pipe( $.if( PRODUCTION, $.imagemin( [
-            $.imagemin.jpegtran( {
+            $.imagemin.mozjpeg( {
                 progressive: true
             } ),
             $.imagemin.optipng( {
@@ -193,36 +184,28 @@ function images() {
         .pipe( gulp.dest( PATHS.dist + '/img' ) );
 }
 
-// Lint PHP
-gulp.task( 'phpl', function() {
-    return gulp.src( PATHS.phpcs )
-        .pipe( $.runCommand( 'composer run-scripts lint:php' ) )
-        .on( 'error', log )
-        .pipe( gulp.dest( '.' ) );
+// Lint PHP.
+gulp.task( 'lint:php', function() {
+    return $.run( 'composer run-script lint:php' ).exec( process.stdin, phpcs );
 });
 
-// Sniff code.
-gulp.task( 'phpcs', function() {
-    return gulp.src( PATHS.phpcs )
-        .pipe( $.runCommand( 'composer run-scripts lint:wpcs' ) )
-        .on( 'error', log )
-        .pipe( gulp.dest( '.' ) );
-});
+// WordPress PHP coding standards sniff.
+function phpcs( done ) {
+    return $.run( 'composer run-script lint:wpcs' ).exec( process.stdin, done );
+}
 
 // Start BrowserSync to preview the site in
 function server( done ) {
     browser.init({
-        proxy: BROWSERSYNC.url,
-        ui: {
-            port: 8080
-        }
+        proxy: BROWSERSYNC.url.join( '' ),
+        ui: { port: 8080 }
     });
 
     done();
 }
 
 // Reload the browser with BrowserSync
-function reload(done) {
+function reload( done ) {
     browser.reload();
     done();
 }
@@ -235,7 +218,7 @@ function watch() {
         .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) ) + ' changed.' )
         .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) ) + ' was removed.' );
 
-    gulp.watch( '**/*.php', reload )
+    gulp.watch( '**/*.php', gulp.series( 'lint:php', reload ) )
         .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) ) + ' changed.' )
         .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) ) + ' was removed.' );
 
@@ -243,7 +226,7 @@ function watch() {
 }
 
 // Build the "dist" folder by running all of the below tasks
-gulp.task( 'build', gulp.series( clean, gulp.parallel( sass, 'webpack:build', images, copy ) ) );
+gulp.task( 'build', gulp.series( clean, 'lint:php', gulp.parallel( sass, 'webpack:build', images, copy ) ) );
 
 // Build the site, run the server, and watch for file changes
-gulp.task( 'default', gulp.series( 'build', 'phpl', 'phpcs', server, gulp.parallel( 'webpack:watch', watch ) ) );
+gulp.task( 'default', gulp.series( 'build', server, gulp.parallel( 'webpack:watch', watch ) ) );

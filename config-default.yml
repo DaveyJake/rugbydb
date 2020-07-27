@@ -9,7 +9,7 @@ BROWSERSYNC:
   url:
     - "http://"
     - *hostname
-    - ".test:8080"
+    - ".test"
   # Files for BrowserSync to watch.
   watch:
     - "**/*.scss"
@@ -32,13 +32,14 @@ PATHS:
   # Entries of main files.
   entries:
     - "src/js/usardb.js"
+    - "src/js/usardb-admin.js"
   # Paths to admin-specific files.
   admin:
     - "src/**/admin/*"
   # Paths to static assets that aren't images, CSS, or JavaScript.
   assets:
     - "src/**/*"
-    - "!src/{img,js,sass}"
+    - "!src/{img,js/**,js,sass/**,sass}/*"
   # Paths to Sass libraries, which can then be loaded with @import.
   sass:
     - "src/sass/**/*"
