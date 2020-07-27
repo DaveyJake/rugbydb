@@ -35,7 +35,7 @@ echo '<main id="primary" class="site-main">';
 
 				echo '<ul>';
 
-				$slifer_404_category_args = array(
+				$usardb_404_category_args = array(
 					'orderby'    => 'count',
 					'order'      => 'DESC',
 					'show_count' => 1,
@@ -43,7 +43,7 @@ echo '<main id="primary" class="site-main">';
 					'number'     => 10,
 				);
 
-				wp_list_categories( $slifer_404_category_args );
+				wp_list_categories( $usardb_404_category_args );
 
 				echo '</ul>';
 
@@ -51,9 +51,9 @@ echo '<main id="primary" class="site-main">';
 			echo '</div><!-- .widget -->';
 
 			/* translators: %1$s: smiley */
-			$slifer_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'usardb' ), convert_smilies( ':)' ) ) . '</p>';
+			$usardb_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'usardb' ), convert_smilies( ':)' ) ) . '</p>';
 
-			the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>{$slifer_archive_content}" );
+			the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>{$usardb_archive_content}" );
 
 			the_widget( 'WP_Widget_Tag_Cloud' );
 

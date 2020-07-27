@@ -16,12 +16,12 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
      * @return USARDB_WPCM_Venues
      */
     public function __construct() {
-        remove_filters_for_anonymous_class( 'manage_wpcm_venue_custom_column', 'WPCM_Admin_Taxonomies', 'venue_custom_columns', 5 );
-        remove_filters_for_anonymous_class( 'wpcm_venue_add_form_fields', 'WPCM_Admin_Taxonomies', 'venue_add_new_extra_fields', 10 );
-        remove_filters_for_anonymous_class( 'wpcm_venue_edit_form_fields', 'WPCM_Admin_Taxonomies', 'venue_edit_extra_fields', 10 );
-        remove_filters_for_anonymous_class( 'edited_wpcm_venue', 'WPCM_Admin_Taxonomies', 'save_venue_extra_fields', 10 );
-        remove_filters_for_anonymous_class( 'create_wpcm_venue', 'WPCM_Admin_Taxonomies', 'save_venue_extra_fields', 10 );
-        remove_filters_for_anonymous_class( 'manage_edit-wpcm_venue_columns', 'WPCM_Admin_Taxonomies', 'venue_edit_columns' );
+        remove_class_method( 'manage_wpcm_venue_custom_column', 'WPCM_Admin_Taxonomies', 'venue_custom_columns', 5 );
+        remove_class_method( 'wpcm_venue_add_form_fields', 'WPCM_Admin_Taxonomies', 'venue_add_new_extra_fields', 10 );
+        remove_class_method( 'wpcm_venue_edit_form_fields', 'WPCM_Admin_Taxonomies', 'venue_edit_extra_fields', 10 );
+        remove_class_method( 'edited_wpcm_venue', 'WPCM_Admin_Taxonomies', 'save_venue_extra_fields', 10 );
+        remove_class_method( 'create_wpcm_venue', 'WPCM_Admin_Taxonomies', 'save_venue_extra_fields', 10 );
+        remove_class_method( 'manage_edit-wpcm_venue_columns', 'WPCM_Admin_Taxonomies', 'venue_edit_columns', 10 );
 
         add_action( 'manage_wpcm_venue_custom_column', array( $this, 'venue_custom_columns' ), 5, 3 );
         add_action( 'wpcm_venue_add_form_fields', array( $this, 'venue_add_new_extra_fields' ), 10, 2 );
@@ -61,7 +61,7 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
             $wr_id     = $term_meta['wr_id'][0];
             $wr_name   = $term_meta['wr_name'][0];
         } else {
-            $address   = __( 'USA Rugby, 2655 Crescent Dr, Unit A, Lafayette, CO 80026, USA', 'wp-club-manager' );
+            $address   = __( '950 S Birch St, Glendale, CO 80246, USA', 'wp-club-manager' );
             $capacity  = 0;
             $latitude  = '';
             $longitude = '';

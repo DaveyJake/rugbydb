@@ -15,6 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 require get_template_directory() . '/inc/theme-functions.php';
 
 /**
+ * Include custom override scripts.
+ */
+if ( file_exists( get_template_directory() . '/wpclubmanager/class-usardb-wpcm-admin.php' ) ) {
+    require_once get_template_directory() . '/wpclubmanager/class-usardb-wpcm-admin.php';
+}
+
+/**
  * Theme Setup
  */
 require get_template_directory() . '/inc/theme-setup.php';

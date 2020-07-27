@@ -19,7 +19,7 @@ echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ',
 
 	echo '</header><!-- .entry-header -->';
 
-	slifer_post_thumbnail();
+	usardb_post_thumbnail();
 
 	echo '<div class="entry-content">';
 

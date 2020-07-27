@@ -9,11 +9,11 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
-if ( ! function_exists( 'slifer_posted_on' ) ) :
+if ( ! function_exists( 'usardb_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time.
 	 */
-	function slifer_posted_on() {
+	function usardb_posted_on() {
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
@@ -38,11 +38,11 @@ if ( ! function_exists( 'slifer_posted_on' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'slifer_posted_by' ) ) :
+if ( ! function_exists( 'usardb_posted_by' ) ) :
 	/**
 	 * Prints HTML with meta information for the current author.
 	 */
-	function slifer_posted_by() {
+	function usardb_posted_by() {
 		$byline = sprintf(
 			/* translators: %s: post author. */
 			esc_html_x( 'by %s', 'post author', 'usardb' ),
@@ -54,11 +54,11 @@ if ( ! function_exists( 'slifer_posted_by' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'slifer_entry_footer' ) ) :
+if ( ! function_exists( 'usardb_entry_footer' ) ) :
 	/**
 	 * Prints HTML with meta information for the categories, tags and comments.
 	 */
-	function slifer_entry_footer() {
+	function usardb_entry_footer() {
 		// Hide category and tag text for pages.
 		if ( 'post' === get_post_type() ) {
 			/* translators: used between list items, there is a space after the comma */
@@ -114,14 +114,14 @@ if ( ! function_exists( 'slifer_entry_footer' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'slifer_post_thumbnail' ) ) :
+if ( ! function_exists( 'usardb_post_thumbnail' ) ) :
 	/**
 	 * Displays an optional post thumbnail.
 	 *
 	 * Wraps the post thumbnail in an anchor element on index views, or a div
 	 * element when on single views.
 	 */
-	function slifer_post_thumbnail() {
+	function usardb_post_thumbnail() {
 		if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
 			return;
 		}
@@ -153,13 +153,13 @@ if ( ! function_exists( 'slifer_post_thumbnail' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'slifer_body_open' ) ) :
+if ( ! function_exists( 'usardb_body_open' ) ) :
 	/**
 	 * Shim for sites older than 5.2.
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/12563
 	 */
-	function slifer_body_open() {
-		do_action( 'slifer_body_open' );
+	function usardb_body_open() {
+		do_action( 'usardb_body_open' );
 	}
 endif;

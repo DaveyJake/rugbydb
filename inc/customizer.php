@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
-function slifer_customize_register( $wp_customize ) {
+function usardb_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
@@ -22,14 +22,14 @@ function slifer_customize_register( $wp_customize ) {
 			'blogname',
 			array(
 				'selector'        => '.site-title a',
-				'render_callback' => 'slifer_customize_partial_blogname',
+				'render_callback' => 'usardb_customize_partial_blogname',
 			)
 		);
 		$wp_customize->selective_refresh->add_partial(
 			'blogdescription',
 			array(
 				'selector'        => '.site-description',
-				'render_callback' => 'slifer_customize_partial_blogdescription',
+				'render_callback' => 'usardb_customize_partial_blogdescription',
 			)
 		);
 	}
@@ -40,7 +40,7 @@ function slifer_customize_register( $wp_customize ) {
  *
  * @return void
  */
-function slifer_customize_partial_blogname() {
+function usardb_customize_partial_blogname() {
 	bloginfo( 'name' );
 }
 
@@ -49,14 +49,14 @@ function slifer_customize_partial_blogname() {
  *
  * @return void
  */
-function slifer_customize_partial_blogdescription() {
+function usardb_customize_partial_blogdescription() {
 	bloginfo( 'description' );
 }
 
 /**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
-function slifer_customize_preview_js() {
+function usardb_customize_preview_js() {
 	wp_enqueue_script( 'usardb-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
 
@@ -66,5 +66,5 @@ function slifer_customize_preview_js() {
 /**
  * Customizer settings.
  */
-add_action( 'customize_register', 'slifer_customize_register' );
-add_action( 'customize_preview_init', 'slifer_customize_preview_js' );
+add_action( 'customize_register', 'usardb_customize_register' );
+add_action( 'customize_preview_init', 'usardb_customize_preview_js' );

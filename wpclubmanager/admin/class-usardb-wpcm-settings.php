@@ -25,6 +25,11 @@ class USARDB_WPCM_Settings {
      * @return USARDB_WPCM_Filters
      */
     public function __construct() {
+    	define( 'MENS_EAGLES', 51 );
+		define( 'WOMENS_EAGLES', 2583 );
+		define( 'MENS_SEVENS', 2422 );
+		define( 'WOMENS_SEVENS', 3974 );
+
         add_filter( 'wpcm_sports', array( $this, 'rugby_only' ) );
         add_filter( 'wpclubmanager_countries', array( $this, 'us_only' ) );
         add_filter( 'wpclubmanager_player_header_labels', array( $this, 'wpcm_player_header_labels' ) );
@@ -271,8 +276,8 @@ class USARDB_WPCM_Settings {
         }
 
         $usardb_world = array(
-            $me_id => MENS_FIFTEENS,
-            $we_id => WOMENS_FIFTEENS,
+            $me_id => MENS_EAGLES,
+            $we_id => WOMENS_EAGLES,
             $ms_id => MENS_SEVENS,
             $ws_id => WOMENS_SEVENS,
         );

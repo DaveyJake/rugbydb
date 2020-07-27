@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function slifer_widgets_init() {
+function usardb_widgets_init() {
 	register_sidebar(
 		array(
 			'name'          => esc_html__( 'Sidebar', 'usardb' ),
@@ -29,4 +29,4 @@ function slifer_widgets_init() {
 /**
  * Initialize the widgets.
  */
-add_action( 'widgets_init', 'slifer_widgets_init' );
+add_action( 'widgets_init', 'usardb_widgets_init' );

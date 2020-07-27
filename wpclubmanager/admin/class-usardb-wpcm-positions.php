@@ -16,8 +16,8 @@ class USARDB_WPCM_Positions extends WPCM_Admin_Taxonomies {
      * @return USARDB_WPCM_Positions
      */
     public function __construct() {
-        remove_filters_for_anonymous_class( 'manage_wpcm_position_custom_column', 'WPCM_Admin_Taxonomies', 'position_custom_columns', 5 );
-        remove_filters_for_anonymous_class( 'manage_edit-wpcm_position_columns', 'WPCM_Admin_Taxonomies', 'position_edit_columns' );
+        remove_class_method( 'manage_wpcm_position_custom_column', 'WPCM_Admin_Taxonomies', 'position_custom_columns', 5 );
+        remove_class_method( 'manage_edit-wpcm_position_columns', 'WPCM_Admin_Taxonomies', 'position_edit_columns', 10 );
 
         add_action( 'manage_wpcm_position_custom_column', array( $this, 'position_custom_columns' ), 5, 3 );
         add_filter( 'manage_edit-wpcm_position_columns', array( $this, 'position_edit_columns' ) );

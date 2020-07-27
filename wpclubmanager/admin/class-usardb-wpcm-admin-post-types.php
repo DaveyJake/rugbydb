@@ -20,11 +20,11 @@ class USARDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
      * @return USARDB_WPCM_Admin_Post_Types
      */
     public function __construct() {
-        remove_filters_for_anonymous_class( 'manage_wpcm_match_posts_custom_column', 'WPCM_Admin_Post_Types', 'render_match_columns', 2 );
-        remove_filters_for_anonymous_class( 'manage_wpcm_player_posts_columns', 'WPCM_Admin_Post_Types', 'player_columns' );
-        remove_filters_for_anonymous_class( 'manage_wpcm_player_posts_custom_column', 'WPCM_Admin_Post_Types', 'render_player_columns', 2 );
-        remove_filters_for_anonymous_class( 'manage_wpcm_roster_posts_custom_column', 'WPCM_Admin_Post_Types', 'render_roster_columns', 2 );
-        remove_filters_for_anonymous_class( 'quick_edit_custom_box', 'WPCM_Admin_Post_Types', 'quick_edit', 10 );
+        remove_class_method( 'manage_wpcm_match_posts_custom_column', 'WPCM_Admin_Post_Types', 'render_match_columns', 2 );
+        remove_class_method( 'manage_wpcm_player_posts_columns', 'WPCM_Admin_Post_Types', 'player_columns', 10 );
+        remove_class_method( 'manage_wpcm_player_posts_custom_column', 'WPCM_Admin_Post_Types', 'render_player_columns', 2 );
+        remove_class_method( 'manage_wpcm_roster_posts_custom_column', 'WPCM_Admin_Post_Types', 'render_roster_columns', 2 );
+        remove_class_method( 'quick_edit_custom_box', 'WPCM_Admin_Post_Types', 'quick_edit', 10 );
 
         add_action( 'manage_wpcm_match_posts_custom_column', array( $this, 'render_match_columns' ), 2 );
         add_filter( 'manage_wpcm_player_posts_columns', array( $this, 'player_columns' ) );

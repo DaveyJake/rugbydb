@@ -20,9 +20,9 @@ echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ',
 
 			echo '<div class="entry-meta">';
 
-				slifer_posted_on();
+				usardb_posted_on();
 
-				slifer_posted_by();
+				usardb_posted_by();
 
 			echo '</div><!-- .entry-meta -->';
 
@@ -31,7 +31,7 @@ echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ',
 
 	echo '</header><!-- .entry-header -->';
 
-	slifer_post_thumbnail();
+	usardb_post_thumbnail();
 
 	echo '<div class="entry-summary">';
 
@@ -41,7 +41,7 @@ echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ',
 
 	echo '<footer class="entry-footer">';
 
-		slifer_entry_footer();
+		usardb_entry_footer();
 
 	echo '</footer><!-- .entry-footer -->';
 

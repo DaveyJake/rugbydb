@@ -17,7 +17,7 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
      * @return USARDB_WPCM_Admin_Meta_Boxes
      */
     public function __construct() {
-        remove_filters_for_anonymous_class( 'add_meta_boxes', 'WPCM_Admin_Meta_Boxes', 'add_meta_boxes', 20 );
+        remove_class_method( 'add_meta_boxes', 'WPCM_Admin_Meta_Boxes', 'add_meta_boxes', 20 );
         add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20 );
     }
 

@@ -15,17 +15,17 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 <html <?php language_attributes(); ?>>
 <head>
 <?php
-	do_action( 'slifer_head_open' );
+	do_action( 'usardb_head_open' );
 	echo '<meta charset="' . esc_attr( get_bloginfo( 'charset' ) ) . '">';
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 	echo '<link rel="profile" href="https://gmpg.org/xfn/11">';
 	wp_head();
-	do_action( 'slifer_head_close' );
+	do_action( 'usardb_head_close' );
 ?>
 </head>
 <body <?php body_class(); ?>>
 <?php // phpcs:disable Generic.WhiteSpace.ScopeIndent
-	slifer_body_open();
+	usardb_body_open();
 
 	echo '<div id="page" class="site">';
 
@@ -36,16 +36,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 			echo '<div class="site-branding">';
 				the_custom_logo();
 
-				$slifer_bloginfo = get_bloginfo( 'name', 'display' );
+				$usardb_bloginfo = get_bloginfo( 'name', 'display' );
 				if ( is_front_page() && is_home() ) :
-					echo '<h1 class="site-title"><a href="' . esc_url( home_url( '/' ) ) . '" rel="home">' . esc_html( $slifer_bloginfo ) . '</a></h1>';
+					echo '<h1 class="site-title"><a href="' . esc_url( home_url( '/' ) ) . '" rel="home">' . esc_html( $usardb_bloginfo ) . '</a></h1>';
 				else :
-					echo '<p class="site-title"><a href="' . esc_url( home_url( '/' ) ) . '" rel="home">' . esc_html( $slifer_bloginfo ) . '</a></p>';
+					echo '<p class="site-title"><a href="' . esc_url( home_url( '/' ) ) . '" rel="home">' . esc_html( $usardb_bloginfo ) . '</a></p>';
 				endif;
 
-				$slifer_description = get_bloginfo( 'description', 'display' );
-				if ( $slifer_description || is_customize_preview() ) :
-					echo '<p class="site-description">' . esc_html( $slifer_description ) . '</p>';
+				$usardb_description = get_bloginfo( 'description', 'display' );
+				if ( $usardb_description || is_customize_preview() ) :
+					echo '<p class="site-description">' . esc_html( $usardb_description ) . '</p>';
 				endif;
 			echo '</div><!-- .site-branding -->';
 

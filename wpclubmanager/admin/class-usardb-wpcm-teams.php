@@ -17,12 +17,12 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
      * @return USARDB_WPCM_Teams
      */
     public function __construct() {
-        remove_filters_for_anonymous_class( 'wpcm_team_add_form_fields', 'WPCM_Admin_Taxonomies', 'team_add_new_extra_fields', 10 );
-        remove_filters_for_anonymous_class( 'wpcm_team_edit_form_fields', 'WPCM_Admin_Taxonomies', 'team_edit_extra_fields', 10 );
-        remove_filters_for_anonymous_class( 'edited_wpcm_team', 'WPCM_Admin_Taxonomies', 'save_team_extra_fields', 10 );
-        remove_filters_for_anonymous_class( 'create_wpcm_team', 'WPCM_Admin_Taxonomies', 'save_team_extra_fields', 10 );
-        remove_filters_for_anonymous_class( 'manage_wpcm_team_custom_column', 'WPCM_Admin_Taxonomies', 'team_custom_columns', 5 );
-        remove_filters_for_anonymous_class( 'manage_edit-wpcm_team_columns', 'WPCM_Admin_Taxonomies', 'team_edit_columns' );
+        remove_class_method( 'wpcm_team_add_form_fields', 'WPCM_Admin_Taxonomies', 'team_add_new_extra_fields', 10 );
+        remove_class_method( 'wpcm_team_edit_form_fields', 'WPCM_Admin_Taxonomies', 'team_edit_extra_fields', 10 );
+        remove_class_method( 'edited_wpcm_team', 'WPCM_Admin_Taxonomies', 'save_team_extra_fields', 10 );
+        remove_class_method( 'create_wpcm_team', 'WPCM_Admin_Taxonomies', 'save_team_extra_fields', 10 );
+        remove_class_method( 'manage_wpcm_team_custom_column', 'WPCM_Admin_Taxonomies', 'team_custom_columns', 5 );
+        remove_class_method( 'manage_edit-wpcm_team_columns', 'WPCM_Admin_Taxonomies', 'team_edit_columns', 10 );
 
         add_action( 'wpcm_team_add_form_fields', array( $this, 'team_add_new_extra_fields' ), 10, 2 );
         add_action( 'wpcm_team_edit_form_fields', array( $this, 'team_edit_extra_fields' ), 10, 2);

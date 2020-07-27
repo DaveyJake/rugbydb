@@ -16,32 +16,32 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 /**
  * Set up the WordPress core custom header feature.
  *
- * @uses slifer_header_style()
+ * @uses usardb_header_style()
  */
-function slifer_custom_header_setup() {
+function usardb_custom_header_setup() {
 	add_theme_support(
 		'custom-header',
 		apply_filters(
-			'slifer_custom_header_args',
+			'usardb_custom_header_args',
 			array(
 				'default-image'      => '',
 				'default-text-color' => '000000',
 				'width'              => 1000,
 				'height'             => 250,
 				'flex-height'        => true,
-				'wp-head-callback'   => 'slifer_header_style',
+				'wp-head-callback'   => 'usardb_header_style',
 			)
 		)
 	);
 }
 
-if ( ! function_exists( 'slifer_header_style' ) ) :
+if ( ! function_exists( 'usardb_header_style' ) ) :
 	/**
 	 * Styles the header image and text displayed on the blog.
 	 *
-	 * @see slifer_custom_header_setup().
+	 * @see usardb_custom_header_setup().
 	 */
-	function slifer_header_style() {
+	function usardb_header_style() {
 		$header_text_color = get_header_textcolor();
 
 		/*
@@ -81,4 +81,4 @@ endif;
 /**
  * Custom theme header.
  */
-add_action( 'after_setup_theme', 'slifer_custom_header_setup' );
+add_action( 'after_setup_theme', 'usardb_custom_header_setup' );

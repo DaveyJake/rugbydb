@@ -20,7 +20,7 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
     * @return USARDB_WPCM_Admin_Assets
     */
     public function __construct() {
-        remove_filters_for_anonymous_class( 'admin_enqueue_scripts', 'WPCM_Admin_Assets', 'admin_scripts' );
+        remove_class_method( 'admin_enqueue_scripts', 'WPCM_Admin_Assets', 'admin_scripts', 10 );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
     }
 
