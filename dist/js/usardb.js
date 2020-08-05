@@ -1527,7 +1527,7 @@ eval("\n\nvar _interopRequireDefault = __webpack_require__(/*! @babel/runtime-co
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _navigation = __webpack_require__(/*! ./ui/navigation */ \"./src/js/ui/navigation.js\");\n\n/**\n * Main JavaScript file.\n *\n * @author Davey Jacobson <davey.jacobson@tribusgroup.com>\n */\n(function ($) {\n  $(window).on('load', _navigation.navigation);\n})(jQuery);\n\n//# sourceURL=webpack:///./src/js/usardb.js?");
+eval("\n\nvar _navigation = __webpack_require__(/*! ./ui/navigation */ \"./src/js/ui/navigation.js\");\n\n/**\n * Main JavaScript file.\n *\n * @author Davey Jacobson <davey.jacobson@tribusgroup.com>\n */\n(function ($) {\n  $(document).ready(_navigation.navigation);\n})(jQuery);\n\n//# sourceURL=webpack:///./src/js/usardb.js?");
 
 /***/ }),
 

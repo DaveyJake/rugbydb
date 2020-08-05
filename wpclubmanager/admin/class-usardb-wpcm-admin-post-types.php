@@ -214,7 +214,7 @@ class USARDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
         }
         elseif ( 'last' === $query->get( 'orderby' ) ) {
             $query->set( 'orderby', 'meta_value' );
-            $query->set( 'meta_key', '_usar_date_last_match' );
+            $query->set( 'meta_key', '_usar_date_last_test' );
             $query->set( 'meta_type', 'DATE' );
         }
     }
@@ -334,7 +334,7 @@ class USARDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 break;
             case 'number':
                 $badge = get_post_meta( $post->ID, 'wpcm_number', true );
-                echo ( empty( $badge ) ? 'Uncapped' : $badge );
+                echo ( empty( $badge ) ? 'N/A' : $badge );
                 break;
             case 'position':
                 $positions = array();
@@ -353,6 +353,7 @@ class USARDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 break;
             case 'flag':
                 $nationality = get_post_meta( $post->ID, 'wpcm_natl', true );
+                $nationality = empty( $nationality ) ? 'us' : $nationality;
                 echo "<div class='flag-icon-background flag-icon-{$nationality}'></div>";
                 break;
             case 'age':
@@ -360,11 +361,12 @@ class USARDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 echo get_age( $dob );
                 break;
             case 'debut':
-                echo get_the_date( 'F j, Y', $post->ID );
+                $first = get_post_meta( $post->ID, '_usar_date_first_test', true );
+                echo is_null( $first ) ? 'N/A' : date( 'F j, Y', strtotime( $first ) );
                 break;
             case 'last':
-                $last = get_post_meta( $post->ID, '_usar_last', true );
-                echo date( 'F j, Y', strtotime( $last ) );
+                $last = get_post_meta( $post->ID, '_usar_date_last_test', true );
+                echo is_null( $last ) ? 'N/A' : date( 'F j, Y', strtotime( $last ) );
                 break;
         }
     }
@@ -380,8 +382,8 @@ class USARDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
      */
     public function wpcm_player_sortable_columns( $columns ) {
         $columns['number'] = 'wpcm_number';
-        $columns['debut']  = 'date';
-        $columns['last']   = '_usar_date_last_match';
+        $columns['debut']  = '_usar_date_first_test';
+        $columns['last']   = '_usar_date_last_test';
 
         return $columns;
     }

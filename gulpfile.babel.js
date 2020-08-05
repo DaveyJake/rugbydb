@@ -84,11 +84,9 @@ function copy() {
 // Compile Sass into CSS
 // In production, the CSS is compressed
 function sass() {
-    $.run( 'npm run lint:scss' ).exec();
-
-    return gulp.src( PATHS.sass )
+    return gulp.src( ['src/sass/*.scss'] )
         .pipe( $.sourcemaps.init() )
-        .pipe( $.sass({ includePaths: PATHS.sass }).on( 'error', $.sass.logError ) )
+        .pipe( $.sass().on( 'error', $.sass.logError ) )
         .pipe( $.postcss( [ autoprefixer({ overrideBrowserslist: COMPATIBILITY }) ] ) )
         .pipe( $.if( PRODUCTION, $.cleanCss({ compatibility: 'edge' }), $.sourcemaps.write() ) )
         .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
@@ -131,8 +129,6 @@ const webpack = {
         browser.reload();
     },
     build() {
-        $.run( 'npm run lint:js' ).exec();
-
         return gulp.src( PATHS.entries )
             .pipe( named() )
             .pipe( webpackStream( webpack.config, webpack2 ) )
@@ -150,8 +146,9 @@ const webpack = {
 
         return gulp.src( PATHS.entries )
             .pipe( named() )
-            .pipe( webpackStream( watchConfig, webpack2, webpack.changeHandler )
-                .on( 'error', err => log( '[webpack:error]', err.toString({ colors: true }) ) ),
+            .pipe(
+            	webpackStream( watchConfig, webpack2, webpack.changeHandler )
+                	.on( 'error', err => log( '[webpack:error]', err.toString({ colors: true }) ) ),
             )
             .pipe( gulp.dest( PATHS.dist + '/js' ) );
     }
@@ -214,7 +211,7 @@ function reload( done ) {
 function watch() {
     gulp.watch( PATHS.assets, copy );
 
-    gulp.watch( 'src/assets/scss/**/*.scss', sass )
+    gulp.watch( PATHS.sass, sass )
         .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) ) + ' changed.' )
         .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) ) + ' was removed.' );
 
@@ -222,7 +219,7 @@ function watch() {
         .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) ) + ' changed.' )
         .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) ) + ' was removed.' );
 
-    gulp.watch( 'src/assets/img/**/*', gulp.series( images, reload ) );
+    gulp.watch( 'src/img/**', gulp.series( images, reload ) );
 }
 
 // Build the "dist" folder by running all of the below tasks

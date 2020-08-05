@@ -6,5 +6,5 @@ import { navigation } from './ui/navigation';
  * @author Davey Jacobson <davey.jacobson@tribusgroup.com>
  */
 ( function( $ ) {
-	$( window ).on( 'load', navigation );
+	$( document ).ready( navigation );
 } )( jQuery );

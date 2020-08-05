@@ -90,21 +90,13 @@ do_action( 'wpclubmanager_before_single_club' );
 	</div>
 
 	<?php if ( get_the_content() ) : ?>
-
-		<div class="wpcm-entry-content">
-
-			<?php the_content(); ?>
-
-		</div>
-
+		<div class="wpcm-entry-content"><?php the_content(); ?></div>
 	<?php endif; ?>
 
 	<?php
     if ( $details['venue']['address'] && get_option( 'wpcm_club_settings_venue' ) == 'yes' ) {
         ?>
-		<div class="wpcm-club-map">
-			<?php echo do_shortcode( '[map_venue id="' . $details['venue']['id'] . '" width="100%" height="260"]' ); ?>
-		</div>
+		<div class="wpcm-club-map"><?php echo do_shortcode( '[map_venue id="' . $details['venue']['id'] . '" width="100%" height="260"]' ); ?></div>
     	<?php
     }
 

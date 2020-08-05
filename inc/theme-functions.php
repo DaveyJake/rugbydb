@@ -116,12 +116,10 @@ function remove_class_method( ...$args ) {
                 !empty( get_class( $filter_array['function'][0] ) ),
                 ( $filter_array['function'][1] === $method_name ),
             );
-
             // Check if class is not attached to global variable.
             if ( ! empty( $args['class_name'] ) ) {
                 $conditions[] = ( get_class( $filter_array['function'][0] ) === $args['class_name'] );
             }
-
             // Check if `$conditions` are all true.
             if ( (bool) array_product( $conditions ) ) {
                 // Test for WordPress 4.7+ WP_Hook class {@link https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/}.

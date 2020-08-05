@@ -216,7 +216,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
 
         // University
         if ( metadata_exists( 'post', $post->ID, 'usar_university' ) ||
-             ! isset( $_POST['usar_university'] ) ) {
+    		 ! isset( $_POST['usar_university'] ) ) {
 
             $university = get_post_meta( $post->ID, 'usar_university', true );
 
@@ -303,95 +303,95 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
     public static function save( $post_id, $post ) {
         // Save current club.
         if ( isset( $_POST['_wpcm_player_club'] ) ) {
-            update_post_meta( $post->ID, '_wpcm_player_club', $_POST['_wpcm_player_club'] );
+            update_post_meta( $post_id, '_wpcm_player_club', $_POST['_wpcm_player_club'] );
         }
 
         // Save birthday.
         if ( isset( $_POST['wpcm_dob'] ) ) {
-            update_post_meta( $post->ID, 'wpcm_dob', $_POST['wpcm_dob'] );
+            update_post_meta( $post_id, 'wpcm_dob', $_POST['wpcm_dob'] );
         }
 
         // Save first name.
         if ( isset( $_POST['_wpcm_firstname'] ) ) {
-            update_post_meta( $post->ID, '_wpcm_firstname', $_POST['_wpcm_firstname'] );
+            update_post_meta( $post_id, '_wpcm_firstname', $_POST['_wpcm_firstname'] );
         }
 
         // Save last name.
         if ( isset( $_POST['_wpcm_lastname'] ) ) {
-            update_post_meta( $post->ID, '_wpcm_lastname', $_POST['_wpcm_lastname'] );
+            update_post_meta( $post_id, '_wpcm_lastname', $_POST['_wpcm_lastname'] );
         }
 
         // Save badge number.
         if ( isset( $_POST['wpcm_number'] ) ) {
-            update_post_meta( $post->ID, 'wpcm_number', $_POST['wpcm_number'] );
+            update_post_meta( $post_id, 'wpcm_number', $_POST['wpcm_number'] );
         }
 
         // Save height.
         if ( isset( $_POST['wpcm_height'] ) ) {
-            update_post_meta( $post->ID, 'wpcm_height', $_POST['wpcm_height'] );
+            update_post_meta( $post_id, 'wpcm_height', $_POST['wpcm_height'] );
         }
 
         // Save weight.
         if ( isset( $_POST['wpcm_weight'] ) ) {
-            update_post_meta( $post->ID, 'wpcm_weight', $_POST['wpcm_weight'] );
+            update_post_meta( $post_id, 'wpcm_weight', $_POST['wpcm_weight'] );
         }
 
         // Save nationality.
         if ( isset( $_POST['wpcm_natl'] ) ) {
-            update_post_meta( $post->ID, 'wpcm_natl', $_POST['wpcm_natl'] );
+            update_post_meta( $post_id, 'wpcm_natl', $_POST['wpcm_natl'] );
         }
 
         // Save hometown.
         if ( isset( $_POST['wpcm_hometown'] ) ) {
-            update_post_meta( $post->ID, 'wpcm_hometown', $_POST['wpcm_hometown'] );
+            update_post_meta( $post_id, 'wpcm_hometown', $_POST['wpcm_hometown'] );
         }
 
         // Save previous clubs.
         if ( isset( $_POST['wpcm_prevclubs'] ) ) {
-            update_post_meta( $post->ID, 'wpcm_prevclubs', $_POST['wpcm_prevclubs'] );
+            update_post_meta( $post_id, 'wpcm_prevclubs', $_POST['wpcm_prevclubs'] );
         }
 
         // Set private fields.
-        self::set_wpcm_player_additional_detail_fields( $post->ID );
+        self::set_wpcm_player_additional_detail_fields( $post_id );
 
         // Save the unique badge.
         if ( isset( $_POST['_usar_badge'] ) ) {
-            update_post_meta( $post->ID, '_usar_badge', $_POST['_usar_badge'] );
+            update_post_meta( $post_id, '_usar_badge', $_POST['_usar_badge'] );
         }
 
         // Save the date of first match.
-        if ( isset( $_POST['_usar_date_first_match'] ) ) {
-            update_post_meta( $post->ID, '_usar_date_first_match', $_POST['_usar_date_first_match'] );
+        if ( isset( $_POST['_usar_date_first_test'] ) ) {
+            update_post_meta( $post_id, '_usar_date_first_test', $_POST['_usar_date_first_test'] );
         }
 
         // Save the date of last match.
-        if ( isset( $_POST['_usar_date_last_match'] ) ) {
-            update_post_meta( $post->ID, '_usar_date_last_match', $_POST['_usar_date_last_match'] );
+        if ( isset( $_POST['_usar_date_last_test'] ) ) {
+            update_post_meta( $post_id, '_usar_date_last_test', $_POST['_usar_date_last_test'] );
         }
 
         // Save the player's birthplace.
         if ( isset( $_POST['usar_birthplace'] ) ) {
-            update_post_meta( $post->ID, 'usar_birthplace', $_POST['usar_birthplace'] );
+            update_post_meta( $post_id, 'usar_birthplace', $_POST['usar_birthplace'] );
         }
 
         // Save the player's high school.
         if ( isset( $_POST['usar_high_school'] ) ) {
-            update_post_meta( $post->ID, 'usar_high_school', $_POST['usar_high_school'] );
+            update_post_meta( $post_id, 'usar_high_school', $_POST['usar_high_school'] );
         }
 
         // Save the player's university affiliation.
         if ( isset( $_POST['usar_university'] ) ) {
-            update_post_meta( $post->ID, 'usar_university', $_POST['usar_university'] );
+            update_post_meta( $post_id, 'usar_university', $_POST['usar_university'] );
         }
 
         // Save the player's ESPN Scrum ID.
         if ( isset( $_POST['usar_scrum_id'] ) ) {
-            update_post_meta( $post->ID, 'usar_scrum_id', $_POST['usar_scrum_id'] );
+            update_post_meta( $post_id, 'usar_scrum_id', $_POST['usar_scrum_id'] );
         }
 
         // Save the player's World Rugby ID.
         if ( isset( $_POST['wr_id'] ) ) {
-            update_post_meta( $post->ID, 'wr_id', $_POST['wr_id'] );
+            update_post_meta( $post_id, 'wr_id', $_POST['wr_id'] );
         }
 
         // Save the player's World Rugby match list.
@@ -400,10 +400,10 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
             $match_list             = preg_split( '/,/', $match_list );
             $_POST['wr_match_list'] = implode( '|', $match_list );
 
-            update_post_meta( $post->ID, 'wr_match_list', $_POST['wr_match_list'] );
+            update_post_meta( $post_id, 'wr_match_list', $_POST['wr_match_list'] );
         }
 
-        do_action( 'wpclubmanager_after_admin_player_save', $post->ID );
+        do_action( 'wpclubmanager_after_admin_player_save', $post_id );
 
         do_action( 'delete_plugin_transients' );
     }
@@ -475,16 +475,16 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
                 $last_match_dates[] = $last_match;
             }
 
-            // Get the current `_usar_date_last_match` value.
-            if ( metadata_exists( 'post', $post->ID, '_usar_date_last_match' ) ) {
-                $last_match_date    = get_post_meta( $post->ID, '_usar_date_last_match', true );
+            // Get the current `_usar_date_last_test` value.
+            if ( metadata_exists( 'post', $post->ID, '_usar_date_last_test' ) ) {
+                $last_match_date    = get_post_meta( $post->ID, '_usar_date_last_test', true );
                 $last_match_dates[] = strtotime( $last_match_date );
             }
 
             $actual = max( $last_match_dates );
             $actual = date( 'Y-m-d', $actual );
 
-            update_post_meta( $post->ID, '_usar_date_last_match', $actual );
+            update_post_meta( $post->ID, '_usar_date_last_test', $actual );
         }
     }
 

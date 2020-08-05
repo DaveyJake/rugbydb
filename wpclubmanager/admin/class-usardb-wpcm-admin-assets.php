@@ -41,12 +41,15 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
         $suffix		    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
         $api_key		= get_option( 'wpcm_google_map_api' );
 
+        // Register styles.
+        wp_register_style( 'usardb-wpcm-admin', get_template_directory_uri() . '/wpclubmanager/admin/assets/css/usardb-wpcm-admin.css', false, WPCM_VERSION );
+
         // Register scripts
         wp_register_script( 'wpclubmanager_admin', WPCM()->plugin_url() . '/assets/js/admin/wpclubmanager_admin' . $suffix . '.js', array( 'jquery', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-ui-sortable' ), WPCM_VERSION );
 
         wp_register_script( 'ajax-chosen', WPCM()->plugin_url() . '/assets/js/jquery-chosen/ajax-chosen.jquery' . $suffix . '.js', array( 'jquery', 'chosen' ), WPCM_VERSION );
 
-        wp_register_script( 'order-chosen', WPCM()->plugin_url() . '/assets/js/jquery-chosen/chosen.order.jquery' . $suffix . '.js', array( 'jquery' ), '1.2.1' );
+        wp_register_script( 'order-chosen', WPCM()->plugin_url() . '/assets/js/jquery-chosen/chosen.order.jquery.min.js', array( 'jquery' ), '1.2.1' );
 
         wp_register_script( 'chosen', WPCM()->plugin_url() . '/assets/js/jquery-chosen/chosen.jquery' . $suffix . '.js', array( 'jquery' ), '1.8.2' );
 
@@ -65,6 +68,7 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
         wp_register_script( 'wpclubmanager_admin_meta_boxes', WPCM()->plugin_url() . '/assets/js/admin/meta-boxes' . $suffix . '.js', array( 'jquery', 'chosen', 'order-chosen', 'iris', 'jquery-timepicker', 'wpcm-tax-order', 'jquery-ui-datepicker', 'wpclubmanager-admin-combify' ), WPCM_VERSION );
 
         if ( in_array( $screen_id, array( 'edit-wpcm_match', 'edit-wpcm_player', 'edit-wpcm_staff' ) ) ) {
+            wp_enqueue_style( 'usardb-wpcm-admin' );
             wp_register_script( 'wpclubmanager_quick-edit', WPCM()->plugin_url() . '/assets/js/admin/quick-edit.js', array( 'jquery', 'wpclubmanager_admin' ), WPCM_VERSION );
             wp_enqueue_script( 'wpclubmanager_quick-edit' );
         }
