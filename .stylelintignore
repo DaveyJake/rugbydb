@@ -1,0 +1,10 @@
+src/sass/abstracts/**/*
+src/sass/base/_meta.scss
+src/sass/generic/_normalize.scss
+**node_modules**
+**vendor**
+*.css
+*.js*
+*.php
+*.sublime-*
+*.yml

@@ -36,7 +36,9 @@
 
 	<!-- Exclude patterns. -->
 	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/inc/libs/*</exclude-pattern>
 	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/WR/*</exclude-pattern>
 
 
 	<!--
@@ -50,6 +52,45 @@
 		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.ShortPrefixPassed"/>
 	</rule>
 	<rule ref="WPThemeReview"/>
+
+	<!--
+	#############################################################################
+	EXCLUDE PHPCS CONFLICTS
+	#############################################################################
+	-->
+
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent">
+		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed"/>
+	</rule>
+
+	<rule ref="PHPCompatibility">
+		<exclude name="PHPCompatibility.LanguageConstructs.NewLanguageConstructs.t_ns_separatorFound"/>
+	</rule>
+
+	<rule ref="Squiz.Commenting">
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+	</rule>
+
+	<rule ref="Squiz.NamingConventions.ValidVariableName">
+		<exclude name="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
+		<exclude name="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/>
+		<exclude name="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+		<exclude name="Squiz.NamingConventions.ValidVariableName.StringNotCamelCaps"/>
+	</rule>
+
+	<rule ref="Squiz.Operators.ComparisonOperatorUsage">
+		<exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
+		<exclude name="Squiz.Operators.ComparisonOperatorUsage.NotAllowed"/>
+	</rule>
+
+	<rule ref="Squiz.WhiteSpace.ControlStructureSpacing">
+		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
+	</rule>
+
+	<rule ref="PEAR.ControlStructures.MultiLineCondition">
+		<exclude name="PEAR.ControlStructures.MultiLineCondition.SpacingAfterOpenBrace"/>
+	</rule>
 
 	<!--
 	#############################################################################
@@ -97,14 +138,13 @@
 		</properties>
 	</rule>
 
-
 	<!--
 	#############################################################################
 	USE THE PHPCompatibility RULESET
 	#############################################################################
 	-->
 
-	<config name="testVersion" value="5.6-"/>
+	<config name="testVersion" value="7.0"/>
 	<rule ref="PHPCompatibilityWP"/>
 
 </ruleset>

@@ -4,7 +4,7 @@
  *
  * @since USARDB 1.0.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
+if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
 class USARDB_WPCM_Admin {
 

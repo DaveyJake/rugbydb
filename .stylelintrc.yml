@@ -1,0 +1,62 @@
+---
+extends: stylelint-config-wordpress/scss
+rules:
+  at-rule-empty-line-before:
+    - never
+    - ignore:
+      - after-comment
+      - blockless-after-blockless
+      - blockless-after-same-name-blockless
+      - inside-block
+    - ignoreAtRules:
+      - if
+      - else
+      - include
+      - import
+      - for
+      - each
+      - media
+  block-closing-brace-newline-after:
+    - always-multi-line
+    - ignoreAtRules:
+      - if
+      - else
+      - debug
+      - error
+      - warn
+  block-no-empty: true
+  color-no-invalid-hex: true
+  comment-empty-line-before:
+    - always
+    - ignore:
+      - stylelint-commands
+      - after-comment
+  declaration-colon-space-after: always
+  indentation:
+    - tab
+    - except:
+      - value
+  max-line-length: 120
+  max-empty-lines: 2
+  rule-empty-line-before:
+    - always-multi-line
+    - except:
+      - after-single-line-comment
+      - first-nested
+    - ignore:
+      - after-comment
+  scss/comment-no-loud: true
+  string-quotes: single
+  unit-whitelist:
+    - px
+    - em
+    - rem
+    - vw
+    - vh
+    - deg
+    - ms
+    - '%'
+    - s
+    - dpi
+    - pt
+    - fr

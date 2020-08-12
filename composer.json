@@ -15,7 +15,9 @@
         }
     ],
     "require": {
-        "php": ">=5.6"
+        "php": ">=5.6",
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "sinergi/browser-detector": "^6.1"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
@@ -25,6 +27,7 @@
     },
     "scripts": {
         "lint:wpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
+        "phpcbf": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
         "lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor .",
         "make-pot": "wp i18n make-pot . languages/_s.pot"
     },

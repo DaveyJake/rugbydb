@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
 // phpcs:disable Generic.WhiteSpace.ScopeIndent
 
-echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">';
+echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', apply_filters( 'post_class', get_post_class() ) ) ) . '">';
 
 	echo '<header class="entry-header">';
 

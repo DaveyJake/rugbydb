@@ -1,15 +1,20 @@
 ---
-# Change `usardb` to the name of your project's root directory (i.e. the name of the folder that contains ALL wordpress files).
+# Change `usardb` to the name of your usardb's root directory (i.e. the name of the folder that contains ALL wordpress files).
 PROXY:
   &hostname "stats"
 
+# Accepts 'development' or 'production'.
+STATUS: "development"
+
+# Set to true if you want static asset revisioning; helpful for cache busting.
+REVISIONING: true
+
 # Browsersync config.
 BROWSERSYNC:
-  # Protocol, hostname and TLD of local development server URL. Grunt converts this to a URL.
   url:
     - "http://"
     - *hostname
-    - ".test"
+    - ".test:8080"
   # Files for BrowserSync to watch.
   watch:
     - "**/*.scss"
@@ -22,50 +27,50 @@ COMPATIBILITY:
   - "> 1%"
   - "ios >= 9"
 
-# Set to true if you want static asset revisioning; helpful for cache busting.
-REVISIONING: true
-
 # Grunt will reference these paths when it copies files.
 PATHS:
+  # Path to admin directory.
+  admin: "admin"
   # Path to dist folders.
   dist: "dist"
+  # Paths to static assets that aren't images, CSS, or JavaScript.
+  assets:
+    - "src/**"
+    - "node_modules/multiselect/{css,img,js}/**"
+    - "vendor/mobiledetect/mobiledetectlib/Mobile_Detect.php"
+    - "vendor/sinergi/browser-detector/src/*"
+    - "!src/{img,js,sass}/**"
+  # Paths to the main JavaScript directory.
+  js:
+    - "src/js/**/*"
+  # Paths to Sass libraries, which can then be loaded with @import.
+  sass:
+    - "node_modules/foundation-sites/scss"
+  # Paths to Sass templates.
+  templates:
+    - "src/sass/*.scss"
   # Entries of main files.
   entries:
     - "src/js/usardb.js"
     - "src/js/usardb-admin.js"
-  # Paths to admin-specific files.
-  admin:
-    sass: "src/sass/usardb-admin.scss"
-    js: "src/js/usardb-admin.js"
-  # Paths to static assets that aren't images, CSS, or JavaScript.
-  assets:
-    - "src/**"
-    - "!src/{img,img/**/*,js/**/*,js,sass/**/*,sass}"
-  # Paths to Sass libraries, which can then be loaded with @import.
-  sass:
-    - "src/sass"
-    - "!src/sass/admin"
-  # Paths to the main JavaScript directory.
-  js:
-    - "src/js"
-    - "!src/js/admin"
   # Paths for the package task to include/exclude in .zip archive.
   package:
     - "**/*"
+    - "!**/.babelrc"
+    - "!**/.eslint*"
+    - "!**/.git*"
     - "!**/node_modules/**"
     - "!**/packaged/**"
     - "!**/src/**"
-    - "!**/codesniffer.ruleset.xml"
+    - "!**/phpcs.xml.dist"
     - "!**/composer.json"
     - "!**/composer.lock"
     - "!**/config.yml"
-    - "!**/config-cssmin.yml"
     - "!**/config-default.yml"
-    - "!**/config-terser.yml"
-    - "!**/Gruntfile.js"
     - "!**/gulpfile.babel.js"
     - "!**/package.json"
     - "!**/package-lock.json"
+    - "!**/usardb.sublime-*"
     - "!**/webpack.config.js"
   # Paths for PHP CodeSniffer.
   phpcs:
