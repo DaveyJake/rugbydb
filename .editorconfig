@@ -14,13 +14,21 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
 
-[{gulpfile.babel.js,package.json}]
+[*.{js,scss}]
 indent_style = space
 indent_size = 4
 
-[*.yml]
+[gulpfile.babel.js]
+indent_style = space
+indent_size = 4
+
+[*.{yml,json}]
 indent_style = space
 indent_size = 2
+
+[*.scss]
+indent_style = tab
+indent_size = 4
 
 [{*.txt,wp-config*.php}]
 end_of_line = crlf

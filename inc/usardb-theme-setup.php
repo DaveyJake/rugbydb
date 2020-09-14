@@ -42,7 +42,7 @@ if ( ! function_exists( 'usardb_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// Add WPClubManager support
+		// Add WPClubManager support.
 	    add_theme_support( 'wpclubmanager' );
 
 		// This theme uses wp_nav_menu() in one location.
@@ -50,11 +50,11 @@ if ( ! function_exists( 'usardb_setup' ) ) :
 			array( 'main-menu' => esc_html__( 'Primary', 'usardb' ) )
 		);
 
-		/*
-		 * Switch default core markup for search form, comment form, and comments
-		 * to output valid HTML5.
+		/**
+		 * Switch default core markup for search form, comment form, and comments to output valid HTML5.
+         *
+         * Accepts 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script'.
 		 */
-		//add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
 		add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
 
 		// Set up the WordPress core custom background feature.
@@ -144,12 +144,13 @@ if ( ! function_exists( 'usardb_facebook_image_sizes' ) ) :
 	 * @see 'add_image_size'
 	 */
 	function usardb_facebook_image_sizes() {
-	    foreach ( array( 'page', 'post', 'wpcm_club', 'wpcm_match', 'wpcm_player', 'wpcm_staff' ) as $post_type ) {
+        $post_types = array( 'page', 'post', 'wpcm_club', 'wpcm_match', 'wpcm_player', 'wpcm_staff' );
+        $cropped    = array( 'wpcm_player', 'wpcm_staff' );
 
-	        if ( in_array( $post_type, array( 'wpcm_player', 'wpcm_staff' ) ) ) {
+	    foreach ( $post_types as $post_type ) {
+	        if ( in_array( $post_type, $cropped, true ) ) {
 	            $crop = array( 'center', 'top' );
-	        }
-	        else {
+	        } else {
 	            $crop = false;
 	        }
 

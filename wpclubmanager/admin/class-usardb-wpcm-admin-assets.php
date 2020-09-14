@@ -20,7 +20,7 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
     * @return USARDB_WPCM_Admin_Assets
     */
     public function __construct() {
-        remove_class_method( 'admin_enqueue_scripts', 'WPCM_Admin_Assets', 'admin_scripts', 10 );
+        usardb_remove_class_method( 'admin_enqueue_scripts', 'WPCM_Admin_Assets', 'admin_scripts', 10 );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
     }
 
@@ -41,8 +41,9 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
         $suffix		    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
         $api_key		= get_option( 'wpcm_google_map_api' );
 
-        // Register styles.
+        // Register custom styles and scripts.
         wp_register_style( 'usardb-wpcm-admin', get_template_directory_uri() . '/wpclubmanager/admin/assets/css/usardb-wpcm-admin.css', false, WPCM_VERSION );
+        wp_register_script( 'usardb-wpcm-admin', get_template_directory_uri() . '/wpclubmanager/admin/assets/js/usardb-wpcm-admin.js', array( 'jquery', 'jquery-ui-tooltip', 'wpclubmanager_admin' ), WPCM_VERSION );
 
         // Register scripts
         wp_register_script( 'wpclubmanager_admin', WPCM()->plugin_url() . '/assets/js/admin/wpclubmanager_admin' . $suffix . '.js', array( 'jquery', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-ui-sortable' ), WPCM_VERSION );
@@ -61,19 +62,22 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
 
         wp_register_script( 'wpclubmanager-admin-locationpicker', get_template_directory_uri() . '/wpclubmanager/admin/assets/js/locationpicker.js', array( 'jquery', 'google-maps', 'jquery-locationpicker' ), WPCM_VERSION, true );
 
-        wp_register_script( 'jquery-timepicker', WPCM()->plugin_url() . '/assets/js/jquery.timepicker' . $suffix . '.js', array( 'jquery' ), '1.11.13', true );
+        if ( SCRIPT_DEBUG ) {
+            wp_register_script( 'jquery-timepicker', get_template_directory_uri() . '/wpclubmanager/admin/assets/js/jquery.timepicker.js', array( 'jquery' ), WPCM_VERSION, true );
+        } else {
+            wp_register_script( 'jquery-timepicker', WPCM()->plugin_url() . '/assets/js/jquery.timepicker' . $suffix . '.js', array( 'jquery' ), WPCM_VERSION, true );
+        }
 
         wp_register_script( 'wpclubmanager-admin-combify', WPCM()->plugin_url() . '/assets/js/admin/combify' . $suffix . '.js', array( 'jquery' ), WPCM_VERSION, true );
 
         wp_register_script( 'wpclubmanager_admin_meta_boxes', WPCM()->plugin_url() . '/assets/js/admin/meta-boxes' . $suffix . '.js', array( 'jquery', 'chosen', 'order-chosen', 'iris', 'jquery-timepicker', 'wpcm-tax-order', 'jquery-ui-datepicker', 'wpclubmanager-admin-combify' ), WPCM_VERSION );
 
-        if ( in_array( $screen_id, array( 'edit-wpcm_match', 'edit-wpcm_player', 'edit-wpcm_staff' ) ) ) {
-            wp_enqueue_style( 'usardb-wpcm-admin' );
+        if ( in_array( $screen_id, array( 'edit-wpcm_match', 'edit-wpcm_player', 'edit-wpcm_staff' ), true ) ) {
             wp_register_script( 'wpclubmanager_quick-edit', WPCM()->plugin_url() . '/assets/js/admin/quick-edit.js', array( 'jquery', 'wpclubmanager_admin' ), WPCM_VERSION );
             wp_enqueue_script( 'wpclubmanager_quick-edit' );
         }
 
-        if ( in_array( $screen_id, array( 'edit-wpcm_team', 'edit-wpcm_season', 'edit-wpcm_position', 'edit-wpcm_job', 'edit-wpcm_comp' ) ) ) {
+        if ( in_array( $screen_id, array( 'edit-wpcm_team', 'edit-wpcm_season', 'edit-wpcm_position', 'edit-wpcm_job', 'edit-wpcm_comp' ), true ) ) {
             wp_enqueue_script( 'jquery-ui-core' );
             wp_enqueue_script( 'jquery-ui-sortable' );
             wp_enqueue_script( 'wpcm-tax-order' );
@@ -84,7 +88,7 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
         }
 
         // Edit venue pages
-        if ( in_array( $screen_id, array( 'edit-wpcm_venue' ) ) ) {
+        if ( in_array( $screen_id, array( 'edit-wpcm_venue' ), true ) ) {
             wp_enqueue_script( 'google-maps' );
             wp_enqueue_script( 'jquery-locationpicker' );
             wp_enqueue_script( 'wpclubmanager-admin-locationpicker' );
@@ -92,6 +96,7 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
 
         // WPlubManager admin pages
         if ( in_array( $screen_id, wpcm_get_screen_ids() ) ) {
+            wp_enqueue_style( 'usardb-wpcm-admin' );
             wp_enqueue_script( 'jquery' );
             wp_enqueue_script( 'ajax-chosen' );
             wp_enqueue_script( 'order-chosen' );
@@ -100,7 +105,7 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
             wp_enqueue_script( 'wpclubmanager_admin' );
         }
 
-        if ( in_array( $screen_id, array( 'wpcm_player', 'wpcm_club', 'wpcm_staff', 'wpcm_sponsor', 'wpcm_table', 'wpcm_roster', 'wpcm_match' ) ) ) {
+        if ( in_array( $screen_id, array( 'wpcm_player', 'wpcm_club', 'wpcm_staff', 'wpcm_sponsor', 'wpcm_table', 'wpcm_roster', 'wpcm_match' ), true ) ) {
             wp_enqueue_script( 'ajax-chosen' );
             wp_enqueue_script( 'order-chosen' );
             wp_enqueue_script( 'chosen' );
@@ -111,7 +116,7 @@ class USARDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
         }
 
         // Tooltip for non-test matches.
-        if ( in_array( $screen_id, array( 'edit-wpcm_match' ) ) ) {
+        if ( in_array( $screen_id, array( 'edit-wpcm_match', 'edit-wpcm_player' ), true ) ) {
             wp_enqueue_script( 'jquery-ui-tooltip' );
         }
 

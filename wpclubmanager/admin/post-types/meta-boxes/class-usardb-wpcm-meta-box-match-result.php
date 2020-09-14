@@ -12,17 +12,18 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
 class USARDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
 
     /**
-     * Output the metabox
+     * Output the metabox.
+     *
+     * @param WP_Post|object $post Current post object.
      */
     public static function output( $post ) {
-
         wp_nonce_field( 'wpclubmanager_save_data', 'wpclubmanager_meta_nonce' );
 
         $played    = get_post_meta( $post->ID, 'wpcm_played', true );
         $postponed = get_post_meta( $post->ID, '_wpcm_postponed', true );
         $walkover  = get_post_meta( $post->ID, '_wpcm_walkover', true );
 
-        // Postponed Args.
+        // Postponed args.
         $postponed_args = array(
             'id'            => '_wpcm_walkover',
             'value'         => $walkover,
@@ -135,7 +136,6 @@ class USARDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
         echo '</div>'; // End #results-table
 
         do_action( 'wpclubmanager_admin_after_results_table', $post->ID );
-
     }
 
 }

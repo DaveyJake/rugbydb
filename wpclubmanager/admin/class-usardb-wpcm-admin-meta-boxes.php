@@ -10,15 +10,16 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
-
     /**
      * Priamry constructor.
      *
      * @return USARDB_WPCM_Admin_Meta_Boxes
      */
     public function __construct() {
-        remove_class_method( 'add_meta_boxes', 'WPCM_Admin_Meta_Boxes', 'add_meta_boxes', 20 );
+        usardb_remove_class_method( 'add_meta_boxes', 'WPCM_Admin_Meta_Boxes', 'add_meta_boxes', 20 );
         add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20 );
+
+        add_action( 'wpclubmanager_process_wpcm_player_meta', 'USARDB_WPCM_Meta_Box_Player_Details::save', 10, 2 );
     }
 
     /**
@@ -44,14 +45,21 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
      * @access private
      */
     private function club_meta_boxes( $post ) {
+        // Clubs.
         add_meta_box( 'wpclubmanager-club-parent', __( 'Linked Clubs', 'wp-club-manager'), 'WPCM_Meta_Box_Club_Parent::output', 'wpcm_club', 'normal', 'high' );
+        // Club details.
         add_meta_box( 'wpclubmanager-club-details', __( 'Club Details', 'wp-club-manager' ), 'WPCM_Meta_Box_Club_Details::output', 'wpcm_club', 'normal', 'high' );
+        // Club information.
         add_meta_box( 'wpclubmanager-club-info', __( 'Club Information', 'wp-club-manager'), function( $post ) {
-            wp_editor( $post->post_content, 'post_content', array(
-                'name'          => 'post_content',
-                'textarea_rows' => 10,
-                'tinymce'       => array( 'resize' => false )
-            ) );
+            wp_editor(
+                $post->post_content,
+                'post_content',
+                array(
+                    'name'          => 'post_content',
+                    'textarea_rows' => 10,
+                    'tinymce'       => array( 'resize' => false ),
+                )
+            );
         }, 'wpcm_club', 'normal', 'high' );
 
         if ( is_league_mode() && 'publish' === $post->post_status )
@@ -72,10 +80,11 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
      * @access private
      */
     private function match_meta_boxes( $post ) {
+        // Match fixture.
         add_meta_box( 'wpclubmanager-match-fixture', __( 'Match Fixture', 'wp-club-manager' ), 'WPCM_Meta_Box_Match_Fixture::output', 'wpcm_match', 'normal', 'high' );
         // Custom match details added here.
         add_meta_box( 'wpclubmanager-match-details', __( 'Match Details', 'wp-club-manager' ), 'USARDB_WPCM_Meta_Box_Match_Details::output', 'wpcm_match', 'normal', 'high' );
-
+        // Show match report?
         if ( 'yes' === get_option( 'wpcm_match_show_report', 'yes' ) )
         {
             add_meta_box( 'wpclubmanager-match-report', __( 'Match Report', 'wp-club-manager' ), function( $post ) {
@@ -85,7 +94,7 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
                 ) );
             }, 'wpcm_match', 'normal', 'high' );
         }
-
+        // Show match preview?
         if ( 'yes' === get_option( 'wpcm_match_show_preview', 'no' ) )
         {
             add_meta_box( 'postexcerpt', __( 'Match Preview', 'wp-club-manager' ), function( $post ) {
@@ -114,21 +123,26 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
      * Add WPCM Player meta boxes.
      *
      * @access private
+     *
+     * @param WP_Post|object $post Current post object.
      */
     private function player_meta_boxes( $post ) {
-
+        // Player details.
         add_meta_box( 'wpclubmanager-player-details', __( 'Player Details', 'wp-club-manager' ), 'USARDB_WPCM_Meta_Box_Player_Details::output', 'wpcm_player', 'normal', 'high' );
-
+        // Player bio.
         add_meta_box( 'wpclubmanager-player-bio', __( 'Player Biography', 'wp-club-manager' ), function( $post ) {
-            wp_editor( $post->post_content, 'post_content', array(
-                'name'          => 'post_content',
-                'textarea_rows' => 10,
-                'tinymce'       => array( 'resize' => false )
-            ) );
+            wp_editor(
+                $post->post_content,
+                'post_content',
+                array(
+                    'name'          => 'post_content',
+                    'textarea_rows' => 10,
+                    'tinymce'       => array( 'resize' => false ),
+                )
+            );
         }, 'wpcm_player', 'normal', 'high' );
 
-        if ( 'publish' === $post->post_status )
-        {
+        if ( 'publish' === $post->post_status ) {
             add_meta_box( 'wpclubmanager-player-stats', __( 'Player Statistics', 'wp-club-manager' ), 'WPCM_Meta_Box_Player_Stats::output', 'wpcm_player', 'normal', 'high' );
             add_meta_box( 'wpclubmanager-player-users', __( 'Link Player to User', 'wp-club-manager' ), 'WPCM_Meta_Box_Player_Users::output', 'wpcm_player', 'normal', 'high' );
         }
@@ -136,32 +150,37 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
         add_meta_box( 'wpclubmanager-player-display', __( 'Player Stats Display', 'wp-club-manager'), 'WPCM_Meta_Box_Player_Display::output', 'wpcm_player', 'side' );
         add_meta_box( 'postimagediv', __( 'Player Image' ), 'post_thumbnail_meta_box', 'wpcm_player', 'side' );
 
-        if ( is_club_mode() )
-        {
+        if ( is_club_mode() ) {
             add_meta_box( 'wpclubmanager-player-roster', __( 'Add Player to Roster', 'wp-club-manager'), 'WPCM_Meta_Box_Player_Roster::output', 'wpcm_player', 'side' );
         }
-
     }
 
     /**
      * Add WPCM Staff meta boxes.
      *
      * @access private
+     *
+     * @param WP_Post|object $post Current post object.
      */
     private function staff_meta_boxes( $post ) {
+        // Staff details.
         add_meta_box( 'wpclubmanager-staff-details', __( 'Staff Details', 'wp-club-manager' ), 'WPCM_Meta_Box_Staff_Details::output', 'wpcm_staff', 'normal', 'high' );
+        // Staff bio.
         add_meta_box( 'wpclubmanager-staff-bio', __( 'Staff Biography', 'wp-club-manager'), function( $post ) {
-            wp_editor( $post->post_content, 'post_content', array(
-                'name'          => 'post_content',
-                'textarea_rows' => 10,
-                'tinymce'       => array( 'resize' => false )
-            ) );
+            wp_editor(
+                $post->post_content,
+                'post_content',
+                array(
+                    'name'          => 'post_content',
+                    'textarea_rows' => 10,
+                    'tinymce'       => array( 'resize' => false ),
+                )
+            );
         }, 'wpcm_staff', 'normal', 'high' );
-
+        // Featured image.
         add_meta_box( 'postimagediv', __( 'Staff Image' ), 'post_thumbnail_meta_box', 'wpcm_staff', 'side' );
-
-        if ( is_club_mode() )
-        {
+        // Staff to roster?
+        if ( is_club_mode() ) {
             add_meta_box( 'wpclubmanager-staff-roster', __( 'Add to Staff Roster', 'wp-club-manager'), 'WPCM_Meta_Box_Staff_Roster::output', 'wpcm_staff', 'side' );
         }
     }
@@ -170,6 +189,8 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
      * League tables.
      *
      * @access private
+     *
+     * @param WP_Post|object $post Current post object.
      */
     private function league_tables( $post ) {
         if ( $post->post_status == 'publish' )
@@ -188,6 +209,8 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
      * Rosters.
      *
      * @access private
+     *
+     * @param WP_Post|object $post Current post object.
      */
     private function rosters( $post ) {
         if ( 'publish' === $post->post_status )
@@ -206,12 +229,13 @@ class USARDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
      * Sponsor meta boxes.
      *
      * @access private
+     *
+     * @param WP_Post|object $post Current post object.
      */
     private function sponsors( $post ) {
         add_meta_box( 'wpclubmanager-sponsor-link', __( 'Sponsor Details', 'wp-club-manager' ), 'WPCM_Meta_Box_Sponsor_Url::output', 'wpcm_sponsor', 'normal', 'high' );
         add_meta_box( 'postimagediv', __( 'Sponsor Logo'), 'post_thumbnail_meta_box', 'wpcm_sponsor', 'side' );
     }
-
 }
 
 new USARDB_WPCM_Admin_Meta_Boxes();

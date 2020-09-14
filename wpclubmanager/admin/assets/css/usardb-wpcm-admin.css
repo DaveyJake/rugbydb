@@ -6,7 +6,7 @@
 }
 
 .chosen-choices .search-choice {
-    margin: 0 5px 0 0 !important;
+    margin: 3px 5px 0 0 !important;
 }
 
 .chosen-choices .search-choice:last-child {
@@ -51,14 +51,19 @@
     padding: 0;
 }
 
-.post-type-wpcm_staff #email,
-.post-type-wpcm_staff #jobs,
-.post-type-wpcm_player #position {
-    width: 122px;
+.post-type-wpcm_staff #the-list td.column-image img,
+.post-type-wpcm_player #the-list td.column-image img {
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-.post-type-wpcm_player #number {
-    width: 3.3125em;
+.post-type-wpcm_staff #email,
+.post-type-wpcm_staff #jobs,
+.post-type-wpcm_player #age,
+.post-type-wpcm_player #birthday,
+.post-type-wpcm_player #number,
+.post-type-wpcm_player #position {
+    width: 100%;
 }
 
 .post-type-wpcm_player #debut,

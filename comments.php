@@ -1,13 +1,13 @@
 <?php
 /**
- * The template for displaying comments
+ * The template for displaying comments.
  *
  * This is the template that displays the area of the page that contains both the current comments
  * and the comment form.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package USARDB
+ * @package USA_Rugby_Database
  */
 
 /*
@@ -16,62 +16,53 @@
  * return early without loading the comments.
  */
 if ( post_password_required() ) {
-	return;
+    return;
 }
-?>
 
-<div id="comments" class="comments-area">
+echo '<div id="comments" class="comments-area">';
 
-	<?php
-	// You can start editing here -- including this comment!
-	if ( have_comments() ) :
-		?>
-		<h2 class="comments-title">
-			<?php
-			$usardb_comment_count = get_comments_number();
-			if ( '1' === $usardb_comment_count ) {
-				printf(
-					/* translators: 1: title. */
-					esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'usardb' ),
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
-				);
-			} else {
-				printf(
-					/* translators: 1: comment count number, 2: title. */
-					esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $usardb_comment_count, 'comments title', 'usardb' ) ),
-					number_format_i18n( $usardb_comment_count ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
-				);
-			}
-			?>
-		</h2><!-- .comments-title -->
+// You can start editing here -- including this comment!
+if ( have_comments() ) :
+    echo '<h2 class="comments-title">';
 
-		<?php the_comments_navigation(); ?>
+    $usardb_comment_count = get_comments_number();
 
-		<ol class="comment-list">
-			<?php
-			wp_list_comments(
-				array(
-					'style'      => 'ol',
-					'short_ping' => true,
-				)
-			);
-			?>
-		</ol><!-- .comment-list -->
+    if ( '1' === $usardb_comment_count ) {
+        printf(
+            /* translators: 1: title. */
+            esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'usardb' ),
+            '<span>' . wp_kses_post( get_the_title() ) . '</span>'
+        );
+    } else {
+        printf(
+            /* translators: 1: comment count number, 2: title. */
+            esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $usardb_comment_count, 'comments title', 'usardb' ) ),
+            number_format_i18n( $usardb_comment_count ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            '<span>' . wp_kses_post( get_the_title() ) . '</span>'
+        );
+    }
 
-		<?php
-		the_comments_navigation();
+    echo '</h2><!-- .comments-title -->';
 
-		// If comments are closed and there are comments, let's leave a little note, shall we?
-		if ( ! comments_open() ) :
-			?>
-			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'usardb' ); ?></p>
-			<?php
-		endif;
+    the_comments_navigation();
 
-	endif; // Check for have_comments().
+    echo '<ol class="comment-list">';
+        wp_list_comments(
+            array(
+                'style'      => 'ol',
+                'short_ping' => true,
+            )
+        );
+    echo '</ol><!-- .comment-list -->';
 
-	comment_form();
-	?>
+    the_comments_navigation();
 
-</div><!-- #comments -->
+    // If comments are closed and there are comments, let's leave a little note, shall we?
+    if ( ! comments_open() ) :
+        echo '<p class="no-comments">' . esc_html__( 'Comments are closed.', 'usardb' ) . '</p>';
+    endif;
+endif;
+
+comment_form();
+
+echo '</div><!-- #comments -->';

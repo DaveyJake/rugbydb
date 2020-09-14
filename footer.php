@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
 		wp_footer();
 
-		do_action( 'usardb_body_close' );
+		usardb_body_close();
 
 	echo '</body>';
 

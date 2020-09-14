@@ -8,6 +8,7 @@ env:
 globals:
   window: true
   document: true
+  Foundation: true
   jQuery: true
   lodash: true
   wp: readonly
@@ -27,62 +28,80 @@ parserOptions:
     modules: true
     impliedStrict: true
 rules:
-  block-scoped-var: 2
-  camelcase: 2
+  block-scoped-var: error
+  camelcase: error
   comma-dangle:
-    - 2
+    - error
     - arrays: only-multiline
       objects: only-multiline
       imports: only-multiline
       exports: only-multiline
       functions: never
   comma-style:
-    - 2
+    - error
     - last
-  curly:
-    - 0
-    - all
   dot-notation:
-    - 2
+    - error
     - allowKeywords: false
   eqeqeq:
-    - 2
+    - error
     - allow-null
-  guard-for-in: 2
+  guard-for-in: error
+  indent:
+    - error
+    - 4
+    - VariableDeclarator: first
   jsdoc/check-types:
-    - 2
+    - error
     - exemptTagContexts:
       - tag: param
         types: true
-  new-cap: 2
-  no-bitwise: 2
-  no-caller: 2
+      - tag: return
+        types: true
+  new-cap: error
+  no-bitwise: error
+  no-caller: error
   no-cond-assign:
-    - 2
+    - error
     - except-parens
-  no-debugger: 2
-  no-empty: 2
-  no-eval: 2
-  no-extend-native: 2
-  no-extra-parens: 1
-  no-irregular-whitespace: 2
-  no-iterator: 2
-  no-loop-func: 2
+  no-console: 0
+  no-debugger: error
+  no-empty: error
+  no-eval: error
+  no-extend-native:
+    - error
+    - exceptions:
+      - Date
+  no-extra-parens: warn
+  no-irregular-whitespace: error
+  no-iterator: error
+  no-loop-func: error
+  no-mixed-operators: warn
   no-mixed-spaces-and-tabs:
-    - 2
+    - error
     - smart-tabs
-  no-multi-str: 2
-  no-new: 2
+  no-multi-spaces:
+    - error
+    - exceptions:
+        ImportDeclaration: true
+        VariableDeclarator: true
+  no-multi-str: error
+  no-new: error
+  no-nested-ternary: 0
   no-plusplus: 0
-  no-proto: 2
-  no-script-url: 2
-  no-sequences: 2
-  no-shadow: 1
-  no-undef: 2
-  no-unused-vars: 1
-  no-with: 2
+  no-proto: error
+  no-restricted-syntax:
+    - error
+    - selector: CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]
+      message: Unexpected property on console object was called
+  no-script-url: error
+  no-sequences: error
+  no-shadow: warn
+  no-undef: error
+  no-unused-vars: warn
+  no-with: error
   object-shorthand:
-    - 2
+    - error
     - consistent
   quotes: 0
   semi:
@@ -94,11 +113,11 @@ rules:
     - exceptions:
       - empty
   strict:
-    - 1
+    - warn
     - global
-  valid-typeof: 2
+  valid-typeof: error
   wrap-iife:
-    - 2
+    - error
     - inside
 settings:
   jsdoc:
@@ -106,7 +125,6 @@ settings:
     preferredTypes:
       Array: array
       boolean: bool
-      Object: false
     tagNamePreference:
       virtual: abstract
       extends: augments

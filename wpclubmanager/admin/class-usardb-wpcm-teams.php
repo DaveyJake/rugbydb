@@ -10,19 +10,18 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
 
 class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
-
     /**
      * Primary constructor.
      *
      * @return USARDB_WPCM_Teams
      */
     public function __construct() {
-        remove_class_method( 'wpcm_team_add_form_fields', 'WPCM_Admin_Taxonomies', 'team_add_new_extra_fields', 10 );
-        remove_class_method( 'wpcm_team_edit_form_fields', 'WPCM_Admin_Taxonomies', 'team_edit_extra_fields', 10 );
-        remove_class_method( 'edited_wpcm_team', 'WPCM_Admin_Taxonomies', 'save_team_extra_fields', 10 );
-        remove_class_method( 'create_wpcm_team', 'WPCM_Admin_Taxonomies', 'save_team_extra_fields', 10 );
-        remove_class_method( 'manage_wpcm_team_custom_column', 'WPCM_Admin_Taxonomies', 'team_custom_columns', 5 );
-        remove_class_method( 'manage_edit-wpcm_team_columns', 'WPCM_Admin_Taxonomies', 'team_edit_columns', 10 );
+        usardb_remove_class_method( 'wpcm_team_add_form_fields', 'WPCM_Admin_Taxonomies', 'team_add_new_extra_fields', 10 );
+        usardb_remove_class_method( 'wpcm_team_edit_form_fields', 'WPCM_Admin_Taxonomies', 'team_edit_extra_fields', 10 );
+        usardb_remove_class_method( 'edited_wpcm_team', 'WPCM_Admin_Taxonomies', 'save_team_extra_fields', 10 );
+        usardb_remove_class_method( 'create_wpcm_team', 'WPCM_Admin_Taxonomies', 'save_team_extra_fields', 10 );
+        usardb_remove_class_method( 'manage_wpcm_team_custom_column', 'WPCM_Admin_Taxonomies', 'team_custom_columns', 5 );
+        usardb_remove_class_method( 'manage_edit-wpcm_team_columns', 'WPCM_Admin_Taxonomies', 'team_edit_columns', 10 );
 
         add_action( 'wpcm_team_add_form_fields', array( $this, 'team_add_new_extra_fields' ), 10, 2 );
         add_action( 'wpcm_team_edit_form_fields', array( $this, 'team_edit_extra_fields' ), 10, 2);
@@ -92,9 +91,6 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
     /**
      * Save the custom team fields as `term_meta`.
      *
-     * @uses update_term_meta()
-     * @uses get_term_meta()
-     *
      * @param int $term_id The ID of the current term.
      */
     public function save_team_extra_fields( $term_id ) {
@@ -134,8 +130,7 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
      *
      * @global WP_Post|object $post The current post.
      *
-     * @uses USARDB_WPCM_Teams::usardb_get_wpcm_player_count_by_team()
-     * @uses get_term_meta()
+     * @see USARDB_WPCM_Teams::wpcm_team_player_count()
      *
      * @param mixed  $value  The value for the column.
      * @param string $column The column name.
@@ -160,8 +155,8 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
                     'fields'           => 'id=>slug',
                     'hide_empty'       => false,
                 ) );
-                $count = $this->usardb_get_wpcm_player_count_by_team( $t_id );
-                echo '<a href="' . admin_url( 'edit.php?post_type=wpcm_player&wpcm_team=' . $teams[ $t_id ] ) . '">' . ( !empty( $count ) ? $count : '0' ) . '</a>';
+                $count = $this->wpcm_team_player_count( $t_id );
+                echo '<a href="' . admin_url( 'edit.php?post_type=wpcm_player&wpcm_team=' . $teams[ $t_id ] ) . '">' . ( ! empty( $count ) ? $count : '0' ) . '</a>';
                 break;
             case 'ID':
                 echo $t_id;
@@ -170,19 +165,17 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
     }
 
     /**
-     * Get player counts for each team.
+     * Get player counts for each team via.
      *
      * @access private
      *
-     * @link {@see 'USARDB_WPCM_Teams::team_custom_columns'}
-     *
-     * @uses WP_Query()
+     * @see USARDB_WPCM_Teams::team_custom_columns()
      *
      * @param int $t_id The current term's ID.
      *
      * @return int The post count for the term.
      */
-    private function usardb_get_wpcm_player_count_by_team( $t_id ) {
+    private function wpcm_team_player_count( $t_id ) {
         $args = array(
             'post_type'      => 'wpcm_player',
             'post_status'    => array( 'publish' ),
@@ -203,7 +196,6 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
 
         return $count;
     }
-
 }
 
 return new USARDB_WPCM_Teams();

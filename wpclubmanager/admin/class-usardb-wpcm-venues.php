@@ -16,12 +16,12 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
      * @return USARDB_WPCM_Venues
      */
     public function __construct() {
-        remove_class_method( 'manage_wpcm_venue_custom_column', 'WPCM_Admin_Taxonomies', 'venue_custom_columns', 5 );
-        remove_class_method( 'wpcm_venue_add_form_fields', 'WPCM_Admin_Taxonomies', 'venue_add_new_extra_fields', 10 );
-        remove_class_method( 'wpcm_venue_edit_form_fields', 'WPCM_Admin_Taxonomies', 'venue_edit_extra_fields', 10 );
-        remove_class_method( 'edited_wpcm_venue', 'WPCM_Admin_Taxonomies', 'save_venue_extra_fields', 10 );
-        remove_class_method( 'create_wpcm_venue', 'WPCM_Admin_Taxonomies', 'save_venue_extra_fields', 10 );
-        remove_class_method( 'manage_edit-wpcm_venue_columns', 'WPCM_Admin_Taxonomies', 'venue_edit_columns', 10 );
+        usardb_remove_class_method( 'manage_wpcm_venue_custom_column', 'WPCM_Admin_Taxonomies', 'venue_custom_columns', 5 );
+        usardb_remove_class_method( 'wpcm_venue_add_form_fields', 'WPCM_Admin_Taxonomies', 'venue_add_new_extra_fields', 10 );
+        usardb_remove_class_method( 'wpcm_venue_edit_form_fields', 'WPCM_Admin_Taxonomies', 'venue_edit_extra_fields', 10 );
+        usardb_remove_class_method( 'edited_wpcm_venue', 'WPCM_Admin_Taxonomies', 'save_venue_extra_fields', 10 );
+        usardb_remove_class_method( 'create_wpcm_venue', 'WPCM_Admin_Taxonomies', 'save_venue_extra_fields', 10 );
+        usardb_remove_class_method( 'manage_edit-wpcm_venue_columns', 'WPCM_Admin_Taxonomies', 'venue_edit_columns', 10 );
 
         add_action( 'manage_wpcm_venue_custom_column', array( $this, 'venue_custom_columns' ), 5, 3 );
         add_action( 'wpcm_venue_add_form_fields', array( $this, 'venue_add_new_extra_fields' ), 10, 2 );
@@ -33,9 +33,6 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
 
     /**
      * Add custom fields to `wpcm_venue` taxonomy interface.
-     *
-     * @uses get_terms()
-     * @uses get_term_meta()
      *
      * @param WP_Term|object $tag The current term.
      */
@@ -71,33 +68,33 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
         }
         ?>
         <div class="form-field">
-            <label for="term_meta[wr_id]"><?php _e( 'World Rugby ID', 'usa-rugby-database' ); ?></label>
+            <label for="term_meta[wr_id]"><?php esc_html_e( 'World Rugby ID', 'usa-rugby-database' ); ?></label>
             <input type="text" class="wr-id" name="term_meta[wr_id]" id="term_meta[wr_id]" value="<?php echo esc_attr( $wr_id ); ?>" />
         </div>
         <div class="form-field">
-            <label for="term_meta[wr_name]"><?php _e( 'Historical Name', 'usa-rugby-database' ); ?></label>
+            <label for="term_meta[wr_name]"><?php esc_html_e( 'Historical Name', 'usa-rugby-database' ); ?></label>
             <input type="text" class="wr-name" name="term_meta[wr_name]" id="term_meta[wr_name]" value="<?php echo esc_attr( $wr_name ); ?>" />
         </div>
         <div class="form-field">
-            <label for="term_meta[wpcm_address]"><?php _e( 'Venue Address', 'wp-club-manager' ); ?></label>
+            <label for="term_meta[wpcm_address]"><?php esc_html_e( 'Venue Address', 'wp-club-manager' ); ?></label>
             <input type="text" class="wpcm-address" name="term_meta[wpcm_address]" id="term_meta[wpcm_address]" value="<?php echo esc_attr( $address ); ?>" />
             <p><div class="wpcm-location-picker"></div></p>
-            <p class="description"><?php _e( "Drag the marker to the venue's location.", 'wp-club-manager' ); ?></p>
+            <p class="description"><?php esc_html_e( "Drag the marker to the venue's location.", 'wp-club-manager' ); ?></p>
         </div>
         <div class="form-field">
-            <label for="term_meta[wpcm_latitude]"><?php _e( 'Latitude', 'wp-club-manager' ); ?></label>
+            <label for="term_meta[wpcm_latitude]"><?php esc_html_e( 'Latitude', 'wp-club-manager' ); ?></label>
             <input type="text" class="wpcm-latitude" name="term_meta[wpcm_latitude]" id="term_meta[wpcm_latitude]" value="<?php echo esc_attr( $latitude ); ?>" />
         </div>
         <div class="form-field">
-            <label for="term_meta[wpcm_longitude]"><?php _e( 'Longitude', 'wp-club-manager' ); ?></label>
+            <label for="term_meta[wpcm_longitude]"><?php esc_html_e( 'Longitude', 'wp-club-manager' ); ?></label>
             <input type="text" class="wpcm-longitude" name="term_meta[wpcm_longitude]" id="term_meta[wpcm_longitude]" value="<?php echo esc_attr( $longitude ); ?>" />
         </div>
         <div class="form-field">
-            <label for="term_meta[place_id]"><?php _e( 'Place ID', 'wp-club-manager' ); ?></label>
+            <label for="term_meta[place_id]"><?php esc_html_e( 'Place ID', 'wp-club-manager' ); ?></label>
             <input class="place-id" name="term_meta[place_id]" id="term_meta[place_id]" type="text" value="<?php echo esc_attr( $place_id ); ?>" size="8" />
         </div>
         <div class="form-field">
-            <label for="term_meta[wpcm_capacity]"><?php _e( 'Venue Capacity', 'wp-club-manager' ); ?></label>
+            <label for="term_meta[wpcm_capacity]"><?php esc_html_e( 'Venue Capacity', 'wp-club-manager' ); ?></label>
             <input class="wpcm-capacity" name="term_meta[wpcm_capacity]" id="term_meta[wpcm_capacity]" type="text" value="<?php echo esc_attr( $capacity ); ?>" size="8" />
         </div>
         <?php
@@ -106,8 +103,7 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
     /**
      * Make the custom `wpcm_venue` fields editable.
      *
-     * @uses get_term_meta()
-     * @uses usardb_wpcm_decode_address()
+     * @see usardb_wpcm_decode_address()
      *
      * @param WP_Term|object $tag The current term.
      */
@@ -118,6 +114,7 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
 
         if ( $address ) {
             $coordinates = usardb_wpcm_decode_address( $address );
+
             if ( is_array ( $coordinates ) ) {
                 $latitude  = $coordinates['lat'];
                 $longitude = $coordinates['lng'];
@@ -126,45 +123,42 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
         }
         ?>
         <tr class="form-field">
-            <th scope="row" valign="top"><label for="term_meta[wr_id]"><?php _e( 'World Rugby ID', 'usa-rugby-database' ); ?></label></th>
-            <td><input type="text" class="wr-id" name="term_meta[wr_id]" id="term_meta[wr_id]" value="<?php echo ( isset( $term_meta['wr_id'][0] ) && !empty( $term_meta['wr_id'][0] ) ) ? $term_meta['wr_id'][0] : ''; ?>"></td>
+            <th scope="row" valign="top"><label for="term_meta[wr_id]"><?php esc_html_e( 'World Rugby ID', 'usa-rugby-database' ); ?></label></th>
+            <td><input type="text" class="wr-id" name="term_meta[wr_id]" id="term_meta[wr_id]" value="<?php echo ( isset( $term_meta['wr_id'][0] ) && ! empty( $term_meta['wr_id'][0] ) ) ? $term_meta['wr_id'][0] : ''; ?>"></td>
         </tr>
         <tr class="form-field">
-            <th scope="row" valign="top"><label for="term_meta[wr_name]"><?php _e( 'Historical Name', 'usa-rugby-database' ); ?></label></th>
-            <td><input type="text" class="wr-name" name="term_meta[wr_name]" id="term_meta[wr_name]" value="<?php echo ( isset( $term_meta['wr_name'][0] ) && !empty( $term_meta['wr_name'][0] ) ) ? $term_meta['wr_name'][0] : ''; ?>"></td>
+            <th scope="row" valign="top"><label for="term_meta[wr_name]"><?php esc_html_e( 'Historical Name', 'usa-rugby-database' ); ?></label></th>
+            <td><input type="text" class="wr-name" name="term_meta[wr_name]" id="term_meta[wr_name]" value="<?php echo ( isset( $term_meta['wr_name'][0] ) && ! empty( $term_meta['wr_name'][0] ) ) ? $term_meta['wr_name'][0] : ''; ?>"></td>
         </tr>
         <tr class="form-field">
-            <th scope="row" valign="top"><label for="term_meta[wpcm_address]"><?php _e( 'Address', 'wp-club-manager' ); ?></label></th>
+            <th scope="row" valign="top"><label for="term_meta[wpcm_address]"><?php esc_html_e( 'Address', 'wp-club-manager' ); ?></label></th>
             <td>
-                <input type="text" class="wpcm-address" name="term_meta[wpcm_address]" id="term_meta[wpcm_address]" value="<?php echo ( isset( $term_meta['wpcm_address'][0] ) && !empty( $term_meta['wpcm_address'][0] ) ) ? $term_meta['wpcm_address'][0] : ''; ?>" />
+                <input type="text" class="wpcm-address" name="term_meta[wpcm_address]" id="term_meta[wpcm_address]" value="<?php echo ( isset( $term_meta['wpcm_address'][0] ) && ! empty( $term_meta['wpcm_address'][0] ) ) ? $term_meta['wpcm_address'][0] : ''; ?>" />
                 <p><div class="wpcm-location-picker"></div></p>
-                <p class="description"><?php _e( "Drag the marker to the venue's location.", 'wp-club-manager' ); ?></p>
+                <p class="description"><?php esc_html_e( "Drag the marker to the venue's location.", 'wp-club-manager' ); ?></p>
             </td>
         </tr>
         <tr class="form-field">
-            <th scope="row" valign="top"><label for="term_meta[wpcm_latitude]"><?php _e( 'Latitude', 'wp-club-manager' ); ?></label></th>
-            <td><input type="text" class="wpcm-latitude" name="term_meta[wpcm_latitude]" id="term_meta[wpcm_latitude]" value="<?php echo ( isset( $term_meta['wpcm_latitude'][0] ) && !empty( $term_meta['wpcm_latitude'][0] ) ) ? $term_meta['wpcm_latitude'][0] : $latitude; ?>" /></td>
+            <th scope="row" valign="top"><label for="term_meta[wpcm_latitude]"><?php esc_html_e( 'Latitude', 'wp-club-manager' ); ?></label></th>
+            <td><input type="text" class="wpcm-latitude" name="term_meta[wpcm_latitude]" id="term_meta[wpcm_latitude]" value="<?php echo ( isset( $term_meta['wpcm_latitude'][0] ) && ! empty( $term_meta['wpcm_latitude'][0] ) ) ? $term_meta['wpcm_latitude'][0] : $latitude; ?>" /></td>
         </tr>
         <tr class="form-field">
-            <th scope="row" valign="top"><label for="term_meta[wpcm_longitude]"><?php _e( 'Longitude', 'wp-club-manager' ); ?></label></th>
-            <td><input type="text" class="wpcm-longitude" name="term_meta[wpcm_longitude]" id="term_meta[wpcm_longitude]" value="<?php echo ( isset( $term_meta['wpcm_longitude'][0] ) && !empty( $term_meta['wpcm_longitude'][0] ) ) ? $term_meta['wpcm_longitude'][0] : $longitude; ?>" /></td>
+            <th scope="row" valign="top"><label for="term_meta[wpcm_longitude]"><?php esc_html_e( 'Longitude', 'wp-club-manager' ); ?></label></th>
+            <td><input type="text" class="wpcm-longitude" name="term_meta[wpcm_longitude]" id="term_meta[wpcm_longitude]" value="<?php echo ( isset( $term_meta['wpcm_longitude'][0] ) && ! empty( $term_meta['wpcm_longitude'][0] ) ) ? $term_meta['wpcm_longitude'][0] : $longitude; ?>" /></td>
         </tr>
         <tr class="form-field">
-            <th scope="row" valign="top"><label for="term_meta[place_id]"><?php _e( 'Place ID', 'usa-rugby-database' ); ?></label></th>
-            <td><input class="place-id" name="term_meta[place_id]" id="term_meta[place_id]" type="text" value="<?php echo ( isset( $term_meta['place_id'][0] ) && !empty( $term_meta['place_id'][0] ) ) ? $term_meta['place_id'][0] : $place_id; ?>" size="8" /></td>
+            <th scope="row" valign="top"><label for="term_meta[place_id]"><?php esc_html_e( 'Place ID', 'usa-rugby-database' ); ?></label></th>
+            <td><input class="place-id" name="term_meta[place_id]" id="term_meta[place_id]" type="text" value="<?php echo ( isset( $term_meta['place_id'][0] ) && ! empty( $term_meta['place_id'][0] ) ) ? $term_meta['place_id'][0] : $place_id; ?>" size="8" /></td>
         </tr>
         <tr class="form-field">
-            <th scope="row" valign="top"><label for="term_meta[wpcm_capacity]"><?php _e( 'Venue Capacity', 'wp-club-manager' ); ?></label></th>
-            <td><input class="wpcm-capacity" name="term_meta[wpcm_capacity]" id="term_meta[wpcm_capacity]" type="text" value="<?php echo ( isset( $term_meta['wpcm_capacity'][0] ) && !empty( $term_meta['wpcm_capacity'][0] ) ) ? $term_meta['wpcm_capacity'][0] : ''; ?>" size="8" /></td>
+            <th scope="row" valign="top"><label for="term_meta[wpcm_capacity]"><?php esc_html_e( 'Venue Capacity', 'wp-club-manager' ); ?></label></th>
+            <td><input class="wpcm-capacity" name="term_meta[wpcm_capacity]" id="term_meta[wpcm_capacity]" type="text" value="<?php echo ( isset( $term_meta['wpcm_capacity'][0] ) && ! empty( $term_meta['wpcm_capacity'][0] ) ) ? $term_meta['wpcm_capacity'][0] : ''; ?>" size="8" /></td>
         </tr>
         <?php
     }
 
     /**
      * Save the custom venue fields as `term_meta`.
-     *
-     * @uses update_term_meta()
-     * @uses get_term_meta()
      *
      * @param int $term_id The ID of the current term.
      */
@@ -205,8 +199,7 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
      *
      * @global WP_Post|object $post The current post.
      *
-     * @uses USARDB_WPCM_Venues::usardb_get_wpcm_venue_match_count()
-     * @uses get_term_meta()
+     * @see USARDB_WPCM_Venues::usardb_get_wpcm_venue_match_count()
      *
      * @param mixed  $value  The value for the column.
      * @param string $column The column name.
@@ -219,10 +212,10 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
 
         switch ( $column ) {
             case 'address':
-                echo ( isset( $term_meta['wpcm_address'][0] ) && !empty( $term_meta['wpcm_address'][0] ) ) ? $term_meta['wpcm_address'][0] : '';
+                echo ( isset( $term_meta['wpcm_address'][0] ) && ! empty( $term_meta['wpcm_address'][0] ) ) ? $term_meta['wpcm_address'][0] : '';
                 break;
             case 'capacity':
-                echo ( isset( $term_meta['wpcm_capacity'][0] ) && !empty( $term_meta['wpcm_capacity'][0] ) ) ? $term_meta['wpcm_capacity'][0] : '';
+                echo ( isset( $term_meta['wpcm_capacity'][0] ) && ! empty( $term_meta['wpcm_capacity'][0] ) ) ? $term_meta['wpcm_capacity'][0] : '';
                 break;
             case 'hosted':
                 $venue = get_terms( array(
@@ -232,7 +225,7 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
                     'hide_empty'       => false,
                 ) );
                 $count = $this->usardb_get_wpcm_venue_match_count( $t_id );
-                echo '<a href="' . admin_url( 'edit.php?post_type=wpcm_match&wpcm_venue=' . $venue[ $t_id ] ) . '">' . ( !empty( $count ) ? $count : '0' ) . '</a>';
+                echo '<a href="' . admin_url( 'edit.php?post_type=wpcm_match&wpcm_venue=' . $venue[ $t_id ] ) . '">' . ( ! empty( $count ) ? $count : '0' ) . '</a>';
                 break;
             case 'ID':
                 echo $t_id;
@@ -246,8 +239,6 @@ class USARDB_WPCM_Venues extends WPCM_Admin_Taxonomies {
      * @access private
      *
      * @see USARDB_WPCM_Venues::venue_custom_columns()
-     *
-     * @uses WP_Query()
      *
      * @param int $t_id The current term's ID.
      *

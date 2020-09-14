@@ -110,8 +110,7 @@ class USARDB_WPCM_Meta_Box_Match_Player_Enhancements {
         /**
          * Filters the reserved words.
          *
-         * @param array $reserved Set of words one would use to identify a club,
-         *                        team, country, etc.
+         * @param array $reserved Set of words one would use to identify a club, team, country, etc.
          */
         $reserved = apply_filters( 'wpcm_player_squad_reserved_words', $reserved );
 
@@ -123,15 +122,11 @@ class USARDB_WPCM_Meta_Box_Match_Player_Enhancements {
         $slug = $club->post_name;
         $name = $club->post_title;
 
-        if ( 'rugby' !== $sport || 'us' !== $country ||
-             ! in_array( $slug, $reserved ) ||
-             ! in_array( $name, $reserved ) ) {
-
+        if ( 'rugby' !== $sport || 'us' !== $country || ! in_array( $slug, $reserved ) || ! in_array( $name, $reserved ) ) {
             return $squad_number;
         }
 
-        $number       = get_post_meta( $player_id, 'wpcm_number', true );
-        $squad_number = '';
+        $number = get_post_meta( $player_id, 'wpcm_number', true );
 
         if ( $number )
         {

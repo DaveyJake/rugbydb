@@ -33,20 +33,31 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         // First name.
         wpclubmanager_wp_text_input( array(
             'id'    => '_wpcm_firstname',
-            'label' => __( 'First Name', 'wp-club-manager' ),
+            'label' => __( 'First Name', 'usa-rugby-database' ),
             'class' => 'regular-text',
         ) );
+
+        // Preferred first name (or nickname).
+        wpclubmanager_wp_text_input( array(
+            'id'          => '_usar_nickname',
+            'label'       => __( 'Nickname <span id="nickname-info" class="dashicons dashicons-info"></span>', 'usa-rugby-database' ),
+            'class'       => 'regular-text',
+            'description' => '<small><em>The player\'s preferred name or nickname.</em></small>',
+            'desc_tip'    => true,
+        ) );
+        self::player_tooltip();
+
         // Last name.
         wpclubmanager_wp_text_input( array(
             'id'    => '_wpcm_lastname',
-            'label' => __( 'Last Name', 'wp-club-manager' ),
+            'label' => __( 'Last Name', 'usa-rugby-database' ),
             'class' => 'regular-text',
         ) );
 
         // Show player badge number.
         wpclubmanager_wp_text_input( array(
             'id'    => 'wpcm_number',
-            'label' => __( 'Squad Number', 'wp-club-manager' ),
+            'label' => __( 'XV Badge', 'usa-rugby-database' ),
             'class' => 'measure-text',
         ) );
 
@@ -55,14 +66,14 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         {
             ?>
             <p>
-                <label><?php _e( 'Current Club', 'wp-club-manager' ); ?></label>
+                <label><?php esc_html_e( 'Current Club', 'usa-rugby-database' ); ?></label>
                 <?php
                 wpcm_dropdown_posts( array(
                     'id'               => '_wpcm_player_club',
                     'name'             => '_wpcm_player_club',
                     'post_type'        => 'wpcm_club',
                     'limit'            => -1,
-                    'show_option_none' => __( 'None', 'wp-club-manager' ),
+                    'show_option_none' => __( 'None', 'usa-rugby-database' ),
                     'class'            => 'chosen_select',
                     'selected'         => $club,
                 ) );
@@ -74,7 +85,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         {
             wpclubmanager_wp_text_input( array(
                 'id'    => '_wpcm_player_club',
-                'label' => __( 'Current Club', 'wp-club-manager' ),
+                'label' => __( 'Current Club', 'usa-rugby-database' ),
                 'class' => 'regular-text',
             ) );
         }
@@ -83,14 +94,14 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         if ( 'yes' === get_option( 'wpcm_player_profile_show_position' ) ) {
             ?>
             <p>
-                <label><?php _e( 'Position', 'wp-club-manager' ); ?></label>
+                <label><?php esc_html_e( 'Position', 'usa-rugby-database' ); ?></label>
                 <?php
                 $args = array(
                     'taxonomy'    => 'wpcm_position',
                     'name'        => 'tax_input[wpcm_position][]',
                     'selected'    => $position_ids,
                     'values'      => 'term_id',
-                    'placeholder' => sprintf( __( 'Choose %s', 'wp-club-manager' ), __( 'positions', 'wp-club-manager' ) ),
+                    'placeholder' => sprintf( __( 'Choose %s', 'usa-rugby-database' ), __( 'positions', 'usa-rugby-database' ) ),
                     'class'       => 'regular-text',
                     'attribute'   => 'multiple',
                     'chosen'      => true,
@@ -108,8 +119,8 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
 
             $field = array(
                 'id'                => 'wpcm_dob',
-                'label'             => __( 'Date of Birth', 'wp-club-manager' ),
-                'placeholder'       => _x( 'YYYY-MM-DD', 'placeholder', 'wp-club-manager' ),
+                'label'             => __( 'Date of Birth', 'usa-rugby-database' ),
+                'placeholder'       => _x( 'YYYY-MM-DD', 'placeholder', 'usa-rugby-database' ),
                 'description'       => '',
                 'value'             => $dob,
                 'class'             => 'wpcm-birth-date-picker',
@@ -125,7 +136,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         if ( 'yes' === get_option( 'wpcm_player_profile_show_height' ) ) {
             $field = array(
                 'id'    => 'wpcm_height',
-                'label' => __( 'Height (cm)', 'wp-club-manager' ),
+                'label' => __( 'Height (cm)', 'usa-rugby-database' ),
                 'class' => 'measure-text',
             );
 
@@ -136,7 +147,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         if ( 'yes' === get_option( 'wpcm_player_profile_show_weight' ) ) {
             $field = array(
                 'id'    => 'wpcm_weight',
-                'label' => __( 'Weight (kg)', 'wp-club-manager' ),
+                'label' => __( 'Weight (kg)', 'usa-rugby-database' ),
                 'class' => 'measure-text',
             );
 
@@ -144,8 +155,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         }
 
         // Birthplace
-        if ( metadata_exists( 'post', $post->ID, 'usar_birthplace' ) ||
-             ! isset( $_POST['usar_birthplace'] ) ) {
+        if ( metadata_exists( 'post', $post->ID, 'usar_birthplace' ) || ! isset( $_POST['usar_birthplace'] ) ) {
 
             $birthplace = get_post_meta( $post->ID, 'usar_birthplace', true );
             $hometown   = get_post_meta( $post->ID, 'wpcm_hometown', true );
@@ -179,7 +189,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         if ( 'yes' === get_option( 'wpcm_player_profile_show_nationality' ) ) {
             $field = array(
                 'id'    => 'wpcm_natl',
-                'label' => __( 'Nationality', 'wp-club-manager' ),
+                'label' => __( 'Nationality', 'usa-rugby-database' ),
             );
 
             wpclubmanager_wp_country_select( $field );
@@ -189,7 +199,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         if ( 'yes' === get_option( 'wpcm_player_profile_show_prevclubs' ) ) {
             $field = array(
                 'id'    => 'wpcm_prevclubs',
-                'label' => __( 'Previous Clubs', 'wp-club-manager' ),
+                'label' => __( 'Previous Clubs', 'usa-rugby-database' ),
                 'class' => 'regular-text',
             );
 
@@ -197,8 +207,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         }
 
         // High School
-        if ( metadata_exists( 'post', $post->ID, 'usar_high_school' ) ||
-             ! isset( $_POST['usar_high_school'] ) ) {
+        if ( metadata_exists( 'post', $post->ID, 'usar_high_school' ) || ! isset( $_POST['usar_high_school'] ) ) {
 
             $high_school = get_post_meta( $post->ID, 'usar_high_school', true );
 
@@ -215,8 +224,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         }
 
         // University
-        if ( metadata_exists( 'post', $post->ID, 'usar_university' ) ||
-    		 ! isset( $_POST['usar_university'] ) ) {
+        if ( metadata_exists( 'post', $post->ID, 'usar_university' ) || ! isset( $_POST['usar_university'] ) ) {
 
             $university = get_post_meta( $post->ID, 'usar_university', true );
 
@@ -233,8 +241,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         }
 
         // ESPN Scrum ID
-        if ( metadata_exists( 'post', $post->ID, 'usar_scrum_id' ) ||
-             ! isset( $_POST['usar_scrum_id'] ) ) {
+        if ( metadata_exists( 'post', $post->ID, 'usar_scrum_id' ) || ! isset( $_POST['usar_scrum_id'] ) ) {
 
             $scrum_id = get_post_meta( $post->ID, 'usar_scrum_id', true );
 
@@ -251,8 +258,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         }
 
         // World Rugby ID
-        if ( metadata_exists( 'post', $post->ID, 'wr_id' ) ||
-             ! isset( $_POST['wr_id'] ) ) {
+        if ( metadata_exists( 'post', $post->ID, 'wr_id' ) || ! isset( $_POST['wr_id'] ) ) {
 
             $world_rugby_id = get_post_meta( $post->ID, 'wr_id', true );
 
@@ -269,8 +275,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         }
 
         // World Rugby Match List
-        if ( metadata_exists( 'post', $post->ID, 'wr_match_list' ) ||
-             ! isset( $_POST['wr_match_list'] ) ) {
+        if ( metadata_exists( 'post', $post->ID, 'wr_match_list' ) || ! isset( $_POST['wr_match_list'] ) ) {
 
             $match_list = get_post_meta( $post->ID, 'wr_match_list', true );
             $match_csv  = preg_split( '/\|/', $match_list );
@@ -295,7 +300,7 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
     /**
      * Save meta box data.
      *
-     * @uses USARDB_WPCM_Meta_Box_Player_Details::set_wpcm_player_additional_detail_fields()
+     * @see USARDB_WPCM_Meta_Box_Player_Details::set_wpcm_player_additional_detail_fields()
      *
      * @param int            $post_id The current post ID value.
      * @param WP_Post|object $post    The current post object.
@@ -314,6 +319,11 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         // Save first name.
         if ( isset( $_POST['_wpcm_firstname'] ) ) {
             update_post_meta( $post_id, '_wpcm_firstname', $_POST['_wpcm_firstname'] );
+        }
+
+        // Save nickname.
+        if ( isset( $_POST['_usar_nickname'] ) ) {
+            update_post_meta( $post_id, '_usar_nickname', $_POST['_usar_nickname'] );
         }
 
         // Save last name.
@@ -409,18 +419,16 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
     }
 
     /**
-     * Additional player detail private fields.
+     * Additional player detail private fields via {@see 'USARDB_WPCM_Meta_Box_Player_Details::save'}.
      *
      * @access private
      *
-     * @link {@see 'USARDB_WPCM_Meta_Box_Player_Details::save'}
+     * @see USARDB_WPCM_Meta_Box_Player_Details::_get_the_latest_badge_number()
      *
-     * @uses USARDB_WPCM_Meta_Box_Player_Details::_get_the_latest_badge_number()
-     *
-     * @param int $post->ID The post ID of the player.
+     * @param int $post_id The post ID of the player.
      */
     private static function set_wpcm_player_additional_detail_fields( $post_id ) {
-        if ( 'wpcm_player' !== get_post_type( $post->ID ) ) {
+        if ( 'wpcm_player' !== get_post_type( $post_id ) ) {
             return;
         }
 
@@ -428,13 +436,13 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         if ( isset( $_POST['wpcm_number'] ) && ! isset( $_POST['_usar_badge'] ) ) {
             $valid = array( 'mens-eagles', 'womens-eagles' );
             // Teams attached to player.
-            $teams = wp_get_object_terms( $post->ID, 'wpcm_team' );
+            $teams = wp_get_object_terms( $post_id, 'wpcm_team' );
             foreach ( $teams as $team ) {
-                if ( in_array( $team->slug, $valid ) ) {
+                if ( in_array( $team->slug, $valid, true ) ) {
                     $latest = intval( self::_get_the_latest_badge_number( $team->slug ) );
                     $badge  = $latest + 1;
 
-                    update_post_meta( $post->ID, '_usar_badge', $badge );
+                    update_post_meta( $post_id, '_usar_badge', $badge );
                 }
             }
         }
@@ -445,8 +453,8 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
             $last_match_dates = array();
             $match_dates      = array();
 
-            if ( metadata_exists( 'post', $post->ID, 'wr_match_list' ) ) {
-                $matches = get_post_meta( $post->ID, 'wr_match_list', true );
+            if ( metadata_exists( 'post', $post_id, 'wr_match_list' ) ) {
+                $matches = get_post_meta( $post_id, 'wr_match_list', true );
                 $matches = preg_split( '/\|/', $matches );
                 $caps    = count( $matches );
 
@@ -471,29 +479,31 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
 
                 wp_reset_postdata();
 
-                $last_match = max( $match_dates );
-                $last_match_dates[] = $last_match;
+                if ( ! empty( $match_dates ) ) {
+                    $last_match = max( $match_dates );
+                    $last_match_dates[] = $last_match;
+                }
             }
 
-            // Get the current `_usar_date_last_test` value.
-            if ( metadata_exists( 'post', $post->ID, '_usar_date_last_test' ) ) {
-                $last_match_date    = get_post_meta( $post->ID, '_usar_date_last_test', true );
+            // Update the current `_usar_date_last_test` value.
+            if ( metadata_exists( 'post', $post_id, '_usar_date_last_test' ) ) {
+                $last_match_date    = get_post_meta( $post_id, '_usar_date_last_test', true );
                 $last_match_dates[] = strtotime( $last_match_date );
             }
 
             $actual = max( $last_match_dates );
             $actual = date( 'Y-m-d', $actual );
 
-            update_post_meta( $post->ID, '_usar_date_last_test', $actual );
+            update_post_meta( $post_id, '_usar_date_last_test', $actual );
         }
     }
 
     /**
-     * Get the latest `_usar_badge` number.
+     * Get the latest `_usar_badge` number via {@see 'wpcm_player_additional_detail_fields'}.
      *
      * @access private
      *
-     * @link {@see 'wpcm_player_additional_detail_fields'}
+     * @see USARDB_WPCM_Meta_Box_Player_Details::set_wpcm_player_additional_detail_fields()
      *
      * @param string $team The team to look through.
      *
@@ -529,6 +539,29 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         wp_reset_postdata();
 
         return max( $badges );
+    }
+
+    /**
+     * Add tooltip to player details.
+     */
+    private static function player_tooltip() {
+        add_action( 'admin_print_footer_scripts', 'USARDB_WPCM_Meta_Box_Player_Details::tooltip_content' );
+    }
+
+    /**
+     * Tooltip content.
+     */
+    public static function tooltip_content() {
+        echo '<script> ' .
+            'jQuery( document ).ready( function( $ ) { ' .
+                '$( "._usar_nickname_field " ).mouseenter( function() { ' .
+                    '$( ".help_tip" ).removeClass( "hidden" ); ' .
+                '}); ' .
+                '$( "._usar_nickname_field " ).mouseleave( function() { ' .
+                    '$( ".help_tip" ).addClass( "hidden" ); ' .
+                '}); ' .
+            '}); ' .
+        '</script>';
     }
 
     /**

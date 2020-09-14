@@ -1,11 +1,10 @@
 config.yml
 node_modules
 vendor
+WR
+.DS_Store
 *.bak
 *.sublime-*
 *.zip
-.DS_Store
-**/dist/
-**/src/fonts
-**/src/img
-WR
+**/dist/**
+**/src/**

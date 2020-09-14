@@ -30,7 +30,7 @@ const DEV = !!( yargs.argv.dev );
 /**
  * Load settings from the config[-default].yml file.
  */
-const { STATUS, BROWSERSYNC, COMPATIBILITY, REVISIONING, PATHS } = loadConfig();
+const { PROJECT, STATUS, BROWSERSYNC, COMPATIBILITY, REVISIONING, PATHS } = loadConfig();
 
 // Check if file exists synchronously
 function checkFileExists( filepath ) {
@@ -57,7 +57,7 @@ function loadConfig() {
 
     } else if ( checkFileExists( 'config-default.yml' ) ) {
         // config-default.yml exists, load it
-        log(colors.bold.cyan( 'config.yml' ), 'does not exist, loading', colors.bold.cyan( 'config-default.yml' ) );
+        log( colors.bold.cyan( 'config.yml' ), 'does not exist, loading', colors.bold.cyan( 'config-default.yml' ) );
         let ymlFile = fs.readFileSync( 'config-default.yml', 'utf8' );
         return yaml.load( ymlFile );
 
@@ -75,6 +75,7 @@ function loadConfig() {
  * @param {callback} done Signal to Gulp that task is finished.
  */
 function clean( done ) {
+    rimraf( PATHS.admin, done );
     rimraf( PATHS.dist, done );
 }
 
@@ -84,9 +85,46 @@ function clean( done ) {
  */
 function copy() {
     return gulp.src( PATHS.assets )
-        .pipe( $.each( function( content, file, callback ) {
-            gulp.dest( $.if( file.basename.match( /\.php$/ ), 'inc/libs/', PATHS.dist + '/' ) )
+        .pipe( $.rename( function( path ) {
+            if ( path.extname.match( /\.php$/ ) ) {
+                path.dirname = 'inc/libs/';
+            } else if ( path.basename.match( /foundation/ ) ) {
+                path.dirname = 'src/js/utils/foundation/' + path.dirname + '/';
+            } else {
+                path.dirname = PATHS.dist + '/' + path.dirname + '/';
+            }
         }))
+        .pipe( gulp.dest( './' ) );
+}
+
+/**
+ * Dynamic CSS destinations.
+ *
+ * @param {object} path The path value from $.rename().
+ */
+function cssDestination( path ) {
+    if ( path.basename.match( /(-admin)/ ) ) {
+        path.dirname = PATHS.admin + '/css/';
+    } else {
+        path.dirname = PATHS.dist + '/css/';
+    }
+
+    return path;
+}
+
+/**
+ * Dynamic JavaScript destinations.
+ *
+ * @param {object} path The path value from $.rename().
+ */
+function jsDestination( path ) {
+    if ( path.basename.match( /(-admin|widget-)/ ) ) {
+        path.dirname = PATHS.admin + '/js/';
+    } else {
+        path.dirname = PATHS.dist + '/js/';
+    }
+
+    return path;
 }
 
 /**
@@ -109,13 +147,15 @@ function sass() {
         .pipe( $.if( PRODUCTION, $.cleanCss({ compatibility: 'edge' }) ) )
         .pipe( $.if( !PRODUCTION, $.sourcemaps.write( '.' ) ) )
         .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
-        .pipe( $.each( function( content, file, callback ) {
-            gulp.dest( $.if( file.basename.match( /-admin\.scss$/ ), PATHS.admin + '/css', PATHS.dist + '/css' ) )
+        .pipe( $.rename( function( path ) {
+            cssDestination( path )
         }))
+        .pipe( gulp.dest( './' ) )
         .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() ) )
-        .pipe( $.each( function( content, file, callback ) {
-            gulp.dest( $.if( file.basename.match( /-admin\.scss$/ ), PATHS.admin + '/css', PATHS.dist + '/css' ) )
+        .pipe( $.rename( function( path ) {
+            cssDestination( path )
         }))
+        .pipe( gulp.dest( './' ) )
         .pipe( browser.reload({ stream: true }) );
 }
 
@@ -143,6 +183,7 @@ const webpack = {
             ]
         },
         output: {
+            path: path.resolve( __dirname, PATHS.dist + '/js' ),
             filename: '[name].js'
         },
         externals: {
@@ -167,13 +208,15 @@ const webpack = {
             .pipe( webpackStream( webpack.config, webpack2 ) )
             .pipe( $.if( PRODUCTION, $.uglify().on( 'error', e => { console.log( e ); }) ) )
             .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
-            .pipe( $.each( function( content, file, callback ) {
-                gulp.dest( $.if( file.basename.match( /-admin\.js$/ ), PATHS.admin + '/js', PATHS.dist + '/js' ) )
+            .pipe( $.rename( function( path ) {
+                jsDestination( path )
             }))
+            .pipe( gulp.dest( './' ) )
             .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() ) )
-            .pipe( $.each( function( content, file, callback ) {
-                gulp.dest( $.if( file.basename.match( /-admin\.js$/ ), PATHS.admin + '/js', PATHS.dist + '/js' ) )
-            }));
+            .pipe( $.rename( function( path ) {
+                jsDestination( path )
+            }))
+            .pipe( gulp.dest( './' ) );
     },
 
     watch() {
@@ -189,9 +232,10 @@ const webpack = {
                     log( '[webpack:error]', err.toString({ colors: true }) )
                 })
             )
-            .pipe( $.each( function( content, file, callback ) {
-                gulp.dest( $.if( file.basename.math( /-admin\.js$/ ), PATHS.admin + '/js', PATHS.dist + '/js' ) )
-            }));
+            .pipe( $.rename( function( path ) {
+                jsDestination( path )
+            }))
+            .pipe( gulp.dest( './' ) );
     }
 };
 
@@ -247,9 +291,7 @@ gulp.task( 'cache:clear', function( callback ) {
 function server( done ) {
     browser.init({
         proxy: BROWSERSYNC.url.join( '' ),
-        ui: {
-            port: 8080
-        }
+        ui: { port: 8080 }
     });
 
     done();
@@ -263,9 +305,13 @@ function reload( done ) {
 
 // Watch for changes to static assets, pages, Sass, and JavaScript
 function watch() {
-    gulp.watch( PATHS.assets, gulp.parallel( copyStatic, copyPHP ) );
+    gulp.watch( PATHS.assets, copy );
 
     gulp.watch( 'src/sass/**/*.scss', gulp.series( 'lint:scss', sass ) )
+        .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) + ' changed.' ) )
+        .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) + ' was removed.' ) );
+
+    gulp.watch( 'src/js/**/*.js', gulp.series( 'lint:js', 'webpack:build', reload ) )
         .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) + ' changed.' ) )
         .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) + ' was removed.' ) );
 

@@ -16,8 +16,8 @@ class USARDB_WPCM_Seasons extends WPCM_Admin_Taxonomies {
      * @return USARDB_WPCM_Seasons
      */
     public function __construct() {
-        remove_class_method( 'manage_wpcm_season_custom_column', 'WPCM_Admin_Taxonomies', 'season_custom_columns', 5 );
-        remove_class_method( 'manage_edit-wpcm_season_columns', 'WPCM_Admin_Taxonomies', 'season_edit_columns', 10 );
+        usardb_remove_class_method( 'manage_wpcm_season_custom_column', 'WPCM_Admin_Taxonomies', 'season_custom_columns', 5 );
+        usardb_remove_class_method( 'manage_edit-wpcm_season_columns', 'WPCM_Admin_Taxonomies', 'season_edit_columns', 10 );
 
         add_action( 'manage_wpcm_season_custom_column', array( $this, 'season_custom_columns' ), 5, 3 );
         add_filter( 'manage_edit-wpcm_season_columns', array( $this, 'season_edit_columns' ) );

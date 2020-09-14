@@ -1,5 +1,5 @@
 /*global ajaxurl, inlineEditPost, inlineEditL10n, wpclubmanager_admin */
-( function( $ ) {
+jQuery( function( $ ) {
     var pagenow = window.pagenow,
         typenow = window.typenow;
 
@@ -46,4 +46,4 @@
             });
         });
     }
-}( jQuery ) );
+});

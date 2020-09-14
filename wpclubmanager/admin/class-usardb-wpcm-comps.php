@@ -16,12 +16,12 @@ class USARDB_WPCM_Comps extends WPCM_Admin_Taxonomies {
      * @return USARDB_WPCM_comps
      */
     public function __construct() {
-        remove_class_method( 'wpcm_comp_add_form_fields', 'WPCM_Admin_Taxonomies', 'comp_add_new_extra_fields', 10 );
-        remove_class_method( 'wpcm_comp_edit_form_fields', 'WPCM_Admin_Taxonomies', 'comp_edit_extra_fields', 10 );
-        remove_class_method( 'edited_wpcm_comp', 'WPCM_Admin_Taxonomies', 'save_comp_extra_fields', 10 );
-        remove_class_method( 'create_wpcm_comp', 'WPCM_Admin_Taxonomies', 'save_comp_extra_fields', 10 );
-        remove_class_method( 'manage_wpcm_comp_custom_column', 'WPCM_Admin_Taxonomies', 'comp_custom_columns', 5 );
-        remove_class_method( 'manage_edit-wpcm_comp_columns', 'WPCM_Admin_Taxonomies', 'comp_edit_columns', 10 );
+        usardb_remove_class_method( 'wpcm_comp_add_form_fields', 'WPCM_Admin_Taxonomies', 'comp_add_new_extra_fields', 10 );
+        usardb_remove_class_method( 'wpcm_comp_edit_form_fields', 'WPCM_Admin_Taxonomies', 'comp_edit_extra_fields', 10 );
+        usardb_remove_class_method( 'edited_wpcm_comp', 'WPCM_Admin_Taxonomies', 'save_comp_extra_fields', 10 );
+        usardb_remove_class_method( 'create_wpcm_comp', 'WPCM_Admin_Taxonomies', 'save_comp_extra_fields', 10 );
+        usardb_remove_class_method( 'manage_wpcm_comp_custom_column', 'WPCM_Admin_Taxonomies', 'comp_custom_columns', 5 );
+        usardb_remove_class_method( 'manage_edit-wpcm_comp_columns', 'WPCM_Admin_Taxonomies', 'comp_edit_columns', 10 );
 
         add_action( 'wpcm_comp_add_form_fields', array( $this, 'comp_add_new_extra_fields' ), 10, 2 );
         add_action( 'wpcm_comp_edit_form_fields',array( $this, 'comp_edit_extra_fields' ), 10, 2);

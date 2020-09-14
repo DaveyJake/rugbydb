@@ -1,6 +1,6 @@
 ---
-# Change `usardb` to the name of your usardb's root directory (i.e. the name of the folder that contains ALL wordpress files).
-PROXY:
+# Change to your project's root directory (i.e. the name of the folder that contains ALL wordpress files).
+PROJECT:
   &hostname "stats"
 
 # Accepts 'development' or 'production'.
@@ -14,7 +14,7 @@ BROWSERSYNC:
   url:
     - "http://"
     - *hostname
-    - ".test:8080"
+    - ".test"
   # Files for BrowserSync to watch.
   watch:
     - "**/*.scss"

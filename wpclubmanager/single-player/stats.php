@@ -24,8 +24,10 @@ else
 
 $seasons = wpcm_get_ordered_post_terms( $post->ID, 'wpcm_season' );
 
-// Reverse chronological order.
-asort( $seasons );
+if ( ! empty( $seasons ) ) {
+    // Reverse chronological order.
+    asort( $seasons );
+}
 
 if ( is_array( $teams ) && count( $teams ) > 1 )
 {
@@ -77,7 +79,7 @@ if ( is_array( $teams ) && count( $teams ) > 1 )
                         wpclubmanager_get_template( 'single-player/stats-table.php', array(
                             'stats'  => $stats,
                             'team'   => $team->term_id,
-                            'season' => $season->term_id
+                            'season' => $season->term_id,
                         ) );
 				    echo '</div>';
                 }

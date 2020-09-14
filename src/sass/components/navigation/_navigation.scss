@@ -1,92 +1,91 @@
 .main-navigation {
-	display: block;
-	width: 100%;
+    display: block;
+    width: 100%;
 
-	a {
-		display: block;
-		text-decoration: none;
-	}
+    a {
+        display: block;
+        text-decoration: none;
+    }
 
-	ul {
-		display: none;
-		list-style: none;
-		margin: 0;
-		padding-left: 0;
+    ul {
+        display: none;
+        list-style: none;
+        margin: 0;
+        padding-left: 0;
+        // Toggled state.
+        @at-root .toggled#{&} {
+            display: block;
+        }
 
-		@at-root .toggled#{&} {
-			display: block;
-		}
+        li {
+            position: relative;
+            //&:hover > a,
+            //&.focus > a {}
 
-		li {
-			position: relative;
-			//&:hover > a,
-			//&.focus > a {}
+            @include level-two-list;
 
-			@include level-two-list;
+            &:hover,
+            &.focus {
+                > ul {
+                    left: auto;
+                }
+            }
 
-			&:hover,
-			&.focus {
+            a {
+                width: 200px;
+            }
 
-				> ul {
-					left: auto;
-				}
-			}
+            //:hover > a,
+            //.focus > a {}
 
-			a {
-				width: 200px;
-			}
+            //a:hover,
+            //a.focus {}
+        }
+    }
 
-			//:hover > a,
-			//.focus > a {}
-
-			//a:hover,
-			//a.focus {}
-		}
-	}
-
-	//.current_page_item > a,
-	//.current-menu-item > a,
-	//.current_page_ancestor > a,
-	//.current-menu-ancestor > a {}
+    //.current_page_item > a,
+    //.current-menu-item > a,
+    //.current_page_ancestor > a,
+    //.current-menu-ancestor > a {}
 }
 
-/* Small menu. */
+// Small menu.
 .menu-toggle {
-	display: block;
+    display: block;
 }
 
-@media screen and (min-width: 37.5em) {
+// Mobile screen width.
+@include breakpoint(37.5em) {
+    .menu-toggle {
+        display: none;
+    }
 
-	.menu-toggle {
-		display: none;
-	}
-
-	.main-navigation ul {
-		display: flex;
-	}
+    .main-navigation ul {
+        display: flex;
+    }
 }
 
-.comment-navigation,
-.posts-navigation,
-.post-navigation {
+.comment,
+.posts,
+.post {
+    &-navigation {
+        .site-main & {
+            margin: 0 0 1.5em;
+        }
 
-	.site-main & {
-		margin: 0 0 1.5em;
-	}
+        .nav {
+            &-links {
+                display: flex;
+            }
 
-	.nav {
+            &-previous {
+                flex: 1 0 50%;
+            }
 
-		&-links {
-			display: flex;
-		}
-
-		&-previous {
-			flex: 1 0 50%;
-		}
-
-		&-next {
-			text-align: end;
-			flex: 1 0 50%;
-		}
-	}
+            &-next {
+                text-align: end;
+                flex: 1 0 50%;
+            }
+        }
+    }
 }

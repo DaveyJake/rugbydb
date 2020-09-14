@@ -35,9 +35,10 @@
 	<file>.</file>
 
 	<!-- Exclude patterns. -->
-	<exclude-pattern>/vendor/*</exclude-pattern>
 	<exclude-pattern>/inc/libs/*</exclude-pattern>
 	<exclude-pattern>/node_modules/*</exclude-pattern>
+    <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/wpclubmanager/*</exclude-pattern>
 	<exclude-pattern>/WR/*</exclude-pattern>
 
 
@@ -64,6 +65,12 @@
 	</rule>
 
 	<rule ref="PHPCompatibility">
+        <exclude name="PHPCompatibility.FunctionDeclarations.NewParamTypeDeclarations.boolFound"/>
+        <exclude name="PHPCompatibility.FunctionDeclarations.NewParamTypeDeclarations.stringFound"/>
+        <exclude name="PHPCompatibility.FunctionUse.NewFunctions.array_replaceFound"/>
+        <exclude name="PHPCompatibility.Keywords.NewKeywords.t_dirFound"/>
+        <exclude name="PHPCompatibility.LanguageConstructs.NewEmptyNonVariable.Found"/>
+        <exclude name="PHPCompatibility.LanguageConstructs.NewLanguageConstructs.t_ellipsisFound"/>
 		<exclude name="PHPCompatibility.LanguageConstructs.NewLanguageConstructs.t_ns_separatorFound"/>
 	</rule>
 
@@ -90,6 +97,10 @@
 
 	<rule ref="PEAR.ControlStructures.MultiLineCondition">
 		<exclude name="PEAR.ControlStructures.MultiLineCondition.SpacingAfterOpenBrace"/>
+	</rule>
+
+	<rule ref="WPThemeReview.PluginTerritory">
+		<exclude name="WPThemeReview.PluginTerritory.ForbiddenFunctions.plugin_territory_add_shortcode"/>
 	</rule>
 
 	<!--
@@ -134,7 +145,7 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="usardb" />
+			<property name="prefixes" type="array" value="usardb,_usardb" />
 		</properties>
 	</rule>
 

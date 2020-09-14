@@ -10,9 +10,9 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
 if ( ! is_active_sidebar( 'sidebar-1' ) ) {
-	return;
+    return;
 }
 
 echo '<aside id="secondary" class="widget-area">';
-	dynamic_sidebar( 'sidebar-1' );
+    dynamic_sidebar( 'sidebar-1' );
 echo '</aside><!-- #secondary -->';

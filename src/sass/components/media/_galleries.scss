@@ -1,22 +1,22 @@
 .gallery {
-	margin-bottom: 1.5em;
-	display: grid;
-	grid-gap: 1.5em;
+    margin-bottom: 1.5em;
+    display: grid;
+    grid-gap: 1.5em;
 
-	&-item {
-		display: inline-block;
-		text-align: center;
-		width: 100%;
-	}
+    &-item {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+    }
 
-	&-caption {
-		display: block;
-	}
+    &-caption {
+        display: block;
+    }
 }
 
+// Column spacing.
 @for $i from 2 through 9 {
-
-	.gallery-columns-#{$i} {
-		grid-template-columns: repeat($i, 1fr);
-	}
+    .gallery-columns-#{$i} {
+        grid-template-columns: repeat($i, 1fr);
+    }
 }

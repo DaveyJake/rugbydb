@@ -9,40 +9,32 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
-echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">';
+$usardb_post_class = apply_filters( 'post_class', get_post_class() ); // phpcs:ignore
 
-	echo '<header class="entry-header">';
+echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', $usardb_post_class ) ) . '">';
 
-		the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' );
+    echo '<header class="entry-header">';
+        the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' );
 
-		// phpcs:disable
-		if ( 'post' === get_post_type() ) :
+if ( 'post' === get_post_type() ) :
+    echo '<div class="entry-meta">';
+        usardb_posted_on();
 
-			echo '<div class="entry-meta">';
+        usardb_posted_by();
+    echo '</div><!-- .entry-meta -->';
+endif;
 
-				usardb_posted_on();
+    echo '</header><!-- .entry-header -->';
 
-				usardb_posted_by();
+    usardb_post_thumbnail();
 
-			echo '</div><!-- .entry-meta -->';
+if ( has_excerpt() ) :
+    echo '<div class="entry-summary">';
+        the_excerpt();
+    echo '</div><!-- .entry-summary -->';
+endif;
 
-		endif;
-		// phpcs:enable
-
-	echo '</header><!-- .entry-header -->';
-
-	usardb_post_thumbnail();
-
-	echo '<div class="entry-summary">';
-
-		the_excerpt();
-
-	echo '</div><!-- .entry-summary -->';
-
-	echo '<footer class="entry-footer">';
-
-		usardb_entry_footer();
-
-	echo '</footer><!-- .entry-footer -->';
-
+    echo '<footer class="entry-footer">';
+        usardb_entry_footer();
+    echo '</footer><!-- .entry-footer -->';
 echo '</article><!-- #post-' . get_the_ID() . ' -->';

@@ -334,6 +334,14 @@ class USARDB_WPCM_Settings {
             'checkboxgroup' => '',
         );
 
+        $settings[10] = array(
+            'desc'          => __( 'Caps', 'wp-club-manager' ),
+            'id'            => 'wpcm_player_profile_show_exp',
+            'default'       => 'no',
+            'type'          => 'checkbox',
+            'checkboxgroup' => '',
+        );
+
         return $settings;
     }
 

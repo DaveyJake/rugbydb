@@ -1,4 +1,9 @@
-node_modules
+composer.*
 gulpfile.babel.js
+node_modules
+package*.json
+.babelrc
 .DS_Store
+.editorconfig
 *.min.js
+*.yml

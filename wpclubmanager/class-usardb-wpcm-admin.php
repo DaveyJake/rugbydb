@@ -15,8 +15,6 @@ class USARDB_WPCM_Admin {
      */
     public function __construct() {
         $this->includes();
-
-        add_action( 'wpclubmanager_process_wpcm_player_meta', 'USARDB_WPCM_Meta_Box_Player_Details::save', 10, 2 );
     }
 
     /**
@@ -45,7 +43,4 @@ class USARDB_WPCM_Admin {
         require 'admin/class-usardb-wpcm-teams.php';
         require 'admin/class-usardb-wpcm-venues.php';
     }
-
 }
-
-return new USARDB_WPCM_Admin();

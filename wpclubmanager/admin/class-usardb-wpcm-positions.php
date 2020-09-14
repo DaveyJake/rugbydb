@@ -16,8 +16,8 @@ class USARDB_WPCM_Positions extends WPCM_Admin_Taxonomies {
      * @return USARDB_WPCM_Positions
      */
     public function __construct() {
-        remove_class_method( 'manage_wpcm_position_custom_column', 'WPCM_Admin_Taxonomies', 'position_custom_columns', 5 );
-        remove_class_method( 'manage_edit-wpcm_position_columns', 'WPCM_Admin_Taxonomies', 'position_edit_columns', 10 );
+        usardb_remove_class_method( 'manage_wpcm_position_custom_column', 'WPCM_Admin_Taxonomies', 'position_custom_columns', 5 );
+        usardb_remove_class_method( 'manage_edit-wpcm_position_columns', 'WPCM_Admin_Taxonomies', 'position_edit_columns', 10 );
 
         add_action( 'manage_wpcm_position_custom_column', array( $this, 'position_custom_columns' ), 5, 3 );
         add_filter( 'manage_edit-wpcm_position_columns', array( $this, 'position_edit_columns' ) );
@@ -47,8 +47,7 @@ class USARDB_WPCM_Positions extends WPCM_Admin_Taxonomies {
      *
      * @global WP_Post|object $post The current post.
      *
-     * @uses USARDB_WPCM_positions::usardb_get_wpcm_player_count_by_position()
-     * @uses get_term_meta()
+     * @see USARDB_WPCM_positions::usardb_get_wpcm_player_count_by_position()
      *
      * @param mixed  $value  The value for the column.
      * @param string $column The column name.

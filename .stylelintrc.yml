@@ -33,7 +33,7 @@ rules:
       - after-comment
   declaration-colon-space-after: always
   indentation:
-    - tab
+    - 4
     - except:
       - value
   max-line-length: 120
