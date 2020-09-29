@@ -192,7 +192,9 @@ const webpack = {
                 commonjs: 'lodash',
                 amd: 'lodash',
                 root: '_'
-            }
+            },
+            Foundation: 'Foundation',
+            Modernizr: 'Modernizr'
         }
     },
 

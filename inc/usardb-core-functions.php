@@ -10,6 +10,24 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
 /**
+ * Check if post has pre-existing metadata.
+ *
+ * @see metadata_exists()
+ *
+ * @param int    $post_id  The post ID.
+ * @param string $meta_key The meta key to look for.
+ *
+ * @return bool            True if key is found. False if not.
+ */
+function post_meta_exists( $post_id, $meta_key ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+    if ( metadata_exists( 'post', $post_id, $meta_key ) ) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
  * Helper function usardb_that checks an array for string keys aka an associative array.
  *
  * @param array $array Array to check.
@@ -56,20 +74,20 @@ function usardb_get_slug( $post = null ) {
 }
 
 /**
- * Parse spread argument with other arguments.
+ * Parse arguments when function uses spreader `...` parameter.
  *
- * @param mixed $args     Custom arguments.
- * @param array $defaults Default arguments.
+ * @since 1.0.0
  *
- * @return array Combined $args and $defaults into one.
+ * @param array $args     Custom function arguments collected from spreader.
+ * @param array $defaults Default function arguments.
+ *
+ * @return array Combined arguments with defaults.
  */
 function usardb_parse_args( $args, $defaults ) {
-    $keys = array_keys( $defaults );
-
-    $default_values = array_values( $defaults );
-    $custom_values  = array_values( $args );
-
-    $values = array_replace( $default_values, $custom_values );
+    $keys       = array_keys( $defaults );
+    $def_values = array_values( $defaults );
+    $arg_values = array_values( $args );
+    $values     = array_replace( $def_values, $arg_values );
 
     return array_combine( $keys, $values );
 }

@@ -6,6 +6,7 @@ module.exports = {
       amd: 'lodash',
       root: '_'
     },
+    Foundation: 'Foundation',
     Modernizr: 'Modernizr'
   }
 };

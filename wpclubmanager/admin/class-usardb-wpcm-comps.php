@@ -7,7 +7,8 @@
  * @subpackage WPCM_Comps
  * @since 1.0.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
+
+defined( 'ABSPATH' ) || exit;
 
 class USARDB_WPCM_Comps extends WPCM_Admin_Taxonomies {
     /**
@@ -16,6 +17,10 @@ class USARDB_WPCM_Comps extends WPCM_Admin_Taxonomies {
      * @return USARDB_WPCM_comps
      */
     public function __construct() {
+        if ( ! is_admin() ) {
+            return;
+        }
+
         usardb_remove_class_method( 'wpcm_comp_add_form_fields', 'WPCM_Admin_Taxonomies', 'comp_add_new_extra_fields', 10 );
         usardb_remove_class_method( 'wpcm_comp_edit_form_fields', 'WPCM_Admin_Taxonomies', 'comp_edit_extra_fields', 10 );
         usardb_remove_class_method( 'edited_wpcm_comp', 'WPCM_Admin_Taxonomies', 'save_comp_extra_fields', 10 );
@@ -29,6 +34,9 @@ class USARDB_WPCM_Comps extends WPCM_Admin_Taxonomies {
         add_action( 'create_wpcm_comp', array( $this, 'save_comp_extra_fields' ), 10, 2 );
         add_action( 'manage_wpcm_comp_custom_column', array( $this, 'comp_custom_columns' ), 5,3);
         add_filter( 'manage_edit-wpcm_comp_columns', array( $this, 'comp_edit_columns') );
+        // Sortable columns.
+        add_filter( 'manage_edit-wpcm_comp_sortable_columns', array( $this, 'comp_sortable_columns' ), 10 );
+        add_filter( 'terms_clauses', array( $this, 'comp_sort_columns' ), 10, 3 );
     }
 
     /**
@@ -55,9 +63,9 @@ class USARDB_WPCM_Comps extends WPCM_Admin_Taxonomies {
         }
         ?>
         <div class="form-field">
-            <label for="term_meta[wpcm_comp_label]"><?php _e( 'Display Name', 'wp-club-manager' ); ?></label>
+            <label for="term_meta[wpcm_comp_label]"><?php esc_html_e( 'Display Name', 'wp-club-manager' ); ?></label>
             <input name="term_meta[wpcm_comp_label]" id="term_meta[wpcm_comp_label]" type="text" value="<?php echo ( isset( $term_meta['wpcm_comp_label'] ) && !empty( $term_meta['wpcm_comp_label'][0] ) ) ? $term_meta['wpcm_comp_label'][0] : '' ?>" />
-            <p><?php _e('The comp label is used to display a shortened version of the comp name.', 'wp-club-manager'); ?></p>
+            <p><?php esc_html_e('The comp label is used to display a shortened version of the comp name.', 'wp-club-manager'); ?></p>
         </div>
         <?php
     }
@@ -76,11 +84,11 @@ class USARDB_WPCM_Comps extends WPCM_Admin_Taxonomies {
         ?>
         <tr class="form-field">
             <th scope="row" valign="top">
-                <label for="term_meta[wpcm_comp_label]"><?php _e( 'Display Name', 'wp-club-manager' ); ?></label>
+                <label for="term_meta[wpcm_comp_label]"><?php esc_html_e( 'Display Name', 'wp-club-manager' ); ?></label>
             </th>
             <td>
                 <input name="term_meta[wpcm_comp_label]" id="term_meta[wpcm_comp_label]" type="text" value="<?php echo $term_meta['wpcm_comp_label'][0] ? $term_meta['wpcm_comp_label'][0] : '' ?>" />
-                <p class="description"><?php _e( 'The comp label is used to display a shortened version of the comp name.', 'wp-club-manager' ); ?></p>
+                <p class="description"><?php esc_html_e( 'The comp label is used to display a shortened version of the comp name.', 'wp-club-manager' ); ?></p>
             </td>
         </tr>
         <?php
@@ -153,6 +161,39 @@ class USARDB_WPCM_Comps extends WPCM_Admin_Taxonomies {
                 echo $t_id;
                 break;
         }
+    }
+
+    /**
+     * Sort columns by {@see 'terms_clauses'}.
+     *
+     * @param string[] $pieces     Array of query SQL clauses.
+     * @param string[] $taxonomies Array of taxonomy names.
+     * @param array    $args       Array of term query arguments.
+     */
+    public function comp_sort_columns( $pieces, $taxonomies, $args ) {
+        global $pagenow;
+
+        if ( 'edit-tags.php' !== $pagenow && 'wpcm_comp' !== $taxonomies[0] ) {
+            return $pieces;
+        }
+
+        $pieces['orderby'] = 'ORDER BY t.term_id';
+        $pieces['order']   = isset( $_REQUEST['order'] ) ? $_GET['order'] : 'DESC';
+
+        return $pieces;
+    }
+
+    /**
+     * Sortable columns for `wpcm_comp` taxonomy.
+     *
+     * @param array $columns Current taxonomy columns.
+     *
+     * @return array Sortable columns.
+     */
+    public function comp_sortable_columns( $columns ) {
+        $columns['ID'] = 'term_id';
+
+        return $columns;
     }
 }
 

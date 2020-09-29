@@ -7,7 +7,8 @@
  * @subpackage WPCM_Teams
  * @since 1.0.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
+
+defined( 'ABSPATH' ) || exit;
 
 class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
     /**
@@ -57,7 +58,7 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
         }
         ?>
         <div class="form-field">
-            <label for="term_meta[wpcm_team_label]"><?php _e( 'Display Name', 'wp-club-manager' ); ?></label>
+            <label for="term_meta[wpcm_team_label]"><?php esc_html_e( 'Display Name', 'wp-club-manager' ); ?></label>
             <input name="term_meta[wpcm_team_label]" id="term_meta[wpcm_team_label]" type="text" value="<?php echo ( isset( $term_meta['wpcm_team_label'] ) && !empty( $term_meta['wpcm_team_label'][0] ) ) ? $term_meta['wpcm_team_label'][0] : $wpcm_team_label; ?>" />
             <p><?php _e('The team label is used to display a shortened version of the team name.', 'wp-club-manager'); ?></p>
         </div>
@@ -78,11 +79,11 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
         ?>
         <tr class="form-field">
             <th scope="row" valign="top">
-                <label for="term_meta[wpcm_team_label]"><?php _e( 'Display Name', 'wp-club-manager' ); ?></label>
+                <label for="term_meta[wpcm_team_label]"><?php esc_html_e( 'Display Name', 'wp-club-manager' ); ?></label>
             </th>
             <td>
                 <input name="term_meta[wpcm_team_label]" id="term_meta[wpcm_team_label]" type="text" value="<?php echo $term_meta['wpcm_team_label'][0] ? $term_meta['wpcm_team_label'][0] : '' ?>" />
-                <p class="description"><?php _e( 'The team label is used to display a shortened version of the team name.', 'wp-club-manager' ); ?></p>
+                <p class="description"><?php esc_html_e( 'The team label is used to display a shortened version of the team name.', 'wp-club-manager' ); ?></p>
             </td>
         </tr>
         <?php
@@ -156,7 +157,12 @@ class USARDB_WPCM_Teams extends WPCM_Admin_Taxonomies {
                     'hide_empty'       => false,
                 ) );
                 $count = $this->wpcm_team_player_count( $t_id );
-                echo '<a href="' . admin_url( 'edit.php?post_type=wpcm_player&wpcm_team=' . $teams[ $t_id ] ) . '">' . ( ! empty( $count ) ? $count : '0' ) . '</a>';
+                $args  = array(
+                    'post_type' => 'wpcm_player',
+                    'wpcm_team' => $teams[ $t_id ],
+                );
+                $url = add_query_arg( $args, admin_url( 'edit.php' ) );
+                echo '<a href="' . esc_url( $url ) . '">' . ( ! empty( $count ) ? $count : '0' ) . '</a>';
                 break;
             case 'ID':
                 echo $t_id;

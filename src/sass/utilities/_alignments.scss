@@ -25,3 +25,17 @@
 
     margin-bottom: 1.5em;
 }
+
+$directions: left center right;
+@each $dir in $directions {
+    .text-#{$dir} {
+        text-align: $dir;
+    }
+}
+
+$positions: absolute relative fixed;
+@each $p in $positions {
+    .#{$p} {
+        position: $p;
+    }
+}

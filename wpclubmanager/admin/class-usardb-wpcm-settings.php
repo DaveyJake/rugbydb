@@ -8,7 +8,8 @@
  * @subpackage WP_Club_Manager_Filters
  * @since USARDB 1.0.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed.
+
+defined( 'ABSPATH' ) || exit;
 
 class USARDB_WPCM_Settings {
 
@@ -47,11 +48,6 @@ class USARDB_WPCM_Settings {
         }
 
         /**
-         * WPCM `club` post type adjustments.
-         */
-        add_filter( 'wpclubmanager_register_post_type_club', array( $this, 'wpcm_club_post_type_adjustments' ) );
-
-        /**
          * WPCM term adjustmnts.
          */
         add_filter( 'get_terms', array( $this, 'wpcm_term_corrections' ), 10, 4 );
@@ -70,25 +66,31 @@ class USARDB_WPCM_Settings {
      * @return array Should only contain rugby.
      */
     public function rugby_only( $sports ) {
-        foreach ( $sports as $slug => $data ) {
-            if ( 'rugby' !== $slug ) {
-                unset( $sports[ $slug ] );
-            }
-        }
+        // Grab only rugby.
+        $rugby  = $sports['rugby'];
+
+        // Remove rating.
+        unset( $rugby['stats_labels']['rating'] );
 
         // American spelling of 'Centre'.
-        foreach ( $sports['rugby']['terms']['wpcm_position'] as $i => $data ) {
+        foreach ( $rugby['terms']['wpcm_position'] as $i => $data ) {
             if ( 'Centre' === $data['name'] && 'centre' === $data['slug'] ) {
-                $data['name'] = 'Center';
-                $data['slug'] = 'center';
+                $rugby['terms']['wpcm_position'][ $i ]['name'] = 'Center';
+                $rugby['terms']['wpcm_position'][ $i ]['slug'] = 'center';
             }
         }
 
         // Five-Eighths
-        $sports['rugby']['terms']['wpcm_position'][] = array(
+        $rugby['terms']['wpcm_position'][] = array(
             'name' => 'Five-Eighths',
             'slug' => 'five-eighths',
         );
+
+        // Remove all other sports.
+        $sports = array();
+
+        // Set it only to rugby.
+        $sports['rugby'] = $rugby;
 
         return $sports;
     }
@@ -101,7 +103,6 @@ class USARDB_WPCM_Settings {
      * @return array Should only contain 'yellowcards' and 'redcards'.
      */
     public function rugby_cards_only( $cards ) {
-        $cards = array();
         $cards = array( 'yellowcards', 'redcards' );
 
         return $cards;
@@ -133,7 +134,7 @@ class USARDB_WPCM_Settings {
      *
      * @since USA_Rugby 2.5.0
      *
-     * @link {@see "wpclubmanager_get_image_size_{$image_size}"}
+     * @see "wpclubmanager_get_image_size_{$image_size}"
      *
      * @param array $size Default image arguments.
      */
@@ -146,36 +147,9 @@ class USARDB_WPCM_Settings {
     }
 
     /**
-     * WP Club Manager `club` post type.
-     *
-     * @link {@see 'wpclubmanager_register_post_type_club'}
-     *
-     * @param array $args Default arguments.
-     */
-    public function wpcm_club_post_type_adjustments( $args ) {
-        $args['labels'] = array(
-            'name'               => __( 'Unions', 'wp-club-manager' ),
-            'singular_name'      => __( 'Union', 'wp-club-manager' ),
-            'add_new'            => __( 'Add New', 'wp-club-manager' ),
-            'all_items'          => __( 'All Unions', 'wp-club-manager' ),
-            'add_new_item'       => __( 'Add New Union', 'wp-club-manager' ),
-            'edit_item'          => __( 'Edit Union', 'wp-club-manager' ),
-            'new_item'           => __( 'New Union', 'wp-club-manager' ),
-            'view_item'          => __( 'View Union', 'wp-club-manager' ),
-            'search_items'       => __( 'Search Unions', 'wp-club-manager' ),
-            'not_found'          => __( 'No unions found', 'wp-club-manager' ),
-            'not_found_in_trash' => __( 'No unions found in trash'),
-            'parent_item_colon'  => __( 'Parent Union:', 'wp-club-manager' ),
-            'menu_name'          => __( 'Unions', 'wp-club-manager' )
-        );
-
-        return $args;
-    }
-
-    /**
      * Correct term names when they match term slugs.
      *
-     * @link {@see 'get_terms'}
+     * @see get_terms()
      *
      * @param array                $terms      The current terms to edit.
      * @param array                $taxonomies List of taxonomies.

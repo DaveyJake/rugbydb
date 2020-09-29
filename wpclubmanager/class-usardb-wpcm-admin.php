@@ -23,7 +23,8 @@ class USARDB_WPCM_Admin {
      * @since USARDB 1.0.0
      */
     private function includes() {
-        require 'usardb-wpcm-functions.php';
+        require 'admin/class-usardb-wpcm-timezone-picker.php';
+        require 'admin/class-usardb-wpcm-post-types.php';
         require 'admin/class-usardb-wpcm-settings.php';
 
         require 'admin/class-usardb-wpcm-admin-columns.php';
@@ -32,9 +33,9 @@ class USARDB_WPCM_Admin {
 
         require 'admin/post-types/meta-boxes/class-usardb-wpcm-meta-box-match-details.php';
         require 'admin/post-types/meta-boxes/class-usardb-wpcm-meta-box-match-details-custom.php';
+        require 'admin/post-types/meta-boxes/class-usardb-wpcm-meta-box-match-player-enhancements.php';
         require 'admin/post-types/meta-boxes/class-usardb-wpcm-meta-box-match-result.php';
         require 'admin/post-types/meta-boxes/class-usardb-wpcm-meta-box-player-details.php';
-        require 'admin/post-types/meta-boxes/class-usardb-wpcm-meta-box-match-player-enhancements.php';
         require 'admin/class-usardb-wpcm-admin-meta-boxes.php';
 
         require 'admin/class-usardb-wpcm-comps.php';
@@ -43,4 +44,5 @@ class USARDB_WPCM_Admin {
         require 'admin/class-usardb-wpcm-teams.php';
         require 'admin/class-usardb-wpcm-venues.php';
     }
+
 }

@@ -230,3 +230,20 @@ if ( ! function_exists( 'usardb_posted_on' ) ) :
 
     }
 endif;
+
+if ( ! function_exists( 'usardb_table_columns' ) ) :
+    /**
+     * Output table column headers.
+     *
+     * @param array $columns Column header names.
+     */
+    function usardb_table_columns( $columns ) {
+        foreach ( $columns as $column ) {
+            if ( 'ID' === $column ) {
+                $column = '<span class="hide">' . $column . '</span>';
+            }
+
+            echo '<th scope="column">' . wp_kses_post( $column ) . '</th>';
+        }
+    }
+endif;

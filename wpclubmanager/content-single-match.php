@@ -18,21 +18,26 @@ echo '<article id="post-' . get_the_ID() . '" '; post_class( $type ); echo '>';
 
 	do_action( 'wpclubmanager_before_single_match' );
 
-    echo '<div class="wpcm-match-info wpcm-row">';
+	echo '<div class="wpcm-match-info wpcm-row">';
+		/**
+		 * wpclubmanager_single_match_club_badges
+		 *
+		 * @hooked wpclubmanager_template_single_match_home_club_badge - 5
+		 * @hooked wpclubmanager_template_single_match_away_club_badge - 10
+		 */
+		do_action( 'wpclubmanager_single_match_badges' );
 
 		/**
 		 * wpclubmanager_single_match_info hook
 		 *
-		 * @hooked wpclubmanager_template_single_match_home_club_badge - 5
-		 * @hooked wpclubmanager_template_single_match_date - 10
-		 * @hooked wpclubmanager_template_single_match_comp - 20
-		 * @hooked wpclubmanager_template_single_match_away_club_badge - 30
+		 * @hooked wpclubmanager_template_single_match_date - 20
+		 * @hooked wpclubmanager_template_single_match_comp - 30
 		 */
 		do_action( 'wpclubmanager_single_match_info' );
 
-    echo '</div>';
+	echo '</div>';
 
-    echo '<div class="wpcm-match-fixture wpcm-row">';
+	echo '<div class="wpcm-match-fixture wpcm-row">';
 
 		/**
 		 * wpclubmanager_single_match_fixture hook
@@ -43,9 +48,9 @@ echo '<article id="post-' . get_the_ID() . '" '; post_class( $type ); echo '>';
 		 */
 		do_action( 'wpclubmanager_single_match_fixture' );
 
-    echo '</div>';
+	echo '</div>';
 
-    echo '<div class="wpcm-match-meta wpcm-row">';
+	echo '<div class="wpcm-match-meta wpcm-row">';
 
 		echo '<div class="wpcm-match-meta-left">';
 
@@ -71,9 +76,9 @@ echo '<article id="post-' . get_the_ID() . '" '; post_class( $type ); echo '>';
 
 		echo '</div>';
 
-    echo '</div>';
+	echo '</div>';
 
-    echo '<div class="wpcm-match-details wpcm-row">';
+	echo '<div class="wpcm-match-details wpcm-row">';
 
 		/**
 		 * wpclubmanager_single_match_report hook
@@ -91,8 +96,8 @@ echo '<article id="post-' . get_the_ID() . '" '; post_class( $type ); echo '>';
 		 */
 		do_action( 'wpclubmanager_single_match_details' );
 
-    echo '</div>';
+	echo '</div>';
 
-    do_action( 'wpclubmanager_after_single_match' );
+	do_action( 'wpclubmanager_after_single_match' );
 
 echo '</article>';

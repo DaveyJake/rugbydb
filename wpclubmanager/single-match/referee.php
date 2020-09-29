@@ -17,7 +17,7 @@ $show_referee = get_option( 'wpcm_results_show_referee' );
 if ( $referee && 'yes' === $show_referee )
 {
 	echo '<div class="wpcm-match-referee">';
-        _e( 'Referee', 'wp-club-manager' );
-        echo ': ' . $referee;
+        esc_html_e( 'Referee', 'wp-club-manager' );
+        echo ': ' . do_shortcode( $referee );
     echo '</div>';
 }

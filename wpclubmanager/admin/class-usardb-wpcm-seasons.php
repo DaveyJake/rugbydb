@@ -7,7 +7,8 @@
  * @subpackage WPCM_Seasons
  * @since 1.0.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
+
+defined( 'ABSPATH' ) || exit;
 
 class USARDB_WPCM_Seasons extends WPCM_Admin_Taxonomies {
     /**
@@ -56,8 +57,6 @@ class USARDB_WPCM_Seasons extends WPCM_Admin_Taxonomies {
      * @param int    $t_id   The term ID.
      */
     public function season_custom_columns( $value, $column, $t_id ) {
-        global $post;
-
         $season = get_terms( array(
             'taxonomy'         => 'wpcm_season',
             'term_taxonomy_id' => $t_id,
@@ -65,17 +64,29 @@ class USARDB_WPCM_Seasons extends WPCM_Admin_Taxonomies {
             'hide_empty'       => false,
         ) );
 
+        $match_args = array(
+            'post_type'   => 'wpcm_match',
+            'wpcm_season' => $season[ $t_id ],
+        );
+        $match_url = add_query_arg( $match_args, admin_url( 'edit.php' ) );
+
+        $player_args = array(
+            'post_type'   => 'wpcm_roster',
+            'wpcm_season' => $season[ $t_id ],
+        );
+        $player_url = add_query_arg( $player_args, admin_url( 'edit.php' ) );
+
         switch ( $column ) {
             case 'move':
                 echo '<i class="dashicons dashicons-move"></i>';
                 break;
             case 'matches':
-                $count = $this->usardb_get_wpcm_match_count_by_season( $t_id );
-                echo '<a href="' . admin_url( 'edit.php?post_type=wpcm_match&wpcm_season=' . $season[ $t_id ] ) . '">' . ( !empty( $count ) ? $count : '0' ) . '</a>';
+                $count = $this->get_total_season_matches( $t_id );
+                echo '<a href="' . esc_url( $match_url ) . '">' . ( ! empty( $count ) ? $count : '0' ) . '</a>';
                 break;
             case 'players':
-                $count = $this->usardb_get_wpcm_player_count_by_season( $t_id );
-                echo '<a href="' . admin_url( 'edit.php?post_type=wpcm_player&wpcm_season=' . $season[ $t_id ] ) . '">' . ( !empty( $count ) ? $count : '0' ) . '</a>';
+                $count = $this->get_total_roster_players( $t_id, $season[ $t_id ] );
+                echo '<a href="' . esc_url( $player_url ) . '">' . ( ! empty( $count ) ? $count : '0' ) . '</a>';
                 break;
             case 'ID':
                 echo $t_id;
@@ -84,19 +95,61 @@ class USARDB_WPCM_Seasons extends WPCM_Admin_Taxonomies {
     }
 
     /**
-     * Get match counts for each venue.
+     * Get total number of players from season roster.
      *
      * @access private
      *
-     * @link {@see 'USARDB_WPCM_Venues::venue_custom_columns'}
+     * @since 1.0.0
      *
-     * @uses WP_Query()
+     * @see USARDB_WPCM_Seasons::season_custom_columns()
      *
-     * @param int $t_id The current term's ID.
+     * @param int        $t_id   Current term ID.
+     * @param int|string $season Season slug.
+     *
+     * @return mixed
+     */
+    private function get_total_roster_players( $t_id, $season ) {
+        $args = array(
+            'post_type'      => 'wpcm_roster',
+            'post_status'    => array( 'publish', 'future' ),
+            'posts_per_page' => -1,
+            'tax_query'      => array(
+                array(
+                    'taxonomy'         => 'wpcm_season',
+                    'field'            => 'term_id',
+                    'terms'            => array( $t_id ),
+                    'include_children' => false,
+                ),
+            ),
+        );
+
+        $players = array();
+        $rosters = get_posts( $args );
+        foreach ( $rosters as $roster ) {
+            $player_ids = maybe_unserialize( get_post_meta( $roster->ID, '_wpcm_roster_players', true ) );
+
+            $players[ $season ][] = count( $player_ids );
+        }
+
+        wp_reset_postdata();
+
+        return array_sum( $players[ $season ] );
+    }
+
+    /**
+     * Get the total number of specified post object's by season.
+     *
+     * @access private
+     *
+     * @since 1.0.0
+     *
+     * @see USARDB_WPCM_Seasons::season_custom_columns()
+     *
+     * @param int    $t_id      The current term's ID.
      *
      * @return int The post count for the term.
      */
-    private function usardb_get_wpcm_match_count_by_season( $t_id ) {
+    private function get_total_season_matches( int $t_id ) {
         $args = array(
             'post_type'      => 'wpcm_match',
             'post_status'    => array( 'publish', 'future' ),
@@ -112,42 +165,7 @@ class USARDB_WPCM_Seasons extends WPCM_Admin_Taxonomies {
         );
 
         $query = new WP_Query( $args );
-        $count = (int) $query->post_count;
-        wp_reset_postdata();
-
-        return $count;
-    }
-
-    /**
-     * Get player counts for each venue.
-     *
-     * @access private
-     *
-     * @link {@see 'USARDB_WPCM_Seasons::season_custom_columns'}
-     *
-     * @uses WP_Query()
-     *
-     * @param int $t_id The current term's ID.
-     *
-     * @return int The post count for the term.
-     */
-    private function usardb_get_wpcm_player_count_by_season( $t_id ) {
-        $args = array(
-            'post_type'      => 'wpcm_player',
-            'post_status'    => array( 'publish', 'future' ),
-            'posts_per_page' => -1,
-            'tax_query'      => array(
-                array(
-                    'taxonomy'         => 'wpcm_season',
-                    'field'            => 'term_id',
-                    'terms'            => array( $t_id ),
-                    'include_children' => false,
-                ),
-            ),
-        );
-
-        $query = new WP_Query( $args );
-        $count = (int) $query->post_count;
+        $count = absint( $query->post_count );
         wp_reset_postdata();
 
         return $count;

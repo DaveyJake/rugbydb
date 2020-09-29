@@ -11,6 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 global $post;
 
-$side = wpcm_get_match_clubs( $post->ID );
+$side = usardb_wpcm_get_match_clubs( $post->ID );
 
 echo '<div class="wpcm-match-home-club">' . $side[0] . '</div>';

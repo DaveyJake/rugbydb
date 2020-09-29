@@ -11,13 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 global $post;
 
-$badges = wpcm_get_match_badges( $post->ID, 'crest-medium', array( 'class' => 'away-logo' ) );
-$format = get_match_title_format();
+$away_club = get_post_meta( $post->ID, 'wpcm_away_club', true );
+$small     = get_the_post_thumbnail_url( $away_club, 'post-thumbnail' );
 
-if ( '%home% vs %away%' === $format ) {
-	$badge = $badges[1];
-} else {
-	$badge = $badges[0];
-}
+$interchange = "[{$small}, small]";
 
-echo '<div class="wpcm-match-away-club-badge">' . $badge . '</div>';
+echo '<div class="wpcm-match-club-badge away-logo" data-interchange="' . esc_attr( $interchange ) . '"></div>';

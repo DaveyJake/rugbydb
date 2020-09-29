@@ -16,6 +16,8 @@ $players                  = unserialize( get_post_meta( $post->ID, 'wpcm_players
 $wpcm_player_stats_labels = wpcm_get_preset_labels();
 $subs_not_used            = get_post_meta( $post->ID, '_wpcm_match_subs_not_used', true );
 
+unset( $wpcm_player_stats_labels['rating'] );
+
 if ( $played && $players )
 {
     if ( array_key_exists( 'lineup', $players ) && is_array( $players['lineup'] ) )
@@ -23,7 +25,7 @@ if ( $played && $players )
         echo '<div class="wpcm-match-stats-start">';
 
             echo '<h3>';
-                _e( 'Lineup', 'wp-club-manager' );
+                esc_html_e( 'Lineup', 'wp-club-manager' );
             echo '</h3>';
 
             echo '<table class="wpcm-lineup-table">';
@@ -36,7 +38,7 @@ if ( $played && $players )
                     }
 
                     echo '<th class="name">';
-                        _e( 'Name', 'wp-club-manager' );
+                        esc_html_e( 'Name', 'wp-club-manager' );
                     echo '</th>';
 
                     foreach ( $wpcm_player_stats_labels as $key => $val )
@@ -53,7 +55,7 @@ if ( $played && $players )
                          'yes' === get_option( 'wpcm_match_show_stats_redcards' ) ) {
 
                         echo '<th class="notes">';
-                            _e( 'Cards', 'wp-club-manager' );
+                            esc_html_e( 'Cards', 'wp-club-manager' );
                         echo '</th>';
                     }
 
@@ -83,7 +85,7 @@ if ( $played && $players )
         echo '<div class="wpcm-match-stats-subs">';
 
             echo '<h3>';
-                _e( 'Subs', 'wp-club-manager' );
+                esc_html_e( 'Subs', 'wp-club-manager' );
             echo '</h3>';
 
             echo '<table class="wpcm-subs-table">';
@@ -95,7 +97,7 @@ if ( $played && $players )
                         }
 
                         echo '<th class="name">';
-                            _e( 'Name', 'wp-club-manager' );
+                            esc_html_e( 'Name', 'wp-club-manager' );
                         echo '</th>';
 
                         foreach ( $wpcm_player_stats_labels as $key => $val ) {
@@ -111,7 +113,7 @@ if ( $played && $players )
                              'yes' === get_option( 'wpcm_show_stats_redcards' ) && get_option( 'wpcm_match_show_stats_redcards' ) ) {
 
                             echo '<th class="notes">';
-                                _e( 'Cards', 'wp-club-manager' );
+                                esc_html_e( 'Cards', 'wp-club-manager' );
                             echo '</th>';
                         }
 

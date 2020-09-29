@@ -72,6 +72,7 @@
         <exclude name="PHPCompatibility.LanguageConstructs.NewEmptyNonVariable.Found"/>
         <exclude name="PHPCompatibility.LanguageConstructs.NewLanguageConstructs.t_ellipsisFound"/>
 		<exclude name="PHPCompatibility.LanguageConstructs.NewLanguageConstructs.t_ns_separatorFound"/>
+		<exclude name="PHPCompatibility.Syntax.NewFunctionArrayDereferencing.Found"/>
 	</rule>
 
 	<rule ref="Squiz.Commenting">

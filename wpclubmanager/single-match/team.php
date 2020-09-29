@@ -11,10 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 global $post;
 
-$team      = wpcm_get_match_team( $post->ID );
+$team      = usardb_wpcm_get_match_team( $post->ID );
 $show_team = get_option( 'wpcm_results_show_team' );
 
-if ( $show_team == 'yes' && $team )
-{
+if ( $team && 'yes' === $show_team ) {
 	echo '<div class="wpcm-match-team">' . $team[0] . '</div>';
 }

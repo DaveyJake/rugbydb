@@ -40,9 +40,8 @@ class USARDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         // Preferred first name (or nickname).
         wpclubmanager_wp_text_input( array(
             'id'          => '_usar_nickname',
-            'label'       => __( 'Nickname <span id="nickname-info" class="dashicons dashicons-info"></span>', 'usa-rugby-database' ),
+            'label'       => __( 'Nickname <span id="nickname-info" class="help_tip dashicons dashicons-info" data-tip="The player\'s preferred name or nickname."></span>', 'usa-rugby-database' ),
             'class'       => 'regular-text',
-            'description' => '<small><em>The player\'s preferred name or nickname.</em></small>',
             'desc_tip'    => true,
         ) );
         self::player_tooltip();

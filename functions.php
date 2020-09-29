@@ -7,7 +7,30 @@
  * @package USARDB
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
+
+/**
+ * Date format as found in the database.
+ *
+ * @var constant
+ */
+define( 'DATE_TIME', 'Y-m-d H:i:s' );
+
+/**
+ * Date format as needed for ISO standards.
+ *
+ * @var constant
+ */
+define( 'DATE_STATS', 'Y-m-d H:i:sP' );
+
+/**
+ * Ensure that the UTC timezone is THE UTC timezone.
+ *
+ * @var constant
+ */
+define( 'ETC_UTC', DateTimeZone::listIdentifiers( DateTimeZone::UTC )[0] );
 
 /**
  * Third-Party: Device Detection
@@ -65,6 +88,13 @@ require get_template_directory() . '/inc/usardb-template-functions.php';
 require get_template_directory() . '/inc/usardb-customizer.php';
 
 /**
+ * WP Club Manager custom functions.
+ */
+if ( file_exists( get_template_directory() . '/wpclubmanager/usardb-wpcm-functions.php' ) ) {
+    require get_template_directory() . '/wpclubmanager/usardb-wpcm-functions.php';
+}
+
+/**
  * Load Jetpack compatibility file.
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
@@ -86,13 +116,13 @@ if ( is_admin() ) {
      */
     if ( file_exists( get_template_directory() . '/wpclubmanager/class-usardb-wpcm-admin.php' ) ) {
         require_once get_template_directory() . '/wpclubmanager/class-usardb-wpcm-admin.php';
-    }
 
-    /**
-     * BBTS Plugin Overrides
-     *
-     * @global BBTS_Plugin_Overrides $bbts_plugin_overrides
-     * @since 1.0.0
-     */
-    $GLOBALS['usardb_wpcm_admin'] = new USARDB_WPCM_Admin();
+        /**
+         * USARDB Plugin Overrides
+         *
+         * @global USARDB_WPCM_Admin $usardb_wpcm_admin
+         * @since 1.0.0
+         */
+        $GLOBALS['usardb_wpcm_admin'] = new USARDB_WPCM_Admin();
+    }
 }

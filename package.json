@@ -72,7 +72,7 @@
     "style-sherpa": "^1.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vinyl-named": "^1.1.0",
-    "webpack": "^4.44.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-stream": "^4.0.0",
     "yargs": "^3.8.0"

@@ -1,4 +1,124 @@
 table {
-    margin: 0 0 1.5em;
+    border: 1px solid #ddd;
     width: 100%;
+    margin-bottom: 1rem;
+
+    &.unstriped {
+        tbody {
+            background-color: #fefefe;
+            tr {
+                border-bottom: 0;
+                border-bottom: 1px solid #f1f1f1;
+                background-color: #fefefe;
+            }
+        }
+    }
+
+    &.scroll {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    &.hover {
+        thead {
+            tr {
+                &:hover {
+                    background-color: #f3f3f3;
+                }
+            }
+        }
+        tfoot {
+            tr {
+                &:hover {
+                    background-color: #ececec;
+                }
+            }
+        }
+        tbody {
+            tr {
+                &:hover {
+                    background-color: #f9f9f9;
+                }
+            }
+        }
+        &:not(.unstriped) {
+            tr {
+                &:nth-of-type(even) {
+                    &:hover {
+                        background-color: #ececec;
+                    }
+                }
+            }
+        }
+    }
+
+    &.table-scroll {
+        overflow-x: auto;
+    }
+}
+
+thead,
+tfoot {
+    border: 1px solid #f1f1f1;
+    background-color: #fefefe;
+    background: #f8f8f8;
+    color: #0a0a0a;
+    tr {
+        background: transparent;
+    }
+    th {
+        padding: 0.5rem 0.625rem 0.625rem;
+        font-weight: bold;
+        @extend .text-center;
+    }
+    td {
+        padding: 0.5rem 0.625rem 0.625rem;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+tbody {
+    border: 1px solid #f1f1f1;
+    background-color: #fefefe;
+    th {
+        padding: 0.5rem 0.625rem 0.625rem;
+    }
+    td {
+        padding: 0.5rem 0.625rem 0.625rem;
+    }
+    tr {
+        &:nth-child(even) {
+            border-bottom: 0;
+            background-color: #f1f1f1;
+        }
+    }
+}
+
+caption {
+    padding: 0.5rem 0.625rem 0.625rem;
+    font-weight: bold;
+}
+
+// Table stack.
+@include breakpoint(large down) {
+    table.stack {
+        thead {
+            display: none;
+        }
+        tfoot {
+            display: none;
+        }
+        tr {
+            display: block;
+        }
+        th {
+            display: block;
+        }
+        td {
+            display: block;
+            border-top: 0;
+        }
+    }
 }

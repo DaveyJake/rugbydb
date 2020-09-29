@@ -8,3 +8,4 @@ WR
 *.zip
 **/dist/**
 **/src/**
+.niu/wpclubmanager/admin/post-types/meta-boxes/class-usardb-wpcm-meta-box-match-timezone.php

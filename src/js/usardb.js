@@ -1,3 +1,4 @@
+import { Interchange } from 'foundation-sites';
 import { master } from './utils';
 import { navigation } from './ui/navigation';
 
@@ -13,9 +14,17 @@ import { navigation } from './ui/navigation';
     const scope = {
         common: {
             init: function() {
+                $doc.foundation();
                 $doc.ready( navigation );
 
                 console.log( 'We good!' ); // eslint-disable
+            }
+        },
+        single_wpcm_match: {
+            init: function() {
+                $( '.wpcm-match-club-badge' ).each( function() {
+                    return new Interchange( $( this ) );
+                } );
             }
         }
     };

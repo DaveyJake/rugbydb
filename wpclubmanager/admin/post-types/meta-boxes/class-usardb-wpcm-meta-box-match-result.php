@@ -7,7 +7,8 @@
  * @subpackage WPCM_Meta_Box_Match_Result
  * @since USARDB 1.0.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
+
+defined( 'ABSPATH' ) || exit;
 
 class USARDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
 
@@ -136,6 +137,51 @@ class USARDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
         echo '</div>'; // End #results-table
 
         do_action( 'wpclubmanager_admin_after_results_table', $post->ID );
+    }
+
+    /**
+     * Save meta box data.
+     *
+     * @param int     $post_id Post ID.
+     * @param WP_Post $post    Post object.
+     */
+    public static function save( $post_id, $post ) {
+        $sport = get_option( 'wpcm_sport' );
+
+        if ( ! empty( $_POST['wpcm_played'] ) ) {
+            update_post_meta( $post_id, 'wpcm_played', $_POST['wpcm_played'] );
+        } else {
+            update_post_meta( $post_id, 'wpcm_played', '' );
+        }
+
+        if ( ! empty( $_POST['_wpcm_postponed'] ) ) {
+            update_post_meta( $post_id, '_wpcm_postponed', $_POST['_wpcm_postponed'] );
+        } else {
+            update_post_meta( $post_id, '_wpcm_postponed', '' );
+        }
+
+        if ( isset( $_POST['_wpcm_walkover'] ) ) {
+            update_post_meta( $post_id, '_wpcm_walkover', $_POST['_wpcm_walkover'] );
+        }
+
+        if ( isset( $_POST['wpcm_goals'] ) ) {
+            $goals = $_POST['wpcm_goals'];
+
+            update_post_meta( $post_id, 'wpcm_goals', serialize( $goals ) );
+            update_post_meta( $post_id, 'wpcm_home_goals', $goals['total']['home'] );
+            update_post_meta( $post_id, 'wpcm_away_goals', $goals['total']['away'] );
+        }
+
+        if ( 'rugby' === $sport && isset( $_POST['wpcm_bonus'] ) ) {
+            if ( ! is_league_mode() ) {
+                $bonus = $_POST['wpcm_bonus'];
+                delete_post_meta( $post_id, 'wpcm_bonus', serialize( $bonus ) );
+                delete_post_meta( $post_id, 'wpcm_home_bonus', $bonus['home'] );
+                delete_post_meta( $post_id, 'wpcm_away_bonus', $bonus['away'] );
+            }
+        }
+
+        do_action( 'delete_plugin_transients' );
     }
 
 }

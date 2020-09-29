@@ -13,6 +13,8 @@ global $post;
 
 $captain = get_post_meta( $post->ID, '_wpcm_match_captain', true );
 
+unset( $value['rating'] );
+
 echo '<tr>';
 
     if ( 'yes' === get_option( 'wpcm_lineup_show_shirt_numbers' ) )
@@ -34,7 +36,7 @@ echo '<tr>';
         if ( isset( $value['mvp'] ) )
         {
             echo '<span class="mvp" title="';
-                _e( 'Player of Match', 'wp-club-manager' );
+                esc_html_e( 'Player of Match', 'wp-club-manager' );
                 echo '">&#9733;';
             echo '</span>';
         }
@@ -46,8 +48,7 @@ echo '<tr>';
 
     echo '</th>';
 
-    foreach ( $value as $key => $stat )
-    {
+    foreach ( $value as $key => $stat ) {
         if ( $stat == '0' || $stat == null )
         {
             $stat = '&mdash;';
@@ -66,18 +67,18 @@ echo '<tr>';
         if ( 'yes' === get_option( 'wpcm_show_stats_yellowcards' ) && isset( $value['yellowcards'] ) && get_option( 'wpcm_show_stats_yellowcards' ) )
         {
             echo '<span class="yellowcard" title="';
-                _e( 'Yellow Card', 'wp-club-manager' );
+                esc_html_e( 'Yellow Card', 'wp-club-manager' );
                 echo '">';
-                _e( 'Yellow Card', 'wp-club-manager' );
+                esc_html_e( 'Yellow Card', 'wp-club-manager' );
             echo '</span>';
         }
 
         if ( 'yes' === get_option( 'wpcm_show_stats_redcards' ) && isset( $value['redcards'] ) && get_option( 'wpcm_show_stats_redcards' ) )
         {
             echo '<span class="redcard" title="';
-                _e( 'Red Card', 'wp-club-manager' );
+                esc_html_e( 'Red Card', 'wp-club-manager' );
                 echo '">';
-                _e( 'Red Card', 'wp-club-manager' );
+                esc_html_e( 'Red Card', 'wp-club-manager' );
             echo '</span>';
         }
         echo '</td>';

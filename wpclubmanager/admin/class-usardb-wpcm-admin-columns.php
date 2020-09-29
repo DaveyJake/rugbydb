@@ -1,4 +1,4 @@
-<?php // phpcs:ignore
+<?php
 /**
  * USA Rugby Database API: WP Club Manager Admin Columns
  *
@@ -8,7 +8,8 @@
  * @subpackage WPCM_Admin_Columns
  * @since USARDB 1.0.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
+
+defined( 'ABSPATH' ) || exit;
 
 class USARDB_WPCM_Admin_Columns {
 

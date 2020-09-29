@@ -18,27 +18,36 @@ if ( ! defined( 'ABSPATH' ) ) {
         <?php do_action( 'wpclubmanager_player_quick_edit_left_start' ); ?>
 
         <div class="player_fields">
-            <label class="alignleft">
-                <span class="title"><?php esc_html_e( 'First Name', 'wp-club-manager' ); ?></span>
+            <label class="player-name alignleft">
+                <span class="title"><?php esc_html_e( 'Player Name', 'wp-club-manager' ); ?></span>
                 <span class="input-text-wrap">
-                    <input type="text" name="_wpcm_firstname" class="text fname" value="">
+                    <input type="text" name="_wpcm_firstname" class="text fname" value="" placeholder="First Name">
                 </span>
             </label>
 
-            <label class="alignleft">
-                <span class="title"><?php esc_html_e( 'Last Name', 'wp-club-manager' ); ?></span>
+            <label class="player-name alignleft">
                 <span class="input-text-wrap">
-                    <input type="text" name="_wpcm_lastname" class="text lname" value="">
+                    <input type="text" name="_usar_nickname" class="text nname" value="" placeholder="Nickname">
                 </span>
             </label>
-            <br />
-            <label class="alignleft">
-                <span class="title"><?php esc_html_e( 'Nickname', 'wp-club-manager' ); ?></span>
+
+            <label class="player-name alignleft">
                 <span class="input-text-wrap">
-                    <input type="text" name="_usar_nickname" class="text nname" value="">
+                    <input type="text" name="_wpcm_lastname" class="text lname" value="" placeholder="Last Name">
                 </span>
             </label>
+
+            <br clear="both" />
+
+            <label class="alignleft">
+                <span class="title"><?php esc_html_e( 'WR ID', 'wp-club-manager' ); ?></span>
+                <span class="input-text-wrap">
+                    <input type="text" name="wr_id" class="text wr_id" value="">
+                </span>
+            </label>
+
             <br />
+
             <?php if ( is_league_mode() ) : ?>
                 <label class="alignleft">
                     <span class="title"><?php esc_html_e( 'Club', 'wp-club-manager' ); ?></span>

@@ -25,6 +25,11 @@ function usardb_body_classes( $classes ) {
 		$classes[] = 'no-sidebar';
 	}
 
+    // Front page.
+    if ( is_front_page() ) {
+        $classes[] = 'front-page';
+    }
+
 	return $classes;
 }
 

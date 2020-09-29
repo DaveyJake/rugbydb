@@ -7,7 +7,8 @@
  * @subpackage WPCM_Positions
  * @since 1.0.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if directly accessed
+
+defined( 'ABSPATH' ) || exit;
 
 class USARDB_WPCM_Positions extends WPCM_Admin_Taxonomies {
     /**
