@@ -1,0 +1,124 @@
+.wpcm {
+    &-column {
+        &:not(.flex):not(.relative) {
+            width: 100%;
+            float: left;
+            @include breakpoint(medium) {
+                width: 50%;
+            }
+
+            &:last-of-type {
+                float: right;
+            }
+        }
+
+        &.relative {
+            position: relative;
+        }
+    }
+
+    &_club,
+    &_match,
+    &_player,
+    &_venue {
+        padding: {
+            left: 0;
+            right: 0;
+        };
+
+        .entry-title {
+            @include breakpoint(mobile down) {
+                font-size: 1.6em;
+            }
+            font-weight: 900;
+
+            .wp-post-image {
+                margin-right: 0.9375rem;
+                vertical-align: middle;
+            }
+        }
+
+        h2 {
+            @include breakpoint(mobile down) {
+                font-size: 1.25em;
+            }
+        }
+
+        .entry-title,
+        h2,
+        h3 {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0 0.5em 0.5em;
+        }
+
+        table {
+            margin-bottom: 0;
+
+            thead,
+            tfoot {
+                background: var(--background);
+
+                th {
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    &_venue {
+        h3 {
+            @extend .text-center;
+        }
+    }
+
+    &-entry {
+        &-header,
+        &-content,
+        &-footer {
+            @include breakpoint(mobile down) {
+                font-size: 80%;
+            }
+
+            @include breakpoint(medium) {
+                font-size: 100%;
+            }
+        }
+    }
+
+    &-entry-content {
+        padding: 0 0.5em 0.5em;
+
+        @include breakpoint(medium) {
+            p {
+                text-align: justify;
+            }
+        }
+
+        @include breakpoint(wordpress) {
+            padding: 0 0.9375em;
+        }
+
+        + hr + h3 {
+            margin-top: 0;
+        }
+
+        .wpcm-match-report & {
+            padding: {
+                left: 0;
+                right: 0;
+            }
+
+            @include breakpoint(medium down) {
+                .featured-image {
+                    margin: 0 -0.5em 1em;
+
+                    &__photographer {
+                        padding-right: 0.5em;
+                    }
+                }
+            }
+        }
+    }
+}

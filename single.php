@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
@@ -20,8 +20,8 @@ while ( have_posts() ) :
 
     the_post_navigation(
         array(
-            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'usardb' ) . '</span> <span class="nav-title">%title</span>',
-            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'usardb' ) . '</span> <span class="nav-title">%title</span>',
+            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'rugby-database' ) . '</span> <span class="nav-title">%title</span>',
+            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'rugby-database' ) . '</span> <span class="nav-title">%title</span>',
         )
     );
 

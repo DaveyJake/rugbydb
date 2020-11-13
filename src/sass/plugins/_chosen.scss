@@ -1,0 +1,25 @@
+.chosen-container {
+    .chosen-drop {
+        border: {
+            bottom: 0;
+            top: 1px solid #aaa;
+        }
+        top: auto;
+        bottom: 40px;
+    }
+
+    &.chosen-with-drop {
+        .chosen-single {
+            @include border-radius(top);
+            @include border-radius(bottom, 5px);
+            background-image: none;
+        }
+
+        .chosen-drop {
+            @include border-radius(bottom);
+            @include border-radius(top, 5px);
+            margin-bottom: -1rem;
+            box-shadow: none;
+        }
+    }
+}

@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package USA_Rugby_Database
+ * @package Rugby_Database
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore

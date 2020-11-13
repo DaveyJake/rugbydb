@@ -1,0 +1,78 @@
+$unit: rem-calc(15px);
+$card-size: 250px;
+$image-height: rem-calc(190px);
+$meta-height: rem-calc(30px);
+
+#primary {
+    padding-top: rem-calc(8px);
+}
+
+#grid {
+    padding: 0;
+
+    @include breakpoint(xxlarge) {
+        padding: $unit;
+    }
+}
+
+#scroll-status {
+    @include absolute-center;
+}
+
+.card {
+    width: 100%;
+    height: $card-size;
+    margin-bottom: $unit;
+    filter: drop-shadow(0 1.5px 0 #fff);
+
+    @include breakpoint(568px) {
+        width: 50%;
+    }
+
+    @include breakpoint(medium) {
+        width: 33.3333%;
+    }
+
+    @include breakpoint(large) {
+        width: 25%;
+    }
+
+    @include breakpoint(xlarge) {
+        width: 20%;
+    }
+
+    @include breakpoint(xxlarge) {
+        width: $card-size;
+    }
+
+    &__container {
+        position: relative;
+        width: 80%;
+        height: inherit;
+        margin: auto;
+    }
+
+    &__image,
+    &__meta {
+        @include full-width;
+    }
+
+    &__image {
+        display: block;
+        height: $image-height;
+        background: {
+            repeat: no-repeat;
+            size: contain;
+            position: center center;
+        }
+    }
+
+    &__meta {
+        height: $meta-height;
+        @extend .text-center;
+    }
+
+    &__title {
+        margin: 0;
+    }
+}

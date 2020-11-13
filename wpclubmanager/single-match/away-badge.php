@@ -2,12 +2,12 @@
 /**
  * Single match - Away Badge
  *
- * @author 		ClubPress
- * @package 	WPClubManager/Templates
- * @version     1.4.0
+ * @author 	ClubPress
+ * @package WPClubManager/Templates
+ * @version 2.5.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 

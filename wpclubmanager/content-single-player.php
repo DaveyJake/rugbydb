@@ -9,13 +9,13 @@
  * @version 1.5.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 do_action( 'wpclubmanager_before_single_player' );
-
-echo '<article id="post-' . get_the_ID() . '" '; post_class(); echo '>';
-
-    echo '<div class="wpcm-player-info wpcm-row">';
+?>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<?php
+    echo '<header class="wpcm-entry-header wpcm-player-info wpcm-row">';
 
     	/**
     	 * wpclubmanager_single_player_image hook
@@ -36,7 +36,7 @@ echo '<article id="post-' . get_the_ID() . '" '; post_class(); echo '>';
 
 		echo '</div>';
 
-	echo '</div>';
+	echo '</header>';
 
 	echo '<div class="wpcm-profile-stats wpcm-row">';
 
@@ -49,7 +49,7 @@ echo '<article id="post-' . get_the_ID() . '" '; post_class(); echo '>';
 
 	echo '</div>';
 
-	echo '<div class="wpcm-profile-bio wpcm-row">';
+	echo '<div class="wpcm-entry-content wpcm-profile-bio wpcm-row">';
 
 		/**
 		 * wpclubmanager_single_player_bio hook
@@ -61,5 +61,5 @@ echo '<article id="post-' . get_the_ID() . '" '; post_class(); echo '>';
 	echo '</div>';
 
 	do_action( 'wpclubmanager_after_single_player' );
-
-echo '</article>';
+?>
+</article>

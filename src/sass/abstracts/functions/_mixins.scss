@@ -1,0 +1,210 @@
+// Transparent white.
+//
+// @param number $opacity Default 0.5.
+@function transparent-white($opacity: 0.5) {
+    $str: 'rgba(255, 255, 255, #{$opacity})';
+
+    @return unquote($str);
+}
+
+// Offset for club colors..
+//
+// @param string $primary   Club's primary color.
+// @param string $secondary Club's secondary color.
+//
+// @return string Corrected color.
+@function club-colors($primary, $secondary) {
+    $fallback: #fff;
+
+    $lightness: (lightness(#{$primary}) - lightness(#{$secondary}));
+
+    @if ($primary == $fallback) {
+        @return $secondary;
+    } @else if ($secondary == $fallback) {
+        @return $primary;
+    } @else if ($lightness > 0) {
+        @return $primary;
+    } @else {
+        @return $secondary;
+    }
+}
+
+// Background image.
+//
+// @param string $url Path to image.
+//
+@mixin element-background($url) {
+    background: {
+        image: url($url);
+        repeat: no-repeat;
+        position: center center;
+        size: contain;
+    }
+}
+
+// Absolute bottom.
+@mixin absolute-bottom {
+    position: absolute;
+    bottom: 0;
+    @content;
+}
+
+// Clearfix.
+@mixin rdb-clearfix {
+    &::before,
+    &::after {
+        display: table;
+        content: ' ';
+    }
+
+    &::after {
+        clear: both;
+    }
+}
+
+// Typekit: Industry.
+@mixin typekit-industry {
+    font: {
+        family: industry, sans-serif;
+        style: normal;
+    }
+}
+
+// Center block.
+@mixin center-block {
+    display: block;
+    margin: auto;
+}
+
+// Center element full-width.
+@mixin full-center-width {
+    margin: auto;
+    max-width: $size__site-main-width;
+}
+
+// Column width with margin.
+@mixin column-width($numberColumns: 3) {
+    width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
+}
+
+// Full Height.
+@mixin full-height {
+    height: 100%;
+}
+
+// Full Width.
+@mixin full-width {
+    width: 100%;
+}
+
+// Half Width.
+@mixin half-width {
+    width: 50%;
+}
+
+// Level 2 List.
+@mixin level-two-list {
+    ul {
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+        float: left;
+        position: absolute;
+        top: 100%;
+        left: -999em;
+        z-index: 99999;
+
+        li {
+
+            ul {
+                left: -999em;
+                top: 0;
+            }
+
+            &:hover,
+            &.focus {
+
+                > ul {
+                    display: block;
+                    left: auto;
+                }
+            }
+        }
+    }
+}
+
+// Flexbox.
+@mixin flex($justify-content: center, $align-items: center) {
+    display: flex;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    @content;
+}
+
+// Flex between.
+@mixin flex-between {
+    @include flex(space-between);
+}
+
+// Flex center.
+@mixin flex-center {
+    @include flex;
+}
+
+// Flex evenly.
+@mixin flex-evenly {
+    @include flex(space-evenly);
+}
+
+// Score block.
+@mixin score-block {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    line-height: 1.4;
+    background: $color__background-body;
+    color: #fff;
+    font: {
+        family: industry, sans-serif;
+        size: 1.5em;
+        weight: 900;
+    }
+    z-index: 9;
+}
+
+// Text-align
+//
+// @param string $dir Accepts 'left', 'center', 'right'. Only use when need to
+//                    override third-party library.
+@mixin text($dir: left) {
+    text-align: $dir !important;
+}
+
+// BEGIN WPCM SPECIFIC MIXINS
+
+// Chosen dropdown filters.
+@mixin dropdown-spacing {
+    float: left;
+    margin: 0.5%;
+}
+
+// No wrap white-space.
+@mixin nowrap {
+    white-space: nowrap;
+}
+
+// Border radius.
+//
+// @param {string} $tb     Accepts 'top', 'bottom'.
+// @param {string} $lr     Accepts 'left', 'right'.
+// @param {number} $radius Number output in px.
+//
+@mixin border-radius($dir: null, $radius: 0) {
+    @if ($dir == top or $dir == bottom) {
+        border-#{$dir}-left-radius: $radius;
+        border-#{$dir}-right-radius: $radius;
+    } @else if ($dir == left or $dir == right) {
+        border-top-#{$dir}-radius: $radius;
+        border-bottom-#{$dir}-radius: $radius;
+    } @else {
+        border-radius: $radius;
+    }
+}

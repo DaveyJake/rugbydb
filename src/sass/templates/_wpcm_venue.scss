@@ -1,0 +1,61 @@
+.wpcm {
+    &-entry {
+        &-header {
+            flex-direction: column;
+
+            .entry-title {
+                @include breakpoint(medium down) {
+                    padding-top: 0.25em;
+                }
+            }
+
+            .wpcm-column {
+                @include breakpoint(medium down) {
+                    flex-direction: column;
+                }
+            }
+        }
+
+        &-footer {
+            padding: 0 0.5em 1.85em;
+        }
+    }
+
+    &-venue {
+        &-info {
+            @extend .text-center;
+            @include breakpoint(medium) {
+                text-align: left;
+            }
+
+            [class^='wpcm-venue-'] {
+                padding-bottom: 0.7em;
+
+                h3 {
+                    padding-bottom: 0;
+                    @include breakpoint(mobile down) {
+                        justify-content: center;
+                    }
+                }
+
+                p {
+                    padding: 0 0.5em;
+                }
+            }
+        }
+
+        &-image {
+            img {
+                @include breakpoint(medium down) {
+                    @include full-width;
+                }
+            }
+        }
+
+        &-select {
+            #venue {
+                @include full-width;
+            }
+        }
+    }
+}

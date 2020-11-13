@@ -1,4 +1,4 @@
-=== USARDB ===
+=== RDB ===
 
 Contributors: automattic
 Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
@@ -10,11 +10,11 @@ Stable tag: 1.0.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
 
-A starter theme called USARDB.
+A starter theme called RDB.
 
 == Description ==
 
-The official TRIBUS theme for USARDB Smith & Frampton.
+The official TRIBUS theme for RDB Smith & Frampton.
 
 == Installation ==
 
@@ -26,7 +26,7 @@ The official TRIBUS theme for USARDB Smith & Frampton.
 
 = Does this theme support any plugins? =
 
-USARDB includes support for WooCommerce and for Infinite Scroll in Jetpack.
+RDB includes support for WooCommerce and for Infinite Scroll in Jetpack.
 
 == Changelog ==
 

@@ -1,0 +1,108 @@
+.wpcm {
+    &_club {
+        table {
+            &.union-details {
+                th {
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    &-matches {
+        &-list {
+            margin-top: -1px;
+
+            &-date {
+                overflow: visible;
+                white-space: nowrap;
+            }
+
+            &-item {
+                td {
+                    font-size: 0.85em;
+                }
+            }
+
+            &-link {
+                display: flex;
+                justify-content: space-evenly;
+                /* stylelint-disable */
+                $win: #269e0b;
+                $loss: #9e0b2a;
+                $draw: #808080;
+
+                .win & {
+                    color: $win;
+
+                    &:hover {
+                        color: darken($win, 15);
+                    }
+                }
+
+                .loss & {
+                    color: $loss;
+
+                    &:hover {
+                        color: darken($loss, 15);
+                    }
+                }
+
+                .draw & {
+                    color: $draw;
+                }
+                /* stylelint-enable */
+            }
+
+            &-status {
+                @extend .text-center;
+            }
+
+            &-fixture {
+                span {
+                    width: 33.3%;
+                    @include nowrap;
+                }
+            }
+
+            &-info {
+                white-space: nowrap;
+            }
+        }
+    }
+
+    &-h2h-list {
+        margin-top: 0;
+
+        @include breakpoint(mobile down) {
+            border-spacing: 3px;
+        }
+
+        td {
+            padding: 20px;
+            @include text(center);
+            background-color: var(--primary-color);
+            color: #fff;
+            text-shadow: 0 0 3px #000;
+        }
+
+        &-count,
+        &-desc {
+            display: block;
+            margin-top: 5px;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        &-count {
+            font: {
+                size: 2em;
+                weight: 600;
+            }
+        }
+
+        &-desc {
+            font-size: 0.75em;
+        }
+    }
+}

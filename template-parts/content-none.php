@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
 echo '<section class="no-results not-found">';
     echo '<header class="page-header">';
-        echo '<h1 class="page-title">' . esc_html__( 'Nothing Found', 'usardb' ) . '</h1>';
+        echo '<h1 class="page-title">' . esc_html__( 'Nothing Found', 'rdb' ) . '</h1>';
     echo '</header><!-- .page-header -->';
 
     echo '<div class="page-content">';
@@ -21,7 +21,7 @@ echo '<section class="no-results not-found">';
             printf(
                 '<p>' . wp_kses(
                     /* translators: 1: link to WP admin new post page. */
-                    __( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'usardb' ),
+                    __( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'rdb' ),
                     array(
                         'a' => array(
                             'href' => array(),
@@ -31,11 +31,11 @@ echo '<section class="no-results not-found">';
                 esc_url( admin_url( 'post-new.php' ) )
             );
         elseif ( is_search() ) :
-            echo '<p>' . esc_html__( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'usardb' ) . '</p>';
+            echo '<p>' . esc_html__( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'rdb' ) . '</p>';
 
             get_search_form();
         else :
-            echo '<p>' . esc_html__( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'usardb' ) . '</p>';
+            echo '<p>' . esc_html__( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'rdb' ) . '</p>';
 
             get_search_form();
         endif;

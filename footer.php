@@ -6,24 +6,24 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
-			echo '<footer id="colophon" class="site-footer">';
-
-				echo '<div class="site-info">';
-
-				echo '</div><!-- .site-info -->';
-
-			echo '</footer><!-- #colophon -->';
-
 		echo '</div><!-- #page -->';
+
+        echo '<footer id="colophon" class="site-footer mm-slideout">';
+
+            echo '<div class="site-info wpcm-row">Copyright&nbsp;<i class="far fa-copyright"></i>&nbsp;' . esc_html( date( 'Y' ) ) . '. All rights reserved.</div><!-- .site-info -->';
+
+        echo '</footer><!-- #colophon -->';
+
+        rdb_nav_menu();
 
 		wp_footer();
 
-		usardb_body_close();
+		rdb_body_close();
 
 	echo '</body>';
 

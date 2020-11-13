@@ -1,0 +1,46 @@
+@import '../components/content/dropdown-filters';
+@import '../components/content/datatables';
+
+.front-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    &.ua-mobile {
+        margin-top: $size__navbar-height;
+    }
+
+    #page {
+        flex: 1 0 auto;
+
+        .team-filters {
+            justify-content: space-evenly;
+            margin-bottom: 0.5em;
+        }
+
+        #all-matches {
+            font-size: 0.875em;
+
+            @include breakpoint(medium) {
+                font-size: 0.9375em;
+            }
+
+            @include breakpoint(large) {
+                font-size: 1em;
+            }
+
+            [src*='victoria-rugby'],
+            [src*='south-australia'] {
+                height: 14px;
+            }
+
+            &_wrapper {
+                .wpcm-row:last-child {
+                    .paging_full_numbers {
+                        margin: auto;
+                    }
+                }
+            }
+        }
+    }
+}

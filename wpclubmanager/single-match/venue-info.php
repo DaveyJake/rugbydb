@@ -7,12 +7,12 @@
  * @version     2.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 
 $played     = get_post_meta( $post->ID, 'wpcm_played', true );
-$venue_info = usardb_wpcm_get_match_venue( $post->ID );
+$venue_info = rdb_wpcm_get_match_venue( $post->ID );
 
 if ( ! $played )
 {
@@ -33,7 +33,7 @@ if ( ! $played )
 		if ( $venue_info['address'] )
         {
 			echo '<h3>';
-                echo _e( 'Venue Address', 'wp-club-manager' );
+                esc_html_e( 'Venue Address', 'wp-club-manager' );
             echo '</h3>';
 
 			echo '<p class="address">';

@@ -1,1 +1,0 @@
-{"version":3,"sources":["admin/_admin.scss"],"names":[],"mappings":"AACA,qBACI,UAAW","file":"usardb-admin.css","sourcesContent":["// Slug box.\n.post-php #post_name {\n    width: 100%;\n}\n"]}

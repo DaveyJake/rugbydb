@@ -1,87 +1,136 @@
+$color__table-background: #fefefe;
+$color__table-border: #f1f1f1;
+$color__table-font: #0a0a0a;
+$color__thead-hover: #f3f3f3;
+$color__tbody: #f8f8f8;
+$color__tbody-hover: #f9f9f9;
+$color__tfoot-hover: #ececec;
+
 table {
-    border: 1px solid #ddd;
-    width: 100%;
-    margin-bottom: 1rem;
-
-    &.unstriped {
-        tbody {
-            background-color: #fefefe;
-            tr {
-                border-bottom: 0;
-                border-bottom: 1px solid #f1f1f1;
-                background-color: #fefefe;
-            }
-        }
-    }
-
-    &.scroll {
-        display: block;
+    &:not(.dataTable) {
+        border: 1px solid #ddd;
         width: 100%;
-        overflow-x: auto;
-    }
+        margin-bottom: 1rem;
 
-    &.hover {
-        thead {
-            tr {
-                &:hover {
-                    background-color: #f3f3f3;
-                }
-            }
-        }
+        thead,
         tfoot {
-            tr {
-                &:hover {
-                    background-color: #ececec;
+            background-color: $color__table-background;
+            background: $color__tbody;
+            color: $color__table-font;
+        }
+
+        &.unstriped {
+            tbody {
+                background-color: $color__table-background;
+                tr {
+                    border-bottom: 0;
+                    border-bottom: 1px solid $color__table-border;
+                    background-color: $color__table-background;
                 }
             }
         }
-        tbody {
-            tr {
-                &:hover {
-                    background-color: #f9f9f9;
-                }
-            }
+
+        &.scroll {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
         }
-        &:not(.unstriped) {
-            tr {
-                &:nth-of-type(even) {
+
+        &.hover {
+            thead {
+                tr {
                     &:hover {
-                        background-color: #ececec;
+                        background-color: $color__thead-hover;
+                    }
+                }
+            }
+            tfoot {
+                tr {
+                    &:hover {
+                        background-color: $color__tfoot-hover;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    &:hover {
+                        background-color: $color__tbody-hover;
+                    }
+                }
+            }
+            &:not(.unstriped) {
+                tr {
+                    &:nth-of-type(even) {
+                        &:hover {
+                            background-color: $color__tfoot-hover;
+                        }
                     }
                 }
             }
         }
+
+        &.table-scroll {
+            overflow-x: auto;
+        }
     }
 
-    &.table-scroll {
-        overflow-x: auto;
+    &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
+        > .dtr-control:before {
+            line-height: 14px !important;
+
+            @include breakpoint(large) {
+                line-height: 1rem !important;
+            }
+        }
     }
+
+    &.wpcm-subs-table {
+        &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
+            > .dtr-control:before {
+                line-height: 18px !important;
+            }
+        }
+    }
+}
+
+th,
+td {
+    font-family: $font__post-title;
+    @include breakpoint(mobile down) {
+        font-size: 80%;
+    }
+}
+
+th {
+    font-weight: 600 !important;
+}
+
+td {
+    font-weight: 500;
 }
 
 thead,
 tfoot {
-    border: 1px solid #f1f1f1;
-    background-color: #fefefe;
-    background: #f8f8f8;
-    color: #0a0a0a;
+    background: $color__blue;
+    border: 1px solid $color__table-border;
+    color: $color__white;
     tr {
         background: transparent;
     }
     th {
         padding: 0.5rem 0.625rem 0.625rem;
-        font-weight: bold;
-        @extend .text-center;
+        font-weight: 600;
+        text-align: center !important;
     }
     td {
         padding: 0.5rem 0.625rem 0.625rem;
-        font-weight: bold;
         text-align: left;
     }
 }
 
 tbody {
-    border: 1px solid #f1f1f1;
-    background-color: #fefefe;
+    border: 1px solid $color__table-border;
+    background-color: $color__table-background;
     th {
         padding: 0.5rem 0.625rem 0.625rem;
     }
@@ -91,18 +140,18 @@ tbody {
     tr {
         &:nth-child(even) {
             border-bottom: 0;
-            background-color: #f1f1f1;
+            background-color: $color__table-border;
         }
     }
 }
 
 caption {
     padding: 0.5rem 0.625rem 0.625rem;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 // Table stack.
-@include breakpoint(large down) {
+@include breakpoint(wordpress down) {
     table.stack {
         thead {
             display: none;
@@ -112,6 +161,10 @@ caption {
         }
         tr {
             display: block;
+
+            &:not(.description) {
+                text-align: center;
+            }
         }
         th {
             display: block;

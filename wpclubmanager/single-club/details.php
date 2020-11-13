@@ -2,23 +2,27 @@
 /**
  * Club details table.
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-global $details;
+global $post, $details;
 
-echo '<table>';
+$venues = get_the_terms( $post, 'wpcm_venue' );
+
+d( $venues );
+
+echo '<table class="union-details stack">';
 	echo '<tbody>';
 		if ( $details['formed'] ) :
-			echo '<tr>';
+			echo '<tr class="formed">';
 				echo '<th>' . __( 'Formed', 'wp-club-manager' ) . '</th>';
 				echo '<td>' . esc_html( $details['formed'] ) . '</td>';
 			echo '</tr>';
 		endif;
 
-		echo '<tr>';
+		echo '<tr class="ground">';
 			echo '<th>' . __( 'Ground', 'wp-club-manager' ) . '</th>';
 			echo '<td>' . esc_html( $details['venue']['name'] ) . '</td>';
 		echo '</tr>';
@@ -37,7 +41,7 @@ echo '<table>';
 			echo '</tr>';
 		endif;
 
-		if ( $details['venue']['description'] ) :
+		if ( $details['venue']['description'] && $details['venue']['description'] !== $details['venue']['name'] ) :
 			echo '<tr class="description">';
 				echo '<th>' . __( 'Ground Info', 'wp-club-manager' ) . '</th>';
 				echo '<td>' . esc_html( $details['venue']['description'] ) . '</td>';
@@ -45,16 +49,16 @@ echo '<table>';
 		endif;
 
 		if ( $details['honours'] ) :
-			echo '<tr>';
-				echo '<th>' . __( 'Honours', 'wp-club-manager' ) . '</th>';
+			echo '<tr class="honors">';
+				echo '<th>' . __( 'Honors', 'wp-club-manager' ) . '</th>';
 				echo '<td>' . stripslashes( nl2br( $details['honours'] ) ) . '</td>';
 			echo '</tr>';
 		endif;
 
 		if ( $details['website'] ) :
-			echo '<tr>';
-				echo '<th></th>';
-				echo '<td><a href="' . esc_url( $details['website'] ) . '" target="_blank">' . __( 'Visit website', 'wp-club-manager' ) . '</a></td>';
+			echo '<tr class="website">';
+				echo '<th>Team Website</th>';
+				echo '<td><a href="' . esc_url( $details['website'] ) . '" target="_blank">' . esc_html( $details['website'] ) . '</a></td>';
 			echo '</tr>';
 		endif;
 	echo '</tbody>';

@@ -9,7 +9,7 @@
  * @version 1.5.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 get_header();
 
@@ -21,11 +21,11 @@ get_header();
 	 */
 	do_action( 'wpclubmanager_before_main_content' );
 
-	while ( have_posts() ) : the_post();
+		while ( have_posts() ) : the_post();
 
-		wpclubmanager_get_template_part( 'content', 'single-player' );
+			wpclubmanager_get_template_part( 'content', 'single-player' );
 
-	endwhile; // end of the loop.
+		endwhile; // end of the loop.
 
 	/**
 	 * wpclubmanager_after_main_content hook

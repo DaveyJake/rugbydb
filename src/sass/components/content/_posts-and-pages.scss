@@ -1,9 +1,16 @@
+.wpcm {
+    &-row {
+        max-width: $size__site-main-width;
+        height: inherit;
+    }
+}
+
 .sticky {
     display: block;
 }
 
 .post,
-.page {
+.page:not(body) {
     margin: 0 0 1.5em;
 }
 
@@ -20,4 +27,14 @@
 .page-links {
     clear: both;
     margin: 0 0 1.5em;
+}
+
+.dot {
+    line-height: 0.8;
+    font-size: 2em;
+
+    &::before {
+        content: '\00B7';
+        font-family: $font__default;
+    }
 }

@@ -90,6 +90,8 @@ function copy() {
                 path.dirname = 'inc/libs/';
             } else if ( path.basename.match( /foundation/ ) ) {
                 path.dirname = 'src/js/utils/foundation/' + path.dirname + '/';
+            } else if ( path.extname.match( /\.(js|css)/ ) ) {
+                path.dirname = PATHS.dist + '/' + path.extname.slice(1) + '/';
             } else {
                 path.dirname = PATHS.dist + '/' + path.dirname + '/';
             }
@@ -103,10 +105,17 @@ function copy() {
  * @param {object} path The path value from $.rename().
  */
 function cssDestination( path ) {
-    if ( path.basename.match( /(-admin)/ ) ) {
-        path.dirname = PATHS.admin + '/css/';
-    } else {
-        path.dirname = PATHS.dist + '/css/';
+    if ( path.basename.match( /style/ ) ) {
+        path.dirname = '.';
+    }
+    else {
+        if ( path.basename.match( /(-admin)/ ) ) {
+            path.dirname = PATHS.admin;
+        } else {
+            path.dirname = PATHS.dist;
+        }
+
+        path.dirname += '/css/';
     }
 
     return path;
@@ -133,29 +142,14 @@ function jsDestination( path ) {
 function sass() {
     return gulp.src( PATHS.templates )
         .pipe( $.sourcemaps.init() )
-        .pipe(
-            $.sass({
-                includePaths: PATHS.sass
-            }).on( 'error', $.sass.logError )
-        )
-        .pipe(
-            $.postcss([
-                autoprefixer({ overrideBrowserslist: COMPATIBILITY }),
-                cssnano()
-            ])
-        )
+        .pipe( $.sass({ includePaths: PATHS.sass }).on( 'error', $.sass.logError ) )
+        .pipe( $.postcss([ autoprefixer({ overrideBrowserslist: COMPATIBILITY }), cssnano() ]) )
         .pipe( $.if( PRODUCTION, $.cleanCss({ compatibility: 'edge' }) ) )
         .pipe( $.if( !PRODUCTION, $.sourcemaps.write( '.' ) ) )
         .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
-        .pipe( $.rename( function( path ) {
-            cssDestination( path )
-        }))
-        .pipe( gulp.dest( './' ) )
+        .pipe( $.rename( function( path ) { cssDestination( path ) })).pipe( gulp.dest( './' ) )
         .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() ) )
-        .pipe( $.rename( function( path ) {
-            cssDestination( path )
-        }))
-        .pipe( gulp.dest( './' ) )
+        .pipe( $.rename( function( path ) { cssDestination( path ) })).pipe( gulp.dest( './' ) )
         .pipe( browser.reload({ stream: true }) );
 }
 
@@ -177,7 +171,7 @@ const webpack = {
             rules: [
                 {
                     test: /\.js$/,
-                    exclude: /node_modules(?![\\\/]foundation-sites)/,
+                    exclude: /(^_*$|node_modules(?![\\\/]foundation-sites))/,
                     use: ['babel-loader', 'eslint-loader']
                 }
             ]
@@ -193,17 +187,16 @@ const webpack = {
                 amd: 'lodash',
                 root: '_'
             },
-            Foundation: 'Foundation',
-            Modernizr: 'Modernizr'
+            moment: 'moment',
+            DataTable: 'DataTable',
+            yadcf: 'yadcf'
         }
     },
-
     changeHandler( err, stats ) {
         log( '[webpack]', stats.toString({ colors: true }) );
 
         browser.reload();
     },
-
     build() {
         return gulp.src( PATHS.entries )
             .pipe( named() )
@@ -220,7 +213,6 @@ const webpack = {
             }))
             .pipe( gulp.dest( './' ) );
     },
-
     watch() {
         const watchConfig = Object.assign( webpack.config, {
             watch: true,

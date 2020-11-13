@@ -4,10 +4,10 @@
  *
  * @author ClubPress
  * @package WPClubManager/Templates
- * @since WPCM 2.5.0 - Custom integration.
+ * @version 2.5.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 
@@ -19,7 +19,13 @@ echo '<tr>';
 
     if ( 'yes' === get_option( 'wpcm_lineup_show_shirt_numbers' ) )
     {
-        echo '<th class="shirt-number">' . $count . '</th>';
+        echo '<th class="shirt-number">';
+            if ( ! empty( $value['shirtnumber'] ) ) :
+                echo esc_html( $value['shirtnumber'] );
+            else :
+                echo '';
+            endif;
+        echo '</th>';
     }
 
     echo '<th class="name">';
@@ -36,7 +42,7 @@ echo '<tr>';
         if ( isset( $value['mvp'] ) )
         {
             echo '<span class="mvp" title="';
-                esc_html_e( 'Player of Match', 'wp-club-manager' );
+                esc_attr_e( 'Player of Match', 'wp-club-manager' );
                 echo '">&#9733;';
             echo '</span>';
         }
@@ -62,12 +68,12 @@ echo '<tr>';
 
     if ( 'yes' === get_option( 'wpcm_show_stats_yellowcards' ) || 'yes' === get_option( 'wpcm_show_stats_redcards' ) )
     {
-        echo '<td class="notes">';
+        echo '<td class="notes"' . ( isset( $dnp ) ? ' colspan="5"' : '' ) . '>';
 
         if ( 'yes' === get_option( 'wpcm_show_stats_yellowcards' ) && isset( $value['yellowcards'] ) && get_option( 'wpcm_show_stats_yellowcards' ) )
         {
             echo '<span class="yellowcard" title="';
-                esc_html_e( 'Yellow Card', 'wp-club-manager' );
+                esc_attr_e( 'Yellow Card', 'wp-club-manager' );
                 echo '">';
                 esc_html_e( 'Yellow Card', 'wp-club-manager' );
             echo '</span>';
@@ -76,7 +82,7 @@ echo '<tr>';
         if ( 'yes' === get_option( 'wpcm_show_stats_redcards' ) && isset( $value['redcards'] ) && get_option( 'wpcm_show_stats_redcards' ) )
         {
             echo '<span class="redcard" title="';
-                esc_html_e( 'Red Card', 'wp-club-manager' );
+                esc_attr_e( 'Red Card', 'wp-club-manager' );
                 echo '">';
                 esc_html_e( 'Red Card', 'wp-club-manager' );
             echo '</span>';

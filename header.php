@@ -6,62 +6,47 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
 <?php
-    usardb_head_open();
+    rdb_head_open();
     echo '<meta charset="' . esc_attr( get_bloginfo( 'charset' ) ) . '">';
-    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+    echo '<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">';
     echo '<link rel="profile" href="https://gmpg.org/xfn/11">';
     wp_head();
-    usardb_head_close();
+    rdb_head_close();
 ?>
 </head>
 <body <?php body_class(); ?>>
 <?php // phpcs:disable Generic.WhiteSpace.ScopeIndent
-    usardb_body_open();
+    rdb_body_open();
 
     echo '<div id="page" class="site">';
 
-        echo '<a class="skip-link screen-reader-text" href="#primary">' . esc_html__( 'Skip to content', 'usardb' ) . '</a>';
+        echo '<a class="skip-link screen-reader-text" href="#primary">' . esc_html__( 'Skip to content', 'rugby-database' ) . '</a>';
 
-        echo '<header id="masthead" class="site-header">';
+        echo '<header id="masthead" class="site-header Fixed" itemscope itemtype="http://schema.org/WPHeader">';
 
-            echo '<div class="site-branding">';
+            echo '<div class="wpcm-row">';
 
-                $usardb_bloginfo = get_bloginfo( 'name', 'display' );
+                echo '<div class="main-navigation">';
+                    echo '<div class="site-branding">';
+                        echo '<a href="' . esc_url( home_url( '/' ) ) . '" rel="bookmark"><span class="logo"><span class="word-rugby">RUGBY</span><span class="word-db">DB</span></span></a>';
+                    echo '</div><!-- .site-branding -->';
 
-                if ( is_front_page() && is_home() ) :
-                    echo '<h1 class="site-title"><a href="' . esc_url( home_url( '/' ) ) . '" rel="home">' . esc_html( $usardb_bloginfo ) . '</a></h1>';
-                else :
-                    echo '<p class="site-title"><a href="' . esc_url( home_url( '/' ) ) . '" rel="home">' . esc_html( $usardb_bloginfo ) . '</a></p>';
-                endif;
+                    rdb_nav_menu( array( 'container_id' => 'site-menu' ) );
+                echo '</div><!-- .site-navigation -->';
 
-                $usardb_description = get_bloginfo( 'description', 'display' );
+                echo '<div class="site-menu">';
+                    rdb_site_menu();
+                echo '</div>';
 
-                if ( $usardb_description || is_customize_preview() ) :
-                    echo '<p class="site-description">' . esc_html( $usardb_description ) . '</p>';
-                endif;
-
-            echo '</div><!-- .site-branding -->';
-
-            echo '<nav id="site-navigation" class="main-navigation">';
-
-                echo '<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">' . esc_html__( 'Primary Menu', 'usardb' ) . '</button>';
-
-                wp_nav_menu(
-                    array(
-                        'theme_location' => 'main-menu',
-                        'menu_id'        => 'primary-menu',
-                    )
-                );
-
-            echo '</nav><!-- #site-navigation -->';
+            echo '</div>';
 
         echo '</header><!-- #masthead -->';

@@ -1,0 +1,101 @@
+.dataTable {
+    .control {
+        @include breakpoint(mobile down) {
+            max-width: 20px;
+        }
+    }
+
+    th {
+        .sorting {
+            width: 50% !important;
+
+            @include breakpoint(medium) {
+                width: 33.333% !important;
+            }
+
+            @include breakpoint(large) {
+                width: 25% !important;
+            }
+        }
+    }
+
+    th,
+    td {
+        font-size: 87.5%;
+    }
+
+    td.date,
+    .result {
+        white-space: nowrap !important;
+    }
+
+    .fixture-result {
+        flex-direction: row !important;
+        justify-content: space-between;
+
+        @include breakpoint(medium) {
+            justify-content: space-evenly;
+        }
+    }
+
+    &s {
+        &_wrapper,
+        &_paginate {
+            @include breakpoint(767px down) {
+                margin-top: 0 !important;
+            }
+        }
+
+        &_wrapper {
+            .flex {
+                align-items: center;
+
+                @include breakpoint(wordpress down) {
+                    flex-direction: column;
+                }
+            }
+        }
+
+        &_empty {
+            img {
+                height: 1rem;
+                margin-top: 7px;
+            }
+        }
+
+        &_filter,
+        &_paginate {
+            font-size: 72.5%;
+
+            @include breakpoint(medium) {
+                font-size: 90%;
+            }
+
+            @include breakpoint(large) {
+                width: 50% !important;
+                font-size: 100%;
+            }
+        }
+
+        &_filter {
+            @include full-width;
+            @include text(center);
+
+            label {
+                @include full-width;
+            }
+
+            input {
+                margin: 0 !important;
+                width: calc(100% - 12px);
+            }
+        }
+
+        &_paginate {
+            float: none !important;
+            margin-top: 0;
+            padding-bottom: 0.25em;
+            @include text(center);
+        }
+    }
+}

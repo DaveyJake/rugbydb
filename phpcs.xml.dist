@@ -35,9 +35,12 @@
 	<file>.</file>
 
 	<!-- Exclude patterns. -->
+	<exclude-pattern>/.niu/*</exclude-pattern>
 	<exclude-pattern>/inc/libs/*</exclude-pattern>
 	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/inc/class-rdb-taxonomy-*</exclude-pattern>
     <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/_wpclubmanager/*</exclude-pattern>
     <exclude-pattern>/wpclubmanager/*</exclude-pattern>
 	<exclude-pattern>/WR/*</exclude-pattern>
 
@@ -104,6 +107,10 @@
 		<exclude name="WPThemeReview.PluginTerritory.ForbiddenFunctions.plugin_territory_add_shortcode"/>
 	</rule>
 
+	<rule ref="WPThemeReview.Templates.ReservedFileNamePrefix.ReservedTemplatePrefixFound">
+		<exclude-pattern>/page-*.php</exclude-pattern>
+	</rule>
+
 	<!--
 	#############################################################################
 	SNIFF SPECIFIC CONFIGURATION
@@ -114,7 +121,7 @@
 		 Multiple valid text domains can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="usardb"/>
+			<property name="text_domain" type="array" value="rdb,rugby-database"/>
 		</properties>
 	</rule>
 
@@ -146,7 +153,7 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="usardb,_usardb" />
+			<property name="prefixes" type="array" value="rdb,_rdb" />
 		</properties>
 	</rule>
 

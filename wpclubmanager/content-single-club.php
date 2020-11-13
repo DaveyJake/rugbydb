@@ -8,18 +8,21 @@
  * @package WPClubManager/Templates
  * @version 2.5.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
-global $post;
+defined( 'ABSPATH' ) || exit;
+
+global $post, $details, $primary_color_bg;
 
 $details          = get_club_details( $post );
-$primary_color_bg = ( $details['primary_color'] ) ? ' style="background-color:' . $details['primary_color'] . ';color:#fff;text-shadow: 0 0 3px #000;"' : '';
+$secondary_color  = isset( $details['secondary_color'] ) ? $details['secondary_color'] : '#fff';
+$primary_color    = isset( $details['primary_color'] ) ? $details['primary_color'] : '#808080';
+$primary_color_bg = ' style="background-color:' . $primary_color . ';color:' . $secondary_color . ';text-shadow: 0 0 3px #808080;"';
 
 do_action( 'wpclubmanager_before_single_club' );
-
-echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', apply_filters( 'post_class', get_post_class() ) ) ) . '">';
-
-	echo '<div class="wpcm-club-details wpcm-row">';
+?>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="--primary-color:<?php echo esc_attr( $primary_color ); ?>; --secondary-color:<?php echo esc_attr( $secondary_color ); ?>">
+<?php
+	echo '<header class="wpcm-entry-header wpcm-club-details wpcm-row">';
 
 		/**
 		 * Title.
@@ -33,7 +36,7 @@ echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ',
 
 		do_action( 'wpclubmanager_after_single_club_details' );
 
-	echo '</div>';
+	echo '</header>';
 
 	/**
 	 * Content.
@@ -61,7 +64,7 @@ echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ',
 	}
 
 	do_action( 'wpclubmanager_after_single_club_content' );
-
-echo '</article>';
-
+?>
+</article>
+<?php
 do_action( 'wpclubmanager_after_single_club' );

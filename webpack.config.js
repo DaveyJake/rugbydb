@@ -6,7 +6,8 @@ module.exports = {
       amd: 'lodash',
       root: '_'
     },
-    Foundation: 'Foundation',
-    Modernizr: 'Modernizr'
+    moment: 'moment',
+    DataTable: 'DataTable',
+    yadcf: 'yadcf'
   }
 };

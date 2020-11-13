@@ -37,6 +37,7 @@ PATHS:
   assets:
     - "src/**"
     - "node_modules/multiselect/{css,img,js}/**"
+    - "node_modules/yadcf/jquery.dataTables.yadcf.*"
     - "vendor/mobiledetect/mobiledetectlib/Mobile_Detect.php"
     - "vendor/sinergi/browser-detector/src/*"
     - "!src/{img,js,sass}/**"
@@ -51,8 +52,8 @@ PATHS:
     - "src/sass/*.scss"
   # Entries of main files.
   entries:
-    - "src/js/usardb.js"
-    - "src/js/usardb-admin.js"
+    - "src/js/rdb.js"
+    - "src/js/rdb-admin.js"
   # Paths for the package task to include/exclude in .zip archive.
   package:
     - "**/*"
@@ -70,7 +71,7 @@ PATHS:
     - "!**/gulpfile.babel.js"
     - "!**/package.json"
     - "!**/package-lock.json"
-    - "!**/usardb.sublime-*"
+    - "!**/rdb.sublime-*"
     - "!**/webpack.config.js"
   # Paths for PHP CodeSniffer.
   phpcs:

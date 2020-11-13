@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
  *
- * @package USA_Rugby_Database
+ * @package Rugby_Database
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
@@ -17,7 +17,7 @@ if ( have_posts() ) :
     echo '<header class="page-header">';
         echo '<h1 class="page-title">';
             /* translators: %s: search query. */
-            echo wp_kses_post( printf( esc_html__( 'Search Results for: %s', 'usardb' ), '<span>' . get_search_query() . '</span>' ) );
+            echo wp_kses_post( printf( esc_html__( 'Search Results for: %s', 'rugby-database' ), '<span>' . get_search_query() . '</span>' ) );
         echo '</h1>';
     echo '</header><!-- .page-header -->';
 

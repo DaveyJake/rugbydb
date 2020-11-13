@@ -7,7 +7,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package USA_Rugby_Database
+ * @package Rugby_Database
  */
 
 /*
@@ -25,19 +25,19 @@ echo '<div id="comments" class="comments-area">';
 if ( have_comments() ) :
     echo '<h2 class="comments-title">';
 
-    $usardb_comment_count = get_comments_number();
+    $rdb_comment_count = get_comments_number();
 
-    if ( '1' === $usardb_comment_count ) {
+    if ( '1' === $rdb_comment_count ) {
         printf(
             /* translators: 1: title. */
-            esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'usardb' ),
+            esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'rugby-database' ),
             '<span>' . wp_kses_post( get_the_title() ) . '</span>'
         );
     } else {
         printf(
             /* translators: 1: comment count number, 2: title. */
-            esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $usardb_comment_count, 'comments title', 'usardb' ) ),
-            number_format_i18n( $usardb_comment_count ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $rdb_comment_count, 'comments title', 'rugby-database' ) ),
+            number_format_i18n( $rdb_comment_count ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             '<span>' . wp_kses_post( get_the_title() ) . '</span>'
         );
     }
@@ -59,7 +59,7 @@ if ( have_comments() ) :
 
     // If comments are closed and there are comments, let's leave a little note, shall we?
     if ( ! comments_open() ) :
-        echo '<p class="no-comments">' . esc_html__( 'Comments are closed.', 'usardb' ) . '</p>';
+        echo '<p class="no-comments">' . esc_html__( 'Comments are closed.', 'rugby-database' ) . '</p>';
     endif;
 endif;
 

@@ -9,153 +9,152 @@
  * @version 2.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
+
+$post_id = get_the_ID();
 ?>
-
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<?php
+    echo '<header class="wpcm-entry-header wpcm-player-info wpcm-row">';
 
-    <div class="wpcm-player-info wpcm-row">
+        rdb_player_images( $post_id, 'staff_single' );
 
-        <div class="wpcm-profile-image">
-            <?php echo wpcm_get_player_thumbnail( $post->ID, 'staff_single' ); ?>
-        </div>
+        echo '<div class="wpcm-profile-meta">';
 
-        <div class="wpcm-profile-meta">
+            echo '<h1 class="entry-title">';
 
-            <h1 class="entry-title"><?php the_title(); ?></h1>
+                the_title();
 
-            <table>
-                <tbody>
-                    <?php
-                    if ( get_option( 'wpcm_staff_profile_show_dob' ) === 'yes' ) {
-                        ?>
-                        <tr>
-                            <th><?php _e( 'Birthday', 'wp-club-manager' ); ?></th>
-                            <td><?php echo date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( $post->ID, 'wpcm_dob', true ) ) ); ?></td>
-                        </tr>
-                        <?php
-                    }
+            echo '</h1>';
 
-                    if ( get_option( 'wpcm_staff_profile_show_age' ) === 'yes' ) {
-                        ?>
-                        <tr>
-                            <th><?php _e( 'Age', 'wp-club-manager' ); ?></th>
-                            <td><?php echo get_age( get_post_meta( $post->ID, 'wpcm_dob', true ) ); ?></td>
-                        </tr>
-                        <?php
-                    }
+            echo '<table>';
 
-                    if ( get_option( 'wpcm_staff_profile_show_season' ) === 'yes' ) {
-                        $seasons = get_the_terms( $post->ID, 'wpcm_season' );
+                echo '<tbody>';
 
-                        if ( is_array( $seasons ) ) {
-                            $player_seasons = array();
-
-                            foreach ( $seasons as $value ) {
-                                $player_seasons[] = $value->name;
-                            }
-                            ?>
-                            <tr>
-                                <th><?php _e( 'Season', 'wp-club-manager' ); ?></th>
-                                <td><?php echo implode( ', ', $player_seasons ); ?></td>
-                            </tr>
-                            <?php
-                        }
-                    }
-
-                    if ( get_option( 'wpcm_staff_profile_show_team' ) === 'yes' ) {
-                        $teams = get_the_terms( $post->ID, 'wpcm_team' );
-
-                        if ( is_array( $teams ) ) {
-                            $player_teams = array();
-
-                            foreach ( $teams as $team ) {
-                                $player_teams[] = $team->name;
-                            }
-                            ?>
-                            <tr>
-                                <th><?php _e( 'Team', 'wp-club-manager' ); ?></th>
-                                <td><?php echo implode( ', ', $player_teams ); ?></td>
-                            </tr>
-                            <?php
-                        }
-                    }
-
-                    if ( get_option( 'wpcm_staff_profile_show_jobs' ) === 'yes' ) {
-                        $jobs = get_the_terms( $post->ID, 'wpcm_jobs' );
-
-                        if ( is_array( $jobs ) ) {
-                            $player_jobs = array();
-
-                            foreach ( $jobs as $job ) {
-                                $player_jobs[] = $job->name;
-                            }
-                            ?>
-                            <tr>
-                                <th><?php _e( 'Job', 'wp-club-manager' ); ?></th>
-                                <td><?php echo implode( ', ', $player_jobs ); ?></td>
-                            </tr>
-                            <?php
-                        }
-                    }
-
-                    if ( get_option( 'wpcm_show_staff_email' ) === 'yes' ) {
-                        $email = get_post_meta( $post->ID, '_wpcm_staff_email', true );
-                        ?>
-                        <tr>
-                            <th><?php _e( 'Email', 'wp-club-manager' ); ?></th>
-                            <td><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></td>
-                        </tr>
-                        <?php
-                    }
-
-                    if ( get_option( 'wpcm_show_staff_phone' ) === 'yes' ) {
-                        $phone = get_post_meta( $post->ID, '_wpcm_staff_phone', true );
-                        ?>
-                        <tr>
-                            <th><?php _e( 'Phone', 'wp-club-manager' ); ?></th>
-                            <td><?php echo $phone; ?></td>
-                        </tr>
-                        <?php
-                    }
-
-                    if ( get_option( 'wpcm_staff_profile_show_hometown' ) === 'yes' || get_option( 'wpcm_staff_profile_show_nationality' ) === 'yes') {
-                        ?>
-                        <tr>
-                            <th><?php _e( 'Birthplace', 'wp-club-manager' ); ?></th>
-                            <td>
-                                <?php echo ( get_option( 'wpcm_staff_profile_show_hometown' ) === 'yes' ? get_post_meta( $post->ID, 'wpcm_hometown', true ) : '' ); ?> <?php echo ( get_option( 'wpcm_staff_profile_show_nationality' ) === 'yes' ? '<img class="flag" src="' . WPCM_URL . 'assets/images/flags/' . get_post_meta( $post->ID, 'wpcm_natl', true ) . '.png" />' : '' ); ?>
-                            </td>
-                        </tr>
-                        <?php
-                    }
-
-                    if ( get_option( 'wpcm_staff_profile_show_joined' ) === 'yes' ) {
-                        ?>
-                        <tr>
-                            <th><?php _e( 'Joined', 'wp-club-manager' ); ?></th>
-                            <td><?php echo date_i18n( get_option( 'date_format' ), strtotime( $post->post_date ) ); ?></td>
-                        </tr>
-                        <?php
-                    }
+                if ( get_option( 'wpcm_staff_profile_show_dob' ) === 'yes' ) {
                     ?>
-                </tbody>
-            </table>
+                    <tr>
+                        <th><?php esc_html_e( 'Birthday', 'wp-club-manager' ); ?></th>
+                        <td><?php echo date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( $post_id, 'wpcm_dob', true ) ) ); ?></td>
+                    </tr>
+                    <?php
+                }
 
-        </div>
+                if ( get_option( 'wpcm_staff_profile_show_age' ) === 'yes' ) {
+                    ?>
+                    <tr>
+                        <th><?php esc_html_e( 'Age', 'wp-club-manager' ); ?></th>
+                        <td><?php echo get_age( get_post_meta( $post_id, 'wpcm_dob', true ) ); ?></td>
+                    </tr>
+                    <?php
+                }
 
-    </div>
+                if ( get_option( 'wpcm_staff_profile_show_season' ) === 'yes' ) {
+                    $seasons = get_the_terms( $post_id, 'wpcm_season' );
 
-    <div class="wpcm-profile-bio wpcm-row">
-        <?php
-        if ( get_the_content() ) {
-            ?>
-            <div class="wpcm-entry-content"><?php the_content(); ?></div>
-            <?php
-        }
-        ?>
-    </div>
+                    if ( is_array( $seasons ) ) {
+                        $player_seasons = array();
 
-    <?php do_action( 'wpclubmanager_after_single_staff_bio' ); ?>
+                        foreach ( $seasons as $value ) {
+                            $player_seasons[] = $value->name;
+                        }
+                        ?>
+                        <tr>
+                            <th><?php esc_html_e( 'Season', 'wp-club-manager' ); ?></th>
+                            <td><?php echo implode( ', ', $player_seasons ); ?></td>
+                        </tr>
+                        <?php
+                    }
+                }
 
+                if ( get_option( 'wpcm_staff_profile_show_team' ) === 'yes' ) {
+                    $teams = get_the_terms( $post_id, 'wpcm_team' );
+
+                    if ( is_array( $teams ) ) {
+                        $player_teams = array();
+
+                        foreach ( $teams as $team ) {
+                            $player_teams[] = $team->name;
+                        }
+                        ?>
+                        <tr>
+                            <th><?php esc_html_e( 'Team', 'wp-club-manager' ); ?></th>
+                            <td><?php echo implode( ', ', $player_teams ); ?></td>
+                        </tr>
+                        <?php
+                    }
+                }
+
+                if ( get_option( 'wpcm_staff_profile_show_jobs' ) === 'yes' ) {
+                    $jobs = get_the_terms( $post_id, 'wpcm_jobs' );
+
+                    if ( is_array( $jobs ) ) {
+                        $player_jobs = array();
+
+                        foreach ( $jobs as $job ) {
+                            $player_jobs[] = $job->name;
+                        }
+                        ?>
+                        <tr>
+                            <th><?php esc_html_e( 'Job', 'wp-club-manager' ); ?></th>
+                            <td><?php echo implode( ', ', $player_jobs ); ?></td>
+                        </tr>
+                        <?php
+                    }
+                }
+
+                if ( get_option( 'wpcm_show_staff_email' ) === 'yes' ) {
+                    $email = get_post_meta( $post_id, '_wpcm_staff_email', true );
+                    ?>
+                    <tr>
+                        <th><?php esc_html_e( 'Email', 'wp-club-manager' ); ?></th>
+                        <td><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></td>
+                    </tr>
+                    <?php
+                }
+
+                if ( get_option( 'wpcm_show_staff_phone' ) === 'yes' ) {
+                    $phone = get_post_meta( $post_id, '_wpcm_staff_phone', true );
+                    ?>
+                    <tr>
+                        <th><?php esc_html_e( 'Phone', 'wp-club-manager' ); ?></th>
+                        <td><?php echo $phone; ?></td>
+                    </tr>
+                    <?php
+                }
+
+                if ( get_option( 'wpcm_staff_profile_show_hometown' ) === 'yes' || get_option( 'wpcm_staff_profile_show_nationality' ) === 'yes' ) {
+                    ?>
+                    <tr>
+                        <th><?php esc_html_e( 'Birthplace', 'wp-club-manager' ); ?></th>
+                        <td><?php echo ( get_option( 'wpcm_staff_profile_show_hometown' ) === 'yes' ? get_post_meta( $post_id, 'wpcm_hometown', true ) : '' ); ?> <?php echo ( get_option( 'wpcm_staff_profile_show_nationality' ) === 'yes' ? do_shortcode( '[flag country="' . get_post_meta( $post_id, 'wpcm_natl', true ) . '"]' ) : '' ); ?></td>
+                    </tr>
+                    <?php
+                }
+
+                if ( get_option( 'wpcm_staff_profile_show_joined' ) === 'yes' ) {
+                    ?>
+                    <tr>
+                        <th><?php esc_html_e( 'Joined', 'wp-club-manager' ); ?></th>
+                        <td><?php echo date_i18n( get_option( 'date_format' ), strtotime( $post->post_date ) ); ?></td>
+                    </tr>
+                    <?php
+                }
+
+                echo '</tbody>';
+
+            echo '</table>';
+
+        echo '</div>';
+
+    echo '</header>';
+
+    echo '<div class="wpcm-entry-content wpcm-profile-bio wpcm-row">';
+        if ( get_the_content() ) :
+            the_content();
+        endif;
+    echo '</div>';
+
+    do_action( 'wpclubmanager_after_single_staff_bio' );
+?>
 </article>

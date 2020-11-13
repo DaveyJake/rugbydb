@@ -7,15 +7,43 @@
  * @version     1.4.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 
-$played = get_post_meta( $post->ID, 'wpcm_played', true );
-$score  = wpcm_get_match_result( $post->ID );
+$sep      = get_option( 'wpcm_match_goals_delimiter' );
+$played   = get_post_meta( $post->ID, 'wpcm_played', true );
+$intgoals = unserialize( get_post_meta( $post->ID, 'wpcm_goals', true) );
+$score    = wpcm_get_match_result( $post->ID );
 
 echo '<div class="wpcm-match-score">';
-	echo $score[1];
-	echo '<span class="wpcm-match-score-delimiter">' . ( $played ? $score[3] : get_option( 'wpcm_match_clubs_separator' ) ) . '</span>';
-	echo $score[2];
+
+    echo '<div class="wpcm-match-score__home">';
+
+        echo wpclubmanager_template_single_match_home_club();
+
+        echo '<div class="wpcm-match-score__fulltime">';
+            echo isset( $score[1] ) ? $score[1] : '-';
+        echo '</div>';
+
+        echo '<div class="wpcm-match-score__halftime">';
+            echo isset( $intgoals['q1']['home'] ) ? $intgoals['q1']['home'] : '';
+        echo '</div>';
+
+    echo '</div>';
+
+    echo '<div class="wpcm-match-score__away">';
+
+        echo wpclubmanager_template_single_match_away_club();
+
+        echo '<div class="wpcm-match-score__fulltime">';
+            echo isset( $score[2] ) ? $score[2] : '-';
+        echo '</div>';
+
+        echo '<div class="wpcm-match-score__halftime">';
+            echo isset( $intgoals['q1']['away'] ) ? $intgoals['q1']['away'] : '';
+        echo '</div>';
+
+    echo '</div>';
+
 echo '</div>';

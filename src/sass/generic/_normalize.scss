@@ -20,6 +20,8 @@ html {
 
 body {
     margin: 0;
+    -webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
+    -moz-osx-font-smoothing: grayscale; // sass-lint:disable-line no-vendor-prefixes
 }
 
 /**
@@ -59,8 +61,10 @@ hr {
  */
 
 pre {
-    font-family: monospace;
-    font-size: 1em;
+    font: {
+        family: monospace;
+        size: 1em;
+    }
 }
 
 // Text-level semantics
@@ -101,8 +105,7 @@ strong {
 code,
 kbd,
 samp {
-    font-family: monospace;
-    font-size: 1em;
+    @extend pre;
 }
 
 /**
@@ -156,8 +159,10 @@ input,
 optgroup,
 select,
 textarea {
-    font-family: inherit;
-    font-size: 100%;
+    font: {
+        family: inherit;
+        size: 100%;
+    }
     line-height: 1.15;
     margin: 0;
 }
@@ -306,7 +311,7 @@ textarea {
 
 // Interactive
 
-/*
+/**
  * Add the correct display in Edge, IE 10+, and Firefox.
  */
 
@@ -314,7 +319,7 @@ details {
     display: block;
 }
 
-/*
+/**
  * Add the correct display in all browsers.
  */
 
@@ -325,17 +330,11 @@ summary {
 // Misc
 
 /**
- * Add the correct display in IE 10+.
+ * Add the correct display...
+ * 1. In IE 10+
+ * 2. In IE 10.
  */
-
-template {
-    display: none;
-}
-
-/**
- * Add the correct display in IE 10.
- */
-
-[hidden] {
+template /* 1 */,
+[hidden] /* 2 */ {
     display: none;
 }

@@ -1,0 +1,46 @@
+@import 'rdb';
+
+#page {
+    .ua-mobile & {
+        @include breakpoint(medium down) {
+            margin-top: $size__navbar-height;
+        }
+
+        @include breakpoint(wordpress) {
+            margin-top: $size__navbar-height--desktop;
+        }
+    }
+}
+
+#primary {
+    min-height: 100vh;
+}
+
+article {
+    .entry {
+        &-title,
+        &-content {
+            margin: 0;
+        }
+
+        &-content {
+            padding: 0 0.5em;
+
+            @include breakpoint(medium) {
+                padding: 0 0.9375em;
+            }
+        }
+    }
+
+    h3 {
+        margin: 0;
+
+        + p {
+            margin-top: 0;
+
+            &.address {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

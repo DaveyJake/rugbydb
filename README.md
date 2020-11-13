@@ -21,7 +21,7 @@ Clone this repository to your local environment and create a new branch describi
 
 To start developing on this theme, you'll need to install the necessary Node.js and Composer dependencies.
 
-Open your CLI (e.g. _Terminal_; _PuTTY_; _Command Prompt_) and go your project directory (i.e. `cd /path/to/USARDB`).
+Open your CLI (e.g. _Terminal_; _PuTTY_; _Command Prompt_) and go your project directory (i.e. `cd /path/to/RDB`).
 
 Run the following commands:
 
@@ -32,7 +32,7 @@ $ npm install
 
 ### Available CLI commands
 
-`USARDB` comes packed with CLI commands tailored for WordPress theme development :
+`RDB` comes packed with CLI commands tailored for WordPress theme development :
 
 - `composer lint:wpcs` : checks all PHP files against [PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/).
 - `composer lint:php` : checks all PHP files for syntax errors.

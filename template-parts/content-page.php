@@ -4,19 +4,19 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package USA_Rugby_Database
+ * @package Rugby_Database
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
 
-$usardb_post_class = apply_filters( 'post_class', get_post_class() ); // phpcs:ignore
+$rdb_post_class = apply_filters( 'post_class', get_post_class() ); // phpcs:ignore
 
-echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', $usardb_post_class ) ) . '">';
+echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', $rdb_post_class ) ) . '">';
     echo '<header class="entry-header">';
         the_title( '<h1 class="entry-title">', '</h1>' );
     echo '</header><!-- .entry-header -->';
 
-    usardb_post_thumbnail();
+    rdb_post_thumbnail();
 
 if ( ! empty( get_the_content() ) ) :
     echo '<div class="entry-content">';
@@ -24,7 +24,7 @@ if ( ! empty( get_the_content() ) ) :
 
         wp_link_pages(
             array(
-                'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'usardb' ),
+                'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'rdb' ),
                 'after'  => '</div>',
             )
         );
@@ -37,7 +37,7 @@ if ( get_edit_post_link() ) :
             sprintf(
                 wp_kses(
                     /* translators: %s: Name of current post. Only visible to screen readers */
-                    __( 'Edit <span class="screen-reader-text">%s</span>', 'usardb' ),
+                    __( 'Edit <span class="screen-reader-text">%s</span>', 'rdb' ),
                     array(
                         'span' => array(
                             'class' => array(),

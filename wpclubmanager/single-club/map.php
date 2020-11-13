@@ -2,10 +2,12 @@
 /**
  * Club/Union map.
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit; // phpcs:ignore
+
+global $details;
 
 if ( $details['venue']['address'] && get_option( 'wpcm_club_settings_venue' ) === 'yes' ) :
 

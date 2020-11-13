@@ -2,14 +2,17 @@
 /**
  * Club/Union name.
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
+
+$rdb_nickname = get_post_meta( get_the_ID(), '_wpcm_club_nickname', true );
+$title_class  = ! empty( $rdb_nickname ) ? ' has-nickname' : '';
 
 // phpcs:disable
 
-echo '<h2 class="entry-title">';
+echo '<h1 class="entry-title' . esc_attr( $title_class ) . '">';
 
 	echo '<span>';
 
@@ -26,4 +29,8 @@ echo '<h2 class="entry-title">';
 
 	the_title();
 
-echo '</h2>';
+	if ( ! empty( $rdb_nickname ) ) {
+		echo ",&nbsp;<em>{$rdb_nickname}</em>";
+	}
+
+echo '</h1>';

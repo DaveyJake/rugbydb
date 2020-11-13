@@ -25,13 +25,13 @@ if ( 'mens-eagles' === $slug ) {
         $post_title = sprintf( '%s %s', $nickname, $last );
 
         echo '<h1 class="entry-title">';
-        esc_html_e( $post_title, 'usa-rugby-database' );
+        echo esc_html( $post_title );
         echo '</h1>';
     } else {
         $post_title = sprintf( '%1$s "%2$s" %3$s', $first, $nickname, $last );
 
         echo '<h1 class="entry-title">';
-        esc_html_e( $post_title, 'usa-rugby-database' );
+        echo esc_html( $post_title );
         echo '</h1>';
     }
 } else {

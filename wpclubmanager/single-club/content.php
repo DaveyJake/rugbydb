@@ -2,13 +2,14 @@
 /**
  * Club/Union content.
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
 
-if ( get_the_content() ) :
+$rdb_club_content = get_the_content();
 
-	echo '<div class="wpcm-entry-content wpcm-row">' . apply_filters( 'the_content', get_the_content() ) . '</div>';
-
+if ( $rdb_club_content ) :
+	echo '<div class="wpcm-entry-content wpcm-row">' . apply_filters( 'the_content', $rdb_club_content ) . '</div>';
+    echo '<hr />';
 endif;

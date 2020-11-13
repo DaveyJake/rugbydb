@@ -1,7 +1,7 @@
 src/sass/abstracts/**/*
 src/sass/base/_meta.scss
 src/sass/base/elements/_tables.scss
-src/sass/plugins/foundation/_table.scss
+src/sass/plugins/**
 src/sass/generic/_normalize.scss
 **/node_modules/**
 **/vendor/**

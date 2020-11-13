@@ -2,59 +2,60 @@
 /**
  * Club/Union match list.
  *
- * @package USARDB
+ * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
 
-echo '<ul class="wpcm-matches-list">';
+$rdb_match_cols = array( 'Date', 'Fixture', 'Venue', 'Competition' );
 
-if ( is_club_mode() ) {
-	if ( get_option( 'wpcm_club_settings_h2h' ) === 'no' ) {
-		$matches = wpcm_head_to_heads( $post->ID );
-	}
-} else {
-	$matches = wpcm_head_to_heads( $post->ID );
-}
+echo '<table class="wpcm-matches-list display responsive nowrap" width="100%">';
+echo '<thead><tr>' . rdb_table_columns( $rdb_match_cols, false ) . '</tr></thead>';
+
+$matches = wpcm_head_to_heads( $post->ID );
 
 foreach( $matches as $match ) {
+    $neutral     = get_post_meta( $match->ID, 'wpcm_neutral', true );
     $played      = get_post_meta( $match->ID, 'wpcm_played', true );
     $timestamp   = strtotime( $match->post_date );
     $time_format = get_option( 'time_format' );
     $class       = wpcm_get_match_outcome( $match->ID );
-    $comp        = wpcm_get_match_comp( $match->ID );
-    $sides       = wpcm_get_match_clubs( $match->ID );
-    $result      = wpcm_get_match_result( $match->ID );
+    $comp        = rdb_wpcm_get_match_comp( $match->ID );
+    $sides       = rdb_wpcm_get_match_clubs( $match->ID );
+    $result      = rdb_wpcm_get_match_result( $match->ID );
+    $venue       = rdb_wpcm_get_match_venue( $match->ID );
 
-	echo '<li class="wpcm-matches-list-item ' . $class . '">';
+    echo '<tr id="match-' . $match->ID . '" class="wpcm-matches-list-item ' . $class . '">';
 
-		echo '<a href="' . get_post_permalink( $match->ID, false, true ) . '" class="wpcm-matches-list-link">';
+        echo '<td class="wpcm-matches-list-col wpcm-matches-list-date" data-sort="' . esc_attr( $timestamp ) . '">';
+            echo date_i18n( 'D, F j, Y', $timestamp );
+        echo '</td>';
 
-			echo '<span class="wpcm-matches-list-col wpcm-matches-list-date">';
-				echo date_i18n( 'D d M', $timestamp );
-			echo '</span>';
+        echo '<td class="wpcm-matches-list-col wpcm-matches-list-fixture">';
+            echo '<a href="' . get_post_permalink( $match->ID, false, true ) . '" class="wpcm-matches-list-link">';
+                echo '<span class="wpcm-matches-list-club1">';
+                    echo esc_html( $sides[0] );
+                echo '</span>';
 
-			echo '<span class="wpcm-matches-list-col wpcm-matches-list-club1">';
-				echo $sides[0];
-			echo '</span>';
+                echo '<span class="wpcm-matches-list-status wpcm-matches-list-' . ( $played ? 'result' : 'time' ) . esc_attr( $class ) . '">';
+                    echo esc_html( ( $played ? $result[1] : date_i18n( $time_format, $timestamp ) ) );
+                echo '</span>';
 
-			echo '<span class="wpcm-matches-list-col wpcm-matches-list-status">';
-				echo '<span class="wpcm-matches-list-' . ( $played ? 'result' : 'time' ) . $class . '">';
-					echo ( $played ? $result[0] : date_i18n( $time_format, $timestamp ) );
-				echo '</span>';
-			echo '</span>';
+                echo '<span class="wpcm-matches-list-club2">';
+                    echo esc_html( $sides[1] );
+                echo '</span>';
+            echo '</a>';
+        echo '</td>';
 
-			echo '<span class="wpcm-matches-list-col wpcm-matches-list-club2">';
-				echo $sides[1];
-			echo '</span>';
+        echo '<td class="wpcm-matches-list-col wpcm-matches-list-venue">';
+            echo esc_html( $venue['name'] );
+        echo '</td>';
 
-			echo '<span class="wpcm-matches-list-col wpcm-matches-list-info">';
-				echo $comp[1];
-			echo '</span>';
+        echo '<td class="wpcm-matches-list-col wpcm-matches-list-info">';
+            echo esc_html( $comp[0] );
+        echo '</td>';
 
-		echo '</a>';
-
-	echo '</li>';
+    echo '</tr>';
 }
-
-echo '</ul>';
+echo '<tfoot><tr>' . rdb_table_columns( $rdb_match_cols, false ) . '</tr></tfoot>';
+echo '</table>';
