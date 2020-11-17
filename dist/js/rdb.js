@@ -363,7 +363,7 @@ module.exports = _classCallCheck;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _Object$defineProperty = __webpack_require__(/*! ../core-js/object/define-property */ "./node_modules/@babel/runtime-corejs3/core-js/object/define-property.js");
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs3/core-js/object/define-property */ "./node_modules/@babel/runtime-corejs3/core-js/object/define-property.js");
 
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
@@ -410,13 +410,13 @@ module.exports = _interopRequireDefault;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _Object$getOwnPropertyDescriptor = __webpack_require__(/*! ../core-js/object/get-own-property-descriptor */ "./node_modules/@babel/runtime-corejs3/core-js/object/get-own-property-descriptor.js");
+var _Object$getOwnPropertyDescriptor = __webpack_require__(/*! @babel/runtime-corejs3/core-js/object/get-own-property-descriptor */ "./node_modules/@babel/runtime-corejs3/core-js/object/get-own-property-descriptor.js");
 
-var _Object$defineProperty = __webpack_require__(/*! ../core-js/object/define-property */ "./node_modules/@babel/runtime-corejs3/core-js/object/define-property.js");
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs3/core-js/object/define-property */ "./node_modules/@babel/runtime-corejs3/core-js/object/define-property.js");
 
-var _typeof = __webpack_require__(/*! ../helpers/typeof */ "./node_modules/@babel/runtime-corejs3/helpers/typeof.js");
+var _typeof = __webpack_require__(/*! @babel/runtime-corejs3/helpers/typeof */ "./node_modules/@babel/runtime-corejs3/helpers/typeof.js");
 
-var _WeakMap = __webpack_require__(/*! ../core-js/weak-map */ "./node_modules/@babel/runtime-corejs3/core-js/weak-map.js");
+var _WeakMap = __webpack_require__(/*! @babel/runtime-corejs3/core-js/weak-map */ "./node_modules/@babel/runtime-corejs3/core-js/weak-map.js");
 
 function _getRequireWildcardCache() {
   if (typeof _WeakMap !== "function") return null;
@@ -481,9 +481,9 @@ module.exports = _interopRequireWildcard;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _Symbol$iterator = __webpack_require__(/*! ../core-js/symbol/iterator */ "./node_modules/@babel/runtime-corejs3/core-js/symbol/iterator.js");
+var _Symbol$iterator = __webpack_require__(/*! @babel/runtime-corejs3/core-js/symbol/iterator */ "./node_modules/@babel/runtime-corejs3/core-js/symbol/iterator.js");
 
-var _Symbol = __webpack_require__(/*! ../core-js/symbol */ "./node_modules/@babel/runtime-corejs3/core-js/symbol.js");
+var _Symbol = __webpack_require__(/*! @babel/runtime-corejs3/core-js/symbol */ "./node_modules/@babel/runtime-corejs3/core-js/symbol.js");
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -945,8 +945,9 @@ __webpack_require__(/*! ../../modules/es.symbol.split */ "./node_modules/core-js
 __webpack_require__(/*! ../../modules/es.symbol.to-primitive */ "./node_modules/core-js-pure/modules/es.symbol.to-primitive.js");
 __webpack_require__(/*! ../../modules/es.symbol.to-string-tag */ "./node_modules/core-js-pure/modules/es.symbol.to-string-tag.js");
 __webpack_require__(/*! ../../modules/es.symbol.unscopables */ "./node_modules/core-js-pure/modules/es.symbol.unscopables.js");
-__webpack_require__(/*! ../../modules/es.math.to-string-tag */ "./node_modules/core-js-pure/modules/es.math.to-string-tag.js");
 __webpack_require__(/*! ../../modules/es.json.to-string-tag */ "./node_modules/core-js-pure/modules/es.json.to-string-tag.js");
+__webpack_require__(/*! ../../modules/es.math.to-string-tag */ "./node_modules/core-js-pure/modules/es.math.to-string-tag.js");
+__webpack_require__(/*! ../../modules/es.reflect.to-string-tag */ "./node_modules/core-js-pure/modules/es.reflect.to-string-tag.js");
 var path = __webpack_require__(/*! ../../internals/path */ "./node_modules/core-js-pure/internals/path.js");
 
 module.exports = path.Symbol;
@@ -1090,9 +1091,11 @@ module.exports = parent;
 /***/ (function(module, exports, __webpack_require__) {
 
 var parent = __webpack_require__(/*! ../../es/weak-map */ "./node_modules/core-js-pure/es/weak-map/index.js");
+__webpack_require__(/*! ../../modules/esnext.weak-map.emplace */ "./node_modules/core-js-pure/modules/esnext.weak-map.emplace.js");
 __webpack_require__(/*! ../../modules/esnext.weak-map.from */ "./node_modules/core-js-pure/modules/esnext.weak-map.from.js");
 __webpack_require__(/*! ../../modules/esnext.weak-map.of */ "./node_modules/core-js-pure/modules/esnext.weak-map.of.js");
 __webpack_require__(/*! ../../modules/esnext.weak-map.delete-all */ "./node_modules/core-js-pure/modules/esnext.weak-map.delete-all.js");
+// TODO: remove from `core-js@4`
 __webpack_require__(/*! ../../modules/esnext.weak-map.upsert */ "./node_modules/core-js-pure/modules/esnext.weak-map.upsert.js");
 
 module.exports = parent;
@@ -1506,6 +1509,7 @@ module.exports = function (originalArray, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js-pure/internals/an-object.js");
+var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "./node_modules/core-js-pure/internals/iterator-close.js");
 
 // call something on iterator step with safe closing on error
 module.exports = function (iterator, fn, value, ENTRIES) {
@@ -1513,8 +1517,7 @@ module.exports = function (iterator, fn, value, ENTRIES) {
     return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
   // 7.4.6 IteratorClose(iterator, completion)
   } catch (error) {
-    var returnMethod = iterator['return'];
-    if (returnMethod !== undefined) anObject(returnMethod.call(iterator));
+    iteratorClose(iterator);
     throw error;
   }
 };
@@ -1669,22 +1672,22 @@ var iterate = __webpack_require__(/*! ../internals/iterate */ "./node_modules/co
 module.exports = function from(source /* , mapFn, thisArg */) {
   var length = arguments.length;
   var mapFn = length > 1 ? arguments[1] : undefined;
-  var mapping, A, n, boundFunction;
+  var mapping, array, n, boundFunction;
   aFunction(this);
   mapping = mapFn !== undefined;
   if (mapping) aFunction(mapFn);
   if (source == undefined) return new this();
-  A = [];
+  array = [];
   if (mapping) {
     n = 0;
     boundFunction = bind(mapFn, length > 2 ? arguments[2] : undefined, 2);
     iterate(source, function (nextItem) {
-      A.push(boundFunction(nextItem, n++));
+      array.push(boundFunction(nextItem, n++));
     });
   } else {
-    iterate(source, A.push, A);
+    iterate(source, array.push, { that: array });
   }
-  return new this(A);
+  return new this(array);
 };
 
 
@@ -1781,7 +1784,7 @@ module.exports = {
         id: id++,
         frozen: undefined
       });
-      if (iterable != undefined) iterate(iterable, that[ADDER], that, IS_MAP);
+      if (iterable != undefined) iterate(iterable, that[ADDER], { that: that, AS_ENTRIES: IS_MAP });
     });
 
     var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
@@ -1890,7 +1893,7 @@ module.exports = function (CONSTRUCTOR_NAME, wrapper, common) {
         type: CONSTRUCTOR_NAME,
         collection: new NativeConstructor()
       });
-      if (iterable != undefined) iterate(iterable, target[ADDER], target, IS_MAP);
+      if (iterable != undefined) iterate(iterable, target[ADDER], { that: target, AS_ENTRIES: IS_MAP });
     });
 
     var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
@@ -1943,11 +1946,11 @@ module.exports = function (METHOD_NAME) {
   var regexp = /./;
   try {
     '/./'[METHOD_NAME](regexp);
-  } catch (e) {
+  } catch (error1) {
     try {
       regexp[MATCH] = false;
       return '/./'[METHOD_NAME](regexp);
-    } catch (f) { /* empty */ }
+    } catch (error2) { /* empty */ }
   } return false;
 };
 
@@ -2614,7 +2617,7 @@ module.exports =
   check(typeof self == 'object' && self) ||
   check(typeof global == 'object' && global) ||
   // eslint-disable-next-line no-new-func
-  Function('return this')();
+  (function () { return this; })() || Function('return this')();
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
@@ -2814,6 +2817,7 @@ var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core
 var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js-pure/internals/is-object.js");
 var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js-pure/internals/create-non-enumerable-property.js");
 var objectHas = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js-pure/internals/has.js");
+var shared = __webpack_require__(/*! ../internals/shared-store */ "./node_modules/core-js-pure/internals/shared-store.js");
 var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "./node_modules/core-js-pure/internals/shared-key.js");
 var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js-pure/internals/hidden-keys.js");
 
@@ -2834,11 +2838,12 @@ var getterFor = function (TYPE) {
 };
 
 if (NATIVE_WEAK_MAP) {
-  var store = new WeakMap();
+  var store = shared.state || (shared.state = new WeakMap());
   var wmget = store.get;
   var wmhas = store.has;
   var wmset = store.set;
   set = function (it, metadata) {
+    metadata.facade = it;
     wmset.call(store, it, metadata);
     return metadata;
   };
@@ -2852,6 +2857,7 @@ if (NATIVE_WEAK_MAP) {
   var STATE = sharedKey('state');
   hiddenKeys[STATE] = true;
   set = function (it, metadata) {
+    metadata.facade = it;
     createNonEnumerableProperty(it, STATE, metadata);
     return metadata;
   };
@@ -3006,16 +3012,32 @@ var isArrayIteratorMethod = __webpack_require__(/*! ../internals/is-array-iterat
 var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js-pure/internals/to-length.js");
 var bind = __webpack_require__(/*! ../internals/function-bind-context */ "./node_modules/core-js-pure/internals/function-bind-context.js");
 var getIteratorMethod = __webpack_require__(/*! ../internals/get-iterator-method */ "./node_modules/core-js-pure/internals/get-iterator-method.js");
-var callWithSafeIterationClosing = __webpack_require__(/*! ../internals/call-with-safe-iteration-closing */ "./node_modules/core-js-pure/internals/call-with-safe-iteration-closing.js");
+var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "./node_modules/core-js-pure/internals/iterator-close.js");
 
 var Result = function (stopped, result) {
   this.stopped = stopped;
   this.result = result;
 };
 
-var iterate = module.exports = function (iterable, fn, that, AS_ENTRIES, IS_ITERATOR) {
-  var boundFunction = bind(fn, that, AS_ENTRIES ? 2 : 1);
+module.exports = function (iterable, unboundFunction, options) {
+  var that = options && options.that;
+  var AS_ENTRIES = !!(options && options.AS_ENTRIES);
+  var IS_ITERATOR = !!(options && options.IS_ITERATOR);
+  var INTERRUPTED = !!(options && options.INTERRUPTED);
+  var fn = bind(unboundFunction, that, 1 + AS_ENTRIES + INTERRUPTED);
   var iterator, iterFn, index, length, result, next, step;
+
+  var stop = function (condition) {
+    if (iterator) iteratorClose(iterator);
+    return new Result(true, condition);
+  };
+
+  var callFn = function (value) {
+    if (AS_ENTRIES) {
+      anObject(value);
+      return INTERRUPTED ? fn(value[0], value[1], stop) : fn(value[0], value[1]);
+    } return INTERRUPTED ? fn(value, stop) : fn(value);
+  };
 
   if (IS_ITERATOR) {
     iterator = iterable;
@@ -3025,9 +3047,7 @@ var iterate = module.exports = function (iterable, fn, that, AS_ENTRIES, IS_ITER
     // optimisation for array iterators
     if (isArrayIteratorMethod(iterFn)) {
       for (index = 0, length = toLength(iterable.length); length > index; index++) {
-        result = AS_ENTRIES
-          ? boundFunction(anObject(step = iterable[index])[0], step[1])
-          : boundFunction(iterable[index]);
+        result = callFn(iterable[index]);
         if (result && result instanceof Result) return result;
       } return new Result(false);
     }
@@ -3036,13 +3056,33 @@ var iterate = module.exports = function (iterable, fn, that, AS_ENTRIES, IS_ITER
 
   next = iterator.next;
   while (!(step = next.call(iterator)).done) {
-    result = callWithSafeIterationClosing(iterator, boundFunction, step.value, AS_ENTRIES);
+    try {
+      result = callFn(step.value);
+    } catch (error) {
+      iteratorClose(iterator);
+      throw error;
+    }
     if (typeof result == 'object' && result && result instanceof Result) return result;
   } return new Result(false);
 };
 
-iterate.stop = function (result) {
-  return new Result(true, result);
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/internals/iterator-close.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js-pure/internals/iterator-close.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js-pure/internals/an-object.js");
+
+module.exports = function (iterator) {
+  var returnMethod = iterator['return'];
+  if (returnMethod !== undefined) {
+    return anObject(returnMethod.call(iterator)).value;
+  }
 };
 
 
@@ -3105,6 +3145,31 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports = {};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/internals/map-emplace.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js-pure/internals/map-emplace.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js-pure/internals/an-object.js");
+
+// `Map.prototype.emplace` method
+// https://github.com/thumbsupep/proposal-upsert
+module.exports = function emplace(key, handler) {
+  var map = anObject(this);
+  var value = (map.has(key) && 'update' in handler)
+    ? handler.update(map.get(key), key, map)
+    : handler.insert(key, map);
+  map.set(key, value);
+  return value;
+};
 
 
 /***/ }),
@@ -3789,7 +3854,7 @@ var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.6.4',
+  version: '3.7.0',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
 });
@@ -4631,13 +4696,9 @@ setToStringTag(global.JSON, 'JSON', true);
   !*** ./node_modules/core-js-pure/modules/es.math.to-string-tag.js ***!
   \********************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var setToStringTag = __webpack_require__(/*! ../internals/set-to-string-tag */ "./node_modules/core-js-pure/internals/set-to-string-tag.js");
-
-// Math[@@toStringTag] property
-// https://tc39.github.io/ecma262/#sec-math-@@tostringtag
-setToStringTag(Math, 'Math', true);
+// empty
 
 
 /***/ }),
@@ -4716,6 +4777,18 @@ var parseIntImplementation = __webpack_require__(/*! ../internals/number-parse-i
 $({ global: true, forced: parseInt != parseIntImplementation }, {
   parseInt: parseIntImplementation
 });
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/modules/es.reflect.to-string-tag.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/core-js-pure/modules/es.reflect.to-string-tag.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// empty
 
 
 /***/ }),
@@ -5535,6 +5608,28 @@ $({ target: 'WeakMap', proto: true, real: true, forced: IS_PURE }, {
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/modules/esnext.weak-map.emplace.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js-pure/modules/esnext.weak-map.emplace.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js-pure/internals/export.js");
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js-pure/internals/is-pure.js");
+var $emplace = __webpack_require__(/*! ../internals/map-emplace */ "./node_modules/core-js-pure/internals/map-emplace.js");
+
+// `WeakMap.prototype.emplace` method
+// https://github.com/tc39/proposal-upsert
+$({ target: 'WeakMap', proto: true, real: true, forced: IS_PURE }, {
+  emplace: $emplace
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/modules/esnext.weak-map.from.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/core-js-pure/modules/esnext.weak-map.from.js ***!
@@ -5582,12 +5677,13 @@ $({ target: 'WeakMap', stat: true }, {
 
 "use strict";
 
+// TODO: remove from `core-js@4`
 var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js-pure/internals/export.js");
 var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js-pure/internals/is-pure.js");
 var $upsert = __webpack_require__(/*! ../internals/map-upsert */ "./node_modules/core-js-pure/internals/map-upsert.js");
 
-// `WeakMap.prototype.upsert` method
-// https://github.com/thumbsupep/proposal-upsert
+// `WeakMap.prototype.upsert` method (replaced by `WeakMap.prototype.emplace`)
+// https://github.com/tc39/proposal-upsert
 $({ target: 'WeakMap', proto: true, real: true, forced: IS_PURE }, {
   upsert: $upsert
 });
@@ -12304,7 +12400,6 @@ __webpack_require__.r(__webpack_exports__);
     //	Add screenreader / text support
     this.bind('setPage:after:sr-text', function () {
         close.innerHTML = _core_oncanvas_mmenu_oncanvas__WEBPACK_IMPORTED_MODULE_0__["default"].sr_text(_this.i18n(_this.conf.screenReader.text.closeMenu));
-        _core_oncanvas_mmenu_oncanvas__WEBPACK_IMPORTED_MODULE_0__["default"].sr_aria(close, 'owns', close.getAttribute('href').slice(1));
     });
 });
 
@@ -15455,10 +15550,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./node_modules/mmenu-js/package.json ***!
   \********************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, homepage, keywords, license, main, module, name, repository, scripts, version, default */
+/*! exports provided: name, version, main, module, author, license, repository, description, keywords, scripts, devDependencies, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"mmenu-js\",\"_id\":\"mmenu-js@8.5.18\",\"_inBundle\":false,\"_integrity\":\"sha512-PmTs6orjOUnXWmNisCDEmQy+WLOukkrmtRp0iTj+rooWx+1trzFREI++v5ghE1ZSjU1IKTVSADsOyfB169m/aQ==\",\"_location\":\"/mmenu-js\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"tag\",\"registry\":true,\"raw\":\"mmenu-js\",\"name\":\"mmenu-js\",\"escapedName\":\"mmenu-js\",\"rawSpec\":\"\",\"saveSpec\":null,\"fetchSpec\":\"latest\"},\"_requiredBy\":[\"#USER\",\"/\"],\"_resolved\":\"https://registry.npmjs.org/mmenu-js/-/mmenu-js-8.5.18.tgz\",\"_shasum\":\"b8c7cbed7312f8f185ccf541a30b46222769511f\",\"_spec\":\"mmenu-js\",\"_where\":\"/Users/us00278/Sites/stats/html/wp-content/themes/usardb\",\"author\":{\"name\":\"Fred Heusschen\",\"email\":\"info@frebsite.nl\"},\"bugs\":{\"url\":\"https://github.com/FrDH/mmenu-js/issues\"},\"bundleDependencies\":false,\"deprecated\":false,\"description\":\"The best javascript plugin for app look-alike on- and off-canvas menus with sliding submenus for your website and webapp.\",\"devDependencies\":{\"gulp\":\"^4.0.2\",\"gulp-autoprefixer\":\"^6.1.0\",\"gulp-clean-css\":\"^4.3.0\",\"gulp-concat\":\"^2.6.1\",\"gulp-sass\":\"^4.1.0\",\"gulp-typescript\":\"^5.0.1\",\"typescript\":\"^3.9.7\",\"webpack-stream\":\"^5.2.1\"},\"homepage\":\"https://github.com/FrDH/mmenu-js#readme\",\"keywords\":[\"app\",\"list\",\"listview\",\"megamenu\",\"menu\",\"mmenu\",\"mobile\",\"navigation\",\"off-canvas\",\"on-canvas\",\"curtain\",\"panels\",\"submenu\"],\"license\":\"CC-BY-NC-4.0\",\"main\":\"dist/mmenu.js\",\"module\":\"src/mmenu.js\",\"name\":\"mmenu-js\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/FrDH/mmenu-js.git\"},\"scripts\":{\"build\":\"gulp default\"},\"version\":\"8.5.18\"}");
+module.exports = JSON.parse("{\"name\":\"mmenu-js\",\"version\":\"8.5.20\",\"main\":\"dist/mmenu.js\",\"module\":\"src/mmenu.js\",\"author\":\"Fred Heusschen <info@frebsite.nl>\",\"license\":\"CC-BY-NC-4.0\",\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/FrDH/mmenu-js.git\"},\"description\":\"The best javascript plugin for app look-alike on- and off-canvas menus with sliding submenus for your website and webapp.\",\"keywords\":[\"app\",\"list\",\"listview\",\"megamenu\",\"menu\",\"mmenu\",\"mobile\",\"navigation\",\"off-canvas\",\"on-canvas\",\"curtain\",\"panels\",\"submenu\"],\"scripts\":{\"build\":\"gulp default\"},\"devDependencies\":{\"gulp\":\"^4.0.2\",\"gulp-autoprefixer\":\"^6.1.0\",\"gulp-clean-css\":\"^4.3.0\",\"gulp-concat\":\"^2.6.1\",\"gulp-sass\":\"^4.1.0\",\"gulp-typescript\":\"^5.0.1\",\"typescript\":\"^3.9.7\",\"webpack-stream\":\"^5.2.1\"}}");
 
 /***/ }),
 
@@ -18557,7 +18652,7 @@ var FrontPage = /*#__PURE__*/function () {
     key: "formatDate",
     value: function formatDate(date) {
       var m = (0, _globals.moment)(date),
-          human = m.tz(sessionStorage.timezone).format('ddd, D MMM YYYY');
+          human = m.tz(sessionStorage.timezone).format('MMM D, YYYY');
       return human;
     }
   }, {

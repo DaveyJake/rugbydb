@@ -64,6 +64,10 @@
                 background-position-y: 30%;
             }
 
+            &[data-interchange*='mike-friday'] {
+                background-size: 62%;
+            }
+
             &[data-interchange*='ray-cornbill'] {
                 background-position-y: 27%;
             }

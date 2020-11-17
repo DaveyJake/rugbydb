@@ -26,9 +26,11 @@ echo '<div class="wpcm-match-score">';
             echo isset( $score[1] ) ? $score[1] : '-';
         echo '</div>';
 
-        echo '<div class="wpcm-match-score__halftime">';
-            echo isset( $intgoals['q1']['home'] ) ? $intgoals['q1']['home'] : '';
-        echo '</div>';
+        if ( ! empty( $intgoals['q1']['home'] ) ) :
+            echo '<div class="wpcm-match-score__halftime">';
+                echo $intgoals['q1']['home'];
+            echo '</div>';
+        endif;
 
     echo '</div>';
 
@@ -40,9 +42,11 @@ echo '<div class="wpcm-match-score">';
             echo isset( $score[2] ) ? $score[2] : '-';
         echo '</div>';
 
-        echo '<div class="wpcm-match-score__halftime">';
-            echo isset( $intgoals['q1']['away'] ) ? $intgoals['q1']['away'] : '';
-        echo '</div>';
+        if ( ! empty( $intgoals['q1']['away'] ) ) :
+            echo '<div class="wpcm-match-score__halftime">';
+                echo $intgoals['q1']['away'];
+            echo '</div>';
+        endif;
 
     echo '</div>';
 

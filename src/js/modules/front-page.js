@@ -324,7 +324,7 @@ class FrontPage {
 
     formatDate( date ) {
         const m     = moment( date ),
-              human = m.tz( sessionStorage.timezone ).format( 'ddd, D MMM YYYY' );
+              human = m.tz( sessionStorage.timezone ).format( 'MMM D, YYYY' );
 
         return human;
     }

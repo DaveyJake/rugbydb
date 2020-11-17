@@ -62,7 +62,7 @@ class RDB_Front_Page_Filters {
 
         echo '<div class="team-filters flex clearfix">';
         foreach ( $teams as $team ) :
-            echo '<label><input id="' . esc_attr( $team->slug ) . '" type="radio" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" /> ' . esc_html( $team->name ) . '</label>';
+            echo '<label><input id="' . esc_attr( $team->slug ) . '" type="checkbox" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" /> ' . esc_html( $team->name ) . '</label>';
         endforeach;
         echo '</div>';
     }

@@ -185,9 +185,9 @@ if ( ! function_exists( 'rdb_nav_menu' ) ) :
      */
     function rdb_nav_menu( $args = '' ) {
         $defaults = array(
-            'menu'         => 'main-menu',
-            'container_id' => 'menu',
-            'container'    => 'nav',
+            'menu'            => 'main-menu',
+            'container_id'    => 'menu',
+            'container'       => 'nav',
         );
 
         $args = wp_parse_args( $args, $defaults );

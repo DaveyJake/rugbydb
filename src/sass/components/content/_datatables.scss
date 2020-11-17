@@ -3,6 +3,10 @@
         @include breakpoint(mobile down) {
             max-width: 20px;
         }
+
+        &::before {
+            line-height: 0.845 !important;
+        }
     }
 
     th {

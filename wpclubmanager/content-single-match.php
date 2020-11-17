@@ -21,8 +21,18 @@ $away_club = get_post_meta( $post->ID, 'wpcm_away_club', true );
 if ( '5' === $home_club ) {
 	$home_thumb = $usa;
 	$away_thumb = get_the_post_thumbnail_url( $away_club );
+
+	if ( empty( $away_thumb ) ) {
+		$away       = get_post( $away_club );
+		$away_thumb = get_the_post_thumbnail_url( $away->post_parent );
+	}
 } else {
 	$home_thumb = get_the_post_thumbnail_url( $home_club );
+	if ( empty( $home_thumb ) ) {
+		$home       = get_post( $home_club );
+		$home_thumb = get_the_post_thumbnail_url( $home->post_parent );
+	}
+
 	$away_thumb = $usa;
 }
 

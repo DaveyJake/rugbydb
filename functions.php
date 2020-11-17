@@ -61,6 +61,11 @@ if ( is_plugin_active( 'wp-club-manager/wpclubmanager.php' )
 // phpcs:enable
 
 /**
+ * Theme Analytics
+ */
+require get_template_directory() . '/inc/class-rdb-tracking-analytics.php';
+
+/**
  * Theme Functions
  */
 require get_template_directory() . '/inc/rdb-theme-functions.php';

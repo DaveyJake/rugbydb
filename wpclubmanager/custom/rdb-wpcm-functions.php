@@ -274,10 +274,16 @@ function rdb_wpcm_get_match_comp( $post_id ) {
 
     if ( is_array( $competitions ) ) {
         foreach ( $competitions as $competition ) {
-            $comp        = $competition->name;
-            $t_id        = $competition->term_id;
-            $comp_meta   = get_term_meta( $t_id );
-            $comp_label  = isset( $comp_meta['wpcm_comp_label'] ) ? $comp_meta['wpcm_comp_label'][0] : '';
+            if ( $competition->parent > 0 ) {
+                $parent = get_term_by( 'term_id', $competition->parent, 'wpcm_comp' );
+                $comp   = sprintf( '%s - %s', $parent->name, $competition->name );
+            } else {
+                $comp = $competition->name;
+            }
+
+            $t_id       = $competition->term_id;
+            $comp_meta  = get_term_meta( $t_id );
+            $comp_label = isset( $comp_meta['wpcm_comp_label'] ) ? $comp_meta['wpcm_comp_label'][0] : '';
 
             if ( ! empty( $comp_label ) ) {
                 $label = $comp_label;

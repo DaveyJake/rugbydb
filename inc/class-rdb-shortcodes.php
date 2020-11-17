@@ -277,9 +277,18 @@ class RDB_Shortcodes {
             'flag'
         );
 
+        $countries = WPCM()->countries->countries;
+        $name_abbr = array_flip( $countries );
+
+        if ( isset( $name_abbr[ $atts['country'] ] ) ) {
+            $country = $name_abbr[ $atts['country'] ];
+        } else {
+            $country = $atts['country'];
+        }
+
         $class   = sanitize_text_field( $atts['class'] );
         $state   = strtolower( sanitize_text_field( $atts['state'] ) );
-        $country = strtolower( sanitize_text_field( $atts['country'] ) );
+        $country = strtolower( sanitize_text_field( $country ) );
 
         if ( ! empty( $state ) ) {
             $class .= ' ' . $state;

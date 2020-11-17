@@ -156,12 +156,28 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             }
 
             @each $side, $pos in $position {
-                &[data-#{$side}='new-zealand'] {
+                &[data-#{$side}='new-zealand'],
+                &[data-#{$side}$='-sevens'] {
                     &::#{$pos} {
-                        background-size: 120%;
+                        background-size: 137%;
                         @if ($pos == after) {
                             background-position: 12% 17%;
+                        } @else if ($pos == before) {
+                            background-position: -7rem -2rem;
+
+                            @include breakpoint(wordpress) {
+                                background: {
+                                    size: 120%;
+                                    position: -7rem -5rem;
+                                }
+                            }
                         }
+                    }
+                }
+
+                &[data-#{$side}*='fiji'] {
+                    &::#{$pos} {
+                        background-position: 0 -10rem;
                     }
                 }
 
@@ -232,6 +248,11 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 margin: rem-calc(45px) 5px 5px;
             }
 
+            &__fulltime,
+            &__halftime {
+                text-shadow: 1px 1px 5px $color__text-shadow;
+            }
+
             &__halftime {
                 font: {
                     size: 0.5em;
@@ -239,9 +260,10 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 }
             }
 
-            &__fulltime,
-            &__halftime {
-                text-shadow: 1px 1px 5px $color__text-shadow;
+            &__fulltime {
+                &:last-child {
+                    font-size: 5.5rem;
+                }
             }
         }
 

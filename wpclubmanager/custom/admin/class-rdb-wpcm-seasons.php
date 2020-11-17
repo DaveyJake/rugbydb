@@ -131,7 +131,11 @@ class RDB_WPCM_Seasons {
      * @return bool True (if checked). False (if blank).
      */
     public function season_add_new_fields( $tag ) {
-        $meta = get_term_meta( $tag->term_id, 'rdb_special_event_year', true );
+        if ( isset( $tag->term_id ) ) {
+            $meta = get_term_meta( $tag->term_id, 'rdb_special_event_year', true );
+        } else {
+            $meta = 0;
+        }
         ?>
         <div class="form-field">
             <label for="term_meta[rdb_special_event_year]"><?php esc_html_e( 'Special Event Year (e.g. Olympics; RWC)', 'rugby-database' ); ?></label>
@@ -146,7 +150,11 @@ class RDB_WPCM_Seasons {
      * @return bool True (if checked). False (if blank).
      */
     public function season_edit_new_fields( $tag ) {
-        $meta = get_term_meta( $tag->term_id, 'rdb_special_event_year', true );
+        if ( isset( $tag->term_id ) ) {
+            $meta = get_term_meta( $tag->term_id, 'rdb_special_event_year', true );
+        } else {
+            $meta = 0;
+        }
         ?>
         <tr class="form-field">
             <th scope="row"><label for="term_meta[rdb_special_event_year]"><?php esc_html_e( 'Special Event Year (e.g. Olympics; RWC)', 'rugby-database' ); ?></label></th>

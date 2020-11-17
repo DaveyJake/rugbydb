@@ -2,4 +2,8 @@ footer {
     @include rdb-clearfix;
     display: block;
     padding: 0.9375rem;
+
+    + nav {
+        display: none;
+    }
 }
