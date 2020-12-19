@@ -7,9 +7,11 @@
  * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound,Generic.ControlStructures.InlineControlStructure.NotAllowed
 
-$rdb_post_class = apply_filters( 'post_class', get_post_class() ); // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
+
+$rdb_post_class = apply_filters( 'post_class', get_post_class() );
 
 echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', $rdb_post_class ) ) . '">';
     echo '<header class="entry-header">';

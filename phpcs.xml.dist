@@ -36,9 +36,13 @@
 
 	<!-- Exclude patterns. -->
 	<exclude-pattern>/.niu/*</exclude-pattern>
+	<exclude-pattern>/inc/rdb-custom-header*</exclude-pattern>
 	<exclude-pattern>/inc/libs/*</exclude-pattern>
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/inc/class-rdb-taxonomy-*</exclude-pattern>
+	<exclude-pattern>/inc/class-rdb-tracking-*</exclude-pattern>
+	<exclude-pattern>dist/img/*</exclude-pattern>
+	<exclude-pattern>src/img/*</exclude-pattern>
     <exclude-pattern>/vendor/*</exclude-pattern>
     <exclude-pattern>/_wpclubmanager/*</exclude-pattern>
     <exclude-pattern>/wpclubmanager/*</exclude-pattern>
@@ -153,7 +157,7 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="rdb,_rdb" />
+			<property name="prefixes" type="array" value="rdb,_rdb,wpclubmanager" />
 		</properties>
 	</rule>
 

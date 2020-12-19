@@ -1,3 +1,5 @@
+@import '../abstracts/abstracts';
+
 .wpcm {
     &_club {
         .entry-title {
@@ -59,7 +61,7 @@
             }
 
             &-status {
-                @extend .text-center;
+                text-align: center;
             }
 
             &-fixture {

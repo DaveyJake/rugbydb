@@ -1,3 +1,5 @@
+@import '../abstracts/abstracts';
+
 $block: 120px;
 $badge: 150px;
 $badge-overflow-height: 13rem;
@@ -6,8 +8,10 @@ $border: 1px solid #ddd;
 $border-space: 2px;
 $direction: left center right;
 $icons: (venue: right, referee: left);
+$padding: 0.5em;
 $position: (home: before, away: after);
 $offset: (before: -8.5rem, after: 0.5rem );
+$offset--small: (before: -2.5rem, after: 1.5rem);
 $offset--medium: (before: -4.5rem, after: 1.5rem);
 $offset--large: (before: -3.5rem, after: 1.5rem);
 
@@ -51,11 +55,19 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             &.home-logo {
                 left: 0;
                 transform: translateX(20%);
+
+                &[data-interchange*='black-ferns'] {
+                    width: $badge-overflow-height;
+                }
             }
 
             &.away-logo {
                 right: 0;
                 transform: translateX(-20%);
+
+                &[data-interchange*='black-ferns'] {
+                    width: $badge-overflow-height;
+                }
             }
 
             @include breakpoint(wordpress) {
@@ -64,14 +76,14 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         }
 
         &-comp {
-            padding-top: 0.5em;
+            padding-top: $padding;
 
             @include breakpoint(medium) {
                 padding-top: 0;
             }
 
             div:last-child {
-                padding-top: 0.5em;
+                padding-top: $padding;
             }
         }
 
@@ -79,12 +91,12 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             text-transform: inherit;
 
             &-local {
-                padding-left: 0.5em;
+                padding-left: $padding;
                 white-space: nowrap;
             }
 
             &-website {
-                padding-right: 0.5em;
+                padding-right: $padding;
                 white-space: nowrap;
             }
 
@@ -106,13 +118,24 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             }
         }
 
+        &-head-coach {
+            .dashicons-before {
+                padding-top: 0.4em;
+
+                &::before {
+                    margin-top: 2px;
+                    margin-right: 2px;
+                }
+            }
+        }
+
         &-info {
             display: flex;
             justify-content: space-between;
             padding: 0;
             height: $badge-overflow-height;
             overflow: hidden;
-            @extend .relative;
+            position: relative;
             @include breakpoint(medium) {
                 height: $badge-overflow-height--desktop;
             }
@@ -124,7 +147,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                     size: 125%;
                     repeat: no-repeat;
                 }
-                @extend .absolute;
+                position: absolute;
                 @include half-width;
                 height: inherit;
                 opacity: 0.25;
@@ -149,6 +172,12 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 background-image: var(--away-badge);
             }
 
+            &[data-away='asm-clermont-auvergne'] {
+                &::after {
+                    background-position-y: -2.7rem;
+                }
+            }
+
             &[data-home='france-xv'] {
                 &::before {
                     background-position-y: 8%;
@@ -156,8 +185,31 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             }
 
             @each $side, $pos in $position {
-                &[data-#{$side}='new-zealand'],
-                &[data-#{$side}$='-sevens'] {
+                &[data-#{$side}*='argentina'] {
+                    &::#{$pos} {
+                        background-position-y: 22%;
+                    }
+                }
+
+                &[data-#{$side}*='fiji'] {
+                    &::#{$pos} {
+                        background-position: 0 -10rem;
+                    }
+                }
+
+                &[data-#{$side}*='scotland'] {
+                    &::#{$pos} {
+                        background-position-y: 27%;
+                    }
+                }
+
+                &[data-#{$side}*='wales'] {
+                    &::#{$pos} {
+                        background-position-y: 15%;
+                    }
+                }
+
+                &[data-#{$side}*='new-zealand'] {
                     &::#{$pos} {
                         background-size: 137%;
                         @if ($pos == after) {
@@ -175,20 +227,14 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                     }
                 }
 
-                &[data-#{$side}*='fiji'] {
-                    &::#{$pos} {
-                        background-position: 0 -10rem;
-                    }
-                }
-
-                &[data-#{$side}='canada'],
+                &[data-#{$side}*='canada'],
                 &[data-#{$side}='united-states'] {
                     &::#{$pos} {
-                        background-position: map-get($offset, $pos);
+                        background-position: map-get($offset--small, $pos);
                     }
                 }
 
-                &[data-#{$side}='canada'] {
+                &[data-#{$side}*='canada'] {
                     @include breakpoint(medium) {
                         &::#{$pos} {
                             background-position: map-get($offset--medium, $pos);
@@ -213,7 +259,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         }
 
         &-referee {
-            padding-top: 0.5em;
+            padding-top: $padding;
 
             @include breakpoint(medium) {
                 padding-top: 0;
@@ -228,7 +274,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         }
 
         &-report {
-            padding: 0.5em 0.5em 0 0.5em;
+            padding: $padding $padding 0 $padding;
 
             @include breakpoint(wordpress) {
                 padding: 1em 1em 0 1em;
@@ -255,7 +301,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
 
             &__halftime {
                 font: {
-                    size: 0.5em;
+                    size: $padding;
                     weight: 500;
                 }
             }
@@ -288,7 +334,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 }
 
                 .name {
-                    @extend .text-left;
+                    text-align: left;
                 }
             }
 
@@ -300,19 +346,19 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             .p,
             .c,
             .dg {
-                @extend .text-center;
+                text-align: center;
             }
         }
 
         &-team {
-            padding-top: 0.5em;
+            padding-top: $padding;
         }
 
         @each $icon, $dir in $icons {
             &-#{$icon} {
                 .icon {
-                    width: 23px;
-                    height: 15px;
+                    width: 20px;
+                    height: 13px;
                     display: inline-block;
                     padding: 0;
                     margin: {
@@ -337,7 +383,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             }
 
             @include breakpoint(wordpress) {
-                padding-top: 0.5em;
+                padding-top: $padding;
             }
 
             @each $dir in $direction {
@@ -345,7 +391,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                     @include full-width;
                     font-size: 1em;
                     float: none;
-                    @extend .text-center;
+                    text-align: center;
 
                     @include breakpoint(medium) {
                         width: 33.333%;
@@ -362,10 +408,10 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 display: flex;
                 flex-direction: column;
                 margin: auto;
-                @extend .text-center;
+                text-align: center;
 
                 > :not(.wpcm-match-comp) {
-                    padding-top: 0.5em;
+                    padding-top: $padding;
                 }
 
                 .wpcm-match {
@@ -424,7 +470,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
 
         &-title,
         &-excerpt {
-            @extend .text-center;
+            text-align: center;
         }
 
         &-title {
@@ -442,7 +488,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         }
 
         &-excerpt {
-            margin: 0.25em 0 0.5em;
+            margin: 0.25em 0 $padding;
             font: {
                 size: 1em;
                 weight: 800;
@@ -464,7 +510,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             .featured,
             .supplementary {
                 &-image {
-                    @extend .relative;
+                    position: relative;
                     line-height: 0.7;
 
                     &__description,

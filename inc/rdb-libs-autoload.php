@@ -16,7 +16,7 @@
  * @return void
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
 
 // phpcs:disable
 spl_autoload_register( function( $class ) {

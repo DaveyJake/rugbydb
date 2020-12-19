@@ -275,6 +275,8 @@ class RDB_WPCM_Settings {
 
             update_post_meta( $match->ID, 'wr_usa_team', $rdb_world[ $wr ] );
         }
+
+        wp_reset_postdata();
     }
 
     /**

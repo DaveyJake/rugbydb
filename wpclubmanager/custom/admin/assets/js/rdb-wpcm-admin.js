@@ -84,6 +84,7 @@ jQuery( function( $ ) {
                 neutral           = $wpcm_inline_data.find( '.neutral' ).text(),
                 friendly          = $wpcm_inline_data.find( '.friendly' ).text(),
                 played            = $wpcm_inline_data.find( '.played' ).text(),
+                opponent          = $wpcm_inline_data.find( '.opponent' ).text(),
                 homeScoreHT       = $wpcm_inline_data.find( '.home-ht-goals' ).text(),
                 awayScoreHT       = $wpcm_inline_data.find( '.away-ht-goals' ).text(),
                 videoUrl          = $wpcm_inline_data.find( '.video' ).text();
@@ -99,6 +100,11 @@ jQuery( function( $ ) {
             // World Rugby ID.
             $( '[name="wr_id"]' ).val( wrId );
             $( '[name="usar_scrum_id"]' ).val( scrumId );
+
+            // Opponent
+            if ( opponent ) {
+                setTimeout( setSelectedValue( $( '#post_opponent' ), opponent ), 0 );
+            }
 
             // Halftime score.
             $( '[name="wpcm_goals[q1][home]"]' ).val( homeScoreHT );

@@ -26,6 +26,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</span>
 				</label>
 
+				<label class="alignleft">
+					<span class="title"><?php esc_html_e( 'Opponent', 'wp-club-manager' ); ?></span>
+					<span class="input-text-wrap">
+						<select class="team" name="wpcm_opponent" id="post_opponent">
+							<?php foreach ( $opponents as $id => $title ) : ?>
+								<?php echo '<option value="' . esc_attr( $id ) . '">' . esc_html( $title ) . '</option>'; ?>
+							<?php endforeach; ?>
+						</select>
+					</span>
+				</label>
+
 				<br class="clear" />
 			<?php endif; ?>
 

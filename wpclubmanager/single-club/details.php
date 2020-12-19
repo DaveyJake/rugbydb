@@ -9,9 +9,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 global $post, $details;
 
-$venues = get_the_terms( $post, 'wpcm_venue' );
+$children = get_posts(
+	array(
+		'post_type'   => 'wpcm_club',
+		'post_parent' => $post->ID,
+	)
+);
 
-d( $venues );
+$child_urls = array();
+
+$venues = get_the_terms( $post, 'wpcm_venue' );
 
 echo '<table class="union-details stack">';
 	echo '<tbody>';
@@ -57,8 +64,30 @@ echo '<table class="union-details stack">';
 
 		if ( $details['website'] ) :
 			echo '<tr class="website">';
-				echo '<th>Team Website</th>';
+				echo '<th>Main Website</th>';
 				echo '<td><a href="' . esc_url( $details['website'] ) . '" target="_blank">' . esc_html( $details['website'] ) . '</a></td>';
+			echo '</tr>';
+		endif;
+
+		if ( $post->post_parent ) :
+			$parent = get_post( $post->post_parent );
+
+			echo '<tr class="parent-union">';
+				echo '<th>Union</th>';
+				echo '<td><a href="' . esc_url( trailingslashit( get_permalink( $post->post_parent ) ) ) . '">' . esc_html( $parent->post_title ) . '</a></td>';
+			echo '</tr>';
+		endif;
+
+		if ( $children ) :
+			echo '<tr class="teams">';
+				echo '<th>Teams</th>';
+				echo '<td>';
+				foreach ( $children as $child ) :
+					$child_urls[ $child->post_name ] = '<a href="' . esc_url( trailingslashit( get_permalink( $child->ID ) ) ) . '">' . esc_html( rdb_team_nickname( $child->ID ) ) . '</a>';
+				endforeach;
+				ksort( $child_urls );
+				echo implode( ' • ', array_values( $child_urls ) );
+				echo '</td>';
 			echo '</tr>';
 		endif;
 	echo '</tbody>';

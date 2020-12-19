@@ -1,6 +1,11 @@
 .wpcm {
+    &-row {
+        max-width: $size__site-main-width !important;
+        height: inherit;
+    }
+
     &-column {
-        &:not(.flex):not(.relative) {
+        &:not(.flex):not(.relative):not(.pagination) {
             width: 100%;
             float: left;
             @include breakpoint(medium) {
@@ -69,7 +74,7 @@
 
     &_venue {
         h3 {
-            @extend .text-center;
+            text-align: center;
         }
     }
 

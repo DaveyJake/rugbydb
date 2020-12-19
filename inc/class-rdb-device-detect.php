@@ -7,13 +7,13 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
 
 // Autoload Sinergi detection.
-require_once get_template_directory() . '/inc/rdb-libs-autoload.php'; // phpcs:ignore
+require_once get_template_directory() . '/inc/rdb-libs-autoload.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
 // Load `Mobile_Detect` class.
-require_once get_template_directory() . '/inc/libs/Mobile_Detect.php'; // phpcs:ignore
+require_once get_template_directory() . '/inc/libs/Mobile_Detect.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
 /**
  * All detection features for the theme.

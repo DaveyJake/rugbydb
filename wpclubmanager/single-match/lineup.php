@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 global $post;
 
 $played                   = get_post_meta( $post->ID, 'wpcm_played', true );
-$players                  = unserialize( get_post_meta( $post->ID, 'wpcm_players', true ) );
+$players                  = maybe_unserialize( get_post_meta( $post->ID, 'wpcm_players', true ) );
 $wpcm_player_stats_labels = wpcm_get_preset_labels();
 $subs_not_used            = get_post_meta( $post->ID, '_wpcm_match_subs_not_used', true );
 $wr_id                    = get_post_meta( $post->ID, 'wr_id', true );

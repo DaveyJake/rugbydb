@@ -7,9 +7,9 @@
  * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+// phpcs:disable Generic.ControlStructures.InlineControlStructure.NotAllowed,Generic.WhiteSpace.ScopeIndent
 
-// phpcs:disable Generic.WhiteSpace.ScopeIndent
+defined( 'ABSPATH' ) || exit;
 
 echo '<section class="no-results not-found">';
     echo '<header class="page-header">';

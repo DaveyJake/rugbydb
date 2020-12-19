@@ -20,7 +20,7 @@ if ( $played )
     if ( isset( $intgoals['q1'] ) )
     {
         echo '<div class="wpcm-ss-halftime wpcm-box-scores">';
-        echo $intgoals['q1']['home'] . ' ' . $sep . ' ' . $intgoals['q1']['away'];
+        echo absint( $intgoals['q1']['home'] ) . ' ' . $sep . ' ' . absint( $intgoals['q1']['away'] );
         echo '</div>';
     }
 }

@@ -1,17 +1,14 @@
-.wpcm {
-    &-row {
-        max-width: $size__site-main-width;
-        height: inherit;
-    }
-}
-
 .sticky {
     display: block;
 }
 
 .post,
-.page:not(body) {
+.page:not(.page-about):not(body) {
     margin: 0 0 1.5em;
+}
+
+#post-3157 {
+    margin-bottom: 0;
 }
 
 .updated:not(.published) {

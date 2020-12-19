@@ -1319,13 +1319,14 @@ var arraySpeciesCreate = __webpack_require__(/*! ../internals/array-species-crea
 
 var push = [].push;
 
-// `Array.prototype.{ forEach, map, filter, some, every, find, findIndex }` methods implementation
+// `Array.prototype.{ forEach, map, filter, some, every, find, findIndex, filterOut }` methods implementation
 var createMethod = function (TYPE) {
   var IS_MAP = TYPE == 1;
   var IS_FILTER = TYPE == 2;
   var IS_SOME = TYPE == 3;
   var IS_EVERY = TYPE == 4;
   var IS_FIND_INDEX = TYPE == 6;
+  var IS_FILTER_OUT = TYPE == 7;
   var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
   return function ($this, callbackfn, that, specificCreate) {
     var O = toObject($this);
@@ -1334,7 +1335,7 @@ var createMethod = function (TYPE) {
     var length = toLength(self.length);
     var index = 0;
     var create = specificCreate || arraySpeciesCreate;
-    var target = IS_MAP ? create($this, length) : IS_FILTER ? create($this, 0) : undefined;
+    var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_OUT ? create($this, 0) : undefined;
     var value, result;
     for (;length > index; index++) if (NO_HOLES || index in self) {
       value = self[index];
@@ -1346,7 +1347,10 @@ var createMethod = function (TYPE) {
           case 5: return value;             // find
           case 6: return index;             // findIndex
           case 2: push.call(target, value); // filter
-        } else if (IS_EVERY) return false;  // every
+        } else switch (TYPE) {
+          case 4: return false;             // every
+          case 7: push.call(target, value); // filterOut
+        }
       }
     }
     return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : target;
@@ -1374,7 +1378,10 @@ module.exports = {
   find: createMethod(5),
   // `Array.prototype.findIndex` method
   // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
-  findIndex: createMethod(6)
+  findIndex: createMethod(6),
+  // `Array.prototype.filterOut` method
+  // https://github.com/tc39/proposal-array-filtering
+  filterOut: createMethod(7)
 };
 
 
@@ -3854,7 +3861,7 @@ var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.7.0',
+  version: '3.8.1',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
 });
@@ -18315,13 +18322,20 @@ var _helpers = __webpack_require__(/*! ../utils/helpers */ "./src/js/utils/helpe
  * This file contains the main IIFE that generates the match results table on
  * the website home page.
  *
- * @file   This file defines the `frontPageTable` module.
+ * @file   This file defines the `FrontPage` module.
  * @author Davey Jacobson <daveyjake21@gmail.com>
  * @since  1.0.0
  */
-// JS version of WP's `admin_url` PHP function.
+
+/**
+ * JS version of WP's `admin_url` PHP function.
+ *
+ * @since 1.0.0
+ *
+ * @type {Function}
+ */
 var adminUrl = _helpers.util.adminUrl;
-/* eslint-disable computed-property-spacing, no-else-return, arrow-parens, new-cap */
+/* eslint-disable computed-property-spacing, no-else-return, arrow-parens, new-cap, no-unused-vars */
 
 /**
  * Front page results table.
@@ -18335,6 +18349,11 @@ var adminUrl = _helpers.util.adminUrl;
  */
 
 var FrontPage = /*#__PURE__*/function () {
+  /**
+   * Primary constructor.
+   *
+   * @since 1.0.0
+   */
   function FrontPage() {
     (0, _classCallCheck2["default"])(this, FrontPage);
 
@@ -18349,6 +18368,12 @@ var FrontPage = /*#__PURE__*/function () {
 
     this._yadcf();
   }
+  /**
+   * Initialize Chosen.js on non-mobile screens.
+   *
+   * @since 1.0.0
+   */
+
 
   (0, _createClass2["default"])(FrontPage, [{
     key: "filters",
@@ -18359,6 +18384,13 @@ var FrontPage = /*#__PURE__*/function () {
         });
       }
     }
+    /**
+     * Initialize YetAnotherDataTablesCustomFilter.js
+     *
+     * @access private
+     * @since 1.0.0
+     */
+
   }, {
     key: "_yadcf",
     value: function _yadcf() {
@@ -18419,6 +18451,13 @@ var FrontPage = /*#__PURE__*/function () {
         text_data_delimeter: '&nbsp;'
       }]);
     }
+    /**
+     * Initialize DataTables.js.
+     *
+     * @access private
+     * @since 1.0.0
+     */
+
   }, {
     key: "_dataTable",
     value: function _dataTable() {
@@ -18565,7 +18604,7 @@ var FrontPage = /*#__PURE__*/function () {
           }
         }],
         buttons: false,
-        dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column"p>>',
+        dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column pagination"p>>',
         language: {
           loadingRecords: '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" />',
           search: '',
@@ -18640,6 +18679,12 @@ var FrontPage = /*#__PURE__*/function () {
       });
       return table;
     }
+    /**
+     * DataTables custom handler.
+     *
+     * @since 1.0.0
+     */
+
   }, {
     key: "dtErrorHandler",
     value: function dtErrorHandler() {
@@ -18648,6 +18693,16 @@ var FrontPage = /*#__PURE__*/function () {
         console.log('An error has been reported by DataTables: ', message);
       }).DataTable(); // eslint-disable-line
     }
+    /**
+     * Get formatted date.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} date ISO-8601 string.
+     *
+     * @return {string}     Human-readable date string.
+     */
+
   }, {
     key: "formatDate",
     value: function formatDate(date) {
@@ -18655,6 +18710,20 @@ var FrontPage = /*#__PURE__*/function () {
           human = m.tz(sessionStorage.timezone).format('MMM D, YYYY');
       return human;
     }
+    /**
+     * [logoResult description]
+     *
+     * @since 1.0.0
+     *
+     * @param {string} fixture  Post title of a match (i.e. "United States v Some Country").
+     * @param {string} result   Match result.
+     * @param {string} homeLogo URL of home team logo.
+     * @param {string} awayLogo URL of away team logo.
+     * @param {object} links    Object containing links to the clubs.
+     *
+     * @return {string}         HTML output.
+     */
+
   }, {
     key: "logoResult",
     value: function logoResult(fixture, result, homeLogo, awayLogo, links) {
@@ -18664,11 +18733,31 @@ var FrontPage = /*#__PURE__*/function () {
           scores = result.split(/\s-\s/);
       return (0, _concat["default"])(_context2 = (0, _concat["default"])(_context3 = (0, _concat["default"])(_context4 = (0, _concat["default"])(_context5 = (0, _concat["default"])(_context6 = (0, _concat["default"])(_context7 = (0, _concat["default"])(_context8 = (0, _concat["default"])(_context9 = "<div class=\"fixture-result flex\"><a href=\"".concat(links.home_union, "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context9, homeLogo, "\" alt=\"")).call(_context8, teams[0], "\" height=\"22\" /></a><span class=\"result\"><a href=\"")).call(_context7, links.match, "\" rel=\"bookmark\">")).call(_context6, scores[0], " - ")).call(_context5, scores[1], "</a></span><a href=\"")).call(_context4, links.away_union, "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context3, awayLogo, "\" alt=\"")).call(_context2, teams[1], "\" height=\"22\" /></a></div>");
     }
+    /**
+     * Get competition name from API.
+     *
+     * @since 1.0.0
+     *
+     * @param {object} competition API response of competition object.
+     *
+     * @return {string}            Competition name.
+     */
+
   }, {
     key: "getCompetition",
     value: function getCompetition(competition) {
-      return competition.name;
+      return (!_globals._.isEmpty(competition.parent) ? competition.parent + ' - ' : '') + competition.name;
     }
+    /**
+     * Get opponent from API.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} fixture Post title of a match (i.e. "United States v Some Country").
+     *
+     * @return {string}        The opponent's name.
+     */
+
   }, {
     key: "getOpponent",
     value: function getOpponent(fixture) {
@@ -18727,6 +18816,13 @@ _Object$defineProperty(exports, "pageOpponents", {
   }
 });
 
+_Object$defineProperty(exports, "pageStaff", {
+  enumerable: true,
+  get: function get() {
+    return _pageStaff.pageStaff;
+  }
+});
+
 _Object$defineProperty(exports, "singleWpcmClub", {
   enumerable: true,
   get: function get() {
@@ -18754,6 +18850,8 @@ var _frontPage = __webpack_require__(/*! ./front-page */ "./src/js/modules/front
 
 var _pageOpponents = __webpack_require__(/*! ./page-opponents */ "./src/js/modules/page-opponents.js");
 
+var _pageStaff = __webpack_require__(/*! ./page-staff */ "./src/js/modules/page-staff.js");
+
 var _singleWpcmClub = __webpack_require__(/*! ./single-wpcm-club */ "./src/js/modules/single-wpcm-club.js");
 
 var _singleWpcmMatch = __webpack_require__(/*! ./single-wpcm-match */ "./src/js/modules/single-wpcm-match.js");
@@ -18772,26 +18870,46 @@ var _taxonomyWpcmVenue = __webpack_require__(/*! ./taxonomy-wpcm-venue */ "./src
 "use strict";
 
 
-var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+var _ui = __webpack_require__(/*! ../ui */ "./src/js/ui/index.js");
 
 /**
  * Opponents page.
  *
  * @since 1.0.0
  */
-var $ = window.jQuery,
-    rdb = window.rdb;
-
 var pageOpponents = function pageOpponents() {
-  if ('page-opponents.php' !== rdb.template) {
-    return;
-  }
-
-  return new _utils.Request('unions', $('#nonce').val());
+  (0, _ui.cards)('page-opponents.php', 'unions');
 };
 
 module.exports = {
   pageOpponents: pageOpponents
+};
+
+/***/ }),
+
+/***/ "./src/js/modules/page-staff.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/page-staff.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _ui = __webpack_require__(/*! ../ui */ "./src/js/ui/index.js");
+
+/**
+ * Staff page.
+ *
+ * @since 1.0.0
+ */
+var pageStaff = function pageStaff() {
+  (0, _ui.cards)('page-staff.php', 'staff');
+};
+
+module.exports = {
+  pageStaff: pageStaff
 };
 
 /***/ }),
@@ -18964,6 +19082,8 @@ module.exports = {
  *
  * @since 1.0.0
  */
+
+/* eslint-disable no-unused-vars */
 var taxWpcmVenue = function (_, $, rdb) {
   if ('taxonomy-wpcm_venue.php' !== rdb.template) {
     return;
@@ -19022,6 +19142,9 @@ var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils/index.js");
     page_opponents: {
       init: (0, _modules.pageOpponents)()
     },
+    page_staff: {
+      init: (0, _modules.pageStaff)()
+    },
     single_wpcm_club: {
       init: _modules.singleWpcmClub
     },
@@ -19034,6 +19157,42 @@ var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils/index.js");
   };
   $win.on('load', _utils.master.shooter(scope));
 })(window, document, window.rdb, window.lodash, window.jQuery);
+
+/***/ }),
+
+/***/ "./src/js/ui/cards.js":
+/*!****************************!*\
+  !*** ./src/js/ui/cards.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+/**
+ * Generate cards from API.
+ *
+ * @since 1.0.0
+ *
+ * @param {string} template Name of target template.
+ * @param {string} endpoint Name of target API endpoint.
+ *
+ * @return {Request}        API request and response.
+ */
+var cards = function cards(template, endpoint) {
+  if (template !== _utils.rdb.template) {
+    return;
+  }
+
+  return new _utils.Request(endpoint, (0, _utils.$)('#nonce').val());
+};
+
+module.exports = {
+  cards: cards
+};
 
 /***/ }),
 
@@ -19051,6 +19210,13 @@ var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs3/core
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
+});
+
+_Object$defineProperty(exports, "cards", {
+  enumerable: true,
+  get: function get() {
+    return _cards.cards;
+  }
 });
 
 _Object$defineProperty(exports, "logoLettering", {
@@ -19080,6 +19246,8 @@ _Object$defineProperty(exports, "navigation", {
     return _navigation.navigation;
   }
 });
+
+var _cards = __webpack_require__(/*! ./cards */ "./src/js/ui/cards.js");
 
 var _lettering = __webpack_require__(/*! ./lettering */ "./src/js/ui/lettering.js");
 
@@ -19217,6 +19385,8 @@ __webpack_require__(/*! ../vendor/mmenu/mmenu.polyfills */ "./src/js/vendor/mmen
 
 var _mmenu2 = __webpack_require__(/*! ../vendor/mmenu/mmenu */ "./src/js/vendor/mmenu/mmenu.js");
 
+var _globals = __webpack_require__(/*! ../utils/globals */ "./src/js/utils/globals.js");
+
 /**
  * jQuery.mmenu.
  *
@@ -19226,7 +19396,7 @@ var _mmenu2 = __webpack_require__(/*! ../vendor/mmenu/mmenu */ "./src/js/vendor/
  */
 
 /* eslint-disable array-bracket-spacing, no-multi-spaces */
-var mmenu = function mmenu(rdb) {
+var mmenu = function mmenu() {
   var mmenuOpts = {
     autoHeight: false,
     dropdown: false,
@@ -19261,7 +19431,7 @@ var mmenu = function mmenu(rdb) {
     }
   };
 
-  if (rdb.is_tablet) {
+  if (_globals.rdb.is_tablet) {
     mmenuOpts.autoHeight = true;
     mmenuOpts.dropdown = true;
     mmenuOpts.extensions.push('popup');
@@ -19296,19 +19466,19 @@ module.exports = {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
 
-var _getIterator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js/get-iterator */ "./node_modules/@babel/runtime-corejs3/core-js/get-iterator.js"));
+var _getIterator = __webpack_require__(/*! @babel/runtime-corejs3/core-js/get-iterator */ "./node_modules/@babel/runtime-corejs3/core-js/get-iterator.js");
 
-var _isArray = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/array/is-array */ "./node_modules/@babel/runtime-corejs3/core-js-stable/array/is-array.js"));
+var _Array$isArray = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/array/is-array */ "./node_modules/@babel/runtime-corejs3/core-js-stable/array/is-array.js");
 
-var _getIteratorMethod2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js/get-iterator-method */ "./node_modules/@babel/runtime-corejs3/core-js/get-iterator-method.js"));
+var _getIteratorMethod = __webpack_require__(/*! @babel/runtime-corejs3/core-js/get-iterator-method */ "./node_modules/@babel/runtime-corejs3/core-js/get-iterator-method.js");
 
-var _symbol = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/symbol */ "./node_modules/@babel/runtime-corejs3/core-js-stable/symbol.js"));
+var _Symbol = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/symbol */ "./node_modules/@babel/runtime-corejs3/core-js-stable/symbol.js");
 
 var _from = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/array/from */ "./node_modules/@babel/runtime-corejs3/core-js-stable/array/from.js"));
 
 var _slice = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/slice */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/slice.js"));
 
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof _symbol["default"] === "undefined" || (0, _getIteratorMethod2["default"])(o) == null) { if ((0, _isArray["default"])(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = (0, _getIterator2["default"])(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof _Symbol === "undefined" || _getIteratorMethod(o) == null) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = _getIterator(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { var _context; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = (0, _slice["default"])(_context = Object.prototype.toString.call(o)).call(_context, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return (0, _from["default"])(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -19752,6 +19922,48 @@ _Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
+_Object$defineProperty(exports, "_", {
+  enumerable: true,
+  get: function get() {
+    return _globals._;
+  }
+});
+
+_Object$defineProperty(exports, "$", {
+  enumerable: true,
+  get: function get() {
+    return _globals.$;
+  }
+});
+
+_Object$defineProperty(exports, "moment", {
+  enumerable: true,
+  get: function get() {
+    return _globals.moment;
+  }
+});
+
+_Object$defineProperty(exports, "rdb", {
+  enumerable: true,
+  get: function get() {
+    return _globals.rdb;
+  }
+});
+
+_Object$defineProperty(exports, "wp", {
+  enumerable: true,
+  get: function get() {
+    return _globals.wp;
+  }
+});
+
+_Object$defineProperty(exports, "yadcf", {
+  enumerable: true,
+  get: function get() {
+    return _globals.yadcf;
+  }
+});
+
 _Object$defineProperty(exports, "FIFTEEN_MINUTES", {
   enumerable: true,
   get: function get() {
@@ -19830,6 +20042,8 @@ _Object$defineProperty(exports, "Request", {
 });
 
 exports.master = void 0;
+
+var _globals = __webpack_require__(/*! ./globals */ "./src/js/utils/globals.js");
 
 var _constants = __webpack_require__(/*! ./constants */ "./src/js/utils/constants.js");
 
@@ -19955,11 +20169,9 @@ var _isotopeLayout = _interopRequireDefault(__webpack_require__(/*! isotope-layo
 
 __webpack_require__(/*! isotope-packery */ "./node_modules/isotope-packery/packery-mode.js");
 
-var _ = window._,
-    $ = window.jQuery,
-    rdb = window.rdb,
-    wp = window.wp;
-(0, _jqueryBridget["default"])('isotope', _isotopeLayout["default"], $);
+var _globals = __webpack_require__(/*! ./globals */ "./src/js/utils/globals.js");
+
+(0, _jqueryBridget["default"])('isotope', _isotopeLayout["default"], _globals.$);
 /**
  * Make AJAX request to REST API.
  *
@@ -19976,7 +20188,7 @@ var Request = /*#__PURE__*/function () {
    *
    * @since 1.0.0
    *
-   * @param {string} postType   Slug of request post type.
+   * @param {string} postType   Slug of requested post type.
    * @param {string} nonce      Generated nonce key.
    * @param {string} collection Is the request for multiple items? Default true.
    * @param {number} postId     Post ID of requested item.
@@ -20021,8 +20233,8 @@ var Request = /*#__PURE__*/function () {
         args.post_id = this.postId;
       }
 
-      $.ajax({
-        url: wp.ajax.settings.url,
+      _globals.$.ajax({
+        url: _globals.wp.ajax.settings.url,
         data: args,
         dataType: 'json',
         success: function success(response) {
@@ -20030,9 +20242,9 @@ var Request = /*#__PURE__*/function () {
             return this.error();
           }
 
-          var isoTmpls = ['players', 'teams', 'opponents']; // eslint-disable-line
+          var isoTmpls = ['players', 'staff', 'venues', 'opponents']; // eslint-disable-line
 
-          if ((0, _includes["default"])(_).call(_, isoTmpls, rdb.post_name)) {
+          if ((0, _includes["default"])(_globals._).call(_globals._, isoTmpls, _globals.rdb.post_name)) {
             return Request._isoTmpls(response.data);
           } else if ('match' === this.postType && this.postId > 0) {
             return Request._timelineTmpl(response.data);
@@ -20044,7 +20256,7 @@ var Request = /*#__PURE__*/function () {
           console.log(xhr + '\n' + textStatus + '\n' + errorThrown);
         },
         complete: function complete() {
-          $('#scroll-status').remove();
+          (0, _globals.$)('#scroll-status').remove();
         }
       });
     }
@@ -20066,25 +20278,29 @@ var Request = /*#__PURE__*/function () {
       var term = {
         club: 'union',
         match: 'match',
+        staff: 'staff',
         player: 'player',
         opponent: 'union',
         wpcm_club: 'union',
         wpcm_match: 'match',
-        wpcm_player: 'player'
+        wpcm_staff: 'staff',
+        wpcm_player: 'players'
       };
       var terms = {
         club: 'unions',
         match: 'matches',
+        staff: 'staff',
         player: 'players',
         opponent: 'unions',
         wpcm_club: 'unions',
         wpcm_match: 'matches',
+        wpcm_staff: 'staff',
         wpcm_player: 'players'
       };
 
-      if (this.collection && !_.isUndefined(terms[request])) {
+      if (this.collection && !_globals._.isUndefined(terms[request])) {
         return terms[request];
-      } else if (!_.isUndefined(term[request])) {
+      } else if (!_globals._.isUndefined(term[request])) {
         return term[request];
       }
 
@@ -20103,23 +20319,25 @@ var Request = /*#__PURE__*/function () {
   }, {
     key: "_isoTmpls",
     value: function _isoTmpls(data) {
-      var $selector = $('#grid').imagesLoaded(function () {
+      var $selector = (0, _globals.$)('#grid').imagesLoaded(function () {
         $selector.isotope({
           itemSelector: '.card',
           percentPosition: true,
           getSortData: {
-            name: '[data-name]'
+            order: '[data-order]'
           },
-          sortBy: 'name',
+          sortBy: 'order',
           packery: {
             columnWidth: '.card',
             gutter: 0
           }
         });
+
         var tmpl = $selector.data('tmpl'),
-            template = wp.template(tmpl),
+            template = _globals.wp.template(tmpl),
             result = template(data),
-            cards = $(result);
+            cards = (0, _globals.$)(result);
+
         $selector.append(cards).isotope('appended', cards).isotope({
           sortBy: 'name'
         });
@@ -20138,14 +20356,15 @@ var Request = /*#__PURE__*/function () {
   }, {
     key: "_timelineTmpl",
     value: function _timelineTmpl(data) {
-      if (_.isString(data)) {
+      if (_globals._.isString(data)) {
         return;
       }
 
-      var $selector = $('#rdb-match-timeline'),
+      var $selector = (0, _globals.$)('#rdb-match-timeline'),
           tmpl = $selector.data('tmpl'),
-          template = wp.template(tmpl),
+          template = _globals.wp.template(tmpl),
           result = template(data);
+
       console.log(template);
       return $selector.append(result);
     }

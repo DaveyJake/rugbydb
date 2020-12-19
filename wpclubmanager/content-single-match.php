@@ -85,8 +85,8 @@ $type = ( get_post_meta( $post->ID, 'wpcm_played', true ) ? 'result' : 'fixture'
 			/**
 			 * wpclubmanager_single_match_fixture hook
 			 *
-			 * @hooked wpclubmanager_template_single_match_date - 20
-			 * @hooked wpclubmanager_template_single_match_comp - 30
+			 * @hooked wpclubmanager_template_single_match_comp - 10
+			 * @hooked rdb_single_match_coach - 15
 			 */
 			do_action( 'wpclubmanager_single_match_fixture' );
 
@@ -117,8 +117,8 @@ $type = ( get_post_meta( $post->ID, 'wpcm_played', true ) ? 'result' : 'fixture'
 			/**
 			 * wpclubmanager_single_match_fixture hook
 			 *
-			 * @hooked wpclubmanager_template_single_match_date - 20
-			 * @hooked wpclubmanager_template_single_match_comp - 30
+			 * @hooked wpclubmanager_template_single_match_comp - 10
+			 * @hooked rdb_single_match_coach - 15
 			 */
 			do_action( 'wpclubmanager_single_match_fixture' );
 
@@ -138,7 +138,7 @@ $type = ( get_post_meta( $post->ID, 'wpcm_played', true ) ? 'result' : 'fixture'
 
 	echo '</div>';
 
-	echo '<footer class="wpcm-entry-footer wpcm-match-details wpcm-row">';
+	echo '<article class="wpcm-entry-content wpcm-match-details wpcm-row">';
 
 		/**
 		 * wpclubmanager_single_match_report hook
@@ -157,7 +157,7 @@ $type = ( get_post_meta( $post->ID, 'wpcm_played', true ) ? 'result' : 'fixture'
 		 */
 		do_action( 'wpclubmanager_single_match_details' );
 
-	echo '</footer>';
+	echo '</article>';
 
 	do_action( 'wpclubmanager_after_single_match' );
 ?>

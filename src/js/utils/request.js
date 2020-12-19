@@ -1,11 +1,7 @@
 import jQueryBridget from 'jquery-bridget';
 import Isotope from 'isotope-layout';
 import 'isotope-packery';
-
-const _   = window._,
-      $   = window.jQuery,
-      rdb = window.rdb,
-      wp  = window.wp;
+import { _, $, rdb, wp } from './globals';
 
 jQueryBridget( 'isotope', Isotope, $ );
 
@@ -24,7 +20,7 @@ class Request {
      *
      * @since 1.0.0
      *
-     * @param {string} postType   Slug of request post type.
+     * @param {string} postType   Slug of requested post type.
      * @param {string} nonce      Generated nonce key.
      * @param {string} collection Is the request for multiple items? Default true.
      * @param {number} postId     Post ID of requested item.
@@ -71,7 +67,7 @@ class Request {
                     return this.error();
                 }
 
-                const isoTmpls = ['players', 'teams', 'opponents']; // eslint-disable-line
+                const isoTmpls = ['players', 'staff', 'venues', 'opponents']; // eslint-disable-line
 
                 if ( _.includes( isoTmpls, rdb.post_name ) ) {
                     return Request._isoTmpls( response.data );
@@ -105,20 +101,24 @@ class Request {
         const term = {
             club: 'union',
             match: 'match',
+            staff: 'staff',
             player: 'player',
             opponent: 'union',
             wpcm_club: 'union',
             wpcm_match: 'match',
-            wpcm_player: 'player'
+            wpcm_staff: 'staff',
+            wpcm_player: 'players'
         };
 
         const terms = {
             club: 'unions',
             match: 'matches',
+            staff: 'staff',
             player: 'players',
             opponent: 'unions',
             wpcm_club: 'unions',
             wpcm_match: 'matches',
+            wpcm_staff: 'staff',
             wpcm_player: 'players'
         };
 
@@ -146,9 +146,9 @@ class Request {
                 itemSelector: '.card',
                 percentPosition: true,
                 getSortData: {
-                    name: '[data-name]'
+                    order: '[data-order]'
                 },
-                sortBy: 'name',
+                sortBy: 'order',
                 packery: {
                     columnWidth: '.card',
                     gutter: 0

@@ -205,7 +205,7 @@ class RDB_WPCM_Post_Types {
             'view_item'          => __( 'View Union', 'wp-club-manager' ),
             'search_items'       => __( 'Search Unions', 'wp-club-manager' ),
             'not_found'          => __( 'No unions found', 'wp-club-manager' ),
-            'not_found_in_trash' => __( 'No unions found in trash'),
+            'not_found_in_trash' => __( 'No unions found in trash', 'wp-club-manager' ),
             'parent_item_colon'  => __( 'Parent Union:', 'wp-club-manager' ),
             'menu_name'          => __( 'Unions', 'wp-club-manager' )
         );
@@ -240,6 +240,7 @@ class RDB_WPCM_Post_Types {
      * @return array Updated settings.
      */
     public function wpcm_rest_api_args_player( $args ) {
+        $args['supports'][]            = 'page-attributes';
         $args['rest_base']             = 'players';
         $args['rest_controller_class'] = 'WP_REST_Posts_Controller';
 
@@ -254,6 +255,7 @@ class RDB_WPCM_Post_Types {
      * @return array Updated settings.
      */
     public function wpcm_rest_api_args_staff( $args ) {
+        $args['supports'][]            = 'page-attributes';
         $args['rest_base']             = 'staff';
         $args['rest_controller_class'] = 'WP_REST_Posts_Controller';
 

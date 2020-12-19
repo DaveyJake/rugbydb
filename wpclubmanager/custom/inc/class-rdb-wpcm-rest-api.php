@@ -357,8 +357,15 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             $team        = get_the_terms( $match->ID, 'wpcm_team' );
             $venue       = get_the_terms( $match->ID, 'wpcm_venue' );
 
+            $parent = '';
+
+            if ( ! empty( $competition[0]->parent ) ) {
+                $parent = get_term_by( 'term_id', $competition[0]->parent, 'wpcm_comp' );
+            }
+
             $data['competition'] = array(
                 'name'   => ! empty( $competition[0]->name ) ? $competition[0]->name : '',
+                'parent' => ! empty( $parent ) ? $parent->name : '',
                 'status' => '',
             );
 
@@ -370,7 +377,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 unset( $data['competition']['status'] );
             }
 
-            $data['season'] = $season[0]->name;
+            $data['season'] = $season[0]->slug;
 
             $data['result'] = sprintf( '%d - %d', $meta['wpcm_home_goals'][0], $meta['wpcm_away_goals'][0] );
 
@@ -677,23 +684,61 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         );
 
         foreach ( $players as $player ) {
-            $meta = get_post_meta( $player->ID );
+            $played_at     = array();
+            $played_during = array();
+            $played_in     = array();
+            $played_for    = array();
 
-            $wp_match_list = $this->wp_get_match_ID( $meta['wr_match_list'][0] );
+            $competitions = get_the_terms( $player->ID, 'wpcm_comp' );
+            $positions    = get_the_terms( $player->ID, 'wpcm_position' );
+            $seasons      = get_the_terms( $player->ID, 'wpcm_season' );
+            $teams        = get_the_terms( $player->ID, 'wpcm_team' );
+
+            if ( ! empty( $competitions ) ) {
+                foreach ( $competitions as $competition ) {
+                    $played_in[] = $competition->term_id;
+                }
+            }
+
+            if ( ! empty( $positions ) ) {
+                foreach ( $positions as $position ) {
+                    $played_at[] = $position->term_id;
+                }
+            }
+
+            if ( ! empty( $seasons ) ) {
+                foreach ( $seasons as $season ) {
+                    $played_during[] = $season->term_id;
+                }
+            }
+
+            if ( ! empty( $teams ) ) {
+                foreach ( $teams as $team ) {
+                    $played_for[] = $team->term_id;
+                }
+            }
+
+            $wr_match_list = get_post_meta( $player->ID, 'wr_match_list', true );
+            $wp_match_list = $this->wp_get_match_ID( $wr_match_list );
 
             update_post_meta( $player->ID, 'wp_match_list', $wp_match_list );
 
             $data = array(
                 'ID'            => $player->ID,
                 'title'         => $player->post_title,
-                'slug'          => sanitize_title( $player->post_title ),
+                'slug'          => $player->post_name,
                 'content'       => $player->post_content,
-                'badge'         => absint( $meta['wpcm_number'][0] ),
-                'debut_date'    => $meta['_usar_date_first_test'][0],
-                'final_date'    => $meta['_usar_date_last_test'][0],
-                'wr_id'         => absint( $meta['wr_id'][0] ),
-                'wp_match_list' => isset( $meta['wp_match_list'][0] ) ? $meta['wp_match_list'][0] : $wp_match_list,
-                'wr_match_list' => $meta['wr_match_list'][0],
+                'badge'         => absint( get_post_meta( $player->ID, 'wpcm_number', true ) ),
+                'competitions'  => $played_in,
+                'debut_date'    => get_post_meta( $player->ID, '_usar_date_first_test', true ),
+                'final_date'    => get_post_meta( $player->ID, '_usar_date_last_test', true ),
+                'image'         => get_the_post_thumbnail_url( $player->ID ),
+                'positions'     => $played_at,
+                'seasons'       => $played_during,
+                'teams'         => $played_for,
+                'wr_id'         => absint( get_post_meta( $player->ID, 'wr_id', true ) ),
+                'wp_match_list' => ! empty( $wr_match_list ) ? $wp_match_list : get_post_meta( $player->ID, 'wp_match_list', true ),
+                'wr_match_list' => $wr_match_list,
             );
 
             $api[] = $data;
@@ -729,7 +774,9 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      * @return array All found staff.
      */
     public function get_staff() {
-        $staff = get_posts(
+        $api = array();
+
+        $staffers = get_posts(
             array(
                 'post_type'      => 'wpcm_staff',
                 'post_status'    => 'publish',
@@ -737,7 +784,61 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             )
         );
 
-        return new WP_REST_Response( $staff );
+        foreach ( $staffers as $staff ) {
+            $served_as     = array();
+            $served_during = array();
+            $served_in     = array();
+            $served_for    = array();
+
+            $competitions = get_the_terms( $staff->ID, 'wpcm_comp' );
+            $jobs         = get_the_terms( $staff->ID, 'wpcm_jobs' );
+            $seasons      = get_the_terms( $staff->ID, 'wpcm_season' );
+            $teams        = get_the_terms( $staff->ID, 'wpcm_team' );
+
+            if ( ! empty( $competitions ) ) {
+                foreach ( $competitions as $competition ) {
+                    $served_in[] = $competition->term_id;
+                }
+            }
+
+            if ( ! empty( $jobs ) ) {
+                foreach ( $jobs as $job ) {
+                    $served_as[] = $job->slug;
+                }
+            }
+
+            if ( ! empty( $seasons ) ) {
+                foreach ( $seasons as $season ) {
+                    $served_during[] = $season->slug;
+                }
+            }
+
+            if ( ! empty( $teams ) ) {
+                foreach ( $teams as $team ) {
+                    $served_for[] = $team->slug;
+                }
+            }
+
+            $image_src = get_the_post_thumbnail_url( $staff->ID );
+
+            $data = array(
+                'ID'           => $staff->ID,
+                'name'         => $staff->post_title,
+                'slug'         => $staff->post_name,
+                'content'      => $staff->post_content,
+                'competitions' => $served_in,
+                'image'        => ! empty( $image_src ) ? $image_src : wpcm_placeholder_img_src(),
+                'permalink'    => get_permalink( $staff->ID ),
+                'jobs'         => $served_as,
+                'seasons'      => $served_during,
+                'teams'        => $served_for,
+                'order'        => $staff->menu_order,
+            );
+
+            $api[] = $data;
+        }
+
+        return new WP_REST_Response( $api );
     }
 
     /**

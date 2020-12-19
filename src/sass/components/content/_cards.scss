@@ -1,7 +1,13 @@
-$unit: rem-calc(15px);
+@import '../../abstracts/abstracts';
+
+$card-background: #efefef;
+$card-container-width: 90%;
+$card-margin: 0.75%;
 $card-size: 250px;
+
 $image-height: rem-calc(190px);
 $meta-height: rem-calc(30px);
+$unit: rem-calc(15px);
 
 #primary {
     padding-top: rem-calc(8px);
@@ -20,9 +26,9 @@ $meta-height: rem-calc(30px);
 }
 
 .card {
+    margin: $card-margin 0;
     width: 100%;
-    height: $card-size;
-    margin-bottom: $unit;
+    max-height: $card-size;
     filter: drop-shadow(0 1.5px 0 #fff);
 
     @include breakpoint(568px) {
@@ -47,9 +53,10 @@ $meta-height: rem-calc(30px);
 
     &__container {
         position: relative;
-        width: 80%;
+        width: $card-container-width;
         height: inherit;
         margin: auto;
+        background-color: $card-background;
     }
 
     &__image,
@@ -69,10 +76,53 @@ $meta-height: rem-calc(30px);
 
     &__meta {
         height: $meta-height;
-        @extend .text-center;
+        @include text(center);
     }
 
     &__title {
         margin: 0;
+        color: $white;
+    }
+
+    &.staff {
+        .card {
+            &__container {
+                &__title {
+                    @include absolute-bottom;
+                    padding: 0.25rem 0;
+                    @include full-width;
+                    background-color: $color__background-header;
+                    @include text(center);
+                }
+            }
+
+            &__image {
+                background-size: cover;
+            }
+        }
+
+        [title='Dennis Storer'] {
+            .card__image {
+                background-position-y: rem-calc(-17px);
+            }
+        }
+
+        [title="Eddie O'Sullivan"] {
+            .card__image {
+                background-position-y: 0;
+            }
+        }
+
+        [title='Mike Friday'] {
+            .card__image {
+                background-position-y: -$unit;
+            }
+        }
+
+        [title='Tom Billups'] {
+            .card__image {
+                background-position-y: 0;
+            }
+        }
     }
 }

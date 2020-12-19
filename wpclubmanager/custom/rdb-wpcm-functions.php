@@ -225,24 +225,89 @@ function rdb_wpcm_decode_address( $address ) {
 }
 
 /**
- * Get match team names.
+ * Get head coach for match.
  *
  * @param int $post_id The current post ID.
  *
+ * @return string      Name of head coach.
+ */
+function rdb_wpcm_get_head_coach( $post_id ) {
+    $teams     = get_the_terms( $post_id, 'wpcm_team' );
+    $seasons   = get_the_terms( $post_id, 'wpcm_season' );
+
+    $team_id   = isset( $teams[0] ) ? $teams[0]->term_id : $teams->term_id;
+    $season_id = isset( $seasons[0] ) ? $seasons[0]->term_id : $seasons->term_id;
+
+    $args = array(
+        'post_type'      => 'wpcm_roster',
+        'posts_per_page' => -1,
+        'tax_query'      => array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'wpcm_season',
+                'field'    => 'term_id',
+                'terms'    => $season_id,
+            ),
+            array(
+                'taxonomy' => 'wpcm_team',
+                'field'    => 'term_id',
+                'terms'    => $team_id,
+            ),
+        ),
+    );
+
+    $rosters = get_posts( $args );
+    $roster  = $rosters[0];
+
+    $staff_id = maybe_unserialize( get_post_meta( $roster->ID, '_wpcm_roster_staff', true ) );
+
+    $coach = get_post_field( 'post_title', $staff_id[0] );
+
+    wp_reset_postdata();
+
+    return $coach;
+}
+
+/**
+ * Get match team names.
+ *
+ * @param int  $post_id  The current post ID.
+ * @param bool $abbr     Club abbreviation.
+ * @param bool $nickname Club nickname.
+ *
  * @return array $side1 $side2
  */
-function rdb_wpcm_get_match_clubs( $post_id, $abbr = false ) {
+function rdb_wpcm_get_match_clubs( $post_id, $abbr = false, $nickname = false ) {
+    $club      = get_default_club();
     $format    = get_match_title_format();
     $home_club = get_post_meta( $post_id, 'wpcm_home_club', true );
     $away_club = get_post_meta( $post_id, 'wpcm_away_club', true );
+    $home_nick = get_post_meta( $home_club, '_wpcm_club_nickname', true );
+    $away_nick = get_post_meta( $away_club, '_wpcm_club_nickname', true );
 
-    if ( $abbr == false ) {
-        if ( $format == '%home% vs %away%' ) {
-            $side1 = rdb_wpcm_get_team_name( $home_club, $post_id );
-            $side2 = rdb_wpcm_get_team_name( $away_club, $post_id );
+    if ( false === $abbr ) {
+        if ( false === $nickname ) {
+            if ( $format == '%home% vs %away%' ) {
+                $side1 = rdb_wpcm_get_team_name( $home_club, $post_id );
+                $side2 = rdb_wpcm_get_team_name( $away_club, $post_id );
+            } else {
+                $side1 = rdb_wpcm_get_team_name( $away_club, $post_id );
+                $side2 = rdb_wpcm_get_team_name( $home_club, $post_id );
+            }
         } else {
-            $side1 = rdb_wpcm_get_team_name( $away_club, $post_id );
-            $side2 = rdb_wpcm_get_team_name( $home_club, $post_id );
+            if ( $format == '%home% vs %away%' ) {
+                $side1 = ( 'Eagles' === $home_nick ? 'USA' : $home_nick );
+                $side2 = ( 'Eagles' === $away_nick ? 'USA' : $away_nick );
+
+                $side1 = ! empty( $side1 ) ? $side1 : rdb_wpcm_get_team_name( $home_club, $post_id );
+                $side2 = ! empty( $side2 ) ? $side2 : rdb_wpcm_get_team_name( $away_club, $post_id );
+            } else {
+                $side1 = ( 'Eagles' === $away_nick ? 'USA' : $away_nick );
+                $side2 = ( 'Eagles' === $home_nick ? 'USA' : $home_nick );
+
+                $side1 = ! empty( $side1 ) ? $side1 : rdb_wpcm_get_team_name( $away_club, $post_id );
+                $side2 = ! empty( $side2 ) ? $side2 : rdb_wpcm_get_team_name( $home_club, $post_id );
+            }
         }
     } else {
         if ( $format == '%home% vs %away%' ) {
@@ -253,6 +318,8 @@ function rdb_wpcm_get_match_clubs( $post_id, $abbr = false ) {
             $side2 = get_club_abbreviation( $home_club );
         }
     }
+
+
 
     return array( $side1, $side2 );
 }
@@ -471,6 +538,44 @@ function rdb_wpcm_get_match_venue( $post ) {
 }
 
 /**
+ * Get team display names.
+ *
+ * @param int $post_id  The default club ID.
+ * @param int $match_id The current match ID.
+ *
+ * @return mixed
+ */
+function rdb_wpcm_get_team_name( $post_id, $match_id ) {
+    $club = get_default_club();
+
+    if ( $post_id === $club ) {
+
+        $teams = wp_get_object_terms( $match_id, 'wpcm_team' );
+
+        if ( ! empty( $teams ) && is_array( $teams ) ) {
+            foreach ( $teams as $team ) {
+                $team = reset( $teams );
+                $t_id = $team->term_id;
+
+                $team_label = get_term_meta( $t_id, 'wpcm_team_label', true );
+
+                if ( $team_label ) {
+                    $team_name =  $team_label;
+                } else {
+                    $team_name = get_the_title( $post_id );
+                }
+            }
+        } else {
+            $team_name = get_the_title( $post_id );
+        }
+    } else {
+        $team_name = get_the_title( $post_id );
+    }
+
+    return $team_name;
+}
+
+/**
  * Get timezone from venue.
  *
  * @param array|string $args {
@@ -559,41 +664,99 @@ function rdb_google_venue_timezone( $venue, $match_id ) {
 }
 
 /**
- * Get team display names.
+ * Get club head to heads.
  *
- * @param int $post_id  The default club ID.
- * @param int $match_id The current match ID.
+ * @param int $post_id Current post ID.
  *
- * @return mixed
+ * @return array       All head-to-head matches.
  */
-function rdb_wpcm_get_team_name( $post_id, $match_id ) {
-    $club = get_default_club();
+function rdb_wpcm_head_to_heads( $post_id ) {
+    $club    = get_default_club();
+    $matches = array();
 
-    if ( $post_id === $club ) {
+    // Include child clubs.
+    $child_args = array(
+        'post_type'   => 'wpcm_club',
+        'post_parent' => $post_id,
+    );
+    $children = get_posts( $child_args );
+    wp_reset_postdata();
 
-        $teams = wp_get_object_terms( $match_id, 'wpcm_team' );
+    $args = array(
+        'post_type'      => 'wpcm_match',
+        'posts_per_page' => -1,
+        'meta_query'     => array(
+            array(
+                'relation' => 'OR',
+                array(
+                    'key'   => 'wpcm_home_club',
+                    'value' => $post_id
+                ),
+                array(
+                    'key'   => 'wpcm_away_club',
+                    'value' => $post_id
+                )
+            ),
+            array(
+                'relation' => 'OR',
+                array(
+                    'key'   => 'wpcm_home_club',
+                    'value' => $club
+                ),
+                array(
+                    'key'   => 'wpcm_away_club',
+                    'value' => $club
+                ),
+            ),
+        )
+    );
 
-        if ( ! empty( $teams ) && is_array( $teams ) ) {
-            foreach ( $teams as $team ) {
-                $team = reset( $teams );
-                $t_id = $team->term_id;
+    $club_matches = get_posts( $args );
+    wp_reset_postdata();
 
-                $team_label = get_term_meta( $t_id, 'wpcm_team_label', true );
-
-                if ( $team_label ) {
-                    $team_name =  $team_label;
-                } else {
-                    $team_name = get_the_title( $post_id );
-                }
-            }
-        } else {
-            $team_name = get_the_title( $post_id );
-        }
-    } else {
-        $team_name = get_the_title( $post_id );
+    foreach ( $club_matches as $match ) {
+        $matches[] = $match;
     }
 
-    return $team_name;
+    foreach ( $children as $child ) {
+        $child_args = array(
+            'post_type'      => 'wpcm_match',
+            'posts_per_page' => -1,
+            'meta_query'     => array(
+                array(
+                    'relation' => 'OR',
+                    array(
+                        'key'   => 'wpcm_home_club',
+                        'value' => $child->ID,
+                    ),
+                    array(
+                        'key'   => 'wpcm_away_club',
+                        'value' => $child->ID,
+                    ),
+                ),
+                array(
+                    'relation' => 'OR',
+                    array(
+                        'key'   => 'wpcm_home_club',
+                        'value' => $club
+                    ),
+                    array(
+                        'key'   => 'wpcm_away_club',
+                        'value' => $club
+                    ),
+                ),
+            ),
+        );
+
+        $child_matches = get_posts( $child_args );
+        wp_reset_postdata();
+
+        foreach ( $child_matches as $match ) {
+            $matches[] = $match;
+        }
+    }
+
+    return $matches;
 }
 
 
@@ -671,6 +834,35 @@ function rdb_wpcm_match_away_badge() {
 }
 
 /**
+ * Load head coach.
+ *
+ * @since 1.0.0
+ */
+function rdb_single_match_coach() {
+    wpclubmanager_get_template( 'single-match/head-coach.php' );
+}
+
+/**
+ * Output the local match date via {@see 'wpclubmanager_single_match_venue'}.
+ *
+ * @since 1.0.0
+ */
+function wpclubmanager_template_single_match_date_local() {
+    wpclubmanager_get_template( 'single-match/date-local.php' );
+}
+
+/**
+ * Get match timeline.
+ *
+ * @since 1.0.0
+ *
+ * @param int $wr_id World Rugby match ID.
+ */
+function rdb_wpcm_match_timeline() {
+    wpclubmanager_get_template( 'single-match/timeline.php' );
+}
+
+/**
  * Hooks to remove via {@see 'wpclubmanager_before_single_match'}.
  *
  * @see rdb_wpcm_template_hooks_match_badges()
@@ -692,37 +884,19 @@ function rdb_reset_wpcm_hooks() {
     add_action( 'wpclubmanager_single_match_badge_home', 'rdb_wpcm_match_home_badge', 5 );
     add_action( 'wpclubmanager_single_match_badge_away', 'rdb_wpcm_match_away_badge', 15 );
     add_action( 'wpclubmanager_single_match_info', 'wpclubmanager_template_single_match_score', 10 );
-    add_action( 'wpclubmanager_single_match_fixture', 'wpclubmanager_template_single_match_comp', 20 );
+    add_action( 'wpclubmanager_single_match_fixture', 'wpclubmanager_template_single_match_comp', 10 );
+    add_action( 'wpclubmanager_single_match_fixture', 'rdb_single_match_coach', 15, 1 );
     add_action( 'wpclubmanager_single_match_meta', 'wpclubmanager_template_single_match_referee', 5 );
     add_action( 'wpclubmanager_single_match_meta', 'wpclubmanager_template_single_match_team', 10 );
     add_action( 'wpclubmanager_single_match_meta', 'wpclubmanager_template_single_match_date', 15 );
 
     add_action( 'wpclubmanager_single_match_details', 'rdb_wpcm_match_timeline', 15, 1 );
+
+    add_action( 'wpclubmanager_single_match_venue', 'wpclubmanager_template_single_match_date_local', 15 );
 }
 
 add_action( 'wpclubmanager_before_single_match', 'rdb_reset_wpcm_hooks' );
 
-/**
- * Output the local match date via {@see 'wpclubmanager_single_match_venue'}.
- *
- * @since 1.0.0
- */
-function wpclubmanager_template_single_match_date_local() {
-    wpclubmanager_get_template( 'single-match/date-local.php' );
-}
-
-add_action( 'wpclubmanager_single_match_venue', 'wpclubmanager_template_single_match_date_local', 15 );
-
-/**
- * Get match timeline.
- *
- * @since 1.0.0
- *
- * @param int $wr_id World Rugby match ID.
- */
-function rdb_wpcm_match_timeline() {
-    wpclubmanager_get_template( 'single-match/timeline.php' );
-}
 
 /**
  * Get match timeline.

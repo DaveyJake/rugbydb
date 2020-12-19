@@ -7,7 +7,9 @@
  * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+// phpcs:disable
+
+defined( 'ABSPATH' ) || exit;
 
 if ( ! is_active_sidebar( 'sidebar-1' ) ) {
     return;

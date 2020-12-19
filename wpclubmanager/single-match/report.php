@@ -15,9 +15,11 @@ $played = get_post_meta( $post->ID, 'wpcm_played', true );
 $title  = get_post_meta( $post->ID, 'usar_match_report_title', true );
 $title  = ! empty( $title ) ? $title : 'Match Report';
 
+$content = get_the_content();
+
 if ( $played )
 {
-	if ( get_the_content() )
+	if ( ! empty( $content ) && $content !== 'Coming soon.' )
     {
 		echo '<div class="wpcm-match-report">';
 			echo '<h1 class="wpcm-entry-title">';

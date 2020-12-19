@@ -9,6 +9,8 @@
  * @since 1.0.0
  */
 
+// phpcs:disable WordPress.Security
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -60,12 +62,10 @@ class RDB_Template_AJAX {
      * @since 1.0.0
      */
     public function __construct() {
-        // phpcs:disable
         $this->collection = isset( $_REQUEST['collection'] ) ? $this->sanitize( $_REQUEST['collection'] ) : true;
         $this->post_type  = isset( $_REQUEST['post_type'] ) ? $this->sanitize( $_REQUEST['post_type'] ) : 'posts';
         $this->post_id    = isset( $_REQUEST['post_id'] ) ? $this->sanitize( $_REQUEST['post_id'] ) : 0;
         $this->nonce      = isset( $_REQUEST['nonce'] ) ? $this->sanitize( $_REQUEST['nonce'] ) : '';
-        // phpcs:enable
 
         add_action( "wp_ajax_get_{$this->post_type}", array( $this, 'request' ), 10 );
         add_action( "wp_ajax_nopriv_get_{$this->post_type}", array( $this, 'request' ), 10 );
@@ -108,7 +108,7 @@ class RDB_Template_AJAX {
 
         // phpcs:disable
         // Uncomment when modifying REST API response.
-        // delete_transient( $trans_key );
+        delete_transient( $trans_key );
         // phpcs:enable
 
         $data = get_transient( $trans_key );

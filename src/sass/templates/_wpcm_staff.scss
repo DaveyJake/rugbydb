@@ -1,3 +1,5 @@
+@import '../abstracts/abstracts';
+
 .wpcm {
     &_staff {
         .icon {
@@ -109,7 +111,7 @@
                     top: 0.25em;
                     bottom: 0.4em;
                 }
-                @extend .text-center;
+                text-align: center;
                 font: {
                     size: 2em;
                     weight: 900;

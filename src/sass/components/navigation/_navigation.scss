@@ -22,7 +22,7 @@
 
         &.word {
             &-rugby {
-                color: #9e0b2a;
+                color: $color__logo-red;
 
                 span {
                     &.char {
@@ -44,7 +44,7 @@
                         }
                         // Y -4.75px --> -1.75px skewX(-3deg)
                         &-Y {
-                            margin-left: 0;
+                            margin-left: -1px;
                             transform: skewX(-3deg);
                         }
                     }
@@ -52,8 +52,8 @@
             }
 
             &-db {
-                margin-left: 3px;
-                color: #06355e;
+                margin-left: 4px;
+                color: $color__logo-blue;
 
                 span {
                     &.char {
@@ -82,6 +82,7 @@
 
         .menu-main-menu-container {
             position: absolute;
+            top: 0;
             bottom: 0;
             right: 0;
             height: inherit;
@@ -106,6 +107,10 @@
                 position: relative;
                 text-align: center;
                 width: $menu-item-width;
+
+                &.toggler {
+                    width: 43px;
+                }
                 //&:hover > a,
                 //&.focus > a {}
 
@@ -148,18 +153,31 @@
 
 // Site menu.
 .menu {
-    padding: 1rem;
+    padding-right: 1rem;
     height: inherit;
 
-    &-main-menu-container {
-        @include breakpoint(medium down) {
-            display: none;
-        }
+    @include breakpoint(wordpress) {
+        padding: 1rem;
     }
 
-    // Small menu.
-    &-toggle {
-        display: block;
+    &-main-menu-container {
+        ul {
+            list-style: none;
+
+            @include breakpoint(medium down) {
+                margin: 0;
+                float: right;
+
+                li {
+                    &:not(.toggler) {
+                        display: none;
+                    }
+
+                    @include vertical-center;
+                    right: 1rem;
+                }
+            }
+        }
     }
 
     &-item {
@@ -175,10 +193,6 @@
 
 // Mobile screen width.
 @include breakpoint(37.5em) {
-    .menu-toggle {
-        display: none;
-    }
-
     .main-navigation ul {
         display: flex;
     }

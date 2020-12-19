@@ -664,6 +664,8 @@ add_action( 'rdb_body_open', 'rdb_svgs' );
  * Insert JS template into DOM.
  *
  * @since 1.0.0
+ *
+ * @see rdb_ajax()
  */
 function rdb_tmpl() {
     /**
@@ -671,7 +673,7 @@ function rdb_tmpl() {
      *
      * @var array
      */
-    $rdb_tmpls = array( 'players', 'teams', 'opponents', 'timeline' );
+    $rdb_tmpls = array( 'players', 'staff', 'opponents', 'timeline' );
 
     // Iterate through each page.
     foreach ( $rdb_tmpls as $rdb_page ) {

@@ -16,12 +16,9 @@ echo '<h1 class="entry-title' . esc_attr( $title_class ) . '">';
 
 	echo '<span>';
 
-	if ( has_post_thumbnail() )
-	{
+	if ( has_post_thumbnail() ) {
 		the_post_thumbnail( 'crest-medium' );
-	}
-	else
-	{
+	} else {
 		apply_filters( 'wpclubmanager_club_image', sprintf( '<img src="%s" alt="Placeholder" />', wpcm_placeholder_img_src() ), $post->ID );
 	}
 

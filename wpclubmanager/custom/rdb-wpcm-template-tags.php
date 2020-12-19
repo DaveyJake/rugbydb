@@ -65,3 +65,22 @@ function rdb_term_template_class( $class = '' ) {
 
     echo ' class="' . implode( ' ', $classes ) . '"';
 }
+
+/**
+ * Get union team's nickname (if applicable).
+ *
+ * @since 1.0.0
+ *
+ * @param int $club_id Current club ID.
+ *
+ * @return string      Club nickname.
+ */
+function rdb_team_nickname( $club_id ) {
+    $nickname = get_post_meta( $club_id, '_wpcm_club_nickname', true );
+
+    if ( empty( $nickname ) ) {
+        $nickname = get_the_title( $club_id );
+    }
+
+    return $nickname;
+}

@@ -5,7 +5,9 @@
  * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+// phpcs:disable Generic.ControlStructures.InlineControlStructure.NotAllowed
+
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Register widget area.

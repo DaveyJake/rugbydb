@@ -22,9 +22,7 @@ $post_id = get_the_ID();
         echo '<div class="wpcm-profile-meta">';
 
             echo '<h1 class="entry-title">';
-
                 the_title();
-
             echo '</h1>';
 
             echo '<table>';

@@ -5,13 +5,19 @@
  * @package Rugby_Database
  */
 
+// phpcs:disable Squiz.Commenting.BlockComment.WrongEnd
+
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Set the short initialization when AJAX requesting custom endpoints.
+ *
+ * @since 1.0.0
+ *
+ * @see rdb_tmpl()
  */
 function rdb_ajax() {
-    $ajax_pages = array( 'coaches', 'players', 'teams', 'opponents' );
+    $ajax_pages = array( 'players', 'staff', 'venues', 'opponents' );
 
     if ( is_page( $ajax_pages ) || is_singular( 'wpcm_match' ) ) {
         echo '<input type="hidden" name="dbi-ajax" value="1" />';
@@ -52,6 +58,42 @@ function rdb_body_classes( $classes ) {
 }
 
 /**
+ * Filters the CSS classes applied to a menu item’s list item element.
+ *
+ * @param string[] $classes Array of the CSS classes applied to the menu's <li> element.
+ * @param WP_Post  $item    Current menu item.
+ * @param stdClass $args    Object of `wp_nav_menu` arguments.
+ * @param int      $depth   Depth of menu item. Used for padding.
+ */
+function rdb_menu_item_classes( $classes, $item, $args, $depth ) {
+    $whitelist = array();
+
+    if ( 'main-menu' === $args->theme_location ) {
+        if ( in_array( 'toggler', $classes, true ) ) {
+            $whitelist[] = 'toggler';
+        }
+
+        if ( in_array( 'current-menu-item', $classes, true ) ) {
+            $whitelist[] = 'current-menu-item';
+        }
+
+        if ( in_array( 'current-menu-parent', $classes, true ) ) {
+            $whitelist[] = 'current-menu-parent';
+        }
+
+        if ( in_array( 'current-menu-ancestor', $classes, true ) ) {
+            $whitelist[] = 'current-menu-ancestor';
+        }
+
+        $classes = array();
+
+        $classes[] = 'menu-item';
+    }//end if
+
+    return array_merge( $classes, $whitelist );
+}
+
+/**
  * Add a pingback url auto-discovery header for single posts, pages, or attachments.
  */
 function rdb_pingback_header() {
@@ -61,9 +103,20 @@ function rdb_pingback_header() {
 }
 
 /**
+ * Add RDB favicons.
+ */
+function rdb_favicons() {
+    // phpcs:disable WPThemeReview.CoreFunctionality.NoFavicon.NoFavicon
+    echo '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">';
+    echo '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">';
+    echo '<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">';
+    echo '<link rel="manifest" href="/site.webmanifest">';
+}
+
+/**
  * Prevent images being resized by post type.
  *
- * @since USA_Rugby 2.5.0
+ * @since Rugby_Database 1.0.0
  *
  * @see 'intermediate_image_sizes'
  * @see 'intermediate_image_sizes_advanced'
@@ -140,12 +193,13 @@ function _rdb_prevent_post_type_image_resize( $post_type, $sizes ) {
     return $sizes;
 }
 
-// phpcs:disable
-
 /** Filters *******************************************************************/
 
 // Custom body classes.
 add_filter( 'body_class', 'rdb_body_classes' );
+
+// Menu item classes.
+add_filter( 'nav_menu_css_class', 'rdb_menu_item_classes', 10, 4 );
 
 // Image resizing.
 add_filter( 'intermediate_image_sizes', 'rdb_prevent_post_type_image_resize' );
@@ -155,6 +209,9 @@ add_filter( 'intermediate_image_sizes_advanced', 'rdb_prevent_post_type_image_re
 
 // Pingback head tag.
 add_action( 'wp_head', 'rdb_pingback_header' );
+
+// Favicons.
+add_action( 'rdb_head_open', 'rdb_favicons' );
 
 // Custom endpoint AJAX.
 add_action( 'wp_footer', 'rdb_ajax' );

@@ -5,6 +5,8 @@
  * @package Rugby_Database
  */
 
+// phpcs:disable Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace,Squiz.Commenting.LongConditionClosingComment.Missing,Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -13,6 +15,18 @@ defined( 'ABSPATH' ) || exit;
  * @var string
  */
 $rdb_dev = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+/**
+ * Inline styles above the fold.
+ *
+ * @see 'wp_head'
+ * @since 1.0.0
+ */
+function rdb_inline_styles() {
+    echo '<style>';
+        echo file_get_contents( get_theme_file_path( 'dist/css/above-the-fold.css' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+    echo '</style>';
+}
 
 /**
  * Preload theme styles.
@@ -186,10 +200,15 @@ function rdb_scripts() {
             'dep' => false,
             'ver' => rdb_file_version( 'dist/css/page-players.css' ),
         ),
-        'rdb-staff' => array(
+        'rdb-single-staff' => array(
             'src' => get_theme_file_uri( "dist/css/single-wpcm_staff{$rdb_dev}.css" ),
             'dep' => false,
             'ver' => rdb_file_version( 'dist/css/single-wpcm_staff.css' ),
+        ),
+        'rdb-staff' => array(
+            'src' => get_theme_file_uri( "dist/css/page-staff{$rdb_dev}.css" ),
+            'dep' => false,
+            'ver' => rdb_file_version( 'dist/css/page-staff.css' ),
         ),
         'rdb-teams' => array(
             'src' => get_theme_file_uri( "dist/css/page-teams{$rdb_dev}.css" ),
@@ -312,10 +331,7 @@ function rdb_scripts() {
     // All pages.
     wp_enqueue_style( 'typekit' );
 
-    // Pages with cards.
-    $cards = array( 'players', 'teams', 'opponents' );
-
-    // phpcs:disable
+    // Load custom styles & scripts for specified pages & posts.
     if ( is_front_page() ) {
         // DataTables.
         wp_enqueue_style( 'datatables' );
@@ -365,6 +381,10 @@ function rdb_scripts() {
     }
     // Single match stylesheet.
     elseif ( 'wpcm_match' === $post_type ) {
+        if ( ! wp_script_is( 'dashicons' ) ) {
+            wp_enqueue_style( 'dashicons' );
+        }
+
         wp_enqueue_style( 'rdb-match' );
         wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'dt' );
@@ -379,10 +399,13 @@ function rdb_scripts() {
     }
     // Single staff stylesheet.
     elseif ( 'wpcm_staff' === $post_type ) {
-        wp_enqueue_style( 'rdb-staff' );
+        wp_enqueue_style( 'rdb-single-staff' );
     }
     // Page.
     elseif ( 'page' === $post_type ) {
+        // Pages with cards.
+        $cards = array( 'players', 'staff', 'teams', 'opponents' );
+
         if ( is_page( $cards ) ) {
             // Stylesheet for cards page.
             foreach ( $cards as $page ) {
@@ -444,6 +467,8 @@ function rdb_admin_scripts() {
 	wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . "/admin/js/rdb-admin{$rdb_dev}.js", array( 'jquery' ), rdb_file_version( 'admin/js/rdb-admin.js' ), true );
 }
 
+// Inline styles.
+add_action( 'rdb_head_open', 'rdb_inline_styles' );
 // Preload scripts.
 add_filter( 'style_loader_tag', 'rdb_preload_theme_styles', 10, 4 );
 // Theme scripts.

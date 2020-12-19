@@ -101,15 +101,15 @@
 }
 
 
-/** Matches */
+/** Matches, Rosters */
 .wp-list-table.fixed .column-team {
-    width: 103px;
+    width: 115px;
 }
 .wp-list-table.fixed .column-friendly {
     width: 67px;
 }
 .wp-list-table.fixed .column-season {
-    width: 53px;
+    width: 55px;
 }
 .wp-list-table.fixed .column-score {
     width: 63px;
@@ -202,11 +202,15 @@
 [class*="taxonomy-wpcm_"] .column-players,
 [class*="taxonomy-wpcm_"] .column-hosted,
 [class*="taxonomy-wpcm_"] .column-ID {
-    width: 56px;
+    width: 58px;
 }
 
 [class*="taxonomy-wpcm_"] [id='term_meta[usar_timezone]'] {
     width: 100%;
+}
+
+.taxonomy-wpcm_comp .column-label {
+    width: 80px;
 }
 
 .taxonomy-wpcm_venue #col-container .chosen-container {

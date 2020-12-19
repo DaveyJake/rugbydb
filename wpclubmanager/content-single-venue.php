@@ -43,7 +43,7 @@ do_action( 'wpclubmanager_before_single_venue' );
 
     echo '</div>';
 
-    echo '<div class="wpcm-entry-content wpcm-row term-description">';
+    echo '<article class="wpcm-entry-content wpcm-row term-description">';
 
         /**
          * Entry content hooks.
@@ -52,7 +52,7 @@ do_action( 'wpclubmanager_before_single_venue' );
          */
         do_action( 'rdb_single_venue_content' );
 
-    echo '</div>';
+    echo '</article>';
 
     echo '<hr />';
 

@@ -132,7 +132,11 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
         endif;
 
         if ( $data['post_type'] === 'wpcm_player' ) :
-            if ( ! empty( $_POST['_usar_nickname'] ) ) {
+            if ( ! empty( $_POST['wpcm_number'] ) ) {
+                $badge = $_POST['wpcm_number'];
+            }
+
+            if ( ! empty( $_POST['_usar_nickname'] ) && $badge >= 62 ) {
                 $firstname = $_POST['_usar_nickname'];
             } else {
                 $firstname = $_POST['_wpcm_firstname'];
@@ -142,25 +146,13 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 $lastname = $_POST['_wpcm_lastname'];
             }
 
-            if ( ! empty( $_POST['wpcm_number'] ) ) {
-                $badge = $_POST['wpcm_number'];
-            }
-
             if ( ! empty( $_REQUEST['wpcm_team'] ) ) {
                 $team = $_REQUEST['wpcm_team'];
             }
 
-            if ( ! ( empty( $_POST['_wpcm_firstname'] ) || empty( $_POST['_wpcm_lastname'] ) ) ) {
-                if ( $badge >= 62 && 'mens-eagles' === $team ) {
-                    $data['post_title'] = $firstname . ' ' . $lastname;
-                    $data['post_name']  = sanitize_title( $firstname . '-' . $lastname );
-                } elseif ( 'womens-eagles' === $team ) {
-                    $data['post_title'] = $firstname . ' ' . $lastname;
-                    $data['post_name']  = sanitize_title( $firstname . '-' . $lastname );
-                } else {
-                    $data['post_title'] = $firstname . ' ' . $lastname;
-                    $data['post_name']  = sanitize_title( $firstname . '-' . $lastname );
-                }
+            if ( ! ( empty( $firstname ) && empty( $_POST['_wpcm_lastname'] ) ) ) {
+                $data['post_title'] = $firstname . ' ' . $lastname;
+                $data['post_name']  = sanitize_title( $firstname . '-' . $lastname );
             }
         endif;
 
@@ -340,6 +332,11 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
 
                 get_inline_data( $post );
 
+                $home = get_post_meta( $post->ID, 'wpcm_home_club', true );
+                $away = get_post_meta( $post->ID, 'wpcm_away_club', true );
+
+                $opp_id = ( '5' !== $home ? $home : $away );
+
                 $played = get_post_meta( $post->ID, 'wpcm_played', true );
                 $score  = wpcm_get_match_result( $post->ID );
 
@@ -382,6 +379,7 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                         <span class="season">' . $season[0]->slug . '</span>
                         <span class="venue">' . $venue['slug'] . '</span>
                         <span class="played">' . $played . '</span>
+                        <span class="opponent">' . $opp_id . '</span>
                         <span class="score">' . $score[0] . '</span>
                         <span class="home-ht-goals">' . ( isset( $goals['q1']['home'] ) ? $goals['q1']['home'] : '' ) . '</span>
                         <span class="away-ht-goals">' . ( isset( $goals['q1']['away'] ) ? $goals['q1']['away'] : '' ) . '</span>
@@ -399,16 +397,17 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 ';
                 break;
             case 'team':
-                if ( taxonomy_exists( 'wpcm_team' ) )
-                {
+                if ( taxonomy_exists( 'wpcm_team' ) ) {
                     $terms = get_the_terms( $post->ID, 'wpcm_team' );
 
                     if ( $terms ) {
                         foreach ( $terms as $term ) {
-                            $teams[] = $term->name;
+                            if ( isset( $term->name ) ) {
+                                $teams[] = $term->name;
+                            }
                         }
 
-                        $output = join( ', ', $teams );
+                        $output = trim( $teams[0] );
                     }
                     else {
                         $output = '';
@@ -801,19 +800,43 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
 
         if ( 'wpcm_match' === $post_type )
         {
-            $teams = get_terms( 'wpcm_team', array(
+            $club = get_default_club();
+
+            $opponents = array();
+            $opps      = get_posts(
+                array(
+                    'post_type'      => 'wpcm_club',
+                    'posts_per_page' => -1,
+                )
+            );
+
+            foreach ( $opps as $opp ) {
+                if ( $club !== $opp->ID ) {
+                    $opponents[ $opp->ID ] = $opp->post_title;
+                }
+            }
+
+            $opponents = array_flip( $opponents );
+            ksort( $opponents );
+            $opponents = array_flip( $opponents );
+
+            $teams = get_terms( array(
+                'taxonomy'   => 'wpcm_team',
                 'hide_empty' => false,
             ) );
 
-            $seasons = get_terms( 'wpcm_season', array(
+            $seasons = get_terms( array(
+                'taxonomy'   => 'wpcm_season',
                 'hide_empty' => false,
             ) );
 
-            $comps = get_terms( 'wpcm_comp', array(
+            $comps = get_terms( array(
+                'taxonomy'   => 'wpcm_comp',
                 'hide_empty' => false,
             ) );
 
-            $venues = get_terms( 'wpcm_venue', array(
+            $venues = get_terms( array(
+                'taxonomy'   => 'wpcm_venue',
                 'hide_empty' => false,
             ) );
 
@@ -827,7 +850,8 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
         }
         elseif ( 'wpcm_player' === $post_type )
         {
-            $positions = get_terms( 'wpcm_position', array(
+            $positions = get_terms( array(
+                'taxonomy'   => 'wpcm_position',
                 'hide_empty' => false,
             ) );
 
@@ -855,6 +879,8 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
     public function quick_edit_save( $post ) {
         $post_id = $post->ID;
 
+        $club = (string) get_default_club();
+
         if ( 'wpcm_player' === $post->post_type ) {
             if ( isset( $_REQUEST['_wpcm_firstname'] ) ) {
                 update_post_meta( $post_id, '_wpcm_firstname', wpcm_clean( $_REQUEST['_wpcm_firstname'] ) );
@@ -873,22 +899,29 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
             }
         }
         elseif ( 'wpcm_match' === $post->post_type ) {
+            if ( isset( $_REQUEST['wpcm_comp_status'] ) ) {
+                update_post_meta( $post_id, 'wpcm_comp_status', wpcm_clean( $_REQUEST['wpcm_comp_status'] ) );
+            }
+
             if ( ! empty( $_REQUEST['wpcm_neutral'] ) ) {
                 update_post_meta( $post_id, 'wpcm_neutral', wpcm_clean( $_REQUEST['wpcm_neutral'] ) );
             } else {
                 delete_post_meta( $post_id, 'wpcm_neutral' );
             }
 
-            if ( isset( $_REQUEST['_wpcm_video'] ) ) {
-                update_post_meta( $post_id, '_wpcm_video', wpcm_clean( $_REQUEST['_wpcm_video'] ) );
+            $home = get_post_meta( $post_id, 'wpcm_home_club', true );
+            $away = get_post_meta( $post_id, 'wpcm_away_club', true );
+            $key  = ( $club !== $home ? 'wpcm_home_club' : 'wpcm_away_club' );
+            if ( isset( $_REQUEST['wpcm_opponent'] ) ) {
+                update_post_meta( $post_id, $key, wpcm_clean( $_REQUEST['wpcm_opponent'] ) );
             }
 
             if ( isset( $_REQUEST['wpcm_referee_country'] ) ) {
                 update_post_meta( $post_id, 'wpcm_referee_country', wpcm_clean( $_REQUEST['wpcm_referee_country'] ) );
             }
 
-            if ( isset( $_REQUEST['wpcm_comp_status'] ) ) {
-                update_post_meta( $post_id, 'wpcm_comp_status', wpcm_clean( $_REQUEST['wpcm_comp_status'] ) );
+            if ( isset( $_REQUEST['_wpcm_video'] ) ) {
+                update_post_meta( $post_id, '_wpcm_video', wpcm_clean( $_REQUEST['_wpcm_video'] ) );
             }
         }
     }

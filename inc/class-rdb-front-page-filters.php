@@ -56,13 +56,35 @@ class RDB_Front_Page_Filters {
             array(
                 'taxonomy'   => 'wpcm_team',
                 'hide_empty' => false,
-                'parent'     => 0,
             )
         );
 
         echo '<div class="team-filters flex clearfix">';
         foreach ( $teams as $team ) :
-            echo '<label><input id="' . esc_attr( $team->slug ) . '" type="checkbox" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" /> ' . esc_html( $team->name ) . '</label>';
+            $abbr = '';
+
+            switch ( $team->name ) {
+                case 'Men\'s Eagles':
+                    $abbr = 'MXV';
+                    break;
+                case 'Women\'s Eagles':
+                    $abbr = 'WXV';
+                    break;
+                case 'Men\'s Sevens':
+                    $abbr = 'M7s';
+                    break;
+                case 'Team USA Men':
+                    $abbr = 'Oly (M)';
+                    break;
+                case 'Women\'s Sevens':
+                    $abbr = 'W7s';
+                    break;
+                case 'Team USA Women':
+                    $abbr = 'Oly (W)';
+                    break;
+            }
+
+            echo '<label><input id="' . esc_attr( $team->slug ) . '" type="checkbox" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" /> <span class="show-for-large">' . esc_html( $team->name ) . '</span><span class="hide-for-large">' . esc_html( $abbr ) . '</span></label>';
         endforeach;
         echo '</div>';
     }

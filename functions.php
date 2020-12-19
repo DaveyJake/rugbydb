@@ -7,9 +7,9 @@
  * @package Rugby_Database
  */
 
-defined( 'ABSPATH' ) || exit;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound,Squiz.Commenting.InlineComment.InvalidEndChar,Squiz.PHP.CommentedOutCode.Found
 
-// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Date format as found in the database.
@@ -56,9 +56,7 @@ if ( is_plugin_active( 'wp-club-manager/wpclubmanager.php' )
 /**
  * Extended Taxonomy Search
  */
-// phpcs:disable
 // require get_template_directory() . '/inc/class-rdb-taxonomy-search.php';
-// phpcs:enable
 
 /**
  * Theme Analytics

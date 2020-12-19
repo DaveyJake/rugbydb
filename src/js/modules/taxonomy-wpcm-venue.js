@@ -4,6 +4,8 @@
  * @since 1.0.0
  */
 
+/* eslint-disable no-unused-vars */
+
 const taxWpcmVenue = ( function( _, $, rdb ) {
     if ( 'taxonomy-wpcm_venue.php' !== rdb.template ) {
         return;

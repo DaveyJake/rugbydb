@@ -9,7 +9,9 @@
  * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+// phpcs:disable
+
+defined( 'ABSPATH' ) || exit;
 
 		echo '</div><!-- #page -->';
 

@@ -128,10 +128,12 @@ function cssDestination( path ) {
  */
 function jsDestination( path ) {
     if ( path.basename.match( /(-admin|widget-)/ ) ) {
-        path.dirname = PATHS.admin + '/js/';
+        path.dirname = PATHS.admin;
     } else {
-        path.dirname = PATHS.dist + '/js/';
+        path.dirname = PATHS.dist;
     }
+
+    path.dirname += '/js/';
 
     return path;
 }

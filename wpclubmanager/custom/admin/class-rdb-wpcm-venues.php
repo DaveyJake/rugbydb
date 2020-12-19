@@ -304,6 +304,7 @@ class RDB_WPCM_Venues {
      * @param int    $t_id   The term ID.
      */
     public function venue_custom_columns( $value, $column, $t_id ) {
+        $term      = get_term_by( 'term_id', $t_id, 'wpcm_venue' );
         $term_meta = get_term_meta( $t_id );
 
         switch ( $column ) {
@@ -319,7 +320,7 @@ class RDB_WPCM_Venues {
             case 'hosted':
                 $args = array(
                     'post_type'  => 'wpcm_match',
-                    'wpcm_venue' => $t_id,
+                    'wpcm_venue' => $term->slug,
                 );
                 $count = $this->venue_match_count( $t_id );
                 echo '<a href="' . esc_url( add_query_arg( $args, admin_url( 'edit.php' ) ) ) . '">' . ( ! empty( $count ) ? $count : '0' ) . '</a>';

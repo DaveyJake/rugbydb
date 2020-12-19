@@ -5,7 +5,7 @@
  * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'rdb_setup' ) ) :
 	/**
@@ -35,7 +35,7 @@ if ( ! function_exists( 'rdb_setup' ) ) :
 		 */
 		add_theme_support( 'title-tag' );
 
-		/*
+		/**
 		 * Enable support for Post Thumbnails on posts and pages.
 		 *
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
@@ -47,7 +47,10 @@ if ( ! function_exists( 'rdb_setup' ) ) :
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
-			array( 'main-menu' => esc_html__( 'Primary', 'rdb' ) )
+			array(
+				'main-menu' => esc_html__( 'Primary', 'rugby-database' ),
+				'side-menu' => esc_html__( 'Toggle', 'rugby-database' ),
+			)
 		);
 
 		/**

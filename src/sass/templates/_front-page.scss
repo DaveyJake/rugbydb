@@ -15,7 +15,14 @@
 
         .team-filters {
             justify-content: space-evenly;
-            margin-bottom: 0.5em;
+            margin: {
+                top: 0.5em;
+                bottom: 0.5em;
+            }
+
+            @include breakpoint(medium) {
+                margin-top: 0;
+            }
         }
 
         #all-matches {
@@ -39,7 +46,15 @@
                     .paging_full_numbers {
                         margin: auto;
                     }
+
+                    .wpcm-column {
+                        width: 100%;
+                    }
                 }
+            }
+
+            &_filter {
+                padding-left: 0.55%;
             }
         }
     }

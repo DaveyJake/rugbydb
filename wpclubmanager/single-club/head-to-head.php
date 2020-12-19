@@ -16,7 +16,7 @@ if ( 'yes' === get_option( 'wpcm_club_settings_h2h' ) || 'yes' === get_option( '
 }
 
 if ( 'yes' === get_option( 'wpcm_club_settings_h2h' ) ) {
-	$matches = wpcm_head_to_heads( $post->ID );
+	$matches = rdb_wpcm_head_to_heads( $post->ID );
 	$outcome = wpcm_head_to_head_count( $matches );
 
 	echo '<table class="wpcm-h2h-list">';

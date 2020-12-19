@@ -460,8 +460,8 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
             }
         }
 
-        // Date of last match.
-        if ( ! isset( $_POST['_usar_date_last_match'] ) ) {
+        // Date of first test match.
+        if ( ! isset( $_POST['_usar_date_first_test'] ) ) {
             // Match list.
             $last_match_dates = array();
             $match_dates      = array();
@@ -487,10 +487,60 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
                             setup_postdata( $post );
                             $match_dates[] = strtotime( $post->post_date_gmt );
                         }
+
+                        wp_reset_postdata();
                     }
                 }
 
-                wp_reset_postdata();
+                if ( ! empty( $match_dates ) ) {
+                    $first_match = min( $match_dates );
+                    $first_match_dates[] = $first_match;
+                }
+            }
+
+            // Update the current `_usar_date_first_test` value.
+            if ( metadata_exists( 'post', $post_id, '_usar_date_first_test' ) ) {
+                $first_match_date    = get_post_meta( $post_id, '_usar_date_first_test', true );
+                $first_match_dates[] = strtotime( $first_match_date );
+            }
+
+            $actual = min( $first_match_dates );
+            $actual = date( 'Y-m-d', $actual );
+
+            update_post_meta( $post_id, '_usar_date_first_test', $actual );
+        }
+
+        // Date of last test match.
+        if ( ! isset( $_POST['_usar_date_last_test'] ) ) {
+            // Match list.
+            $last_match_dates = array();
+            $match_dates      = array();
+
+            if ( metadata_exists( 'post', $post_id, 'wr_match_list' ) ) {
+                $matches = get_post_meta( $post_id, 'wr_match_list', true );
+                $matches = preg_split( '/\|/', $matches );
+                $caps    = count( $matches );
+
+                foreach ( $matches as $match ) {
+                    // Get all known matches.
+                    $match_args = array(
+                        'post_type'   => 'wpcm_match',
+                        'post_status' => 'publish',
+                        'meta_key'    => 'wr_id',
+                        'meta_value'  => $match,
+                    );
+
+                    $posts = get_posts( $match_args );
+
+                    if ( ! empty( $posts ) ) {
+                        foreach ( $posts as $post ) {
+                            setup_postdata( $post );
+                            $match_dates[] = strtotime( $post->post_date_gmt );
+                        }
+
+                        wp_reset_postdata();
+                    }
+                }
 
                 if ( ! empty( $match_dates ) ) {
                     $last_match = max( $match_dates );

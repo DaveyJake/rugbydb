@@ -12,16 +12,16 @@ $rdb_match_cols = array( 'Date', 'Fixture', 'Venue', 'Competition' );
 echo '<table class="wpcm-matches-list display responsive nowrap" width="100%">';
 echo '<thead><tr>' . rdb_table_columns( $rdb_match_cols, false ) . '</tr></thead>';
 
-$matches = wpcm_head_to_heads( $post->ID );
+$matches = rdb_wpcm_head_to_heads( $post->ID );
 
-foreach( $matches as $match ) {
+foreach ( $matches as $match ) {
     $neutral     = get_post_meta( $match->ID, 'wpcm_neutral', true );
     $played      = get_post_meta( $match->ID, 'wpcm_played', true );
     $timestamp   = strtotime( $match->post_date );
     $time_format = get_option( 'time_format' );
     $class       = wpcm_get_match_outcome( $match->ID );
     $comp        = rdb_wpcm_get_match_comp( $match->ID );
-    $sides       = rdb_wpcm_get_match_clubs( $match->ID );
+    $sides       = rdb_wpcm_get_match_clubs( $match->ID, false, true );
     $result      = rdb_wpcm_get_match_result( $match->ID );
     $venue       = rdb_wpcm_get_match_venue( $match->ID );
 

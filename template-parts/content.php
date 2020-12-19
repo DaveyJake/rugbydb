@@ -7,11 +7,11 @@
  * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+// phpcs:disable Generic.WhiteSpace.ScopeIndent,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+
+defined( 'ABSPATH' ) || exit;
 
 $rdb_post_class = apply_filters( 'post_class', get_post_class() ); // phpcs:ignore
-
-// phpcs:disable Generic.WhiteSpace.ScopeIndent
 
 echo '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', $rdb_post_class ) ) . '">';
 

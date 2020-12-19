@@ -1,18 +1,12 @@
-import { Request } from '../utils';
+import { cards } from '../ui';
 /**
  * Opponents page.
  *
  * @since 1.0.0
  */
-const $   = window.jQuery,
-      rdb = window.rdb;
-
 const pageOpponents = function() {
-    if ( 'page-opponents.php' !== rdb.template ) {
-        return;
-    }
-
-    return new Request( 'unions', $( '#nonce' ).val() );
+    cards( 'page-opponents.php', 'unions' );
 };
 
 module.exports = { pageOpponents };
+

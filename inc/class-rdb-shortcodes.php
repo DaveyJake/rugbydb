@@ -9,7 +9,9 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // phpcs:ignore
+// phpcs:disable Squiz.Commenting,Squiz.WhiteSpace,Generic.WhiteSpace,Generic.Formatting
+
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Begin shortcodes.
@@ -92,27 +94,34 @@ class RDB_Shortcodes {
 
         $class .= '-image';
 
-        $top_class = ! empty( $caption ) ? 'has-caption ' . $class : $class;
-
+        $top_class    = ! empty( $caption ) ? 'has-caption ' . $class : $class;
         $photo_credit = trim( get_post_meta( $attachment_id, 'usar_photo_credit', true ) );
         $photo_credit = ! empty( $photo_credit ) ? preg_replace( '/\s/', '&nbsp;', $photo_credit ) : '';
 
         $content = "<figure class='{$top_class}'>";
-            $content .= '<div class="wpcm-column relative">';
-                $content .= '<img src="' . esc_url( $src ) . '" class="wp-post-image" width="100%" />';
-                    $content .= "<span class='{$class}__description'>";
-                    if ( ! empty( $caption ) ) {
-                        $content .= esc_html( $caption );
-                    }
 
-                    if ( ! empty( $photo_credit ) ) {
-                        $content .= '<span class="' . esc_attr( $class ) . '__photographer ' . esc_attr( $class ) . '__photographer--inner"><i class="fas fa-camera-retro">&nbsp;' . esc_html( $photo_credit ) . '</i></span>';
-                    }
-                    $content .= '</span>';
+            $content .= '<div class="wpcm-column relative">';
+
+                $content .= '<img src="' . esc_url( $src ) . '" class="wp-post-image" width="100%" />';
+
+                $content .= "<span class='{$class}__description'>";
+
+                if ( ! empty( $caption ) ) {
+                    $content .= esc_html( $caption );
+                }
+
+                if ( ! empty( $photo_credit ) ) {
+                    $content .= '<span class="' . esc_attr( $class ) . '__photographer ' . esc_attr( $class ) . '__photographer--inner"><i class="fas fa-camera-retro">&nbsp;' . esc_html( $photo_credit ) . '</i></span>';
+                }
+
+                $content .= '</span>';
+
             $content .= '</div>';
+
             if ( ! empty( $photo_credit ) ) {
                 $content .= '<div class="' . esc_attr( $class ) . '__photographer ' . esc_attr( $class ) . '__photographer--outer"><i class="fas fa-camera-retro">&nbsp;' . esc_html( $photo_credit ) . '</i></div>';
             }
+
         $content .= '</figure>';
         // phpcs:enable
 
@@ -186,7 +195,11 @@ class RDB_Shortcodes {
         $content = 'Source: <a id="' . esc_attr( $id ) . '" href="' . esc_url( $url ) . '" rel="external noopener noreferrer" target="_blank">';
 
         if ( in_array( $name, $sources, true ) ) {
-            $content .= ucfirst( $name );
+            if ( 'usrugbyfoundation' === $name ) {
+                $content .= 'US Rugby Foundation';
+            } else {
+                $content .= ucfirst( $name );
+            }
         } else {
             $content .= esc_html( $name );
         }
@@ -267,6 +280,10 @@ class RDB_Shortcodes {
      * @return mixed Final HTML.
      */
     public function flag( $atts = null, $content = null ) {
+        if ( ! function_exists( 'WPCM' ) ) {
+            return;
+        }
+
         $atts = shortcode_atts(
             array(
                 'state'   => '',

@@ -1,5 +1,6 @@
 import '../vendor/mmenu/mmenu.polyfills';
 import { Mmenu, Mhead } from '../vendor/mmenu/mmenu';
+import { rdb } from '../utils/globals';
 /**
  * jQuery.mmenu.
  *
@@ -8,7 +9,7 @@ import { Mmenu, Mhead } from '../vendor/mmenu/mmenu';
  * @param {object} rdb WordPress localized variables.
  */
 /* eslint-disable array-bracket-spacing, no-multi-spaces */
-const mmenu = function( rdb ) {
+const mmenu = function() {
     const mmenuOpts = {
         autoHeight: false,
         dropdown: false,

@@ -6,15 +6,21 @@ import { util } from '../utils/helpers';
  * This file contains the main IIFE that generates the match results table on
  * the website home page.
  *
- * @file   This file defines the `frontPageTable` module.
+ * @file   This file defines the `FrontPage` module.
  * @author Davey Jacobson <daveyjake21@gmail.com>
  * @since  1.0.0
  */
 
-// JS version of WP's `admin_url` PHP function.
+/**
+ * JS version of WP's `admin_url` PHP function.
+ *
+ * @since 1.0.0
+ *
+ * @type {Function}
+ */
 const { adminUrl } = util;
 
-/* eslint-disable computed-property-spacing, no-else-return, arrow-parens, new-cap */
+/* eslint-disable computed-property-spacing, no-else-return, arrow-parens, new-cap, no-unused-vars */
 
 /**
  * Front page results table.
@@ -27,6 +33,11 @@ const { adminUrl } = util;
  * @property {Function} dtErrorHandler Custom DataTable error handler.
  */
 class FrontPage {
+    /**
+     * Primary constructor.
+     *
+     * @since 1.0.0
+     */
     constructor() {
         if ( ! rdb.is_front_page ) {
             return;
@@ -41,12 +52,23 @@ class FrontPage {
         this._yadcf();
     }
 
+    /**
+     * Initialize Chosen.js on non-mobile screens.
+     *
+     * @since 1.0.0
+     */
     filters() {
         if ( ! rdb.is_mobile ) {
             $( '.chosen_select' ).chosen( { width: '49%' } );
         }
     }
 
+    /**
+     * Initialize YetAnotherDataTablesCustomFilter.js
+     *
+     * @access private
+     * @since 1.0.0
+     */
     _yadcf() {
         yadcf.init(
             this.table,
@@ -114,6 +136,12 @@ class FrontPage {
         );
     }
 
+    /**
+     * Initialize DataTables.js.
+     *
+     * @access private
+     * @since 1.0.0
+     */
     _dataTable() {
         const self = this;
 
@@ -268,7 +296,7 @@ class FrontPage {
                 }
             ],
             buttons: false,
-            dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column"p>>',
+            dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column pagination"p>>',
             language: {
                 loadingRecords: '<img src="' + adminUrl( 'images/wpspin_light-2x.gif' ) + '" width="16" height="16" />',
                 search: '',
@@ -315,13 +343,28 @@ class FrontPage {
         return table;
     }
 
+    /**
+     * DataTables custom handler.
+     *
+     * @since 1.0.0
+     */
     dtErrorHandler() {
         $.fn.dataTable.ext.errMode = 'none';
+
         this.$tableSelector.on( 'error.dt', function( e, settings, techNote, message ) {
             console.log( 'An error has been reported by DataTables: ', message );
         } ).DataTable(); // eslint-disable-line
     }
 
+    /**
+     * Get formatted date.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} date ISO-8601 string.
+     *
+     * @return {string}     Human-readable date string.
+     */
     formatDate( date ) {
         const m     = moment( date ),
               human = m.tz( sessionStorage.timezone ).format( 'MMM D, YYYY' );
@@ -329,6 +372,19 @@ class FrontPage {
         return human;
     }
 
+    /**
+     * [logoResult description]
+     *
+     * @since 1.0.0
+     *
+     * @param {string} fixture  Post title of a match (i.e. "United States v Some Country").
+     * @param {string} result   Match result.
+     * @param {string} homeLogo URL of home team logo.
+     * @param {string} awayLogo URL of away team logo.
+     * @param {object} links    Object containing links to the clubs.
+     *
+     * @return {string}         HTML output.
+     */
     logoResult( fixture, result, homeLogo, awayLogo, links ) {
         const teams  = fixture.split( /\sv\s/ ),
               scores = result.split( /\s-\s/ );
@@ -336,10 +392,28 @@ class FrontPage {
         return `<div class="fixture-result flex"><a href="${ links.home_union }" rel="bookmark"><img class="icon" src="${ homeLogo }" alt="${ teams[0] }" height="22" /></a><span class="result"><a href="${ links.match }" rel="bookmark">${ scores[0] } - ${ scores[1] }</a></span><a href="${ links.away_union }" rel="bookmark"><img class="icon" src="${ awayLogo }" alt="${ teams[1] }" height="22" /></a></div>`;
     }
 
+    /**
+     * Get competition name from API.
+     *
+     * @since 1.0.0
+     *
+     * @param {object} competition API response of competition object.
+     *
+     * @return {string}            Competition name.
+     */
     getCompetition( competition ) {
-        return competition.name;
+        return ( ! _.isEmpty( competition.parent ) ? competition.parent + ' - ' : '' ) + competition.name;
     }
 
+    /**
+     * Get opponent from API.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} fixture Post title of a match (i.e. "United States v Some Country").
+     *
+     * @return {string}        The opponent's name.
+     */
     getOpponent( fixture ) {
         const parts = fixture.split( /\sv\s/ );
 

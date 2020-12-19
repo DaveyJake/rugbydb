@@ -40,12 +40,15 @@ defined( 'ABSPATH' ) || exit;
                         echo '<a href="' . esc_url( home_url( '/' ) ) . '" rel="bookmark"><span class="logo"><span class="word-rugby">RUGBY</span><span class="word-db">DB</span></span></a>';
                     echo '</div><!-- .site-branding -->';
 
-                    rdb_nav_menu( array( 'container_id' => 'site-menu' ) );
-                echo '</div><!-- .site-navigation -->';
+                    rdb_nav_menu(
+                        array(
+                            'container_id'   => 'primary-menu',
+                            'menu'           => 'main-menu',
+                            'theme_location' => 'main-menu',
+                        )
+                    );
 
-                echo '<div class="site-menu">';
-                    rdb_site_menu();
-                echo '</div>';
+                echo '</div><!-- .main-navigation -->';
 
             echo '</div>';
 

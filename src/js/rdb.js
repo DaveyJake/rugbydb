@@ -1,4 +1,4 @@
-import { common, FrontPage, pageOpponents, singleWpcmClub, singleWpcmMatch, taxWpcmVenue } from './modules';
+import { common, FrontPage, pageOpponents, pageStaff, singleWpcmClub, singleWpcmMatch, taxWpcmVenue } from './modules';
 import { master } from './utils';
 
 /**
@@ -18,6 +18,9 @@ import { master } from './utils';
         },
         page_opponents: {
             init: pageOpponents()
+        },
+        page_staff: {
+            init: pageStaff()
         },
         single_wpcm_club: {
             init: singleWpcmClub

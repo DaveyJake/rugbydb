@@ -49,10 +49,12 @@ class RDB_Taxonomy_Search {
         $where2 = " AND (tm2.meta_value <> '' OR tm3.meta_value <> ''))";
         $where3 = " AND (tm2.meta_value LIKE %s OR tm3.meta_value LIKE %s))";
 
-        if ( empty( $args['search'] ) ) {
-            $pieces['fields'] .= $fields1;
-            $pieces['where']  .= $where2;
-        } elseif ( is_int( $args['search'] ) || preg_match( '/(\d+),(\s)?(\d+)/', $args['search'] ) ) {
+        // if ( empty( $args['search'] ) ) {
+        //     $pieces['fields'] .= $fields1;
+        //     $pieces['where']  .= $where2;
+        // }
+
+        if ( is_int( $args['search'] ) || preg_match( '/(\d+)(,(\s)?\d+)?/', $args['search'] ) ) {
             $pieces['join']   .= " INNER JOIN {$wpdb->termmeta} AS tm1 ON (tm3.term_id = tm1.term_id)";
             $pieces['fields'] .= $fields2;
             $pieces['where']  .= " AND (tm1.meta_key = 'wr_id' AND tm1.meta_value IN ({$args['search']}))";

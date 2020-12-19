@@ -17,7 +17,7 @@ function rdb_tmpl_opponent() {
             if ( ! _.includes( blacklist, opponent.ID ) ) {
                 #>
                 <div id="opponent-{{ opponent.ID }}" class="card{{{ _.isUndefined( opponent._links.up ) ? ' test-side' : ' friendly-side' }}}" data-name="{{ opponent.name }}">
-                    <div class="card__container">
+                    <div class="card__container" shadow>
                         <a class="help_tip" href="{{ opponent.permalink }}" title="{{ opponent.name }}">
                             <span class="card__image" style="background-image: url({{ opponent.logo }});"></span>
                         </a>
