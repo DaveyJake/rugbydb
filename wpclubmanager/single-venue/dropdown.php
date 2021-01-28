@@ -38,6 +38,7 @@ $fields = array(
     'name'        => 'wpcm_venue',
     'placeholder' => 'Choose Venue',
     'options'     => $options,
+    'value'       => get_query_var( 'wpcm_venue', false ),
 );
 
 echo '<div class="wpcm-venue-select">';

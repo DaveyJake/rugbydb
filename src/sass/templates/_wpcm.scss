@@ -63,7 +63,7 @@
 
             thead,
             tfoot {
-                background: var(--background);
+                background: var(--background, $color__background-combo);
 
                 th {
                     color: #fff;

@@ -27,12 +27,37 @@
 
     th,
     td {
-        font-size: 87.5%;
+        white-space: nowrap !important;
     }
 
-    td.date,
-    .result {
-        white-space: nowrap !important;
+    tbody {
+        th,
+        td {
+            padding: {
+                top: 0 !important;
+                bottom: 0 !important;
+            }
+            font-size: 87.5%;
+        }
+
+        td {
+            &.date {
+                white-space: nowrap !important;
+            }
+
+            .inline-cell {
+                @include relative {
+                    width: 33%;
+                    height: rem-calc(36px);
+                }
+
+                .icon,
+                .result {
+                    @include absolute-center;
+                    white-space: nowrap !important;
+                }
+            }
+        }
     }
 
     .fixture-result {
@@ -63,6 +88,8 @@
         }
 
         &_empty {
+            vertical-align: middle;
+
             img {
                 height: 1rem;
                 margin-top: 7px;
@@ -79,7 +106,7 @@
 
             @include breakpoint(large) {
                 width: 50% !important;
-                font-size: 100%;
+                font-size: 91%;
             }
         }
 

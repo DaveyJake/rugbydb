@@ -21,6 +21,16 @@ function rdb_single_venue_title() {
 add_action( 'rdb_single_venue_header', 'rdb_single_venue_title', 5 );
 
 /**
+ * Load venue dropdown menu.
+ *
+ * @since 1.0.0
+ */
+function rdb_single_venue_dropdown() {
+    wpclubmanager_get_template( 'single-venue/dropdown.php' );
+}
+add_action( 'rdb_single_venue_header', 'rdb_single_venue_dropdown' );
+
+/**
  * Load venue image.
  *
  * @since 1.0.0
@@ -28,7 +38,7 @@ add_action( 'rdb_single_venue_header', 'rdb_single_venue_title', 5 );
 function rdb_single_venue_image() {
     wpclubmanager_get_template( 'single-venue/image.php' );
 }
-add_action( 'rdb_single_venue_header', 'rdb_single_venue_image' );
+add_action( 'rdb_before_single_venue_widget', 'rdb_single_venue_image', 5 );
 
 /**
  * Load venue metadata.
@@ -38,7 +48,7 @@ add_action( 'rdb_single_venue_header', 'rdb_single_venue_image' );
 function rdb_single_venue_meta() {
     wpclubmanager_get_template( 'single-venue/meta.php' );
 }
-add_action( 'rdb_single_venue_header', 'rdb_single_venue_meta', 15 );
+add_action( 'rdb_before_single_venue_widget', 'rdb_single_venue_meta' );
 
 /**
  * Load venue map.
@@ -51,6 +61,16 @@ function rdb_single_venue_map() {
 add_action( 'rdb_single_venue_widget', 'rdb_single_venue_map', 5 );
 
 /**
+ * Load venue match list.
+ *
+ * @since 1.0.0
+ */
+function rdb_single_venue_match_list() {
+    wpclubmanager_get_template( 'single-venue/match-list.php' );
+}
+add_action( 'rdb_single_venue_footer', 'rdb_single_venue_match_list' );
+
+/**
  * Load venue description.
  *
  * @since 1.0.0
@@ -59,16 +79,6 @@ function rdb_single_venue_description() {
     wpclubmanager_get_template( 'single-venue/description.php' );
 }
 add_action( 'rdb_single_venue_content', 'rdb_single_venue_description' );
-
-/**
- * Load venue dropdown menu.
- *
- * @since 1.0.0
- */
-function rdb_single_venue_dropdown() {
-    wpclubmanager_get_template( 'single-venue/dropdown.php' );
-}
-add_action( 'rdb_single_venue_footer', 'rdb_single_venue_dropdown' );
 
 /**
  * Content wrappers.

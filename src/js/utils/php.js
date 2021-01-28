@@ -1,9 +1,15 @@
 /**
+ * PHP functions for JavaScript.
+ *
+ * @since 1.0.0
+ */
+
+/**
  * Recreate PHP's `ucfirst` function for JavaScript.
  *
  * @example {
  *
- *      ucfirst( 'some text' ) => 'Some text'
+ *     ucfirst( 'some text' ) => 'Some text'
  *
  * }
  *

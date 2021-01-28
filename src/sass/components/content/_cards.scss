@@ -1,6 +1,8 @@
 @import '../../abstracts/abstracts';
 
-$card-background: #efefef;
+$card-pages: opponents staff venues;
+$card-types: unquote("[class$='-side']") venue;
+$card-background: #ececec;
 $card-container-width: 90%;
 $card-margin: 0.75%;
 $card-size: 250px;
@@ -11,6 +13,10 @@ $unit: rem-calc(15px);
 
 #primary {
     padding-top: rem-calc(8px);
+
+    .page-players & {
+        padding-top: 0;
+    }
 }
 
 #grid {
@@ -47,16 +53,47 @@ $unit: rem-calc(15px);
         width: 20%;
     }
 
-    @include breakpoint(xxlarge) {
-        width: $card-size;
-    }
-
     &__container {
         position: relative;
         width: $card-container-width;
         height: inherit;
         margin: auto;
         background-color: $card-background;
+
+        &__background {
+            position: absolute;
+            @include full;
+            overflow: hidden;
+
+            span {
+                @include absolute-center;
+                width: 100%;
+                height: 100%;
+                background: {
+                    position: center;
+                    repeat: no-repeat;
+                    size: cover;
+                }
+                filter: blur(25px);
+                z-index: 0;
+            }
+        }
+
+        &__title {
+            @include absolute-bottom;
+            padding: 0.25rem 0;
+            @include full-width;
+            background-color: $color__background-header;
+            @include text(center);
+
+            @each $card-type in $card-types {
+                @if venue == $card-type {
+                    font-size: 0.7em;
+                }
+            }
+
+            z-index: 2;
+        }
     }
 
     &__image,
@@ -65,18 +102,44 @@ $unit: rem-calc(15px);
     }
 
     &__image {
+        @include relative;
         display: block;
         height: $image-height;
         background: {
             repeat: no-repeat;
-            size: contain;
-            position: center center;
+            position: center 10%;
+            size: cover;
+        }
+        z-index: 1;
+
+        &[style*='placeholder.png'] {
+            background-size: cover;
         }
     }
 
     &__meta {
         height: $meta-height;
         @include text(center);
+    }
+
+    &__spacer {
+        padding: 10px 10px 15px;
+        height: rem-calc(235px);
+
+        [data-order*='Thailand'] & {
+            background-color: #000334;
+        }
+
+        [data-order*='Association'] &,
+        [data-order*='Bond'] &,
+        [data-order*='Confed'] &,
+        [data-order*='Fed'] &,
+        [data-order*='Féd'] &,
+        [data-order*='Union'] &,
+        [data-order*='Unión'] &,
+        [data-order*='Verband'] & {
+            background-color: #bcbcbc;
+        }
     }
 
     &__title {
@@ -86,16 +149,6 @@ $unit: rem-calc(15px);
 
     &.staff {
         .card {
-            &__container {
-                &__title {
-                    @include absolute-bottom;
-                    padding: 0.25rem 0;
-                    @include full-width;
-                    background-color: $color__background-header;
-                    @include text(center);
-                }
-            }
-
             &__image {
                 background-size: cover;
             }

@@ -23,10 +23,35 @@
             @include breakpoint(medium) {
                 margin-top: 0;
             }
+
+            label {
+                span {
+                    opacity: 0.6;
+                }
+
+                &.active {
+                    span {
+                        opacity: 1;
+                    }
+                }
+            }
         }
 
         #all-matches {
             font-size: 0.875em;
+
+            tbody {
+                th,
+                td {
+                    height: rem-calc(36px);
+                }
+
+                td {
+                    &.venue {
+                        @include text(right);
+                    }
+                }
+            }
 
             @include breakpoint(medium) {
                 font-size: 0.9375em;
@@ -36,9 +61,14 @@
                 font-size: 1em;
             }
 
+            .icon {
+                height: 28px;
+            }
+
+            [src*='argentina-xv'],
             [src*='victoria-rugby'],
             [src*='south-australia'] {
-                height: 14px;
+                height: 18px;
             }
 
             &_wrapper {

@@ -40,4 +40,5 @@ do_action( 'wpclubmanager_after_main_content' );
  */
 do_action( 'wpclubmanager_sidebar' );
 
+wp_nonce_field( 'get_matches', 'nonce' );
 get_footer();

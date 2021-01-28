@@ -1,5 +1,4 @@
-import { _, $, rdb, yadcf, moment } from '../utils/globals';
-import { util } from '../utils/helpers';
+import { _, $, rdb, yadcf, moment, BREAKPOINTS, US_DATE, util } from '../utils';
 /**
  * The front page module.
  *
@@ -12,13 +11,13 @@ import { util } from '../utils/helpers';
  */
 
 /**
- * JS version of WP's `admin_url` PHP function.
+ * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
  *
  * @since 1.0.0
  *
  * @type {Function}
  */
-const { adminUrl } = util;
+const { adminUrl, sanitizeTitle } = util;
 
 /* eslint-disable computed-property-spacing, no-else-return, arrow-parens, new-cap, no-unused-vars */
 
@@ -45,8 +44,10 @@ class FrontPage {
 
         this.filters();
 
-        this.$tableSelector = $( '#all-matches' );
+        this.$table = $( '#all-matches' );
+
         this.nonce = $( '#nonce' ).val();
+
         this.table = this._dataTable();
 
         this._yadcf();
@@ -59,7 +60,7 @@ class FrontPage {
      */
     filters() {
         if ( ! rdb.is_mobile ) {
-            $( '.chosen_select' ).chosen( { width: '49%' } );
+            $( '.chosen_select' ).chosen({ width: '49%' });
         }
     }
 
@@ -141,21 +142,35 @@ class FrontPage {
      *
      * @access private
      * @since 1.0.0
+     *
+     * @link https://datatables.net/reference/event/
+     * @see init.dt search.dt page.dt order.dt length.dt
+     *
+     * @return {DataTable} Current DT instance.
      */
     _dataTable() {
         const self = this;
 
+        // Filter by team checkbox.
         $.fn.dataTable.ext.search.push(
             function( settings, searchData, index, rowData, counter ) {
                 const teams = $( 'input[name="wpcm_team"]:checked' ).map( function() {
                     return this.value;
-                } ).get();
+                }).get();
 
-                if ( teams.length === 0 ) {
+                const friendlies = $( 'input[name="wpcm_friendly"]:checked' ).map( function() {
+                    return this.value;
+                }).get();
+
+                if ( teams.length === 0 && friendlies.length === 1 ) {
                     return true;
                 }
 
-                if ( teams.indexOf( searchData[6] ) !== -1 ) {
+                if ( ! _.includes( ['mens-eagles', 'womens-eagles'], searchData[6] ) ) {
+                    friendlies[0] = '*';
+                }
+
+                if ( teams.indexOf( searchData[6] ) !== -1 && ( '*' === friendlies[0] || friendlies.indexOf( searchData[7] ) !== -1 ) ) {
                     return true;
                 }
 
@@ -163,7 +178,7 @@ class FrontPage {
             }
         );
 
-        const table = this.$tableSelector.DataTable( { // eslint-disable-line
+        const table = this.$table.DataTable({ // eslint-disable-line
             destroy: true,
             autoWidth: false,
             deferRender: true,
@@ -174,9 +189,13 @@ class FrontPage {
                     post_type: 'matches',
                     nonce: this.nonce
                 },
-                dataSrc: function( response ) {
+                dataSrc: ( response ) => {
                     if ( ! response.success ) {
-                        return self.dtErrorHandler();
+                        $.fn.dataTable.ext.errMode = 'none';
+
+                        this.$table.on( 'error.dt', function( e, settings, techNote, message ) {
+                            console.log( 'An error has been reported by DataTables: ', message );
+                        }).DataTable(); // eslint-disable-line
                     }
 
                     const oldData = sessionStorage.allMatches,
@@ -190,56 +209,77 @@ class FrontPage {
                     const responseData = JSON.parse( sessionStorage.allMatches ),
                           final        = [];
 
-                    _.each( responseData, function( match ) {
+                    _.each( responseData, ( match ) => {
                         const api = {
                             ID: match.ID,
                             idStr: `match-${ match.ID }`,
                             competition: {
-                                display: self.getCompetition( match.competition ),
-                                filter: match.competition.name
+                                display: this.competition( match.competition ),
+                                filter: this.competition( match.competition )
                             },
                             date: {
-                                display: self.formatDate( match.date.GMT ),
+                                display: this.formatDate( match.ID, match.date.GMT, match.links ),
                                 filter: match.season
                             },
                             fixture: {
-                                display: self.logoResult( match.fixture, match.result, match.logo.home, match.logo.away, match.links ),
-                                filter: self.getOpponent( match.fixture )
+                                display: this.logoResult( match ),
+                                filter: this.opponent( match.fixture )
                             },
-                            friendly: match.friendly,
-                            venue: match.venue.name,
+                            friendly: match.friendly ? 'friendly' : 'test',
+                            venue: {
+                                display: this.venueLink( match.venue ),
+                                filter: match.venue.name
+                            },
                             neutral: match.venue.neutral,
                             sort: match.date.timestamp,
-                            team: {
-                                name: match.team.name,
-                                slug: match.team.slug
-                            },
+                            team: match.team.slug,
                             links: match.links
                         };
 
                         final.push( api );
-                    } );
+                    });
 
                     return final;
                 }
             },
             columnDefs: [
                 {
-                    className: 'control',
+                    className: 'control match-id sorting_disabled',
                     orderable: false,
                     targets: 0
                 },
                 {
-                    createdCell: function( td, cellData, rowData, row, col ) {
-                        $( td ).attr( 'data-sort', rowData.sort );
-                    },
+                    className: 'date',
                     targets: 1
+                },
+                {
+                    className: 'fixture',
+                    targets: 2
+                },
+                {
+                    className: 'competition min-medium',
+                    targets: 3
+                },
+                {
+                    className: 'venue min-wordpress',
+                    targets: 4
+                },
+                {
+                    className: 'timestamp hide',
+                    targets: 5
+                },
+                {
+                    className: 'team hide',
+                    targets: 6
+                },
+                {
+                    className: 'friendly hide',
+                    targets: 7
                 }
             ],
             columns: [
                 {
                     data: 'ID',
-                    className: 'control match-id sorting_disabled',
                     render: function( data ) {
                         return `<span class="hide">${ data }</span>`;
                     },
@@ -247,58 +287,57 @@ class FrontPage {
                 },
                 {
                     data: 'date',
-                    className: 'date',
                     render: {
                         _: 'display',
                         display: 'display',
                         filter: 'filter'
                     },
+                    width: '25%',
+                    orderData: 5,
                     responsivePriority: 2
                 },
                 {
                     data: 'fixture',
-                    className: 'fixture',
                     render: {
                         _: 'display',
                         display: 'display',
                         filter: 'filter'
                     },
+                    width: '25%',
                     responsivePriority: 1
                 },
                 {
                     data: 'competition',
-                    className: 'competition min-medium',
                     render: {
                         _: 'display',
                         display: 'display',
                         filter: 'filter'
-                    }
+                    },
+                    width: '25%'
                 },
                 {
                     data: 'venue',
-                    className: 'venue min-wordpress'
-                },
-                {
-                    data: 'sort',
-                    className: 'timestamp hide',
-                    render: function( data ) {
-                        return `<span class="hide">${ data }</span>`;
-                    }
-                },
-                {
-                    data: 'team',
-                    className: 'team hide',
                     render: {
-                        _: 'name',
-                        display: 'slug',
-                        filter: 'slug'
-                    }
+                        _: 'display',
+                        display: 'display',
+                        filter: 'filter'
+                    },
+                    width: '25%'
+                },
+                {
+                    data: 'sort'
+                },
+                {
+                    data: 'team'
+                },
+                {
+                    data: 'friendly'
                 }
             ],
             buttons: false,
             dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column pagination"p>>',
             language: {
-                loadingRecords: '<img src="' + adminUrl( 'images/wpspin_light-2x.gif' ) + '" width="16" height="16" />',
+                loadingRecords: '<img src="' + adminUrl( 'images/wpspin_light-2x.gif' ) + '" width="16" height="16" alt="Loading matches..." />',
                 search: '',
                 searchPlaceholder: 'Search Matches'
             },
@@ -311,85 +350,47 @@ class FrontPage {
             searching: true,
             rowId: 'idStr',
             responsive: {
-                breakpoints: [
-                    { name: 'desktop', width: Infinity },
-                    { name: 'xxxlarge', width: 1920 },
-                    { name: 'xxlarge-down', width: 1919 },
-                    { name: 'xxlarge', width: 1440 },
-                    { name: 'xlarge-down', width: 1439 },
-                    { name: 'xlarge', width: 1200 },
-                    { name: 'large-down', width: 1199 },
-                    { name: 'large', width: 1024 },
-                    { name: 'wordpress-down', width: 1023 },
-                    { name: 'wordpress', width: 783 },
-                    { name: 'medium-down', width: 782 },
-                    { name: 'tablet-p', width: 768 },
-                    { name: 'medium', width: 640 },
-                    { name: 'mobile-down', width: 639 },
-                    { name: 'mobile', width: 480 },
-                    { name: 'small-only', width: 479 },
-                    { name: 'small', width: 0 }
-                ],
+                breakpoints: BREAKPOINTS,
                 details: {
                     type: 'column'
                 }
+            },
+            initComplete: function() {
+                const api = this.api();
             }
-        } );
+        });
 
-        $( '.team-filters' ).on( 'change', 'input[name="wpcm_team"]', function() {
+        $( '.team-filters' ).on( 'change', 'input[name="wpcm_team"]', function( e ) {
+            $( `#${ e.currentTarget.value }` ).toggleClass( 'active' );
+
+            if ( 'mens-eagles' === e.currentTarget.value || 'womens-eagles' === e.currentTarget.value ) {
+                $( '.team-filters .match-type' ).removeClass( 'hide' ).addClass( 'active' );
+            } else {
+                $( '.team-filters .match-type' ).removeClass( 'active' ).addClass( 'hide' );
+            }
+
+            const checkedBoxes = _.compact( $( '.team-filters .active' ).map( function() {
+                return this.id;
+            }).get() );
+
+            FrontPage._radioFilters( checkedBoxes );
+
             table.draw();
-        } );
+        });
+
+        $( '.team-filters' ).on( 'change', 'input[name="wpcm_friendly"]', function() {
+            table.draw();
+        });
+
+        $( '.match-filters' ).on( 'change', 'select', function() {
+            table.draw();
+        });
+
+        $( window ).on( 'resize orientationchange', _.debounce( function() {
+            table.draw();
+        }, 300 ) );
 
         return table;
-    }
-
-    /**
-     * DataTables custom handler.
-     *
-     * @since 1.0.0
-     */
-    dtErrorHandler() {
-        $.fn.dataTable.ext.errMode = 'none';
-
-        this.$tableSelector.on( 'error.dt', function( e, settings, techNote, message ) {
-            console.log( 'An error has been reported by DataTables: ', message );
-        } ).DataTable(); // eslint-disable-line
-    }
-
-    /**
-     * Get formatted date.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} date ISO-8601 string.
-     *
-     * @return {string}     Human-readable date string.
-     */
-    formatDate( date ) {
-        const m     = moment( date ),
-              human = m.tz( sessionStorage.timezone ).format( 'MMM D, YYYY' );
-
-        return human;
-    }
-
-    /**
-     * [logoResult description]
-     *
-     * @since 1.0.0
-     *
-     * @param {string} fixture  Post title of a match (i.e. "United States v Some Country").
-     * @param {string} result   Match result.
-     * @param {string} homeLogo URL of home team logo.
-     * @param {string} awayLogo URL of away team logo.
-     * @param {object} links    Object containing links to the clubs.
-     *
-     * @return {string}         HTML output.
-     */
-    logoResult( fixture, result, homeLogo, awayLogo, links ) {
-        const teams  = fixture.split( /\sv\s/ ),
-              scores = result.split( /\s-\s/ );
-
-        return `<div class="fixture-result flex"><a href="${ links.home_union }" rel="bookmark"><img class="icon" src="${ homeLogo }" alt="${ teams[0] }" height="22" /></a><span class="result"><a href="${ links.match }" rel="bookmark">${ scores[0] } - ${ scores[1] }</a></span><a href="${ links.away_union }" rel="bookmark"><img class="icon" src="${ awayLogo }" alt="${ teams[1] }" height="22" /></a></div>`;
     }
 
     /**
@@ -401,8 +402,52 @@ class FrontPage {
      *
      * @return {string}            Competition name.
      */
-    getCompetition( competition ) {
+    competition( competition ) {
+        if ( _.isUndefined( competition ) ) {
+            location.reload();
+        }
+
         return ( ! _.isEmpty( competition.parent ) ? competition.parent + ' - ' : '' ) + competition.name;
+    }
+
+    /**
+     * Get formatted date.
+     *
+     * @since 1.0.0
+     *
+     * @param {number} matchId Current match ID.
+     * @param {string} date    ISO-8601 string.
+     * @param {object} links   Match URLs.
+     *
+     * @return {string}        Human-readable date string.
+     */
+    formatDate( matchId, date, links ) {
+        const m     = moment( date ),
+              human = m.tz( sessionStorage.timezone ).format( US_DATE );
+
+        return `<a id="match-${ matchId }-date-link" class="wpcm-matches-list-link" href="${ links.match }" rel="bookmark">${ human }</a>`;
+    }
+
+    /**
+     * Hyperlink logo.
+     *
+     * @since 1.0.0
+     *
+     * @param {object} match Current match.
+     *
+     * @return {string}      HTML output.
+     */
+    logoResult( match ) {
+        const matchId  = match.ID,
+              fixture  = match.fixture,
+              result   = match.result,
+              homeLogo = match.logo.home,
+              awayLogo = match.logo.away,
+              links    = match.links,
+              teams    = fixture.split( /\sv\s/ ),
+              scores   = result.split( /\s-\s/ );
+
+        return `<div class="fixture-result flex"><div class="inline-cell"><a id="${ sanitizeTitle( teams[0] ) }-link" href="${ links.home_union }" title="${ teams[0] }" rel="bookmark"><img class="icon" src="${ homeLogo }" alt="${ teams[0] }" height="22" /></a></div><div class="inline-cell"><span class="result"><a id="match-${ matchId }-result-link" href="${ links.match }" rel="bookmark">${ scores[0] } - ${ scores[1] }</a></span></div><div class="inline-cell"><a id="${ sanitizeTitle( teams[1] ) }-link"href="${ links.away_union }" title="${ teams[1] }" rel="bookmark"><img class="icon" src="${ awayLogo }" alt="${ teams[1] }" height="22" /></a></div></div>`;
     }
 
     /**
@@ -414,13 +459,50 @@ class FrontPage {
      *
      * @return {string}        The opponent's name.
      */
-    getOpponent( fixture ) {
+    opponent( fixture ) {
         const parts = fixture.split( /\sv\s/ );
 
         if ( 'United States' === parts[ 0 ] ) {
             return parts[ 1 ];
         } else {
             return parts[ 0 ];
+        }
+    }
+
+    /**
+     * Hyperlink venue.
+     *
+     * @since 1.0.0
+     *
+     * @param {object} venue Match venue object.
+     *
+     * @return {string}      HTML output.
+     */
+    venueLink( venue ) {
+        return `<a id="venue-${ venue.id }-link" href="${ venue.link }" title="${ venue.name }" rel="bookmark">${ venue.name }</a>`;
+    }
+
+    /**
+     * Show/Hide radio button filters based on selected teams.
+     *
+     * @since 1.0.0
+     * @access private
+     * @static
+     *
+     * @param {array}  checkedBoxes Checked box ID values.
+     * @param {string} currentValue Current selected value.
+     */
+    static _radioFilters( checkedBoxes ) {
+        const me    = 'mens-eagles',
+              we    = 'womens-eagles',
+              teams = [ me, we ];
+
+        if ( _.xor( checkedBoxes, teams ).length === 0 ||
+            ( checkedBoxes.length === 1 && ( me === checkedBoxes[0] || we === checkedBoxes[0] ) )
+        ) {
+            $( '.team-filters .match-type' ).removeClass( 'hide' ).addClass( 'active' );
+        } else {
+            $( '.team-filters .match-type' ).removeClass( 'active' ).addClass( 'hide' );
         }
     }
 }

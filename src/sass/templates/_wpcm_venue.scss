@@ -1,13 +1,25 @@
 @import '../abstracts/abstracts';
+@import '../components/content/wpcm-matches-list';
+@import '../components/content/datatables';
 
 .wpcm {
     &-entry {
         &-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             flex-direction: column;
+            @include breakpoint(large) {
+                flex-direction: row;
+            }
 
             .entry-title {
                 @include breakpoint(medium down) {
                     padding-top: 0.25em;
+                }
+
+                @include breakpoint(large) {
+                    padding-top: 1rem;
                 }
             }
 
@@ -19,7 +31,7 @@
         }
 
         &-footer {
-            padding: 0 0.5em 1.85em;
+            padding: 0;
         }
     }
 
@@ -55,9 +67,16 @@
         }
 
         &-select {
+            width: 300px;
+            margin-right: 1rem;
+
             #venue {
                 @include full-width;
             }
         }
+    }
+
+    &-matches-list-info {
+        @include text(center);
     }
 }

@@ -11,8 +11,8 @@ const DataTable = {
         api.columns.adjust();
 
         api.columns().indexes().flatten().each( function() {
-            const competition = api.column( '.competition:nth-child(4)', { order: 'index' } ),
-                  venue       = api.column( '.venue:nth-child(5)', { order: 'index' } ),
+            const competition = api.column( '.competition:nth-child(4)', { order: 'index' }),
+                  venue       = api.column( '.venue:nth-child(5)', { order: 'index' }),
 
                   // Select competition.
                   compSelect = $( '<select id="competition-options" data-placeholder="All Competitions"><option value="">All Competitions</option></select>' )
@@ -21,7 +21,7 @@ const DataTable = {
                           const val = $.fn.dataTable.util.escapeRegex( e.currentTarget.value );
 
                           competition.search( val ? '^' + val + '$' : '', true, false ).draw();
-                      } ).trigger( 'chosen:updated' ),
+                      }).trigger( 'chosen:updated' ),
 
                   // Select venue.
                   venueSelect = $( '<select id="venue-options" data-placeholder="All Venues"><option value="">All Venues</option></select>' )
@@ -30,32 +30,32 @@ const DataTable = {
                           const val = $.fn.dataTable.util.escapeRegex( e.currentTarget.value );
 
                           venue.search( val ? '^' + val + '$' : '', true, false ).draw();
-                      } ).trigger( 'chosen:updated' );
+                      }).trigger( 'chosen:updated' );
 
             // Competitions.
             competition.data().unique().sort().each( function( d ) {
                 compSelect.append( '<option value="' + d + '">' + d + '</option>' );
-            } );
+            });
 
             // Venues.
             venue.data().unique().sort().each( function( d ) {
                 venueSelect.append( '<option value="' + d + '">' + d + '</option>' );
-            } );
+            });
 
             $( 'select' ).on( 'chosen:showing_dropdown chosen:hiding_dropdown', function( e ) {
                 const chosenContainer = $( e.target ).next( '.chosen-container' ),
                       classState      = ( e.type === 'chosen:showing_dropdown' && dropdownExceedsBottomViewport( chosenContainer ) ); /* eslint-disable-line */
 
                 chosenContainer.toggleClass( 'chosen-drop-up' );
-            } );
-        } );
+            });
+        });
 
         [ 'state', 'affiliation' ].forEach( function( menuId ) {
             const menuWidth = 'state' === menuId ? '94px' : '100%';
 
-            $( `#${ menuId }-options` ).chosen( { width: menuWidth, allow_single_deselect: true } );
+            $( `#${ menuId }-options` ).chosen({ width: menuWidth, allow_single_deselect: true });
             $( `#${ menuId }-options` ).trigger( 'chosen:updated' );
-        } );
+        });
     }
 };
 
@@ -186,7 +186,7 @@ $doc.ready( function() {
 
                 output.push( api );
 
-            } );
+            });
         }
 
         // Saved parsed data to browser for session.
@@ -403,12 +403,12 @@ $doc.ready( function() {
         $.fn.dataTable.ext.errMode = 'throw';
         var config = new DataTablesConfig( table );
         table.DataTable( config );
-    } );
+    });
 
     var table = $( '#fixtures' ).DataTable();
 
     $( '#fixtures' ).on( 'error.dt', function( e, settings, techNote, message ) { // jshint ignore:line
         var row = table.rows( '.dataTables_empty' );
         table.row( row ).remove().draw( false );
-    } );
-} );
+    });
+});

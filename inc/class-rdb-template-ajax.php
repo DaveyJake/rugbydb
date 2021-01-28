@@ -57,6 +57,24 @@ class RDB_Template_AJAX {
     public $nonce;
 
     /**
+     * Targeted team taxonomy.
+     *
+     * @since 1.0.0
+     *
+     * @var sting
+     */
+    public $team;
+
+    /**
+     * Taxonomy value for `wpcm_venue`.
+     *
+     * @since 1.0.0
+     *
+     * @var int
+     */
+    public $venue;
+
+    /**
      * Primary constructor.
      *
      * @since 1.0.0
@@ -64,8 +82,10 @@ class RDB_Template_AJAX {
     public function __construct() {
         $this->collection = isset( $_REQUEST['collection'] ) ? $this->sanitize( $_REQUEST['collection'] ) : true;
         $this->post_type  = isset( $_REQUEST['post_type'] ) ? $this->sanitize( $_REQUEST['post_type'] ) : 'posts';
+        $this->venue      = isset( $_REQUEST['venue'] ) ? $this->sanitize( $_REQUEST['venue'] ) : 0;
         $this->post_id    = isset( $_REQUEST['post_id'] ) ? $this->sanitize( $_REQUEST['post_id'] ) : 0;
         $this->nonce      = isset( $_REQUEST['nonce'] ) ? $this->sanitize( $_REQUEST['nonce'] ) : '';
+        $this->team       = isset( $_REQUEST['team'] ) ? $this->sanitize( $_REQUEST['team'] ) : '';
 
         add_action( "wp_ajax_get_{$this->post_type}", array( $this, 'request' ), 10 );
         add_action( "wp_ajax_nopriv_get_{$this->post_type}", array( $this, 'request' ), 10 );
@@ -80,15 +100,19 @@ class RDB_Template_AJAX {
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX && wp_verify_nonce( $this->nonce, "get_{$this->post_type}" ) ) {
             $endpoint = "wp/v2/{$this->post_type}";
 
-            if ( ! empty( $this->post_id ) ) {
+            if ( ! empty( $this->venue ) ) {
+                $endpoint .= "/venues/{$this->venue}";
+            } elseif ( ! empty( $this->post_id ) ) {
                 $endpoint .= "/{$this->post_id}";
+            } elseif ( ! empty( $this->team ) ) {
+                $endpoint .= "/{$this->team}";
             }
 
-            $url  = get_rest_url( null, $endpoint );
+            $url  = rest_url( $endpoint );
             $data = $this->parse_response( $url );
 
             $this->send_json( $data );
-        }
+        }//end if
 
         wp_die();
     }
@@ -104,28 +128,33 @@ class RDB_Template_AJAX {
      * @return array|object API response.
      */
     private function parse_response( $url ) {
-        $trans_key = md5( $url );
+        $transient = md5( $url );
 
-        // phpcs:disable
-        // Uncomment when modifying REST API response.
-        delete_transient( $trans_key );
-        // phpcs:enable
+        delete_transient( $transient );
 
-        $data = get_transient( $trans_key );
+        $data = get_transient( $transient );
 
         if ( false === $data ) {
             $response = wp_remote_get( $url );
-            if ( is_wp_error( $response ) ) {
-                return $response->get_error_message();
-            }
 
-            $data = wp_remote_retrieve_body( $response );
-            if ( is_wp_error( $data ) ) {
-                return $data->get_error_message();
-            }
+            $status_code = wp_remote_retrieve_response_code( $response );
 
-            set_transient( $trans_key, $data, 4 * WEEK_IN_SECONDS );
-        }
+            if ( 200 !== $status_code ) {
+                if ( is_wp_error( $response ) ) {
+                    $data = $response->get_error_message();
+                } else {
+                    $data = wp_remote_retrieve_response_message( $response );
+                }
+            } else {
+                $data = wp_remote_retrieve_body( $response );
+
+                if ( is_wp_error( $data ) ) {
+                    $data = $data->get_error_message();
+                } else {
+                    set_transient( $transient, $data, WEEK_IN_SECONDS );
+                }
+            }
+        }//end if
 
         return json_decode( $data );
     }
@@ -138,7 +167,7 @@ class RDB_Template_AJAX {
      * @param array|object $data API response data sent to client.
      */
     private function send_json( $data ) {
-        if ( ! empty( $data ) ) {
+        if ( ! isset( $data->data->status ) ) {
             wp_send_json_success( $data, 200 );
         } else {
             wp_send_json_error( $data, 400 );
@@ -158,10 +187,11 @@ class RDB_Template_AJAX {
     private function sanitize( $field ) {
         if ( isset( $field ) ) {
             return esc_html( wp_unslash( $field ) );
-        } else {
-            return '';
         }
+
+        return '';
     }
+
 }
 
 new RDB_Template_AJAX();

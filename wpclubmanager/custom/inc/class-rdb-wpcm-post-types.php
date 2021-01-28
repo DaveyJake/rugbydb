@@ -35,7 +35,8 @@ class RDB_WPCM_Post_Types {
         'match'  => 'matches',
         'player' => 'players',
         'roster' => 'rosters',
-        'staff'  => 'staff',
+        'sstaff' => 'staff',
+        'venue'  => 'venues',
     );
 
     /**
@@ -49,6 +50,10 @@ class RDB_WPCM_Post_Types {
         }
 
         foreach ( $this->routes as $type => $path ) {
+            if ( 'sstaff' === $type ) {
+                $type = $path;
+            }
+
             add_filter( "wpclubmanager_register_post_type_{$type}", array( $this, "wpcm_rest_api_args_{$type}" ), 5 );
         }
     }

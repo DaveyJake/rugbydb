@@ -40,6 +40,13 @@ define( 'ETC_UTC', DateTimeZone::listIdentifiers( DateTimeZone::UTC )[0] );
 define( 'ONE_MONTH', 4 * WEEK_IN_SECONDS );
 
 /**
+ * Alias for a week in seconds.
+ *
+ * @var constant
+ */
+define( 'ONE_WEEK', WEEK_IN_SECONDS );
+
+/**
  * Third-Party: Device Detection
  */
 require get_template_directory() . '/inc/class-rdb-device-detect.php';
@@ -61,7 +68,7 @@ if ( is_plugin_active( 'wp-club-manager/wpclubmanager.php' )
 /**
  * Theme Analytics
  */
-require get_template_directory() . '/inc/class-rdb-tracking-analytics.php';
+// require get_template_directory() . '/inc/class-rdb-tracking-analytics.php';
 
 /**
  * Theme Functions
@@ -84,16 +91,6 @@ require get_template_directory() . '/inc/class-rdb-shortcodes.php';
 require get_template_directory() . '/inc/rdb-theme-widgets.php';
 
 /**
- * Theme Scripts & Styles
- */
-require get_template_directory() . '/inc/rdb-theme-scripts.php';
-
-/**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/inc/rdb-custom-header.php';
-
-/**
  * Custom template tags for this theme.
  */
 require get_template_directory() . '/inc/rdb-template-tags.php';
@@ -107,6 +104,11 @@ require get_template_directory() . '/inc/rdb-template-functions.php';
  * AJAX templates.
  */
 require get_template_directory() . '/inc/class-rdb-template-ajax.php';
+
+/**
+ * Theme Scripts & Styles
+ */
+require get_template_directory() . '/inc/class-rdb-styles-scripts.php';
 
 /**
  * Front page filters.
@@ -128,5 +130,6 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 /**
  * Globally instantiated classes.
  */
-$GLOBALS['rdb_device_detect'] = new RDB_Device_Detect();
-$GLOBALS['rdb_shortcodes']    = new RDB_Shortcodes();
+$GLOBALS['rdb_device_detect']  = new RDB_Device_Detect();
+$GLOBALS['rdb_shortcodes']     = new RDB_Shortcodes();
+$GLOBALS['rdb_styles_scripts'] = new RDB_Styles_Scripts();

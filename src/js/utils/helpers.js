@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { $ } from './globals';
 import { LOCALE, TIMEZONE } from './constants';
 
 /**
@@ -16,7 +17,7 @@ const util = {
      *
      * @return {string} Website admin URL to specified file.
      */
-    adminUrl( path ) {
+    adminUrl: function( path ) {
         return `${ location.origin }/wp-admin/${ path }`;
     },
     /**
@@ -24,8 +25,8 @@ const util = {
      *
      * @since 1.0.0
      */
-    cookie() {
-        Cookies.set( 'rdb', { locale: LOCALE, timezone: TIMEZONE }, { expires: 7 } );
+    cookie: function() {
+        Cookies.set( 'rdb', { locale: LOCALE, timezone: TIMEZONE }, { expires: 7 });
     },
     /**
      * Check if Chosen.js dropdown goes beyond the DOM viewport.
@@ -37,7 +38,7 @@ const util = {
      *
      * @return {bool}  True if value is greater than viewport height. False if not.
      */
-    dropdownExceedsBottomViewport( chosenContainer ) {
+    dropdownExceedsBottomViewport: function( chosenContainer ) {
         const html           = document.documentElement,
               dropdown       = chosenContainer.find( '.chosen-drop' ),
               dropdownTop    = dropdown.offset().top - html.scrollTop,
@@ -55,7 +56,7 @@ const util = {
      *
      * @return {string}    Red, green and blue numeric.
      */
-    hex2rgb( hex ) {
+    hex2rgb: function( hex ) {
         /* eslint-disable */
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
 
@@ -76,24 +77,76 @@ const util = {
      *
      * @return {number}    Color lightness.
      */
-    lightness( hex ) {
+    lightness: function( hex ) {
         const color = this.hex2rgb( hex );
 
         if ( null !== color ) {
            return ( 1/2 * ( Math.max( color.r, color.g, color.b ) + Math.min( color.r, color.g, color.b ) ) );
         }
     },
-    locale() {
+    locale: function() {
         if ( ! sessionStorage.locale ) {
             sessionStorage.setItem( 'locale', LOCALE );
         }
     },
-    timezone() {
+    /**
+     * Merges together defaults and args much like the WP `wp_parse_args` function
+     *
+     * @since 1.0.0
+     *
+     * @param {object} args     Custom arguments & values.
+     * @param {object} defaults Default arguments & values.
+     *
+     * @return {object}    Arguments to be used instead of defaults.
+    */
+    parseArgs: function( args, defaults ) {
+        if ( typeof args !== 'object' ) {
+            args = {};
+        }
+
+        if ( typeof defaults !== 'object' ) {
+            defaults = {};
+        }
+
+        return $.extend( {}, defaults, args );
+    },
+    /**
+     * WordPress `sanitize_title` for JS.
+     *
+     * @author Nicolas Bages {@link https://github.com/spyesx}
+     * @see {@link https://gist.github.com/spyesx/561b1d65d4afb595f295|String-To-Slug.js}
+     *
+     * @param {string} string String to sanitize.
+     *
+     * @return {string}       The sanitized-hyphenated-string.
+     */
+    sanitizeTitle: function( string ) {
+        string = string.replace( /^\s+|\s+$/g, '' );
+        string = string.toLowerCase();
+
+        // remove accents, swap ñ for n, etc
+        const from = 'àáäâèéëêìíïîòóöôùúüûñç·_,:;',
+              to   = 'aaaaeeeeiiiioooouuuunc------';
+
+        for ( var i = 0, l = from.length; i < l; i++ ) {
+            string = string.replace( new RegExp( from.charAt( i ), 'g' ), to.charAt( i ) );
+        }
+
+        string = string.replace( '_-' ) // replace a dot by a dash
+            .replace( /([a-z])(\/)(\d)/g, '$1-$3' ) // replace slash between letter & number with dash
+            .replace( /\//g, '' ) // collapse all forward-slashes by a dash
+            .replace( /[^a-z0-9 -]/g, '' ) // remove invalid chars
+            .replace( /\s+/g, '-' ) // collapse whitespace and replace by a dash
+            .replace( /-+/g, '-' ); // collapse dashes
+
+        return string;
+    },
+    timezone: function() {
         if ( ! sessionStorage.timezone ) {
             sessionStorage.setItem( 'timezone', TIMEZONE );
         }
     },
-    init() {
+    init: function() {
         this.cookie();
         this.locale();
         this.timezone();

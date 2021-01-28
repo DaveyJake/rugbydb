@@ -28,6 +28,7 @@ parserOptions:
     modules: true
     impliedStrict: true
 rules:
+  array-bracket-spacing: 0
   block-scoped-var: error
   camelcase: error
   comma-dangle:
@@ -107,11 +108,7 @@ rules:
   semi:
     - 0
     - never
-  space-in-parens:
-    - error
-    - always
-    - exceptions:
-      - empty
+  space-in-parens: 0
   strict:
     - warn
     - global

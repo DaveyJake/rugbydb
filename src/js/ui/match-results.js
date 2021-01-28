@@ -15,4 +15,4 @@
     if ( $.fn.DataTable ) {
         $( '#match-results' ).DataTable( settings );
     }
-} )( jQuery );
+})( jQuery );

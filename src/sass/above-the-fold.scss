@@ -1,4 +1,3 @@
-@import './plugins/mmenu/mmenu';
 @import 'abstracts/abstracts';
 @import 'abstracts/fontawesome/fontawesome';
 @import 'abstracts/fontawesome/solid';
@@ -9,6 +8,7 @@
 @import 'utilities/alignments';
 @import 'utilities/flex';
 @import 'utilities/visibility';
+@import './plugins/mmenu/mmenu';
 @import 'components/components';
 @import 'templates/page';
 @import 'templates/wpcm';

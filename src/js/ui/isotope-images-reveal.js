@@ -49,7 +49,7 @@ const isotopeImagesReveal = function( $items, sortValue, background ) {
 
         // sortBy
         if ( ! _.isEmpty( sortValue ) ) {
-            iso.arrange( { sortBy: sortValue } );
+            iso.arrange({ sortBy: sortValue });
         }
 
         // Selector `class` for visible `$item`
@@ -57,7 +57,7 @@ const isotopeImagesReveal = function( $items, sortValue, background ) {
 
         // BUGFIX: Prevent Vertical-Line Load
         iso.layout();
-    } );
+    });
 
     return this;
 };

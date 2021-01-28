@@ -23,12 +23,12 @@ echo '<div class="wpcm-match-score">';
         echo wpclubmanager_template_single_match_home_club();
 
         echo '<div class="wpcm-match-score__fulltime">';
-            echo isset( $score[1] ) ? absint( $score[1] ) : '-';
+            echo isset( $score[1] ) ? '<span>' . absint( $score[1] ) . '</span>' : '<span>-</span>';
         echo '</div>';
 
         if ( ! ( empty( $intgoals['q1']['home'] ) && empty( $intgoals['q1']['away'] ) ) ) :
             echo '<div class="wpcm-match-score__halftime">';
-                echo absint( $intgoals['q1']['home'] );
+                echo '<span>' . absint( $intgoals['q1']['home'] ) . '</span>';
             echo '</div>';
         endif;
 
@@ -39,12 +39,12 @@ echo '<div class="wpcm-match-score">';
         echo wpclubmanager_template_single_match_away_club();
 
         echo '<div class="wpcm-match-score__fulltime">';
-            echo isset( $score[2] ) ? absint( $score[2] ) : '-';
+            echo isset( $score[2] ) ? '<span>' . absint( $score[2] ) . '</span>' : '<span>-</span>';
         echo '</div>';
 
         if ( ! ( empty( $intgoals['q1']['home'] ) && empty( $intgoals['q1']['away'] ) ) ) :
             echo '<div class="wpcm-match-score__halftime">';
-                echo absint( $intgoals['q1']['away'] );
+                echo '<span>' . absint( $intgoals['q1']['away'] ) . '</span>';
             echo '</div>';
         endif;
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying match details in the single-match.php template
+ * The template for displaying venue details in the taxonomy-wpcm_venue.php template
  *
  * @author Davey Jacobson <daveyjake21@gmail.com>
  * @package Rugby_Database
@@ -19,20 +19,27 @@ do_action( 'wpclubmanager_before_single_venue' );
 ?>
 <article id="term-<?php echo esc_attr( $rdb_term->term_id ); ?>" <?php rdb_term_template_class(); ?>>
 <?php
-    echo '<header class="wpcm-entry-header wpcm-row flex">';
+    echo '<header class="wpcm-entry-header">';
 
         /**
          * Header content hooks.
          *
          * @hooked rdb_single_venue_title - 5
-         * @hooked rdb_single_venue_image - 10
-         * @hooked rdb_single_venue_meta - 15
+         * @hooked rdb_single_venue_dropdown - 10
          */
         do_action( 'rdb_single_venue_header' );
 
     echo '</header>';
 
     echo '<div class="wpcm-widget-content wpcm-venue-map">';
+
+        /**
+         * Before widget content.
+         *
+         * @hooked rdb_single_venue_image - 5
+         * @hooked rdb_single_venue_meta - 10
+         */
+        do_action( 'rdb_before_single_venue_widget' );
 
         /**
          * Widget content hooks.
@@ -43,16 +50,18 @@ do_action( 'wpclubmanager_before_single_venue' );
 
     echo '</div>';
 
-    echo '<article class="wpcm-entry-content wpcm-row term-description">';
+    if ( $rdb_term->name !== $rdb_term->description ) :
+        echo '<div class="wpcm-entry-content wpcm-row term-description">';
 
-        /**
-         * Entry content hooks.
-         *
-         * @hooked rdb_single_venue_description - 5
-         */
-        do_action( 'rdb_single_venue_content' );
+            /**
+             * Entry content hooks.
+             *
+             * @hooked rdb_single_venue_description - 5
+             */
+            do_action( 'rdb_single_venue_content' );
 
-    echo '</article>';
+        echo '</div>';
+    endif;
 
     echo '<hr />';
 
@@ -61,7 +70,7 @@ do_action( 'wpclubmanager_before_single_venue' );
         /**
          * Entry footer hooks.
          *
-         * @hooked rdb_single_venue_dropdown - 5
+         * @hooked $rdb_single_venue_match_list - 10
          */
         do_action( 'rdb_single_venue_footer' );
 

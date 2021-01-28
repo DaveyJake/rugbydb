@@ -13,13 +13,13 @@ defined( 'ABSPATH' ) || exit;
 
 get_header();
 
-$rdb_result_columns = array( 'ID', 'Date', 'Fixture', 'Event', 'Venue', 'Timestamp', 'Team' );
+$rdb_result_columns = array( 'ID', 'Date', 'Fixture', 'Event', 'Venue', 'Timestamp', 'Team', 'Friendly' );
 
 echo '<main id="primary" class="site-main">';
 
     rdb_before_match_table();
 
-    echo '<table id="all-matches" class="wpcm-table display responsive" width="100%" cellspacing="0" cellpadding="0">';
+    echo '<table id="all-matches" class="wpcm-table dataTable display" width="100%" cellspacing="0" cellpadding="0">';
         echo '<thead>';
             echo '<tr>';
             rdb_table_columns( $rdb_result_columns );

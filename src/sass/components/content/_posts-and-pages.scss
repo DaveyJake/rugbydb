@@ -2,6 +2,13 @@
     display: block;
 }
 
+.no-bullet {
+    &,
+    &s {
+        list-style: none;
+    }
+}
+
 .post,
 .page:not(.page-about):not(body) {
     margin: 0 0 1.5em;

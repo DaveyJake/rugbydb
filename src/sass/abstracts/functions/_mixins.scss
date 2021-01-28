@@ -7,6 +7,14 @@
     @return unquote($str);
 }
 
+// CSS calculator written for SCSS.
+//
+// @param string $property   CSS property.
+// @param string $expression Mathematical expression.
+@mixin calc($property, $expression) {
+    #{$property}: calc(#{$expression});
+}
+
 // Offset for club colors..
 //
 // @param string $primary   Club's primary color.
@@ -40,6 +48,12 @@
         position: center center;
         size: contain;
     }
+}
+
+// Relative element.
+@mixin relative {
+    position: relative;
+    @content;
 }
 
 // Absolute bottom.
@@ -83,8 +97,13 @@
 }
 
 // Column width with margin.
-@mixin column-width($numberColumns: 3) {
+@mixin column-width($columns, $columns__margin, $numberColumns: 3) {
     width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
+}
+
+// Float element.
+@mixin float($dir) {
+    float: $dir;
 }
 
 // Full Height.
@@ -95,6 +114,12 @@
 // Full Width.
 @mixin full-width {
     width: 100%;
+}
+
+// Full
+@mixin full {
+    @include full-width;
+    @include full-height;
 }
 
 // Half Width.
@@ -157,15 +182,18 @@
 // Score block.
 @mixin score-block {
     position: relative;
-    width: 120px;
+    width: 145px;
     height: 120px;
     line-height: 1.4;
     background: $color__background-body;
-    color: #fff;
+    color: $color__white;
+    font-size: 1.7em;
     font: {
         family: industry, sans-serif;
-        size: 1.5em;
         weight: 900;
+    }
+    @include breakpoint(medium) {
+        font-size: 1.5em;
     }
     z-index: 9;
 }
@@ -207,4 +235,11 @@
     } @else {
         border-radius: $radius;
     }
+}
+
+// Menu item hover.
+@mixin menu-item-hover {
+    background: #fff;
+    color: darken($color__blue, 5%);
+    transition: $hove-transition;
 }

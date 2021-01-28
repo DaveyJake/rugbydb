@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $post;
 
-$captain = get_post_meta( $post->ID, '_wpcm_match_captain', true );
+$captain = absint( get_post_meta( $post->ID, '_wpcm_match_captain', true ) );
 
 unset( $value['rating'] );
 
@@ -37,7 +37,7 @@ echo '<tr>';
 
         echo '<a href="' . get_permalink( $key ) . '">' . get_player_title( $key, get_option( 'wpcm_name_format' ) ) . '</a>';
 
-        echo ( $key === $captain ? ' (c) ' : '' );
+        echo ( $key === $captain ? ' (C)' : '' );
 
         if ( isset( $value['mvp'] ) )
         {
@@ -55,7 +55,7 @@ echo '<tr>';
     echo '</th>';
 
     foreach ( $value as $key => $stat ) {
-        if ( $stat == '0' || $stat == null )
+        if ( empty( $stat ) )
         {
             $stat = '&mdash;';
         }

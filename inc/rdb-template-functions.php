@@ -66,31 +66,19 @@ function rdb_body_classes( $classes ) {
  * @param int      $depth   Depth of menu item. Used for padding.
  */
 function rdb_menu_item_classes( $classes, $item, $args, $depth ) {
-    $whitelist = array();
+    $whitelist = array( 'menu-item', 'menu-item-home', 'toggler', 'current-menu-item', 'current-menu-parent', 'current-menu-ancestor' );
 
     if ( 'main-menu' === $args->theme_location ) {
-        if ( in_array( 'toggler', $classes, true ) ) {
-            $whitelist[] = 'toggler';
-        }
-
-        if ( in_array( 'current-menu-item', $classes, true ) ) {
-            $whitelist[] = 'current-menu-item';
-        }
-
-        if ( in_array( 'current-menu-parent', $classes, true ) ) {
-            $whitelist[] = 'current-menu-parent';
-        }
-
-        if ( in_array( 'current-menu-ancestor', $classes, true ) ) {
-            $whitelist[] = 'current-menu-ancestor';
-        }
-
         $classes = array();
 
-        $classes[] = 'menu-item';
-    }//end if
+        $item_classes = array_intersect( $whitelist, $item->classes );
 
-    return array_merge( $classes, $whitelist );
+        $classes = array_merge( $classes, $item_classes );
+
+        $classes[] = "menu-item-{$item->post_name}";
+    }
+
+    return $classes;
 }
 
 /**
@@ -111,6 +99,58 @@ function rdb_favicons() {
     echo '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">';
     echo '<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">';
     echo '<link rel="manifest" href="/site.webmanifest">';
+}
+
+/**
+ * Filters for the players page.
+ *
+ * @since 1.0.0
+ *
+ * @see 'rdb_shortcodes_tabs'
+ *
+ * @param int $post_id Current post ID.
+ */
+function rdb_players_page_filters( $post_id ) {
+    $post = get_post( $post_id );
+
+    if ( 'players' !== $post->post_name ) {
+        return;
+    }
+
+    // phpcs:disable PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket, PEAR.Functions.FunctionCallSignature.CloseBracketLine
+    $competitions = get_terms( array(
+        'taxonomy'   => 'wpcm_comp',
+        'hide_empty' => false,
+    ) );
+
+    $teams = get_terms( array(
+        'taxonomy'   => 'wpcm_team',
+        'hide_empty' => false,
+    ) );
+
+    $seasons = get_terms( array(
+        'taxonomy'   => 'wpcm_season',
+        'hide_empty' => false,
+    ) );
+
+    $positions = get_terms( array(
+        'taxonomy'   => 'wpcm_position',
+        'hide_empty' => false,
+    ) );
+
+    // Competitions.
+    $html = rdb_taxonomy_dropdown( $competitions );
+
+    // Teams.
+    $html .= rdb_taxonomy_dropdown( $teams );
+
+    // Seasons.
+    $html .= rdb_taxonomy_dropdown( $seasons );
+
+    // Positions.
+    $html .= rdb_taxonomy_dropdown( $positions );
+
+    return $html;
 }
 
 /**
@@ -193,6 +233,88 @@ function _rdb_prevent_post_type_image_resize( $post_type, $sizes ) {
     return $sizes;
 }
 
+/**
+ * Set purge hooks at initialization.
+ *
+ * @since 1.0.0
+ *
+ * @see 'init'
+ * @see rdb_purge_post_transient()
+ * @see rdb_purge_term_transient()
+ */
+function rdb_purge_hooks() {
+    add_action( 'saved_wpcm_venue', 'rdb_purge_term_transient', 10, 3 );
+
+    $ajax_post_types = array( 'wpcm_club', 'wpcm_match', 'wpcm_player', 'wpcm_staff' );
+    foreach ( $ajax_post_types as $post_type ) {
+        add_action( "save_post_{$post_type}", 'rdb_purge_post_transient', 10, 3 );
+    }
+}
+
+/**
+ * Purge AJAX transients when clubs, matches, players, rosters, or staff are saved/updated.
+ *
+ * @since 1.0.0
+ *
+ * @see 'save_post_{$post_type}'
+ *
+ * @param int     $post_ID Current post ID.
+ * @param WP_Post $post    Current post object.
+ * @param bool    $update  Whether this is an existing post being updated.
+ */
+function rdb_purge_post_transient( $post_ID, $post, $update ) {
+    if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || 'revision' === $post->post_type ) {
+        return;
+    }
+
+    $types = array(
+        'wpcm_club'   => 'unions',
+        'wpcm_match'  => 'matches',
+        'wpcm_player' => 'players',
+        'wpcm_staff'  => 'staff',
+    );
+
+    if ( ! isset( $types[ $post->post_type ] ) ) {
+        return;
+    }
+
+    $post_type = $types[ $post->post_type ];
+    $endpoint  = "wp/v2/{$post_type}";
+
+    if ( $update ) {
+        $endpoint .= "/{$post_ID}";
+    }
+
+    $url       = rest_url( $endpoint );
+    $transient = md5( $url );
+
+    delete_transient( $transient );
+}
+
+/**
+ * Purge AJAX transient with venues are saved/updated.
+ *
+ * @since 1.0.0
+ *
+ * @see 'edited_{$taxonomy}'
+ *
+ * @param int  $term_id Term ID.
+ * @param int  $tt_id   Term taxonomy ID.
+ * @param bool $update  Whether this is an existing post being updated.
+ */
+function rdb_purge_term_transient( $term_id, $tt_id, $update ) {
+    $term = get_term( $term_id );
+
+    if ( 'wpcm_venue' !== $term->taxonomy ) {
+        return;
+    }
+
+    $url       = rest_url( 'wp/v2/venues' );
+    $transient = md5( $url );
+
+    delete_transient( $transient );
+}
+
 /** Filters *******************************************************************/
 
 // Custom body classes.
@@ -205,6 +327,7 @@ add_filter( 'nav_menu_css_class', 'rdb_menu_item_classes', 10, 4 );
 add_filter( 'intermediate_image_sizes', 'rdb_prevent_post_type_image_resize' );
 add_filter( 'intermediate_image_sizes_advanced', 'rdb_prevent_post_type_image_resize' );
 
+
 /** Actions *******************************************************************/
 
 // Pingback head tag.
@@ -213,6 +336,11 @@ add_action( 'wp_head', 'rdb_pingback_header' );
 // Favicons.
 add_action( 'rdb_head_open', 'rdb_favicons' );
 
+// Purge AJAX transient for specified objects.
+add_action( 'init', 'rdb_purge_hooks' );
+
 // Custom endpoint AJAX.
 add_action( 'wp_footer', 'rdb_ajax' );
 
+// Players page.
+add_action( 'rdb_shortcodes_tabs', 'rdb_players_page_filters' );

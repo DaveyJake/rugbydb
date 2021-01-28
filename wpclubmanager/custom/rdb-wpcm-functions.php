@@ -261,11 +261,15 @@ function rdb_wpcm_get_head_coach( $post_id ) {
 
     $staff_id = maybe_unserialize( get_post_meta( $roster->ID, '_wpcm_roster_staff', true ) );
 
-    $coach = get_post_field( 'post_title', $staff_id[0] );
+    if ( ! empty( $staff_id[0] ) ) {
+        $coach = get_post_field( 'post_title', $staff_id[0] );
 
-    wp_reset_postdata();
+        wp_reset_postdata();
 
-    return $coach;
+        return $coach;
+    }
+
+    return '';
 }
 
 /**
@@ -676,8 +680,9 @@ function rdb_wpcm_head_to_heads( $post_id ) {
 
     // Include child clubs.
     $child_args = array(
-        'post_type'   => 'wpcm_club',
-        'post_parent' => $post_id,
+        'post_type'      => 'wpcm_club',
+        'posts_per_page' => -1,
+        'post_parent'    => $post_id,
     );
     $children = get_posts( $child_args );
     wp_reset_postdata();
@@ -685,6 +690,8 @@ function rdb_wpcm_head_to_heads( $post_id ) {
     $args = array(
         'post_type'      => 'wpcm_match',
         'posts_per_page' => -1,
+        'orderby'        => 'post_date',
+        'order'          => 'DESC',
         'meta_query'     => array(
             array(
                 'relation' => 'OR',
@@ -722,6 +729,8 @@ function rdb_wpcm_head_to_heads( $post_id ) {
         $child_args = array(
             'post_type'      => 'wpcm_match',
             'posts_per_page' => -1,
+            'orderby'        => 'post_date',
+            'order'          => 'DESC',
             'meta_query'     => array(
                 array(
                     'relation' => 'OR',
@@ -806,6 +815,19 @@ function rdb_match_timeline( $wr_id ) {
     }
 
     return $data;
+}
+
+/**
+ * Short-hand function for a permalink with a trailing slash.
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Post object ID.
+ *
+ * @return string      Post permalink with trailing slash.
+ */
+function rdb_slash_permalink( $post_id ) {
+    return trailingslashit( get_permalink( $post_id ) );
 }
 
 /**

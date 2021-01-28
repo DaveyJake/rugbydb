@@ -13,4 +13,6 @@ global $rdb_tax, $rdb_term;
 
 $rdb_term_content = term_description( $rdb_term, $rdb_tax );
 
-echo wpautop( $rdb_term_content );
+if ( $rdb_term->name !== $rdb_term->description ) :
+    echo wpautop( $rdb_term_content );
+endif;

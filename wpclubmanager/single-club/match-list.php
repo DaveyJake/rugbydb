@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 $rdb_match_cols = array( 'Date', 'Fixture', 'Venue', 'Competition' );
 
-echo '<table class="wpcm-matches-list display responsive nowrap" width="100%">';
+echo '<table class="wpcm-matches-list display responsive nowrap" width="100%" cellspacing="0" cellpadding="0">';
 echo '<thead><tr>' . rdb_table_columns( $rdb_match_cols, false ) . '</tr></thead>';
 
 $matches = rdb_wpcm_head_to_heads( $post->ID );
@@ -48,10 +48,13 @@ foreach ( $matches as $match ) {
         echo '</td>';
 
         echo '<td class="wpcm-matches-list-col wpcm-matches-list-venue">';
-            echo esc_html( $venue['name'] );
+            echo '<a id="' . esc_attr( sprintf( '%s-%d-%s', 'venue', $venue['id'], $venue['slug'] ) ) . '" href="' . esc_url( get_term_link( $venue['id'] ) ) . '" rel="bookmark">' . esc_html( $venue['name'] ) . '</a>';
         echo '</td>';
 
         echo '<td class="wpcm-matches-list-col wpcm-matches-list-info">';
+            if ( empty( $comp ) ) {
+                d( $match->ID );
+            }
             echo esc_html( $comp[0] );
         echo '</td>';
 

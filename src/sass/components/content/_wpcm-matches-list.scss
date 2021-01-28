@@ -1,0 +1,63 @@
+.wpcm {
+    &-matches {
+        &-list {
+            margin-top: -1px;
+
+            &-date {
+                overflow: visible;
+                white-space: nowrap;
+            }
+
+            &-item {
+                td {
+                    font-size: 0.75em;
+                }
+            }
+
+            &-link {
+                display: flex;
+                justify-content: space-evenly;
+                /* stylelint-disable */
+                $win: #269e0b;
+                $loss: #9e0b2a;
+                $draw: #808080;
+
+                .win & {
+                    color: $win;
+
+                    &:hover {
+                        color: darken($win, 15);
+                    }
+                }
+
+                .loss & {
+                    color: $loss;
+
+                    &:hover {
+                        color: darken($loss, 15);
+                    }
+                }
+
+                .draw & {
+                    color: $draw;
+                }
+                /* stylelint-enable */
+            }
+
+            &-status {
+                text-align: center;
+            }
+
+            &-fixture {
+                span {
+                    width: 33.3%;
+                    @include nowrap;
+                }
+            }
+
+            &-info {
+                white-space: nowrap;
+            }
+        }
+    }
+}

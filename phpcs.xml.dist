@@ -75,6 +75,7 @@
         <exclude name="PHPCompatibility.FunctionDeclarations.NewParamTypeDeclarations.boolFound"/>
         <exclude name="PHPCompatibility.FunctionDeclarations.NewParamTypeDeclarations.stringFound"/>
         <exclude name="PHPCompatibility.FunctionUse.NewFunctions.array_replaceFound"/>
+        <exclude name="PHPCompatibility.FunctionUse.NewFunctions.boolvalFound"/>
         <exclude name="PHPCompatibility.Keywords.NewKeywords.t_dirFound"/>
         <exclude name="PHPCompatibility.LanguageConstructs.NewEmptyNonVariable.Found"/>
         <exclude name="PHPCompatibility.LanguageConstructs.NewLanguageConstructs.t_ellipsisFound"/>
@@ -157,7 +158,7 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="rdb,_rdb,wpclubmanager" />
+			<property name="prefixes" type="array" value="rdb,_rdb,the_,wpclubmanager" />
 		</properties>
 	</rule>
 

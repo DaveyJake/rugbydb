@@ -339,3 +339,74 @@ if ( ! function_exists( 'rdb_table_columns' ) ) :
         }
     }
 endif;
+
+if ( ! function_exists( 'rdb_wpcm_countries' ) ) :
+    /**
+     * Add default value to WPCM countries dropdown.
+     *
+     * @since 1.0.0
+     */
+    function rdb_wpcm_countries() {
+        if ( ! function_exists( 'WPCM' ) ) {
+            return '';
+        }
+
+        $played_in = array( 'ae', 'hk', 'au', 'ca', 'en', 'fr', 'fj', 'ws', 'br', 'us', 'ie', 'bm', 'ge', 'de', 'ar', 'es', 'za', 'wl', 'it', 'jp', 'sf', 'uy', 'cr', 'ch', 'cl', 'pr', 'nz', 'cn', 'ru', 'nl', 'be', 'sg', 'ro', 'to' );
+        $countries = array();
+
+        foreach ( $played_in as $abbr ) {
+            $countries[ $abbr ] = WPCM()->countries->countries[ $abbr ];
+        }
+
+        $countries = array_flip( $countries );
+        ksort( $countries );
+        $countries = array_flip( $countries );
+
+        $countries = array( '*' => 'Select a country' ) + $countries;
+        // phpcs:disable
+        echo '<div class="country-filter">';
+            echo '<select id="country-picker" class="chosen_select" data-placeholder="Select a country">';
+            foreach ( $countries as $abbr => $country ) {
+                echo '<option value="' . esc_attr( $abbr ) . '">' . esc_html( $country ) . '</option>';
+            }
+            echo '</select>';
+        echo '</div>';
+    }
+endif;
+
+if ( ! function_exists( 'rdb_unions' ) ) :
+    /**
+     * Opponents page grouped by parent union.
+     *
+     * @since 1.0.0
+     */
+    function rdb_unions() {
+        $options = array();
+
+        $args = array(
+            'post_type'      => 'wpcm_club',
+            'posts_per_page' => -1,
+            'post_parent'    => 0,
+            'orderby'        => 'post_title',
+            'order'          => 'ASC',
+        );
+
+        $unions = get_posts( $args );
+
+        foreach ( $unions as $union ) {
+            $options[ $union->ID ] = $union->post_title;
+        }
+
+        wp_reset_postdata();
+
+        $options = array( '*' => 'Choose Union' ) + $options;
+
+        echo '<div class="opponent-filter">';
+            echo '<select id="opponent-picker" class="chosen_select">';
+            foreach ( $options as $k => $v ) {
+                echo '<option value="' . esc_attr( $k ) . '">' . esc_html( $v ) . '</option>';
+            }
+            echo '</select>';
+        echo '</div>';
+    }
+endif;

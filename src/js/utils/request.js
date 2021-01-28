@@ -22,19 +22,27 @@ class Request {
      *
      * @param {string} postType   Slug of requested post type.
      * @param {string} nonce      Generated nonce key.
-     * @param {string} collection Is the request for multiple items? Default true.
+     * @param {bool}   collection Is the request for multiple items? Default true.
      * @param {number} postId     Post ID of requested item.
+     * @param {string} grid       The grid attribute selector.
      *
      * @return {Request} JSON response from API.
      */
-    constructor( postType = '', nonce = '', collection = true, postId = 0 ) {
-        this.postType = postType;
+    constructor( postType = '', nonce = '', collection = true, postId = 0, venue = '', grid = '#grid' ) {
+        this.postType = postType.match( /\// ) ? postType.split( '/' ) : postType;
+        this.team     = postType.match( /\// ) ? this.postType[1] : ''; // eslint-disable-line
+        this.postType = postType.match( /\// ) ? this.postType[0] : this.postType; // eslint-disable-line
+
         this.nonce = nonce;
+        this.venue = venue;
         this.collection = collection;
         this.postId = postId;
 
+        this.grid = grid;
+
         this.endpoint = Request._endpointMap( this.postType );
 
+        // this._adaptiveBackground();
         this._ajax();
     }
 
@@ -47,6 +55,8 @@ class Request {
      * @return {jQuery.ajax} AJAX response from API.
      */
     _ajax() {
+        const self = this;
+
         const args = {
             action: `get_${ this.endpoint }`,
             nonce: this.nonce,
@@ -54,11 +64,19 @@ class Request {
             post_type: this.postType
         };
 
+        if ( ! _.isEmpty( this.team ) ) {
+            args.team = this.team;
+        }
+
+        if ( ! _.isEmpty( this.venue ) ) {
+            args.venue = this.venue;
+        }
+
         if ( this.postId > 0 ) {
             args.post_id = this.postId;
         }
 
-        $.ajax( {
+        $.ajax({
             url: wp.ajax.settings.url,
             data: args,
             dataType: 'json',
@@ -69,10 +87,10 @@ class Request {
 
                 const isoTmpls = ['players', 'staff', 'venues', 'opponents']; // eslint-disable-line
 
-                if ( _.includes( isoTmpls, rdb.post_name ) ) {
-                    return Request._isoTmpls( response.data );
-                } else if ( 'match' === this.postType && this.postId > 0 ) {
-                    return Request._timelineTmpl( response.data );
+                if ( _.includes( isoTmpls, rdb.post_name ) || _.includes( isoTmpls, rdb.term_name ) ) {
+                    return self._isoTmpls( response.data );
+                } else if ( 'match' === self.postType && self.postId > 0 ) {
+                    return self._timelineTmpl( response.data );
                 }
 
                 return response.data;
@@ -83,7 +101,63 @@ class Request {
             complete: function() {
                 $( '#scroll-status' ).remove();
             }
-        } );
+        });
+    }
+
+    /**
+     * Parse JS templates.
+     *
+     * @since 1.0.0
+     * @access private
+     * @static
+     *
+     * @param {JSON}   response AJAX API response data.
+     */
+    _isoTmpls( response ) {
+        if ( $( this.grid ).children( '.card' ).length ) {
+            return;
+        }
+
+        const $selector = $( this.grid ).imagesLoaded( function() {
+            $selector.isotope({
+                itemSelector: '.card',
+                percentPosition: true,
+                getSortData: {
+                    order: '[data-order]'
+                },
+                sortBy: 'order',
+                packery: {
+                    columnWidth: '.card',
+                    gutter: 0
+                }
+            });
+
+            const tmpl     = $selector.data( 'tmpl' ),
+                  template = wp.template( tmpl ),
+                  result   = template( response ),
+                  cards    = $( result );
+
+            $selector.append( cards ).isotope( 'appended', cards ).isotope();
+        });
+
+        const obj = [
+            {
+                postName: 'venues',
+                attrName: 'country'
+            },
+            {
+                postName: 'opponents',
+                attrName: 'group'
+            },
+            {
+                postName: 'players',
+                attrName: 'name'
+            }
+        ];
+
+        _.each( obj, function( data ) {
+            return Request._filterTmpl( data, $selector );
+        });
     }
 
     /**
@@ -104,10 +178,12 @@ class Request {
             staff: 'staff',
             player: 'player',
             opponent: 'union',
+            venue: 'venue',
             wpcm_club: 'union',
             wpcm_match: 'match',
             wpcm_staff: 'staff',
-            wpcm_player: 'players'
+            wpcm_player: 'player',
+            wpcm_venue: 'venue'
         };
 
         const terms = {
@@ -116,10 +192,12 @@ class Request {
             staff: 'staff',
             player: 'players',
             opponent: 'unions',
+            venue: 'venues',
             wpcm_club: 'unions',
-            wpcm_match: 'matches',
             wpcm_staff: 'staff',
-            wpcm_player: 'players'
+            wpcm_match: 'matches',
+            wpcm_player: 'players',
+            wpcm_venue: 'venues'
         };
 
         if ( this.collection && ! _.isUndefined( terms[ request ] ) ) {
@@ -132,36 +210,51 @@ class Request {
     }
 
     /**
-     * Parse JS templates.
+     * Parse JS filters.
      *
      * @since 1.0.0
      * @access private
      * @static
      *
-     * @param {JSON} response AJAX API response data.
+     * @param {object} data      Key-value pair.
+     * @param {jQuery} $selector The 'select' tag.
      */
-    static _isoTmpls( data ) {
-        const $selector = $( '#grid' ).imagesLoaded( function() {
-            $selector.isotope( {
-                itemSelector: '.card',
-                percentPosition: true,
-                getSortData: {
-                    order: '[data-order]'
-                },
-                sortBy: 'order',
-                packery: {
-                    columnWidth: '.card',
-                    gutter: 0
-                }
-            } );
+    static _filterTmpl( data, $selector ) {
+        const isPage  = ( data.postName === rdb.post_name && `page-${ data.postName }.php` === rdb.template ),
+              isVenue = ( data.postName === rdb.term_name && 'taxonomy-wpcm_venue.php' === rdb.template );
 
-            const tmpl     = $selector.data( 'tmpl' ),
-                  template = wp.template( tmpl ),
-                  result   = template( data ),
-                  cards    = $( result );
+        if ( ! ( isPage || isVenue ) ) {
+            return;
+        }
 
-            $selector.append( cards ).isotope( 'appended', cards ).isotope( { sortBy: 'name' } );
-        } );
+        if ( rdb.is_mobile ) {
+            $( '.chosen_select' ).on( 'change', function() {
+                return Request.__filterTmpl( this.value, $selector, data );
+            });
+        } else {
+            $( '.chosen_select' ).on( 'change', function( e, params ) {
+                return Request.__filterTmpl( params.selected, $selector, data );
+            });
+        }
+    }
+
+    /**
+     * Parse filter value.
+     *
+     * @since 1.0.0
+     * @access private
+     * @static
+     *
+     * @param {number|string} filterValue The selected value.
+     * @param {jQuery}        $selector   The 'select' tag.
+     * @param {object}        data        Object-literal containing values.
+     */
+    static __filterTmpl( filterValue, $selector, data ) {
+        if ( '*' === filterValue ) {
+            $selector.isotope({ filter: '*' });
+        } else {
+            $selector.isotope({ filter: `[data-${ data.attrName }=${ filterValue }]` });
+        }
     }
 
     /**
@@ -173,7 +266,7 @@ class Request {
      *
      * @param {JSON} data AJAX API response data.
      */
-    static _timelineTmpl( data ) {
+    _timelineTmpl( data ) {
         if ( _.isString( data ) ) {
             return;
         }
@@ -182,8 +275,6 @@ class Request {
               tmpl      = $selector.data( 'tmpl' ),
               template  = wp.template( tmpl ),
               result    = template( data );
-
-        console.log( template );
 
         return $selector.append( result );
     }

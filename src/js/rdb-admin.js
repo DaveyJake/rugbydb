@@ -7,4 +7,4 @@
     if ( $( '#the-list' ) ) {
         console.log( 'We good!' );
     }
-} )( jQuery );
+})( jQuery );

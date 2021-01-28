@@ -1,4 +1,4 @@
-import { common, FrontPage, pageOpponents, pageStaff, singleWpcmClub, singleWpcmMatch, taxWpcmVenue } from './modules';
+import { FrontPage, TaxWPCMVenue, common, pageOpponents, pagePlayers, pageStaff, pageVenues, singleWpcmClub, singleWpcmMatch } from './modules';
 import { master } from './utils';
 
 /**
@@ -6,9 +6,7 @@ import { master } from './utils';
  *
  * @author Davey Jacobson <daveyjake21@gmail.com>
  */
-( function( win, doc, rdb, _, $ ) {
-    const $win = $( win );
-
+( function( win, $ ) {
     const scope = {
         common: {
             init: common
@@ -19,8 +17,14 @@ import { master } from './utils';
         page_opponents: {
             init: pageOpponents()
         },
+        page_players: {
+            init: pagePlayers()
+        },
         page_staff: {
             init: pageStaff()
+        },
+        page_venues: {
+            init: pageVenues()
         },
         single_wpcm_club: {
             init: singleWpcmClub
@@ -28,10 +32,12 @@ import { master } from './utils';
         single_wpcm_match: {
             init: singleWpcmMatch
         },
-        tax_wpcm_venue: {
-            init: taxWpcmVenue
+        taxonomy_wpcm_venue: {
+            init: new TaxWPCMVenue()
         }
     };
 
+    const $win = $( win );
+
     $win.on( 'load', master.shooter( scope ) );
-} )( window, document, window.rdb, window.lodash, window.jQuery );
+})( window, window.jQuery );

@@ -20,5 +20,7 @@ if ( $venue ) {
         $flag = $venue['country'];
     }
 
-	echo '<div class="wpcm-match-venue">' . do_shortcode( '[flag country="' . esc_attr( $flag ) . '"]' ) . '&nbsp;' . $venue['name'] . '</div>';
+    $venue_url = '/venues/' . $venue['slug'] . '/';
+
+	echo '<div class="wpcm-match-venue"><a id="match-' . esc_attr( $post->ID ) . '-venue-link" href="' . esc_url( $venue_url ) . '">' . do_shortcode( '[flag country="' . esc_attr( $flag ) . '"]' ) . '&nbsp;' . $venue['name'] . '</a></div>';
 }

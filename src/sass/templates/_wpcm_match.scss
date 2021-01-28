@@ -1,6 +1,6 @@
 @import '../abstracts/abstracts';
 
-$block: 120px;
+$block: 145px;
 $badge: 150px;
 $badge-overflow-height: 13rem;
 $badge-overflow-height--desktop: rem-calc(240px);
@@ -20,7 +20,10 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         &-away,
         &-home {
             &-club {
-                margin: rem-calc(-57px) auto 0;
+                margin: -3.2rem auto 0;
+                @include breakpoint(medium) {
+                    margin: -3.5625rem auto 0;
+                }
                 padding: 0;
                 width: $block;
                 line-height: 1;
@@ -184,7 +187,46 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 }
             }
 
+            &[data-home*='queensland'] {
+                &::before {
+                    background-position: -60px 35%;
+                }
+            }
+
             @each $side, $pos in $position {
+                &[data-#{$side}='united-states'] {
+                    &::#{$pos} {
+                        background: {
+                            size: cover;
+                            position: map-get($offset--small, $pos);
+                        }
+                    }
+
+                    @include breakpoint(large) {
+                        &::#{$pos} {
+                            background-position-y: -5rem;
+                        }
+                    }
+                }
+
+                &[data-#{$side}*='canada'] {
+                    &::#{$pos} {
+                        background-position: map-get($offset--small, $pos);
+                    }
+
+                    @include breakpoint(medium) {
+                        &::#{$pos} {
+                            background-position: map-get($offset--medium, $pos);
+                        }
+                    }
+
+                    @include breakpoint(large) {
+                        &::#{$pos} {
+                            background-position: map-get($offset--large, $pos);
+                        }
+                    }
+                }
+
                 &[data-#{$side}*='argentina'] {
                     &::#{$pos} {
                         background-position-y: 22%;
@@ -192,20 +234,19 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 }
 
                 &[data-#{$side}*='fiji'] {
-                    &::#{$pos} {
-                        background-position: 0 -10rem;
+                    @include breakpoint(large) {
+                        &::#{$pos} {
+                            background-position: 0 -10rem;
+                        }
                     }
                 }
 
-                &[data-#{$side}*='scotland'] {
-                    &::#{$pos} {
-                        background-position-y: 27%;
-                    }
-                }
-
-                &[data-#{$side}*='wales'] {
-                    &::#{$pos} {
-                        background-position-y: 15%;
+                &[data-#{$side}*='england'],
+                &[data-#{$side}*='harlequins'] {
+                    @include breakpoint(large) {
+                        &::#{$pos} {
+                            background-position-y: 10%;
+                        }
                     }
                 }
 
@@ -227,32 +268,15 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                     }
                 }
 
-                &[data-#{$side}*='canada'],
-                &[data-#{$side}='united-states'] {
+                &[data-#{$side}*='scotland'] {
                     &::#{$pos} {
-                        background-position: map-get($offset--small, $pos);
+                        background-position-y: 27%;
                     }
                 }
 
-                &[data-#{$side}*='canada'] {
-                    @include breakpoint(medium) {
-                        &::#{$pos} {
-                            background-position: map-get($offset--medium, $pos);
-                        }
-                    }
-
-                    @include breakpoint(large) {
-                        &::#{$pos} {
-                            background-position: map-get($offset--large, $pos);
-                        }
-                    }
-                }
-
-                &[data-#{$side}='united-states'] {
-                    @include breakpoint(large) {
-                        &::#{$pos} {
-                            background-position-y: -5rem;
-                        }
+                &[data-#{$side}*='wales'] {
+                    &::#{$pos} {
+                        background-position-y: 15%;
                     }
                 }
             }
@@ -285,7 +309,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             @include flex-center;
             @include typekit-industry;
             @include absolute-center;
-            width: 250px;
+            width: 300px;
             z-index: 1;
 
             &__home,
@@ -296,19 +320,27 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
 
             &__fulltime,
             &__halftime {
+                position: relative;
                 text-shadow: 1px 1px 5px $color__text-shadow;
-            }
 
-            &__halftime {
-                font: {
-                    size: $padding;
-                    weight: 500;
+                span {
+                    @include absolute-center;
                 }
             }
 
             &__fulltime {
+                height: 80px;
+
                 &:last-child {
                     font-size: 5.5rem;
+                }
+            }
+
+            &__halftime {
+                height: 40px;
+                font: {
+                    size: $padding;
+                    weight: 500;
                 }
             }
         }
@@ -595,6 +627,10 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 min-width: rem-calc(88px);
                 max-width: rem-calc(88px);
                 text-align: center !important;
+            }
+
+            .name {
+                @include text(left);
             }
 
             .stats {

@@ -28,7 +28,7 @@ if ( $played && $players )
     if ( array_key_exists( 'lineup', $players ) && is_array( $players['lineup'] ) )
     {
         echo '<div class="wpcm-match-stats-start">';
-            echo '<table class="wpcm-lineup-table display responsive nowrap" data-page-length="15" width="100%">';
+            echo '<table class="wpcm-lineup-table dataTable display nowrap" data-page-length="15" width="100%">';
                 echo '<thead>';
                     echo '<tr>';
 
@@ -76,7 +76,7 @@ if ( $played && $players )
                     ksort( $sorted_xv );
 
                     foreach ( $sorted_xv as $shirtnumber => $row ) {
-                        $starters ++;
+                        $starters++;
 
                         $key   = $row['key'];
                         $value = $row[ $key ];

@@ -11,7 +11,11 @@ function rdb_tmpl_staff() {
     ?>
     <script id="tmpl-staff" type="text/html">
     <#
-        data = data.success ? data.data : data;
+        if ( 400 === data.data.status ) {
+            return;
+        }
+
+        data = ( data.success && data.data ) ? data.data : data;
 
         _.each( data, function( staff ) {
             #>

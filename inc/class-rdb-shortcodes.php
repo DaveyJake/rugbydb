@@ -9,7 +9,7 @@
  * @since 1.0.0
  */
 
-// phpcs:disable Squiz.Commenting,Squiz.WhiteSpace,Generic.WhiteSpace,Generic.Formatting
+// phpcs:disable Squiz.Commenting,Squiz.WhiteSpace,Generic.WhiteSpace,Generic.Formatting,Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 defined( 'ABSPATH' ) || exit;
 
@@ -22,11 +22,21 @@ class RDB_Shortcodes {
      * Primary constructor.
      */
     public function __construct() {
+        add_action( 'init', array( $this, 'init' ) );
+    }
+
+    /**
+     * Central location for all shortcodes.
+     *
+     * @since 1.0.0
+     */
+    public function init() {
         add_shortcode( 'article_image', array( $this, 'article_image' ) );
         add_shortcode( 'citation', array( $this, 'citation' ) );
         add_shortcode( 'current_club', array( $this, 'current_club' ) );
         add_shortcode( 'dots', array( $this, 'dots' ) );
         add_shortcode( 'flag', array( $this, 'flag' ) );
+        add_shortcode( 'tabs', array( $this, 'tabs' ) );
     }
 
     /**
@@ -36,8 +46,8 @@ class RDB_Shortcodes {
      *
      * @global WP_Post|object $post Current post object.
      *
-     * @param array $atts    Shortcode attributes.
-     * @param mixed $content Shortcode output.
+     * @param array|null $atts    Shortcode attributes.
+     * @param mixed|null $content Shortcode output.
      *
      * @return mixed Final HTML.
      */
@@ -50,6 +60,8 @@ class RDB_Shortcodes {
                 'attachment_id' => 0,
                 'src'           => '',
                 'caption'       => '',
+                'width'         => '100%',
+                'float'         => '',
             ),
             $atts,
             'article_image'
@@ -59,9 +71,11 @@ class RDB_Shortcodes {
         $attachment_id = absint( $atts['attachment_id'] );
         $image_src     = esc_url( $atts['src'] );
         $caption       = wp_kses_post( $atts['caption'] );
+        $float         = sanitize_text_field( $atts['float'] );
+        $width         = sanitize_text_field( $atts['width'] );
         $size          = 'full';
         // phpcs:disable
-        if ( $post_id < 1 && $attachment_id < 1 ) {
+        if ( ! empty( $image_src ) ) {
             $class = 'article';
             $url   = wp_parse_url( $image_src );
 
@@ -83,26 +97,28 @@ class RDB_Shortcodes {
             }
         } else {
             $class = 'supplementary';
-            $src   = wp_get_attachment_image_src( $attachment_id, $size );
+            $image = wp_get_attachment_image_src( $attachment_id, $size );
+            $src   = $image[0];
 
             if ( empty( $caption ) ) {
                 $caption = wp_get_attachment_caption( $attachment_id );
             }
-
-            $src = $src[0];
         }
 
+        $alt    = "{$class} image";
         $class .= '-image';
 
+        $float        = ! empty( $float ) ? " align{$float}" : '';
         $top_class    = ! empty( $caption ) ? 'has-caption ' . $class : $class;
         $photo_credit = trim( get_post_meta( $attachment_id, 'usar_photo_credit', true ) );
         $photo_credit = ! empty( $photo_credit ) ? preg_replace( '/\s/', '&nbsp;', $photo_credit ) : '';
+        $width        = ( '100%' === $width ) ? '' : ' style="width: ' . esc_attr( $width ) . ';"';
 
-        $content = "<figure class='{$top_class}'>";
+        $content = "<figure class='{$top_class}{$float}'{$width}>";
 
             $content .= '<div class="wpcm-column relative">';
 
-                $content .= '<img src="' . esc_url( $src ) . '" class="wp-post-image" width="100%" />';
+                $content .= '<img src="' . esc_url( $src ) . '" class="wp-post-image" alt="' . esc_html( $alt ) . '" />';
 
                 $content .= "<span class='{$class}__description'>";
 
@@ -214,8 +230,8 @@ class RDB_Shortcodes {
      *
      * @since 1.0.0
      *
-     * @param array $atts    Shortcode attributes.
-     * @param mixed $content Shortcode output.
+     * @param array|null $atts    Shortcode attributes.
+     * @param mixed|null $content Shortcode output.
      *
      * @return mixed Final HTML.
      */
@@ -249,15 +265,24 @@ class RDB_Shortcodes {
      *
      * @since 1.0.0
      *
-     * @param array $atts    Shortcode attributes.
-     * @param mixed $content Shortcode output.
+     * @param array|null $atts    Shortcode attributes.
+     * @param mixed|null $content Shortcode output.
      *
      * @return mixed Final HTML.
      */
     public function dots( $atts = null, $content = null ) {
+        $atts = shortcode_atts(
+            array( 'active_class' => '' ),
+            $atts,
+            'dots'
+        );
+
+        $active_class = sanitize_text_field( $atts['active_class'] );
+        $active_class = empty( $active_class ) ? '' : ".{$active_class} ";
+
         // phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
         $content = '<div id="scroll-status" class="infinite-scroll-request">';
-            $content .= '<style> .loader-ellips{font-size:20px;position:relative;width:4em;height:1em;margin:10px auto}.loader-ellips__dot{display:block;width:1em;height:1em;border-radius:.5em;background:#555;position:absolute;animation-duration:.5s;animation-timing-function:ease;animation-iteration-count:infinite}.loader-ellips__dot:nth-child(1),.loader-ellips__dot:nth-child(2){left:0}.loader-ellips__dot:nth-child(3){left:1.5em}.loader-ellips__dot:nth-child(4){left:3em}@keyframes reveal{from{transform:scale(0.001)}to{transform:scale(1)}}@keyframes slide{to{transform:translateX(1.5em)}}.loader-ellips__dot:nth-child(1){animation-name:reveal}.loader-ellips__dot:nth-child(2),.loader-ellips__dot:nth-child(3){animation-name:slide}.loader-ellips__dot:nth-child(4){animation-name:reveal;animation-direction:reverse} </style>';
+            $content .= '<style> ' . $active_class . '.loader-ellips{font-size:20px;position:relative;width:4em;height:1em;margin:10px auto}' . $active_class . '.loader-ellips__dot{display:block;width:1em;height:1em;border-radius:.5em;background:#555;position:absolute;animation-duration:.5s;animation-timing-function:ease;animation-iteration-count:infinite}' . $active_class . '.loader-ellips__dot:nth-child(1),' . $active_class . '.loader-ellips__dot:nth-child(2){left:0}' . $active_class . '.loader-ellips__dot:nth-child(3){left:1.5em}' . $active_class . '.loader-ellips__dot:nth-child(4){left:3em}@keyframes reveal{from{transform:scale(0.001)}to{transform:scale(1)}}@keyframes slide{to{transform:translateX(1.5em)}}' . $active_class . '.loader-ellips__dot:nth-child(1){animation-name:reveal}' . $active_class . '.loader-ellips__dot:nth-child(2),' . $active_class . '.loader-ellips__dot:nth-child(3){animation-name:slide}' . $active_class . '.loader-ellips__dot:nth-child(4){animation-name:reveal;animation-direction:reverse} </style>';
             $content .= '<div class="loader-ellips">';
                 $content .= '<span class="loader-ellips__dot"></span>';
                 $content .= '<span class="loader-ellips__dot"></span>';
@@ -274,8 +299,8 @@ class RDB_Shortcodes {
      *
      * @since 1.0.0
      *
-     * @param array $atts    Shortcode attributes.
-     * @param mixed $content Shortcode output.
+     * @param array|null $atts    Shortcode attributes.
+     * @param mixed|null $content Shortcode output.
      *
      * @return mixed Final HTML.
      */
@@ -325,4 +350,71 @@ class RDB_Shortcodes {
 
         return wp_kses_post( $content );
     }
+
+    /**
+     * Tabs.
+     *
+     * @since 1.0.0
+     *
+     * @global WP_Post|object $post Current post object.
+     *
+     * @param array|null $atts    Shortcode attributes.
+     * @param mixed|null $content Shortcode output.
+     *
+     * @return mixed Final HTML.
+     */
+    public function tabs( $atts = null, $content = null ) {
+        global $post;
+
+        $atts = shortcode_atts(
+            array(
+                'labels'       => '',
+                'menu_id'      => '',
+                'tab_class'    => 'tabs-title',
+                'tab_hrefs'    => '',
+            ),
+            $atts,
+            'tabs_menu'
+        );
+
+        $labels    = sanitize_text_field( $atts['labels'] );
+        $menu_id   = sanitize_title( $atts['menu_id'] );
+        $tab_class = sanitize_title( $atts['tab_class'] );
+        $tab_hrefs = ! empty( $atts['tab_hrefs'] ) ? sanitize_text_field( $atts['tab_hrefs'] ) : $labels;
+
+        $labels    = array_trim( explode( ',', $labels ) );
+        $tab_hrefs = array_trim( explode( ',', $tab_hrefs ) );
+
+        $content = '<div class="tabs-container clearfix">';
+            $content .= '<ul class="tabs no-bullets" data-tabs id="' . esc_attr( $menu_id ) . '">';
+            foreach ( $labels as $i => $label ) : // phpcs:ignore Generic.WhiteSpace.ScopeIndent.IncorrectExact
+                $content .= '<li class="' . esc_attr( $tab_class ) . ( empty( $i ) ? ' is-active' : '' ) . '">';
+                    $content .= '<a href="#' . esc_attr( sanitize_title( $tab_hrefs[ $i ] ) ) . '" aria-selected="' . ( empty( $i ) ? 'true' : 'false' ) . '">';
+                        $content .= esc_html( $labels[ $i ] );
+                    $content .= '</a>';
+                $content .= '</li>';
+            endforeach;
+            $content .= '</ul>';
+        $content .= '</div>';
+
+        $content .= '<div class="tabs-content" data-tabs-content="' . esc_attr( $menu_id ) . '">';
+        /**
+         * Fires after tabs container is rendered.
+         *
+         * @since 1.0.0
+         *
+         * @param int $post_id Current post ID.
+         */
+        $content .= do_action( 'rdb_shortcodes_tabs', $post->ID );
+
+        foreach ( $labels as $i => $label ) :
+            $content .= '<div class="tabs-panel' . ( empty( $i ) ? ' is-active' : '' ) . '" id="' . esc_attr( sanitize_title( $tab_hrefs[ $i ] ) ) . '">';
+                $content .= '<div class="grid" data-tmpl="player">' . do_shortcode( '[dots active_class="is-active"]' ) . '</div>';
+            $content .= '</div>';
+        endforeach;
+        $content .= '</div>';
+
+        return $content;
+    }
+
 }

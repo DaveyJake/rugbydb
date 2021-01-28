@@ -4,22 +4,33 @@
  *
  * @package Rugby_Database
  */
-function rdb_tmpl_team() {
+function rdb_tmpl_venue() {
     if ( ! is_page( 'venues' ) ) {
         return;
     }
     ?>
     <script id="tmpl-venue" type="text/html">
     <#
-        data = data.success ? data.data : data;
+        if ( 400 === data.data.status ) {
+            return;
+        }
+
+        data = ( data.success && data.data ) ? data.data : data;
 
         _.each( data, function( venue ) {
             #>
-            <div id="venue-{{ venue.ID }}" class="card{{{ _.isUndefined( venue._links.up ) ? ' test-side' : ' friendly-side' }}}" data-name="{{ venue.name }}">
+            <div id="venue-{{ venue.id }}" class="card venue" data-name="{{ venue.name }}" data-country="{{{ ukCountry( venue.meta.addressLocality, venue.meta.addressCountry ) }}}">
                 <div class="card__container" shadow>
-                    <a class="help_tip" href="{{ venue.permalink }}" title="{{ venue.name }}">
-                        <span class="card__image" style="background-image: url({{ venue.image }});"></span>
-                    </a>
+                    <div class="card__container__image">
+                        <a class="help_tip" href="{{ venue.link }}" title="{{ venue.name }}">
+                            <span class="card__image" style="background-image: url({{ venue.image }});"></span>
+                        </a>
+                        <span class="card__container__title">
+                            <a class="help_tip" href="{{ venue.link }}" title="{{ venue.name }}">
+                                <span class="card__title">{{{ _.unescape( venue.name ) }}}</span>
+                            </a>
+                        </span>
+                    </div>
                 </div>
             </div>
             <#

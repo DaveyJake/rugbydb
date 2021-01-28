@@ -7295,6 +7295,563 @@ Interchange.SPECIAL_QUERIES = {
 
 /***/ }),
 
+/***/ "./node_modules/foundation-sites/js/foundation.tabs.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/foundation-sites/js/foundation.tabs.js ***!
+  \*************************************************************/
+/*! exports provided: Tabs */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Tabs", function() { return Tabs; });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _foundation_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./foundation.core.utils */ "./node_modules/foundation-sites/js/foundation.core.utils.js");
+/* harmony import */ var _foundation_util_keyboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./foundation.util.keyboard */ "./node_modules/foundation-sites/js/foundation.util.keyboard.js");
+/* harmony import */ var _foundation_util_imageLoader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./foundation.util.imageLoader */ "./node_modules/foundation-sites/js/foundation.util.imageLoader.js");
+/* harmony import */ var _foundation_core_plugin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./foundation.core.plugin */ "./node_modules/foundation-sites/js/foundation.core.plugin.js");
+
+
+
+
+
+
+
+/**
+ * Tabs module.
+ * @module foundation.tabs
+ * @requires foundation.util.keyboard
+ * @requires foundation.util.imageLoader if tabs contain images
+ */
+
+class Tabs extends _foundation_core_plugin__WEBPACK_IMPORTED_MODULE_4__["Plugin"] {
+  /**
+   * Creates a new instance of tabs.
+   * @class
+   * @name Tabs
+   * @fires Tabs#init
+   * @param {jQuery} element - jQuery object to make into tabs.
+   * @param {Object} options - Overrides to the default plugin settings.
+   */
+  _setup(element, options) {
+    this.$element = element;
+    this.options = jquery__WEBPACK_IMPORTED_MODULE_0___default.a.extend({}, Tabs.defaults, this.$element.data(), options);
+    this.className = 'Tabs'; // ie9 back compat
+
+    this._init();
+
+    _foundation_util_keyboard__WEBPACK_IMPORTED_MODULE_2__["Keyboard"].register('Tabs', {
+      'ENTER': 'open',
+      'SPACE': 'open',
+      'ARROW_RIGHT': 'next',
+      'ARROW_UP': 'previous',
+      'ARROW_DOWN': 'next',
+      'ARROW_LEFT': 'previous' // 'TAB': 'next',
+      // 'SHIFT_TAB': 'previous'
+
+    });
+  }
+  /**
+   * Initializes the tabs by showing and focusing (if autoFocus=true) the preset active tab.
+   * @private
+   */
+
+
+  _init() {
+    var _this = this;
+
+    this._isInitializing = true;
+    this.$element.attr({
+      'role': 'tablist'
+    });
+    this.$tabTitles = this.$element.find(`.${this.options.linkClass}`);
+    this.$tabContent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(`[data-tabs-content="${this.$element[0].id}"]`);
+    this.$tabTitles.each(function () {
+      var $elem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this),
+          $link = $elem.find('a'),
+          isActive = $elem.hasClass(`${_this.options.linkActiveClass}`),
+          hash = $link.attr('data-tabs-target') || $link[0].hash.slice(1),
+          linkId = $link[0].id ? $link[0].id : `${hash}-label`,
+          $tabContent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(`#${hash}`);
+      $elem.attr({
+        'role': 'presentation'
+      });
+      $link.attr({
+        'role': 'tab',
+        'aria-controls': hash,
+        'aria-selected': isActive,
+        'id': linkId,
+        'tabindex': isActive ? '0' : '-1'
+      });
+      $tabContent.attr({
+        'role': 'tabpanel',
+        'aria-labelledby': linkId
+      }); // Save up the initial hash to return to it later when going back in history
+
+      if (isActive) {
+        _this._initialAnchor = `#${hash}`;
+      }
+
+      if (!isActive) {
+        $tabContent.attr('aria-hidden', 'true');
+      }
+
+      if (isActive && _this.options.autoFocus) {
+        _this.onLoadListener = Object(_foundation_core_utils__WEBPACK_IMPORTED_MODULE_1__["onLoad"])(jquery__WEBPACK_IMPORTED_MODULE_0___default()(window), function () {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('html, body').animate({
+            scrollTop: $elem.offset().top
+          }, _this.options.deepLinkSmudgeDelay, () => {
+            $link.focus();
+          });
+        });
+      }
+    });
+
+    if (this.options.matchHeight) {
+      var $images = this.$tabContent.find('img');
+
+      if ($images.length) {
+        Object(_foundation_util_imageLoader__WEBPACK_IMPORTED_MODULE_3__["onImagesLoaded"])($images, this._setHeight.bind(this));
+      } else {
+        this._setHeight();
+      }
+    } // Current context-bound function to open tabs on page load or history hashchange
+
+
+    this._checkDeepLink = () => {
+      var anchor = window.location.hash;
+
+      if (!anchor.length) {
+        // If we are still initializing and there is no anchor, then there is nothing to do
+        if (this._isInitializing) return; // Otherwise, move to the initial anchor
+
+        if (this._initialAnchor) anchor = this._initialAnchor;
+      }
+
+      var $anchor = anchor && jquery__WEBPACK_IMPORTED_MODULE_0___default()(anchor);
+      var $link = anchor && this.$element.find('[href$="' + anchor + '"]'); // Whether the anchor element that has been found is part of this element
+
+      var isOwnAnchor = !!($anchor.length && $link.length); // If there is an anchor for the hash, select it
+
+      if ($anchor && $anchor.length && $link && $link.length) {
+        this.selectTab($anchor, true);
+      } // Otherwise, collapse everything
+      else {
+          this._collapse();
+        }
+
+      if (isOwnAnchor) {
+        // Roll up a little to show the titles
+        if (this.options.deepLinkSmudge) {
+          var offset = this.$element.offset();
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('html, body').animate({
+            scrollTop: offset.top
+          }, this.options.deepLinkSmudgeDelay);
+        }
+        /**
+         * Fires when the plugin has deeplinked at pageload
+         * @event Tabs#deeplink
+         */
+
+
+        this.$element.trigger('deeplink.zf.tabs', [$link, $anchor]);
+      }
+    }; //use browser to open a tab, if it exists in this tabset
+
+
+    if (this.options.deepLink) {
+      this._checkDeepLink();
+    }
+
+    this._events();
+
+    this._isInitializing = false;
+  }
+  /**
+   * Adds event handlers for items within the tabs.
+   * @private
+   */
+
+
+  _events() {
+    this._addKeyHandler();
+
+    this._addClickHandler();
+
+    this._setHeightMqHandler = null;
+
+    if (this.options.matchHeight) {
+      this._setHeightMqHandler = this._setHeight.bind(this);
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).on('changed.zf.mediaquery', this._setHeightMqHandler);
+    }
+
+    if (this.options.deepLink) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).on('hashchange', this._checkDeepLink);
+    }
+  }
+  /**
+   * Adds click handlers for items within the tabs.
+   * @private
+   */
+
+
+  _addClickHandler() {
+    var _this = this;
+
+    this.$element.off('click.zf.tabs').on('click.zf.tabs', `.${this.options.linkClass}`, function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      _this._handleTabChange(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this));
+    });
+  }
+  /**
+   * Adds keyboard event handlers for items within the tabs.
+   * @private
+   */
+
+
+  _addKeyHandler() {
+    var _this = this;
+
+    this.$tabTitles.off('keydown.zf.tabs').on('keydown.zf.tabs', function (e) {
+      if (e.which === 9) return;
+      var $element = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this),
+          $elements = $element.parent('ul').children('li'),
+          $prevElement,
+          $nextElement;
+      $elements.each(function (i) {
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).is($element)) {
+          if (_this.options.wrapOnKeys) {
+            $prevElement = i === 0 ? $elements.last() : $elements.eq(i - 1);
+            $nextElement = i === $elements.length - 1 ? $elements.first() : $elements.eq(i + 1);
+          } else {
+            $prevElement = $elements.eq(Math.max(0, i - 1));
+            $nextElement = $elements.eq(Math.min(i + 1, $elements.length - 1));
+          }
+
+          return;
+        }
+      }); // handle keyboard event with keyboard util
+
+      _foundation_util_keyboard__WEBPACK_IMPORTED_MODULE_2__["Keyboard"].handleKey(e, 'Tabs', {
+        open: function () {
+          $element.find('[role="tab"]').focus();
+
+          _this._handleTabChange($element);
+        },
+        previous: function () {
+          $prevElement.find('[role="tab"]').focus();
+
+          _this._handleTabChange($prevElement);
+        },
+        next: function () {
+          $nextElement.find('[role="tab"]').focus();
+
+          _this._handleTabChange($nextElement);
+        },
+        handled: function () {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      });
+    });
+  }
+  /**
+   * Opens the tab `$targetContent` defined by `$target`. Collapses active tab.
+   * @param {jQuery} $target - Tab to open.
+   * @param {boolean} historyHandled - browser has already handled a history update
+   * @fires Tabs#change
+   * @function
+   */
+
+
+  _handleTabChange($target, historyHandled) {
+    // With `activeCollapse`, if the target is the active Tab, collapse it.
+    if ($target.hasClass(`${this.options.linkActiveClass}`)) {
+      if (this.options.activeCollapse) {
+        this._collapse();
+      }
+
+      return;
+    }
+
+    var $oldTab = this.$element.find(`.${this.options.linkClass}.${this.options.linkActiveClass}`),
+        $tabLink = $target.find('[role="tab"]'),
+        target = $tabLink.attr('data-tabs-target'),
+        anchor = target && target.length ? `#${target}` : $tabLink[0].hash,
+        $targetContent = this.$tabContent.find(anchor); //close old tab
+
+    this._collapseTab($oldTab); //open new tab
+
+
+    this._openTab($target); //either replace or update browser history
+
+
+    if (this.options.deepLink && !historyHandled) {
+      if (this.options.updateHistory) {
+        history.pushState({}, '', anchor);
+      } else {
+        history.replaceState({}, '', anchor);
+      }
+    }
+    /**
+     * Fires when the plugin has successfully changed tabs.
+     * @event Tabs#change
+     */
+
+
+    this.$element.trigger('change.zf.tabs', [$target, $targetContent]); //fire to children a mutation event
+
+    $targetContent.find("[data-mutate]").trigger("mutateme.zf.trigger");
+  }
+  /**
+   * Opens the tab `$targetContent` defined by `$target`.
+   * @param {jQuery} $target - Tab to open.
+   * @function
+   */
+
+
+  _openTab($target) {
+    var $tabLink = $target.find('[role="tab"]'),
+        hash = $tabLink.attr('data-tabs-target') || $tabLink[0].hash.slice(1),
+        $targetContent = this.$tabContent.find(`#${hash}`);
+    $target.addClass(`${this.options.linkActiveClass}`);
+    $tabLink.attr({
+      'aria-selected': 'true',
+      'tabindex': '0'
+    });
+    $targetContent.addClass(`${this.options.panelActiveClass}`).removeAttr('aria-hidden');
+  }
+  /**
+   * Collapses `$targetContent` defined by `$target`.
+   * @param {jQuery} $target - Tab to collapse.
+   * @function
+   */
+
+
+  _collapseTab($target) {
+    var $target_anchor = $target.removeClass(`${this.options.linkActiveClass}`).find('[role="tab"]').attr({
+      'aria-selected': 'false',
+      'tabindex': -1
+    });
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(`#${$target_anchor.attr('aria-controls')}`).removeClass(`${this.options.panelActiveClass}`).attr({
+      'aria-hidden': 'true'
+    });
+  }
+  /**
+   * Collapses the active Tab.
+   * @fires Tabs#collapse
+   * @function
+   */
+
+
+  _collapse() {
+    var $activeTab = this.$element.find(`.${this.options.linkClass}.${this.options.linkActiveClass}`);
+
+    if ($activeTab.length) {
+      this._collapseTab($activeTab);
+      /**
+      * Fires when the plugin has successfully collapsed tabs.
+      * @event Tabs#collapse
+      */
+
+
+      this.$element.trigger('collapse.zf.tabs', [$activeTab]);
+    }
+  }
+  /**
+   * Public method for selecting a content pane to display.
+   * @param {jQuery | String} elem - jQuery object or string of the id of the pane to display.
+   * @param {boolean} historyHandled - browser has already handled a history update
+   * @function
+   */
+
+
+  selectTab(elem, historyHandled) {
+    var idStr;
+
+    if (typeof elem === 'object') {
+      idStr = elem[0].id;
+    } else {
+      idStr = elem;
+    }
+
+    if (idStr.indexOf('#') < 0) {
+      idStr = `#${idStr}`;
+    }
+
+    var $target = this.$tabTitles.has(`[href$="${idStr}"]`);
+
+    this._handleTabChange($target, historyHandled);
+  }
+
+  /**
+   * Sets the height of each panel to the height of the tallest panel.
+   * If enabled in options, gets called on media query change.
+   * If loading content via external source, can be called directly or with _reflow.
+   * If enabled with `data-match-height="true"`, tabs sets to equal height
+   * @function
+   * @private
+   */
+  _setHeight() {
+    var max = 0,
+        _this = this; // Lock down the `this` value for the root tabs object
+
+
+    this.$tabContent.find(`.${this.options.panelClass}`).css('height', '').each(function () {
+      var panel = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this),
+          isActive = panel.hasClass(`${_this.options.panelActiveClass}`); // get the options from the parent instead of trying to get them from the child
+
+      if (!isActive) {
+        panel.css({
+          'visibility': 'hidden',
+          'display': 'block'
+        });
+      }
+
+      var temp = this.getBoundingClientRect().height;
+
+      if (!isActive) {
+        panel.css({
+          'visibility': '',
+          'display': ''
+        });
+      }
+
+      max = temp > max ? temp : max;
+    }).css('height', `${max}px`);
+  }
+  /**
+   * Destroys an instance of tabs.
+   * @fires Tabs#destroyed
+   */
+
+
+  _destroy() {
+    this.$element.find(`.${this.options.linkClass}`).off('.zf.tabs').hide().end().find(`.${this.options.panelClass}`).hide();
+
+    if (this.options.matchHeight) {
+      if (this._setHeightMqHandler != null) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).off('changed.zf.mediaquery', this._setHeightMqHandler);
+      }
+    }
+
+    if (this.options.deepLink) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).off('hashchange', this._checkDeepLink);
+    }
+
+    if (this.onLoadListener) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).off(this.onLoadListener);
+    }
+  }
+
+}
+
+Tabs.defaults = {
+  /**
+   * Link the location hash to the active pane.
+   * Set the location hash when the active pane changes, and open the corresponding pane when the location changes.
+   * @option
+   * @type {boolean}
+   * @default false
+   */
+  deepLink: false,
+
+  /**
+   * If `deepLink` is enabled, adjust the deep link scroll to make sure the top of the tab panel is visible
+   * @option
+   * @type {boolean}
+   * @default false
+   */
+  deepLinkSmudge: false,
+
+  /**
+   * If `deepLinkSmudge` is enabled, animation time (ms) for the deep link adjustment
+   * @option
+   * @type {number}
+   * @default 300
+   */
+  deepLinkSmudgeDelay: 300,
+
+  /**
+   * If `deepLink` is enabled, update the browser history with the open tab
+   * @option
+   * @type {boolean}
+   * @default false
+   */
+  updateHistory: false,
+
+  /**
+   * Allows the window to scroll to content of active pane on load.
+   * Not recommended if more than one tab panel per page.
+   * @option
+   * @type {boolean}
+   * @default false
+   */
+  autoFocus: false,
+
+  /**
+   * Allows keyboard input to 'wrap' around the tab links.
+   * @option
+   * @type {boolean}
+   * @default true
+   */
+  wrapOnKeys: true,
+
+  /**
+   * Allows the tab content panes to match heights if set to true.
+   * @option
+   * @type {boolean}
+   * @default false
+   */
+  matchHeight: false,
+
+  /**
+   * Allows active tabs to collapse when clicked.
+   * @option
+   * @type {boolean}
+   * @default false
+   */
+  activeCollapse: false,
+
+  /**
+   * Class applied to `li`'s in tab link list.
+   * @option
+   * @type {string}
+   * @default 'tabs-title'
+   */
+  linkClass: 'tabs-title',
+
+  /**
+   * Class applied to the active `li` in tab link list.
+   * @option
+   * @type {string}
+   * @default 'is-active'
+   */
+  linkActiveClass: 'is-active',
+
+  /**
+   * Class applied to the content containers.
+   * @option
+   * @type {string}
+   * @default 'tabs-panel'
+   */
+  panelClass: 'tabs-panel',
+
+  /**
+   * Class applied to the active content container.
+   * @option
+   * @type {string}
+   * @default 'is-active'
+   */
+  panelActiveClass: 'is-active'
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/foundation-sites/js/foundation.util.box.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/foundation-sites/js/foundation.util.box.js ***!
@@ -15557,10 +16114,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./node_modules/mmenu-js/package.json ***!
   \********************************************/
-/*! exports provided: name, version, main, module, author, license, repository, description, keywords, scripts, devDependencies, default */
+/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, bugs, description, devDependencies, homepage, keywords, license, main, module, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"mmenu-js\",\"version\":\"8.5.20\",\"main\":\"dist/mmenu.js\",\"module\":\"src/mmenu.js\",\"author\":\"Fred Heusschen <info@frebsite.nl>\",\"license\":\"CC-BY-NC-4.0\",\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/FrDH/mmenu-js.git\"},\"description\":\"The best javascript plugin for app look-alike on- and off-canvas menus with sliding submenus for your website and webapp.\",\"keywords\":[\"app\",\"list\",\"listview\",\"megamenu\",\"menu\",\"mmenu\",\"mobile\",\"navigation\",\"off-canvas\",\"on-canvas\",\"curtain\",\"panels\",\"submenu\"],\"scripts\":{\"build\":\"gulp default\"},\"devDependencies\":{\"gulp\":\"^4.0.2\",\"gulp-autoprefixer\":\"^6.1.0\",\"gulp-clean-css\":\"^4.3.0\",\"gulp-concat\":\"^2.6.1\",\"gulp-sass\":\"^4.1.0\",\"gulp-typescript\":\"^5.0.1\",\"typescript\":\"^3.9.7\",\"webpack-stream\":\"^5.2.1\"}}");
+module.exports = JSON.parse("{\"_args\":[[\"mmenu-js@8.5.20\",\"/Users/us00278/Sites/stats/html/wp-content/themes/rugbydb\"]],\"_from\":\"mmenu-js@8.5.20\",\"_id\":\"mmenu-js@8.5.20\",\"_inBundle\":false,\"_integrity\":\"sha512-bnjsPYhfGrZnfWPW37lgqbWDcBilRxKjjQwFvRa8Ho3cS5R7Lz0NfBxmajFDsNZjPgLAL2ObNGvhVIF04+4ZYQ==\",\"_location\":\"/mmenu-js\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"mmenu-js@8.5.20\",\"name\":\"mmenu-js\",\"escapedName\":\"mmenu-js\",\"rawSpec\":\"8.5.20\",\"saveSpec\":null,\"fetchSpec\":\"8.5.20\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/mmenu-js/-/mmenu-js-8.5.20.tgz\",\"_spec\":\"8.5.20\",\"_where\":\"/Users/us00278/Sites/stats/html/wp-content/themes/rugbydb\",\"author\":{\"name\":\"Fred Heusschen\",\"email\":\"info@frebsite.nl\"},\"bugs\":{\"url\":\"https://github.com/FrDH/mmenu-js/issues\"},\"description\":\"The best javascript plugin for app look-alike on- and off-canvas menus with sliding submenus for your website and webapp.\",\"devDependencies\":{\"gulp\":\"^4.0.2\",\"gulp-autoprefixer\":\"^6.1.0\",\"gulp-clean-css\":\"^4.3.0\",\"gulp-concat\":\"^2.6.1\",\"gulp-sass\":\"^4.1.0\",\"gulp-typescript\":\"^5.0.1\",\"typescript\":\"^3.9.7\",\"webpack-stream\":\"^5.2.1\"},\"homepage\":\"https://github.com/FrDH/mmenu-js#readme\",\"keywords\":[\"app\",\"list\",\"listview\",\"megamenu\",\"menu\",\"mmenu\",\"mobile\",\"navigation\",\"off-canvas\",\"on-canvas\",\"curtain\",\"panels\",\"submenu\"],\"license\":\"CC-BY-NC-4.0\",\"main\":\"dist/mmenu.js\",\"module\":\"src/mmenu.js\",\"name\":\"mmenu-js\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/FrDH/mmenu-js.git\"},\"scripts\":{\"build\":\"gulp default\"},\"version\":\"8.5.20\"}");
 
 /***/ }),
 
@@ -18259,7 +18816,7 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
  *
  * @since 1.0.0
  */
-var common = function (win, doc, rdb, $) {
+var common = function (doc, $) {
   var $doc = $(doc);
   $doc.foundation();
   $.ajaxSetup({
@@ -18277,8 +18834,8 @@ var common = function (win, doc, rdb, $) {
 
   _utils.util.init();
 
-  (0, _ui.mmenu)(rdb);
-}(window, document, window.rdb, window.jQuery);
+  (0, _ui.mmenu)();
+}(document, window.jQuery);
 
 module.exports = {
   common: common
@@ -18300,11 +18857,11 @@ var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/help
 
 var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
 
-var _sort = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/sort */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/sort.js"));
-
 var _stringify = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/json/stringify */ "./node_modules/@babel/runtime-corejs3/core-js-stable/json/stringify.js"));
 
 var _indexOf = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/index-of */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/index-of.js"));
+
+var _includes = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/includes */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/includes.js"));
 
 var _map = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/map */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/map.js"));
 
@@ -18312,9 +18869,7 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/createClass */ "./node_modules/@babel/runtime-corejs3/helpers/createClass.js"));
 
-var _globals = __webpack_require__(/*! ../utils/globals */ "./src/js/utils/globals.js");
-
-var _helpers = __webpack_require__(/*! ../utils/helpers */ "./src/js/utils/helpers.js");
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 
 /**
  * The front page module.
@@ -18328,13 +18883,14 @@ var _helpers = __webpack_require__(/*! ../utils/helpers */ "./src/js/utils/helpe
  */
 
 /**
- * JS version of WP's `admin_url` PHP function.
+ * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
  *
  * @since 1.0.0
  *
  * @type {Function}
  */
-var adminUrl = _helpers.util.adminUrl;
+var adminUrl = _utils.util.adminUrl,
+    sanitizeTitle = _utils.util.sanitizeTitle;
 /* eslint-disable computed-property-spacing, no-else-return, arrow-parens, new-cap, no-unused-vars */
 
 /**
@@ -18357,13 +18913,13 @@ var FrontPage = /*#__PURE__*/function () {
   function FrontPage() {
     (0, _classCallCheck2["default"])(this, FrontPage);
 
-    if (!_globals.rdb.is_front_page) {
+    if (!_utils.rdb.is_front_page) {
       return;
     }
 
     this.filters();
-    this.$tableSelector = (0, _globals.$)('#all-matches');
-    this.nonce = (0, _globals.$)('#nonce').val();
+    this.$table = (0, _utils.$)('#all-matches');
+    this.nonce = (0, _utils.$)('#nonce').val();
     this.table = this._dataTable();
 
     this._yadcf();
@@ -18378,8 +18934,8 @@ var FrontPage = /*#__PURE__*/function () {
   (0, _createClass2["default"])(FrontPage, [{
     key: "filters",
     value: function filters() {
-      if (!_globals.rdb.is_mobile) {
-        (0, _globals.$)('.chosen_select').chosen({
+      if (!_utils.rdb.is_mobile) {
+        (0, _utils.$)('.chosen_select').chosen({
           width: '49%'
         });
       }
@@ -18394,7 +18950,7 @@ var FrontPage = /*#__PURE__*/function () {
   }, {
     key: "_yadcf",
     value: function _yadcf() {
-      _globals.yadcf.init(this.table, [{
+      _utils.yadcf.init(this.table, [{
         column_number: 1,
         column_data_type: 'text',
         filter_type: 'select',
@@ -18403,7 +18959,7 @@ var FrontPage = /*#__PURE__*/function () {
         filter_match_mode: 'exact',
         filter_reset_button_text: false,
         reset_button_style_class: false,
-        select_type: _globals.rdb.is_mobile ? '' : 'chosen',
+        select_type: _utils.rdb.is_mobile ? '' : 'chosen',
         select_type_options: {
           width: '100%'
         }
@@ -18416,7 +18972,7 @@ var FrontPage = /*#__PURE__*/function () {
         filter_default_label: 'Select Opponent',
         filter_reset_button_text: false,
         reset_button_style_class: false,
-        select_type: _globals.rdb.is_mobile ? '' : 'chosen',
+        select_type: _utils.rdb.is_mobile ? '' : 'chosen',
         select_type_options: {
           width: '100%'
         },
@@ -18429,7 +18985,7 @@ var FrontPage = /*#__PURE__*/function () {
         filter_default_label: 'Select Competition',
         filter_reset_button_text: false,
         reset_button_style_class: false,
-        select_type: _globals.rdb.is_mobile ? '' : 'chosen',
+        select_type: _utils.rdb.is_mobile ? '' : 'chosen',
         select_type_options: {
           case_sensitive_search: true,
           enable_split_word_search: true,
@@ -18444,7 +19000,7 @@ var FrontPage = /*#__PURE__*/function () {
         filter_default_label: 'Select Venue',
         filter_reset_button_text: false,
         reset_button_style_class: false,
-        select_type: _globals.rdb.is_mobile ? '' : 'chosen',
+        select_type: _utils.rdb.is_mobile ? '' : 'chosen',
         select_type_options: {
           width: '100%'
         },
@@ -18456,32 +19012,46 @@ var FrontPage = /*#__PURE__*/function () {
      *
      * @access private
      * @since 1.0.0
+     *
+     * @link https://datatables.net/reference/event/
+     * @see init.dt search.dt page.dt order.dt length.dt
+     *
+     * @return {DataTable} Current DT instance.
      */
 
   }, {
     key: "_dataTable",
     value: function _dataTable() {
-      var self = this;
+      var _this = this;
 
-      _globals.$.fn.dataTable.ext.search.push(function (settings, searchData, index, rowData, counter) {
-        var _context;
+      var self = this; // Filter by team checkbox.
 
-        var teams = (0, _map["default"])(_context = (0, _globals.$)('input[name="wpcm_team"]:checked')).call(_context, function () {
+      _utils.$.fn.dataTable.ext.search.push(function (settings, searchData, index, rowData, counter) {
+        var _context, _context2;
+
+        var teams = (0, _map["default"])(_context = (0, _utils.$)('input[name="wpcm_team"]:checked')).call(_context, function () {
+          return this.value;
+        }).get();
+        var friendlies = (0, _map["default"])(_context2 = (0, _utils.$)('input[name="wpcm_friendly"]:checked')).call(_context2, function () {
           return this.value;
         }).get();
 
-        if (teams.length === 0) {
+        if (teams.length === 0 && friendlies.length === 1) {
           return true;
         }
 
-        if ((0, _indexOf["default"])(teams).call(teams, searchData[6]) !== -1) {
+        if (!(0, _includes["default"])(_utils._).call(_utils._, ['mens-eagles', 'womens-eagles'], searchData[6])) {
+          friendlies[0] = '*';
+        }
+
+        if ((0, _indexOf["default"])(teams).call(teams, searchData[6]) !== -1 && ('*' === friendlies[0] || (0, _indexOf["default"])(friendlies).call(friendlies, searchData[7]) !== -1)) {
           return true;
         }
 
         return false;
       });
 
-      var table = this.$tableSelector.DataTable({
+      var table = this.$table.DataTable({
         // eslint-disable-line
         destroy: true,
         autoWidth: false,
@@ -18495,7 +19065,12 @@ var FrontPage = /*#__PURE__*/function () {
           },
           dataSrc: function dataSrc(response) {
             if (!response.success) {
-              return self.dtErrorHandler();
+              _utils.$.fn.dataTable.ext.errMode = 'none';
+
+              _this.$table.on('error.dt', function (e, settings, techNote, message) {
+                console.log('An error has been reported by DataTables: ', message);
+              }).DataTable(); // eslint-disable-line
+
             }
 
             var oldData = sessionStorage.allMatches,
@@ -18509,30 +19084,30 @@ var FrontPage = /*#__PURE__*/function () {
             var responseData = JSON.parse(sessionStorage.allMatches),
                 _final = [];
 
-            _globals._.each(responseData, function (match) {
+            _utils._.each(responseData, function (match) {
               var api = {
                 ID: match.ID,
                 idStr: "match-".concat(match.ID),
                 competition: {
-                  display: self.getCompetition(match.competition),
-                  filter: match.competition.name
+                  display: _this.competition(match.competition),
+                  filter: _this.competition(match.competition)
                 },
                 date: {
-                  display: self.formatDate(match.date.GMT),
+                  display: _this.formatDate(match.ID, match.date.GMT, match.links),
                   filter: match.season
                 },
                 fixture: {
-                  display: self.logoResult(match.fixture, match.result, match.logo.home, match.logo.away, match.links),
-                  filter: self.getOpponent(match.fixture)
+                  display: _this.logoResult(match),
+                  filter: _this.opponent(match.fixture)
                 },
-                friendly: match.friendly,
-                venue: match.venue.name,
+                friendly: match.friendly ? 'friendly' : 'test',
+                venue: {
+                  display: _this.venueLink(match.venue),
+                  filter: match.venue.name
+                },
                 neutral: match.venue.neutral,
                 sort: match.date.timestamp,
-                team: {
-                  name: match.team.name,
-                  slug: match.team.slug
-                },
+                team: match.team.slug,
                 links: match.links
               };
 
@@ -18543,70 +19118,83 @@ var FrontPage = /*#__PURE__*/function () {
           }
         },
         columnDefs: [{
-          className: 'control',
+          className: 'control match-id sorting_disabled',
           orderable: false,
           targets: 0
         }, {
-          createdCell: function createdCell(td, cellData, rowData, row, col) {
-            (0, _globals.$)(td).attr('data-sort', (0, _sort["default"])(rowData));
-          },
+          className: 'date',
           targets: 1
+        }, {
+          className: 'fixture',
+          targets: 2
+        }, {
+          className: 'competition min-medium',
+          targets: 3
+        }, {
+          className: 'venue min-wordpress',
+          targets: 4
+        }, {
+          className: 'timestamp hide',
+          targets: 5
+        }, {
+          className: 'team hide',
+          targets: 6
+        }, {
+          className: 'friendly hide',
+          targets: 7
         }],
         columns: [{
           data: 'ID',
-          className: 'control match-id sorting_disabled',
           render: function render(data) {
             return "<span class=\"hide\">".concat(data, "</span>");
           },
           width: '1px'
         }, {
           data: 'date',
-          className: 'date',
           render: {
             _: 'display',
             display: 'display',
             filter: 'filter'
           },
+          width: '25%',
+          orderData: 5,
           responsivePriority: 2
         }, {
           data: 'fixture',
-          className: 'fixture',
           render: {
             _: 'display',
             display: 'display',
             filter: 'filter'
           },
+          width: '25%',
           responsivePriority: 1
         }, {
           data: 'competition',
-          className: 'competition min-medium',
           render: {
             _: 'display',
             display: 'display',
             filter: 'filter'
-          }
+          },
+          width: '25%'
         }, {
           data: 'venue',
-          className: 'venue min-wordpress'
-        }, {
-          data: 'sort',
-          className: 'timestamp hide',
-          render: function render(data) {
-            return "<span class=\"hide\">".concat(data, "</span>");
-          }
-        }, {
-          data: 'team',
-          className: 'team hide',
           render: {
-            _: 'name',
-            display: 'slug',
-            filter: 'slug'
-          }
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          },
+          width: '25%'
+        }, {
+          data: 'sort'
+        }, {
+          data: 'team'
+        }, {
+          data: 'friendly'
         }],
         buttons: false,
         dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column pagination"p>>',
         language: {
-          loadingRecords: '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" />',
+          loadingRecords: '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" alt="Loading matches..." />',
           search: '',
           searchPlaceholder: 'Search Matches'
         },
@@ -18617,121 +19205,44 @@ var FrontPage = /*#__PURE__*/function () {
         searching: true,
         rowId: 'idStr',
         responsive: {
-          breakpoints: [{
-            name: 'desktop',
-            width: Infinity
-          }, {
-            name: 'xxxlarge',
-            width: 1920
-          }, {
-            name: 'xxlarge-down',
-            width: 1919
-          }, {
-            name: 'xxlarge',
-            width: 1440
-          }, {
-            name: 'xlarge-down',
-            width: 1439
-          }, {
-            name: 'xlarge',
-            width: 1200
-          }, {
-            name: 'large-down',
-            width: 1199
-          }, {
-            name: 'large',
-            width: 1024
-          }, {
-            name: 'wordpress-down',
-            width: 1023
-          }, {
-            name: 'wordpress',
-            width: 783
-          }, {
-            name: 'medium-down',
-            width: 782
-          }, {
-            name: 'tablet-p',
-            width: 768
-          }, {
-            name: 'medium',
-            width: 640
-          }, {
-            name: 'mobile-down',
-            width: 639
-          }, {
-            name: 'mobile',
-            width: 480
-          }, {
-            name: 'small-only',
-            width: 479
-          }, {
-            name: 'small',
-            width: 0
-          }],
+          breakpoints: _utils.BREAKPOINTS,
           details: {
             type: 'column'
           }
+        },
+        initComplete: function initComplete() {
+          var api = this.api();
         }
       });
-      (0, _globals.$)('.team-filters').on('change', 'input[name="wpcm_team"]', function () {
+      (0, _utils.$)('.team-filters').on('change', 'input[name="wpcm_team"]', function (e) {
+        var _context3;
+
+        (0, _utils.$)("#".concat(e.currentTarget.value)).toggleClass('active');
+
+        if ('mens-eagles' === e.currentTarget.value || 'womens-eagles' === e.currentTarget.value) {
+          (0, _utils.$)('.team-filters .match-type').removeClass('hide').addClass('active');
+        } else {
+          (0, _utils.$)('.team-filters .match-type').removeClass('active').addClass('hide');
+        }
+
+        var checkedBoxes = _utils._.compact((0, _map["default"])(_context3 = (0, _utils.$)('.team-filters .active')).call(_context3, function () {
+          return this.id;
+        }).get());
+
+        FrontPage._radioFilters(checkedBoxes);
+
         table.draw();
       });
+      (0, _utils.$)('.team-filters').on('change', 'input[name="wpcm_friendly"]', function () {
+        table.draw();
+      });
+      (0, _utils.$)('.match-filters').on('change', 'select', function () {
+        table.draw();
+      });
+      (0, _utils.$)(window).on('resize orientationchange', _utils._.debounce(function () {
+        table.draw();
+      }, 300));
       return table;
-    }
-    /**
-     * DataTables custom handler.
-     *
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "dtErrorHandler",
-    value: function dtErrorHandler() {
-      _globals.$.fn.dataTable.ext.errMode = 'none';
-      this.$tableSelector.on('error.dt', function (e, settings, techNote, message) {
-        console.log('An error has been reported by DataTables: ', message);
-      }).DataTable(); // eslint-disable-line
-    }
-    /**
-     * Get formatted date.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} date ISO-8601 string.
-     *
-     * @return {string}     Human-readable date string.
-     */
-
-  }, {
-    key: "formatDate",
-    value: function formatDate(date) {
-      var m = (0, _globals.moment)(date),
-          human = m.tz(sessionStorage.timezone).format('MMM D, YYYY');
-      return human;
-    }
-    /**
-     * [logoResult description]
-     *
-     * @since 1.0.0
-     *
-     * @param {string} fixture  Post title of a match (i.e. "United States v Some Country").
-     * @param {string} result   Match result.
-     * @param {string} homeLogo URL of home team logo.
-     * @param {string} awayLogo URL of away team logo.
-     * @param {object} links    Object containing links to the clubs.
-     *
-     * @return {string}         HTML output.
-     */
-
-  }, {
-    key: "logoResult",
-    value: function logoResult(fixture, result, homeLogo, awayLogo, links) {
-      var _context2, _context3, _context4, _context5, _context6, _context7, _context8, _context9;
-
-      var teams = fixture.split(/\sv\s/),
-          scores = result.split(/\s-\s/);
-      return (0, _concat["default"])(_context2 = (0, _concat["default"])(_context3 = (0, _concat["default"])(_context4 = (0, _concat["default"])(_context5 = (0, _concat["default"])(_context6 = (0, _concat["default"])(_context7 = (0, _concat["default"])(_context8 = (0, _concat["default"])(_context9 = "<div class=\"fixture-result flex\"><a href=\"".concat(links.home_union, "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context9, homeLogo, "\" alt=\"")).call(_context8, teams[0], "\" height=\"22\" /></a><span class=\"result\"><a href=\"")).call(_context7, links.match, "\" rel=\"bookmark\">")).call(_context6, scores[0], " - ")).call(_context5, scores[1], "</a></span><a href=\"")).call(_context4, links.away_union, "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context3, awayLogo, "\" alt=\"")).call(_context2, teams[1], "\" height=\"22\" /></a></div>");
     }
     /**
      * Get competition name from API.
@@ -18744,9 +19255,59 @@ var FrontPage = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "getCompetition",
-    value: function getCompetition(competition) {
-      return (!_globals._.isEmpty(competition.parent) ? competition.parent + ' - ' : '') + competition.name;
+    key: "competition",
+    value: function competition(_competition) {
+      if (_utils._.isUndefined(_competition)) {
+        location.reload();
+      }
+
+      return (!_utils._.isEmpty(_competition.parent) ? _competition.parent + ' - ' : '') + _competition.name;
+    }
+    /**
+     * Get formatted date.
+     *
+     * @since 1.0.0
+     *
+     * @param {number} matchId Current match ID.
+     * @param {string} date    ISO-8601 string.
+     * @param {object} links   Match URLs.
+     *
+     * @return {string}        Human-readable date string.
+     */
+
+  }, {
+    key: "formatDate",
+    value: function formatDate(matchId, date, links) {
+      var _context4, _context5;
+
+      var m = (0, _utils.moment)(date),
+          human = m.tz(sessionStorage.timezone).format(_utils.US_DATE);
+      return (0, _concat["default"])(_context4 = (0, _concat["default"])(_context5 = "<a id=\"match-".concat(matchId, "-date-link\" class=\"wpcm-matches-list-link\" href=\"")).call(_context5, links.match, "\" rel=\"bookmark\">")).call(_context4, human, "</a>");
+    }
+    /**
+     * Hyperlink logo.
+     *
+     * @since 1.0.0
+     *
+     * @param {object} match Current match.
+     *
+     * @return {string}      HTML output.
+     */
+
+  }, {
+    key: "logoResult",
+    value: function logoResult(match) {
+      var _context6, _context7, _context8, _context9, _context10, _context11, _context12, _context13, _context14, _context15, _context16, _context17, _context18;
+
+      var matchId = match.ID,
+          fixture = match.fixture,
+          result = match.result,
+          homeLogo = match.logo.home,
+          awayLogo = match.logo.away,
+          links = match.links,
+          teams = fixture.split(/\sv\s/),
+          scores = result.split(/\s-\s/);
+      return (0, _concat["default"])(_context6 = (0, _concat["default"])(_context7 = (0, _concat["default"])(_context8 = (0, _concat["default"])(_context9 = (0, _concat["default"])(_context10 = (0, _concat["default"])(_context11 = (0, _concat["default"])(_context12 = (0, _concat["default"])(_context13 = (0, _concat["default"])(_context14 = (0, _concat["default"])(_context15 = (0, _concat["default"])(_context16 = (0, _concat["default"])(_context17 = (0, _concat["default"])(_context18 = "<div class=\"fixture-result flex\"><div class=\"inline-cell\"><a id=\"".concat(sanitizeTitle(teams[0]), "-link\" href=\"")).call(_context18, links.home_union, "\" title=\"")).call(_context17, teams[0], "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context16, homeLogo, "\" alt=\"")).call(_context15, teams[0], "\" height=\"22\" /></a></div><div class=\"inline-cell\"><span class=\"result\"><a id=\"match-")).call(_context14, matchId, "-result-link\" href=\"")).call(_context13, links.match, "\" rel=\"bookmark\">")).call(_context12, scores[0], " - ")).call(_context11, scores[1], "</a></span></div><div class=\"inline-cell\"><a id=\"")).call(_context10, sanitizeTitle(teams[1]), "-link\"href=\"")).call(_context9, links.away_union, "\" title=\"")).call(_context8, teams[1], "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context7, awayLogo, "\" alt=\"")).call(_context6, teams[1], "\" height=\"22\" /></a></div></div>");
     }
     /**
      * Get opponent from API.
@@ -18759,14 +19320,55 @@ var FrontPage = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "getOpponent",
-    value: function getOpponent(fixture) {
+    key: "opponent",
+    value: function opponent(fixture) {
       var parts = fixture.split(/\sv\s/);
 
       if ('United States' === parts[0]) {
         return parts[1];
       } else {
         return parts[0];
+      }
+    }
+    /**
+     * Hyperlink venue.
+     *
+     * @since 1.0.0
+     *
+     * @param {object} venue Match venue object.
+     *
+     * @return {string}      HTML output.
+     */
+
+  }, {
+    key: "venueLink",
+    value: function venueLink(venue) {
+      var _context19, _context20, _context21;
+
+      return (0, _concat["default"])(_context19 = (0, _concat["default"])(_context20 = (0, _concat["default"])(_context21 = "<a id=\"venue-".concat(venue.id, "-link\" href=\"")).call(_context21, venue.link, "\" title=\"")).call(_context20, venue.name, "\" rel=\"bookmark\">")).call(_context19, venue.name, "</a>");
+    }
+    /**
+     * Show/Hide radio button filters based on selected teams.
+     *
+     * @since 1.0.0
+     * @access private
+     * @static
+     *
+     * @param {array}  checkedBoxes Checked box ID values.
+     * @param {string} currentValue Current selected value.
+     */
+
+  }], [{
+    key: "_radioFilters",
+    value: function _radioFilters(checkedBoxes) {
+      var me = 'mens-eagles',
+          we = 'womens-eagles',
+          teams = [me, we];
+
+      if (_utils._.xor(checkedBoxes, teams).length === 0 || checkedBoxes.length === 1 && (me === checkedBoxes[0] || we === checkedBoxes[0])) {
+        (0, _utils.$)('.team-filters .match-type').removeClass('hide').addClass('active');
+      } else {
+        (0, _utils.$)('.team-filters .match-type').removeClass('active').addClass('hide');
       }
     }
   }]);
@@ -18809,6 +19411,13 @@ _Object$defineProperty(exports, "FrontPage", {
   }
 });
 
+_Object$defineProperty(exports, "pagePlayers", {
+  enumerable: true,
+  get: function get() {
+    return _pagePlayers.pagePlayers;
+  }
+});
+
 _Object$defineProperty(exports, "pageOpponents", {
   enumerable: true,
   get: function get() {
@@ -18820,6 +19429,13 @@ _Object$defineProperty(exports, "pageStaff", {
   enumerable: true,
   get: function get() {
     return _pageStaff.pageStaff;
+  }
+});
+
+_Object$defineProperty(exports, "pageVenues", {
+  enumerable: true,
+  get: function get() {
+    return _pageVenues.pageVenues;
   }
 });
 
@@ -18837,10 +19453,10 @@ _Object$defineProperty(exports, "singleWpcmMatch", {
   }
 });
 
-_Object$defineProperty(exports, "taxWpcmVenue", {
+_Object$defineProperty(exports, "TaxWPCMVenue", {
   enumerable: true,
   get: function get() {
-    return _taxonomyWpcmVenue.taxWpcmVenue;
+    return _taxonomyWpcmVenue.TaxWPCMVenue;
   }
 });
 
@@ -18848,9 +19464,13 @@ var _common = __webpack_require__(/*! ./common */ "./src/js/modules/common.js");
 
 var _frontPage = __webpack_require__(/*! ./front-page */ "./src/js/modules/front-page.js");
 
+var _pagePlayers = __webpack_require__(/*! ./page-players */ "./src/js/modules/page-players.js");
+
 var _pageOpponents = __webpack_require__(/*! ./page-opponents */ "./src/js/modules/page-opponents.js");
 
 var _pageStaff = __webpack_require__(/*! ./page-staff */ "./src/js/modules/page-staff.js");
+
+var _pageVenues = __webpack_require__(/*! ./page-venues */ "./src/js/modules/page-venues.js");
 
 var _singleWpcmClub = __webpack_require__(/*! ./single-wpcm-club */ "./src/js/modules/single-wpcm-club.js");
 
@@ -18870,6 +19490,8 @@ var _taxonomyWpcmVenue = __webpack_require__(/*! ./taxonomy-wpcm-venue */ "./src
 "use strict";
 
 
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
 var _ui = __webpack_require__(/*! ../ui */ "./src/js/ui/index.js");
 
 /**
@@ -18878,11 +19500,76 @@ var _ui = __webpack_require__(/*! ../ui */ "./src/js/ui/index.js");
  * @since 1.0.0
  */
 var pageOpponents = function pageOpponents() {
-  (0, _ui.cards)('page-opponents.php', 'unions');
+  (0, _ui.cards)('page-opponents.php', 'unions', function () {
+    var $select = (0, _utils.$)('.chosen_select');
+    $select.chosen({
+      width: '100%'
+    });
+  });
 };
 
 module.exports = {
   pageOpponents: pageOpponents
+};
+
+/***/ }),
+
+/***/ "./src/js/modules/page-players.js":
+/*!****************************************!*\
+  !*** ./src/js/modules/page-players.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
+
+var _ui = __webpack_require__(/*! ../ui */ "./src/js/ui/index.js");
+
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+var _vendor = __webpack_require__(/*! ../vendor */ "./src/js/vendor/index.js");
+
+/**
+ * Players page.
+ *
+ * @since 1.0.0
+ */
+var pagePlayers = function pagePlayers() {
+  if ('page-players.php' !== _utils.rdb.template) {
+    return;
+  }
+
+  (0, _utils.$)(document).ready(function () {
+    var _context;
+
+    var $teams = (0, _utils.$)('#teams'),
+        endpoint = 'players',
+        teams = new _vendor.Foundation.Tabs($teams, {}),
+        args = {
+      grid: ''
+    };
+    var defaultPath = 'mens-eagles';
+    args.grid = "#".concat(defaultPath, " > .grid");
+    (0, _ui.cards)(_utils.rdb.template, (0, _concat["default"])(_context = "".concat(endpoint, "/")).call(_context, defaultPath), args);
+    $teams.on('change.zf.tabs', function (e, context) {
+      var _context2;
+
+      defaultPath = context[0].childNodes[0].hash.replace('#', ''); // eslint-disable-line
+
+      args.grid = "".concat(context[0].childNodes[0].hash, " > .grid"); // eslint-disable-line
+
+      (0, _ui.cards)(_utils.rdb.template, (0, _concat["default"])(_context2 = "".concat(endpoint, "/")).call(_context2, defaultPath), args);
+    });
+  });
+};
+
+module.exports = {
+  pagePlayers: pagePlayers
 };
 
 /***/ }),
@@ -18914,6 +19601,41 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./src/js/modules/page-venues.js":
+/*!***************************************!*\
+  !*** ./src/js/modules/page-venues.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+var _ui = __webpack_require__(/*! ../ui */ "./src/js/ui/index.js");
+
+/**
+ * Venues page.
+ *
+ * @since 1.0.0
+ */
+var pageVenues = function pageVenues() {
+  (0, _ui.cards)('page-venues.php', 'venues', function () {
+    window.ukCountry = _ui.ukCountry;
+    var $select = (0, _utils.$)('.chosen_select');
+    $select.chosen({
+      width: '100%'
+    });
+  });
+};
+
+module.exports = {
+  pageVenues: pageVenues
+};
+
+/***/ }),
+
 /***/ "./src/js/modules/single-wpcm-club.js":
 /*!********************************************!*\
   !*** ./src/js/modules/single-wpcm-club.js ***!
@@ -18925,8 +19647,6 @@ module.exports = {
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
-
-var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/typeof */ "./node_modules/@babel/runtime-corejs3/helpers/typeof.js"));
 
 var _parseInt2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/parse-int */ "./node_modules/@babel/runtime-corejs3/core-js-stable/parse-int.js"));
 
@@ -18955,22 +19675,6 @@ var singleWpcmClub = function (rdb, $) {
     $wpcmClub.prop('style').setProperty('--background', primaryColor);
   } else {
     $wpcmClub.prop('style').setProperty('--background', secondaryColor);
-  } // DataTables timestamp render sort.
-
-
-  function dtTimestampSort(data, type, row, meta) {
-    if ('sort' === type || 'type' === type) {
-      var api = new $.fn.dataTable.Api(meta.settings),
-          $td = $(api.cell({
-        row: meta.row,
-        column: meta.col
-      }).node()),
-          sortData = $td.data('sort');
-      return (0, _typeof2["default"])(sortData) !== undefined ? sortData : data;
-    }
-
-    var val = $.fn.dataTable.render.number().display(data, type, row, meta);
-    return val;
   } // Column width.
 
 
@@ -18979,7 +19683,7 @@ var singleWpcmClub = function (rdb, $) {
   var options = {
     columns: [{
       data: 'date',
-      render: dtTimestampSort,
+      render: _utils.dtTimestampSort,
       width: colWidth
     }, {
       data: 'fixture',
@@ -19040,6 +19744,7 @@ var singleWpcmMatch = function (rdb, _, $) {
   }); // DataTables config.
 
   var options = {
+    autoWidth: true,
     responsive: true,
     searching: false,
     paging: false,
@@ -19077,36 +19782,348 @@ module.exports = {
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
+
+var _sort = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/sort */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/sort.js"));
+
+var _stringify = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/json/stringify */ "./node_modules/@babel/runtime-corejs3/core-js-stable/json/stringify.js"));
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/classCallCheck */ "./node_modules/@babel/runtime-corejs3/helpers/classCallCheck.js"));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/createClass */ "./node_modules/@babel/runtime-corejs3/helpers/createClass.js"));
+
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+/**
+ * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
+ *
+ * @since 1.0.0
+ *
+ * @type {Function}
+ */
+var adminUrl = _utils.util.adminUrl,
+    sanitizeTitle = _utils.util.sanitizeTitle;
+/**
+ * Ensure `moment.js` is available.
+ *
+ * @since 1.0.0
+ *
+ * @type {Function}
+ */
+
+var moment = window.moment;
 /**
  * Venue template.
  *
  * @since 1.0.0
  */
 
-/* eslint-disable no-unused-vars */
-var taxWpcmVenue = function (_, $, rdb) {
-  if ('taxonomy-wpcm_venue.php' !== rdb.template) {
-    return;
-  }
+/* eslint-disable no-unused-vars, computed-property-spacing, new-cap, object-shorthand */
 
-  if (!rdb.is_mobile) {
-    var $doc = $(document),
-        $select = $('.chosen_select');
-    $select.chosen({
-      width: '100%'
-    }).on('chosen:showing_dropdown', function (e) {
-      $doc.scrollTop($doc.height());
-    });
-    $select.on('change', function (e, param) {
-      e.preventDefault();
-      var prefix = location.origin;
-      window.location = prefix + '/venue/' + param.selected;
-    }).trigger('chosen:updated');
+var TaxWPCMVenue = /*#__PURE__*/function () {
+  /**
+   * Primary constructor.
+   *
+   * @since 1.0.0
+   */
+  function TaxWPCMVenue() {
+    (0, _classCallCheck2["default"])(this, TaxWPCMVenue);
+
+    if ('taxonomy-wpcm_venue.php' !== _utils.rdb.template) {
+      return;
+    }
+
+    this.$table = (0, _utils.$)('.wpcm-matches-list');
+
+    this._dataTable();
   }
-}(window._, window.jQuery, window.rdb);
+  /**
+   * DataTables configuration.
+   *
+   * @since 1.0.0
+   */
+
+
+  (0, _createClass2["default"])(TaxWPCMVenue, [{
+    key: "_dataTable",
+    value: function _dataTable() {
+      // Column width.
+      var colWidth = '25%'; // Options.
+
+      var table = this.$table.DataTable({
+        destroy: true,
+        autoWidth: true,
+        deferRender: true,
+        ajax: {
+          url: adminUrl('admin-ajax.php'),
+          data: {
+            action: 'get_matches',
+            collection: false,
+            post_type: 'matches',
+            venue: _utils.rdb.term_slug,
+            nonce: (0, _utils.$)('#nonce').val()
+          },
+          dataSrc: function dataSrc(response) {
+            if (!response.success) {
+              return TaxWPCMVenue.dtErrorHandler();
+            }
+
+            var oldData = sessionStorage.allMatches,
+                newData = (0, _stringify["default"])(response.data);
+
+            if (newData !== oldData) {
+              sessionStorage.removeItem('allMatches');
+              sessionStorage.setItem('allMatches', newData);
+            }
+
+            var responseData = JSON.parse(sessionStorage.allMatches),
+                _final = [];
+
+            _utils._.each(responseData, function (match) {
+              var api = {
+                ID: match.ID,
+                idStr: "match-".concat(match.ID),
+                competition: {
+                  display: TaxWPCMVenue.competition(match.competition),
+                  filter: match.competition.name
+                },
+                date: {
+                  display: TaxWPCMVenue.formatDate(match.date.GMT, match.links),
+                  filter: match.season
+                },
+                fixture: {
+                  display: TaxWPCMVenue.logoResult(match.fixture, match.result, match.logo.home, match.logo.away, match.links),
+                  filter: TaxWPCMVenue.opponent(match.fixture)
+                },
+                outcome: match.outcome,
+                friendly: match.friendly,
+                neutral: match.venue.neutral,
+                sort: match.date.timestamp,
+                team: {
+                  name: match.team.name,
+                  slug: match.team.slug
+                },
+                links: match.links
+              };
+
+              _final.push(api);
+            });
+
+            return _final;
+          }
+        },
+        columnDefs: [{
+          className: 'control',
+          orderable: false,
+          targets: 0
+        }, {
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            (0, _utils.$)(td).attr('data-sort', (0, _sort["default"])(rowData));
+            (0, _utils.$)(td).addClass('wpcm-matches-list-col wpcm-matches-list-date');
+          },
+          targets: 1
+        }, {
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            (0, _utils.$)(td).addClass('wpcm-matches-list-col wpcm-matches-list-fixture flex');
+          },
+          targets: 2
+        }, {
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            (0, _utils.$)(td).addClass('wpcm-matches-list-col wpcm-matches-list-team');
+          },
+          targets: 3
+        }, {
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            (0, _utils.$)(td).addClass('wpcm-matches-list-col wpcm-matches-list-info');
+          },
+          targets: 4
+        }],
+        columns: [{
+          data: 'ID',
+          className: 'control match-id sorting_disabled',
+          render: function render(data) {
+            return "<span class=\"hide\">".concat(data, "</span>");
+          },
+          width: '1px'
+        }, {
+          data: 'date',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          },
+          width: '25%',
+          responsivePriority: 2
+        }, {
+          data: 'fixture',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          },
+          width: '25%',
+          responsivePriority: 1
+        }, {
+          data: 'team',
+          render: {
+            _: 'name',
+            display: 'name',
+            filter: 'slug'
+          },
+          width: '25%'
+        }, {
+          data: 'competition',
+          className: 'min-medium',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          },
+          width: '25%'
+        }, {
+          data: 'sort',
+          className: 'timestamp hide',
+          render: function render(data) {
+            return "<span class=\"hide\">".concat(data, "</span>");
+          }
+        }],
+        createdRow: function createdRow(row, data, dataIndex, cells) {
+          (0, _utils.$)(row).addClass("wpcm-matches-list-item ".concat(data.outcome));
+        },
+        buttons: false,
+        info: false,
+        language: {
+          loadingRecords: '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" />'
+        },
+        order: [[5, 'desc']],
+        paging: false,
+        scrollCollapse: true,
+        searching: false,
+        rowId: 'idStr',
+        responsive: {
+          breakpoints: _utils.BREAKPOINTS,
+          details: {
+            type: 'column'
+          }
+        }
+      }); // Dropdown venue options.
+
+      var $select = (0, _utils.$)('.chosen_select'),
+          prefix = location.origin;
+
+      if (!_utils.rdb.is_mobile) {
+        $select.on('change', function (e, param) {
+          e.preventDefault();
+          window.location = prefix + '/venue/' + param.selected;
+        }).trigger('chosen:updated');
+      } else {
+        $select.on('change', function (e) {
+          e.preventDefault();
+          window.location = prefix + '/venue/' + this.value;
+        }).trigger('chosen:updated');
+      }
+    }
+    /**
+     * DataTables custom handler.
+     *
+     * @since 1.0.0
+     */
+
+  }], [{
+    key: "dtErrorHandler",
+    value: function dtErrorHandler() {
+      _utils.$.fn.dataTable.ext.errMode = 'none';
+      this.$table.on('error.dt', function (e, settings, techNote, message) {
+        console.log('An error has been reported by DataTables: ', message);
+      }).DataTable(); // eslint-disable-line
+    }
+    /**
+     * Get formatted date.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} date  ISO-8601 string.
+     * @param {object} links Match URLs.
+     *
+     * @return {string}     Human-readable date string.
+     */
+
+  }, {
+    key: "formatDate",
+    value: function formatDate(date, links) {
+      var _context, _context2;
+
+      var m = moment(date),
+          human = m.tz(sessionStorage.timezone).format('MMMM D, YYYY');
+      return (0, _concat["default"])(_context = (0, _concat["default"])(_context2 = "<a id=\"".concat(sanitizeTitle(links.match), "\" class=\"wpcm-matches-list-link\" href=\"")).call(_context2, links.match, "\" rel=\"bookmark\">")).call(_context, human, "</a>");
+    }
+    /**
+     * Hyperlink logo.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} fixture  Post title of a match (i.e. "United States v Some Country").
+     * @param {string} result   Match result.
+     * @param {string} homeLogo URL of home team logo.
+     * @param {string} awayLogo URL of away team logo.
+     * @param {object} links    Object containing links to the clubs.
+     *
+     * @return {string}         HTML output.
+     */
+
+  }, {
+    key: "logoResult",
+    value: function logoResult(fixture, result, homeLogo, awayLogo, links) {
+      var _context3, _context4, _context5, _context6, _context7, _context8;
+
+      var teams = fixture.split(/\sv\s/),
+          scores = result.split(/\s-\s/);
+      return (0, _concat["default"])(_context3 = (0, _concat["default"])(_context4 = (0, _concat["default"])(_context5 = (0, _concat["default"])(_context6 = (0, _concat["default"])(_context7 = (0, _concat["default"])(_context8 = "<a class=\"wpcm-matches-list-link\" href=\"".concat(links.match, "\" rel=\"bookmark\"><span class=\"wpcm-matches-list-club1\"><img class=\"icon\" src=\"")).call(_context8, homeLogo, "\" alt=\"")).call(_context7, teams[0], "\" height=\"22\" /></span><span class=\"wpcm-matches-list-status wpcm-matches-list-result\">")).call(_context6, scores[0], " - ")).call(_context5, scores[1], "</span><span class=\"wpcm-matches-list-club2\"><img class=\"icon\" src=\"")).call(_context4, awayLogo, "\" alt=\"")).call(_context3, teams[1], "\" height=\"22\" /></span></a>");
+    }
+    /**
+     * Get competition name from API.
+     *
+     * @since 1.0.0
+     *
+     * @param {object} competition API response of competition object.
+     *
+     * @return {string}            Competition name.
+     */
+
+  }, {
+    key: "competition",
+    value: function competition(_competition) {
+      return (!_utils._.isEmpty(_competition.parent) ? _competition.parent + ' - ' : '') + _competition.name;
+    }
+    /**
+     * Get opponent from API.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} fixture Post title of a match (i.e. "United States v Some Country").
+     *
+     * @return {string}        The opponent's name.
+     */
+
+  }, {
+    key: "opponent",
+    value: function opponent(fixture) {
+      var parts = fixture.split(/\sv\s/);
+
+      if ('United States' === parts[0]) {
+        return parts[1];
+      }
+
+      return parts[0];
+    }
+  }]);
+  return TaxWPCMVenue;
+}();
 
 module.exports = {
-  taxWpcmVenue: taxWpcmVenue
+  TaxWPCMVenue: TaxWPCMVenue
 };
 
 /***/ }),
@@ -19130,8 +20147,7 @@ var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils/index.js");
  *
  * @author Davey Jacobson <daveyjake21@gmail.com>
  */
-(function (win, doc, rdb, _, $) {
-  var $win = $(win);
+(function (win, $) {
   var scope = {
     common: {
       init: _modules.common
@@ -19142,8 +20158,14 @@ var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils/index.js");
     page_opponents: {
       init: (0, _modules.pageOpponents)()
     },
+    page_players: {
+      init: (0, _modules.pagePlayers)()
+    },
     page_staff: {
       init: (0, _modules.pageStaff)()
+    },
+    page_venues: {
+      init: (0, _modules.pageVenues)()
     },
     single_wpcm_club: {
       init: _modules.singleWpcmClub
@@ -19151,12 +20173,13 @@ var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils/index.js");
     single_wpcm_match: {
       init: _modules.singleWpcmMatch
     },
-    tax_wpcm_venue: {
-      init: _modules.taxWpcmVenue
+    taxonomy_wpcm_venue: {
+      init: new _modules.TaxWPCMVenue()
     }
   };
+  var $win = $(win);
   $win.on('load', _utils.master.shooter(scope));
-})(window, document, window.rdb, window.lodash, window.jQuery);
+})(window, window.jQuery);
 
 /***/ }),
 
@@ -19170,28 +20193,73 @@ var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils/index.js");
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _includes = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/includes */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/includes.js"));
+
 var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 
+var parseArgs = _utils.util.parseArgs;
 /**
  * Generate cards from API.
  *
  * @since 1.0.0
  *
- * @param {string} template Name of target template.
- * @param {string} endpoint Name of target API endpoint.
+ * @param {string}   template Name of target template.
+ * @param {string}   endpoint Name of target API endpoint.
+ * @param {object}   args     Custom arguments & values to be used.
+ * @param {Function} callback Callback function to fire.
  *
- * @return {Request}        API request and response.
+ * @return {Request}          API request and response.
  */
-var cards = function cards(template, endpoint) {
+
+/* eslint-disable array-bracket-spacing */
+
+var cards = function cards(template, endpoint, args, callback) {
   if (template !== _utils.rdb.template) {
     return;
   }
 
-  return new _utils.Request(endpoint, (0, _utils.$)('#nonce').val());
+  var defaults = {
+    collection: true,
+    postId: 0,
+    venue: '',
+    grid: '#grid'
+  };
+  args = parseArgs(args, defaults);
+
+  if (typeof callback === 'function') {
+    callback();
+  }
+
+  return new _utils.Request(endpoint, (0, _utils.$)('#nonce').val(), args.collection, args.postId, args.grid);
+};
+
+var ukCountry = function ukCountry(addressLocality, addressCountry) {
+  var abbr;
+  var uk = {
+    en: ['brighton', 'camborne', 'cambridge', 'coventry', 'gloucester', 'guildford', 'henley-on-thames', 'hersham', 'leeds', 'london', 'melrose', 'northampton', 'otley', 'stockport', 'sunbury-on-thames', 'twickenham', 'worcester'],
+    ie: ['castlereagh'],
+    sf: ['aberdeen', 'edinburgh', 'galashiels', 'scotstoun'],
+    wl: ['brecon', 'cardiff', 'colwyn-bay', 'crosskeys', 'ebbw-vale', 'neath', 'newport', 'pontypool', 'pontypridd', 'whitland']
+  };
+
+  if ('GB' === addressCountry) {
+    _utils._.each(uk, function (cities, country) {
+      if ((0, _includes["default"])(_utils._).call(_utils._, cities, _utils._.kebabCase(_utils._.toLower(addressLocality)))) {
+        abbr = country;
+      }
+    });
+  } else {
+    abbr = _utils._.toLower(addressCountry);
+  }
+
+  return abbr;
 };
 
 module.exports = {
-  cards: cards
+  cards: cards,
+  ukCountry: ukCountry
 };
 
 /***/ }),
@@ -19216,6 +20284,13 @@ _Object$defineProperty(exports, "cards", {
   enumerable: true,
   get: function get() {
     return _cards.cards;
+  }
+});
+
+_Object$defineProperty(exports, "ukCountry", {
+  enumerable: true,
+  get: function get() {
+    return _cards.ukCountry;
   }
 });
 
@@ -19385,14 +20460,12 @@ __webpack_require__(/*! ../vendor/mmenu/mmenu.polyfills */ "./src/js/vendor/mmen
 
 var _mmenu2 = __webpack_require__(/*! ../vendor/mmenu/mmenu */ "./src/js/vendor/mmenu/mmenu.js");
 
-var _globals = __webpack_require__(/*! ../utils/globals */ "./src/js/utils/globals.js");
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 
 /**
  * jQuery.mmenu.
  *
  * @since 1.0.0
- *
- * @param {object} rdb WordPress localized variables.
  */
 
 /* eslint-disable array-bracket-spacing, no-multi-spaces */
@@ -19409,7 +20482,7 @@ var mmenu = function mmenu() {
       content: ['prev', 'title']
     }, {
       position: 'bottom',
-      content: ['<a href="mailto:info@rugbydb.us" rel="external"><i class="fas fa-envelope"></i></a>', '<a href="#" rel="external"><i class="fab fa-facebook-f"></i></a>', '<a href="#" rel="external"><i class="fab fa-instagram"></i></a>']
+      content: ['<a href="mailto:info@rugbydb.com" rel="external"><i class="fas fa-envelope"></i></a>', '<a href="#" rel="external"><i class="fab fa-facebook-f"></i></a>', '<a href="#" rel="external"><i class="fab fa-instagram"></i></a>']
     }],
     searchfield: {
       panel: true
@@ -19431,7 +20504,7 @@ var mmenu = function mmenu() {
     }
   };
 
-  if (_globals.rdb.is_tablet) {
+  if (_utils.rdb.is_tablet) {
     mmenuOpts.autoHeight = true;
     mmenuOpts.dropdown = true;
     mmenuOpts.extensions.push('popup');
@@ -19441,9 +20514,11 @@ var mmenu = function mmenu() {
 
   document.addEventListener('DOMContentLoaded', function () {
     /* eslint-disable no-new */
-    var menu = new _mmenu2.Mmenu("#menu", mmenuOpts, mmenuConf),
-        api = menu.API,
-        header = document.querySelector('#masthead');
+
+    /* const menu   = new Mmenu( "#menu", mmenuOpts, mmenuConf ),
+          api    = menu.API,
+          header = document.querySelector( '#masthead' );*/
+    new _mmenu2.Mmenu("#menu", mmenuOpts, mmenuConf);
     new _mmenu2.Mhead('#masthead');
   });
 };
@@ -19636,10 +20711,68 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
  */
 
 /**
+ * DataTables breakpoints.
+ *
+ * @type {array}
+ */
+var BREAKPOINTS = [{
+  name: 'desktop',
+  width: Infinity
+}, {
+  name: 'xxxlarge',
+  width: 1920
+}, {
+  name: 'xxlarge-down',
+  width: 1919
+}, {
+  name: 'xxlarge',
+  width: 1440
+}, {
+  name: 'xlarge-down',
+  width: 1439
+}, {
+  name: 'xlarge',
+  width: 1200
+}, {
+  name: 'large-down',
+  width: 1199
+}, {
+  name: 'large',
+  width: 1024
+}, {
+  name: 'wordpress-down',
+  width: 1023
+}, {
+  name: 'wordpress',
+  width: 783
+}, {
+  name: 'medium-down',
+  width: 782
+}, {
+  name: 'tablet-p',
+  width: 768
+}, {
+  name: 'medium',
+  width: 640
+}, {
+  name: 'mobile-down',
+  width: 639
+}, {
+  name: 'mobile',
+  width: 480
+}, {
+  name: 'small-only',
+  width: 479
+}, {
+  name: 'small',
+  width: 0
+}];
+/**
  * Fifteen minutes.
  *
  * @type {Date}
  */
+
 var FIFTEEN_MINUTES = new Date((new Date().getTime() + 15) * 60 * 1000);
 /**
  * Internationalization instance.
@@ -19649,12 +20782,26 @@ var FIFTEEN_MINUTES = new Date((new Date().getTime() + 15) * 60 * 1000);
 
 var INTL = new Intl.DateTimeFormat().resolvedOptions();
 /**
+ * ISO-8601 date.
+ *
+ * @type {string}
+ */
+
+var ISO_DATE = 'YYYY-MM-DD';
+/**
+ * ISO-8601 time.
+ *
+ * @type {string}
+ */
+
+var ISO_TIME = 'hh:mm:ss';
+/**
  * User's locale settings.
  *
  * @type {string}
  */
 
-var LOCALE = INTL.locale;
+var LOCALE = INTL.locale.toLowerCase();
 /**
  * User's local timezone.
  *
@@ -19668,7 +20815,7 @@ var TIMEZONE = INTL.timeZone;
  * @type {string}
  */
 
-var US_DATE = 'MMM D, YYYY';
+var US_DATE = 'MMMM D, YYYY';
 /**
  * US time format for Moment.js.
  *
@@ -19684,7 +20831,10 @@ var US_TIME = 'h:mma z';
 
 var UTC = 'Etc/UTC';
 module.exports = {
+  BREAKPOINTS: BREAKPOINTS,
   FIFTEEN_MINUTES: FIFTEEN_MINUTES,
+  ISO_DATE: ISO_DATE,
+  ISO_TIME: ISO_TIME,
   LOCALE: LOCALE,
   TIMEZONE: TIMEZONE,
   US_DATE: US_DATE,
@@ -19745,6 +20895,10 @@ module.exports = Date;
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/typeof */ "./node_modules/@babel/runtime-corejs3/helpers/typeof.js"));
+
 /**
  * Global variables that are used sitewide.
  *
@@ -19757,16 +20911,36 @@ var $ = window.jQuery; // Moment.js
 
 var moment = window.moment; // Localized PHP variables.
 
-var rdb = window.rdb; // WordPress JS object.
+var rdb = window.rdb; // Common events.
+
+var ux = 'load resize orientationchange'; // WordPress JS object.
 
 var wp = window.wp; // Yet another dataTables custom filter.
 
-var yadcf = window.yadcf;
+var yadcf = window.yadcf; // DataTables timestamp render sort.
+
+var dtTimestampSort = function dtTimestampSort(data, type, row, meta) {
+  if ('sort' === type || 'type' === type) {
+    var api = new $.fn.dataTable.Api(meta.settings),
+        $td = $(api.cell({
+      row: meta.row,
+      column: meta.col
+    }).node()),
+        sortData = $td.data('sort');
+    return (0, _typeof2["default"])(sortData) !== undefined ? sortData : data; // eslint-disable-line
+  }
+
+  var val = $.fn.dataTable.render.number().display(data, type, row, meta);
+  return val;
+};
+
 module.exports = {
   _: _,
   $: $,
+  dtTimestampSort: dtTimestampSort,
   moment: moment,
   rdb: rdb,
+  ux: ux,
   wp: wp,
   yadcf: yadcf
 };
@@ -19785,6 +20959,8 @@ module.exports = {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
 
+var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/typeof */ "./node_modules/@babel/runtime-corejs3/helpers/typeof.js"));
+
 var _parseInt2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/parse-int */ "./node_modules/@babel/runtime-corejs3/core-js-stable/parse-int.js"));
 
 var _find = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/find */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/find.js"));
@@ -19792,6 +20968,8 @@ var _find = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs
 var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
 
 var _jsCookie = _interopRequireDefault(__webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js"));
+
+var _globals = __webpack_require__(/*! ./globals */ "./src/js/utils/globals.js");
 
 var _constants = __webpack_require__(/*! ./constants */ "./src/js/utils/constants.js");
 
@@ -19889,6 +21067,59 @@ var util = {
       sessionStorage.setItem('locale', _constants.LOCALE);
     }
   },
+
+  /**
+   * Merges together defaults and args much like the WP `wp_parse_args` function
+   *
+   * @since 1.0.0
+   *
+   * @param {object} args     Custom arguments & values.
+   * @param {object} defaults Default arguments & values.
+   *
+   * @return {object}    Arguments to be used instead of defaults.
+  */
+  parseArgs: function parseArgs(args, defaults) {
+    if ((0, _typeof2["default"])(args) !== 'object') {
+      args = {};
+    }
+
+    if ((0, _typeof2["default"])(defaults) !== 'object') {
+      defaults = {};
+    }
+
+    return _globals.$.extend({}, defaults, args);
+  },
+
+  /**
+   * WordPress `sanitize_title` for JS.
+   *
+   * @author Nicolas Bages {@link https://github.com/spyesx}
+   * @see {@link https://gist.github.com/spyesx/561b1d65d4afb595f295|String-To-Slug.js}
+   *
+   * @param {string} string String to sanitize.
+   *
+   * @return {string}       The sanitized-hyphenated-string.
+   */
+  sanitizeTitle: function sanitizeTitle(string) {
+    string = string.replace(/^\s+|\s+$/g, '');
+    string = string.toLowerCase(); // remove accents, swap ñ for n, etc
+
+    var from = 'àáäâèéëêìíïîòóöôùúüûñç·_,:;',
+        to = 'aaaaeeeeiiiioooouuuunc------';
+
+    for (var i = 0, l = from.length; i < l; i++) {
+      string = string.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+
+    string = string.replace('_-') // replace a dot by a dash
+    .replace(/([a-z])(\/)(\d)/g, '$1-$3') // replace slash between letter & number with dash
+    .replace(/\//g, '') // collapse all forward-slashes by a dash
+    .replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    .replace(/\s+/g, '-') // collapse whitespace and replace by a dash
+    .replace(/-+/g, '-'); // collapse dashes
+
+    return string;
+  },
   timezone: function timezone() {
     if (!sessionStorage.timezone) {
       sessionStorage.setItem('timezone', _constants.TIMEZONE);
@@ -19936,6 +21167,13 @@ _Object$defineProperty(exports, "$", {
   }
 });
 
+_Object$defineProperty(exports, "dtTimestampSort", {
+  enumerable: true,
+  get: function get() {
+    return _globals.dtTimestampSort;
+  }
+});
+
 _Object$defineProperty(exports, "moment", {
   enumerable: true,
   get: function get() {
@@ -19947,6 +21185,13 @@ _Object$defineProperty(exports, "rdb", {
   enumerable: true,
   get: function get() {
     return _globals.rdb;
+  }
+});
+
+_Object$defineProperty(exports, "ux", {
+  enumerable: true,
+  get: function get() {
+    return _globals.ux;
   }
 });
 
@@ -19964,10 +21209,31 @@ _Object$defineProperty(exports, "yadcf", {
   }
 });
 
+_Object$defineProperty(exports, "BREAKPOINTS", {
+  enumerable: true,
+  get: function get() {
+    return _constants.BREAKPOINTS;
+  }
+});
+
 _Object$defineProperty(exports, "FIFTEEN_MINUTES", {
   enumerable: true,
   get: function get() {
     return _constants.FIFTEEN_MINUTES;
+  }
+});
+
+_Object$defineProperty(exports, "ISO_DATE", {
+  enumerable: true,
+  get: function get() {
+    return _constants.ISO_DATE;
+  }
+});
+
+_Object$defineProperty(exports, "ISO_TIME", {
+  enumerable: true,
+  get: function get() {
+    return _constants.ISO_TIME;
   }
 });
 
@@ -20024,6 +21290,13 @@ _Object$defineProperty(exports, "ucfirst", {
   enumerable: true,
   get: function get() {
     return _php.ucfirst;
+  }
+});
+
+_Object$defineProperty(exports, "parseArgs", {
+  enumerable: true,
+  get: function get() {
+    return _php.parseArgs;
   }
 });
 
@@ -20120,11 +21393,17 @@ var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/help
 var _slice = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/slice */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/slice.js"));
 
 /**
+ * PHP functions for JavaScript.
+ *
+ * @since 1.0.0
+ */
+
+/**
  * Recreate PHP's `ucfirst` function for JavaScript.
  *
  * @example {
  *
- *      ucfirst( 'some text' ) => 'Some text'
+ *     ucfirst( 'some text' ) => 'Some text'
  *
  * }
  *
@@ -20156,6 +21435,8 @@ module.exports = {
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
 
 var _includes = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/includes */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/includes.js"));
 
@@ -20190,8 +21471,9 @@ var Request = /*#__PURE__*/function () {
    *
    * @param {string} postType   Slug of requested post type.
    * @param {string} nonce      Generated nonce key.
-   * @param {string} collection Is the request for multiple items? Default true.
+   * @param {bool}   collection Is the request for multiple items? Default true.
    * @param {number} postId     Post ID of requested item.
+   * @param {string} grid       The grid attribute selector.
    *
    * @return {Request} JSON response from API.
    */
@@ -20200,12 +21482,20 @@ var Request = /*#__PURE__*/function () {
     var nonce = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
     var collection = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
     var postId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+    var venue = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
+    var grid = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : '#grid';
     (0, _classCallCheck2["default"])(this, Request);
-    this.postType = postType;
+    this.postType = postType.match(/\//) ? postType.split('/') : postType;
+    this.team = postType.match(/\//) ? this.postType[1] : ''; // eslint-disable-line
+
+    this.postType = postType.match(/\//) ? this.postType[0] : this.postType; // eslint-disable-line
+
     this.nonce = nonce;
+    this.venue = venue;
     this.collection = collection;
     this.postId = postId;
-    this.endpoint = Request._endpointMap(this.postType);
+    this.grid = grid;
+    this.endpoint = Request._endpointMap(this.postType); // this._adaptiveBackground();
 
     this._ajax();
   }
@@ -20222,12 +21512,21 @@ var Request = /*#__PURE__*/function () {
   (0, _createClass2["default"])(Request, [{
     key: "_ajax",
     value: function _ajax() {
+      var self = this;
       var args = {
         action: "get_".concat(this.endpoint),
         nonce: this.nonce,
         collection: this.collection,
         post_type: this.postType
       };
+
+      if (!_globals._.isEmpty(this.team)) {
+        args.team = this.team;
+      }
+
+      if (!_globals._.isEmpty(this.venue)) {
+        args.venue = this.venue;
+      }
 
       if (this.postId > 0) {
         args.post_id = this.postId;
@@ -20244,10 +21543,10 @@ var Request = /*#__PURE__*/function () {
 
           var isoTmpls = ['players', 'staff', 'venues', 'opponents']; // eslint-disable-line
 
-          if ((0, _includes["default"])(_globals._).call(_globals._, isoTmpls, _globals.rdb.post_name)) {
-            return Request._isoTmpls(response.data);
-          } else if ('match' === this.postType && this.postId > 0) {
-            return Request._timelineTmpl(response.data);
+          if ((0, _includes["default"])(_globals._).call(_globals._, isoTmpls, _globals.rdb.post_name) || (0, _includes["default"])(_globals._).call(_globals._, isoTmpls, _globals.rdb.term_name)) {
+            return self._isoTmpls(response.data);
+          } else if ('match' === self.postType && self.postId > 0) {
+            return self._timelineTmpl(response.data);
           }
 
           return response.data;
@@ -20261,65 +21560,23 @@ var Request = /*#__PURE__*/function () {
       });
     }
     /**
-     * Map request to proper endpoint.
-     *
-     * @since 1.0.0
-     * @access private
-     * @static
-     *
-     * @param {string} request Request slug.
-     *
-     * @return {string} Correct slug.
-     */
-
-  }], [{
-    key: "_endpointMap",
-    value: function _endpointMap(request) {
-      var term = {
-        club: 'union',
-        match: 'match',
-        staff: 'staff',
-        player: 'player',
-        opponent: 'union',
-        wpcm_club: 'union',
-        wpcm_match: 'match',
-        wpcm_staff: 'staff',
-        wpcm_player: 'players'
-      };
-      var terms = {
-        club: 'unions',
-        match: 'matches',
-        staff: 'staff',
-        player: 'players',
-        opponent: 'unions',
-        wpcm_club: 'unions',
-        wpcm_match: 'matches',
-        wpcm_staff: 'staff',
-        wpcm_player: 'players'
-      };
-
-      if (this.collection && !_globals._.isUndefined(terms[request])) {
-        return terms[request];
-      } else if (!_globals._.isUndefined(term[request])) {
-        return term[request];
-      }
-
-      return request;
-    }
-    /**
      * Parse JS templates.
      *
      * @since 1.0.0
      * @access private
      * @static
      *
-     * @param {JSON} response AJAX API response data.
+     * @param {JSON}   response AJAX API response data.
      */
 
   }, {
     key: "_isoTmpls",
-    value: function _isoTmpls(data) {
-      var $selector = (0, _globals.$)('#grid').imagesLoaded(function () {
+    value: function _isoTmpls(response) {
+      if ((0, _globals.$)(this.grid).children('.card').length) {
+        return;
+      }
+
+      var $selector = (0, _globals.$)(this.grid).imagesLoaded(function () {
         $selector.isotope({
           itemSelector: '.card',
           percentPosition: true,
@@ -20335,14 +21592,41 @@ var Request = /*#__PURE__*/function () {
 
         var tmpl = $selector.data('tmpl'),
             template = _globals.wp.template(tmpl),
-            result = template(data),
+            result = template(response),
             cards = (0, _globals.$)(result);
 
-        $selector.append(cards).isotope('appended', cards).isotope({
-          sortBy: 'name'
-        });
+        $selector.append(cards).isotope('appended', cards).isotope();
+      });
+      var obj = [{
+        postName: 'venues',
+        attrName: 'country'
+      }, {
+        postName: 'opponents',
+        attrName: 'group'
+      }, {
+        postName: 'players',
+        attrName: 'name'
+      }];
+
+      _globals._.each(obj, function (data) {
+        return Request._filterTmpl(data, $selector);
       });
     }
+    /**
+     * Map request to proper endpoint.
+     *
+     * @since 1.0.0
+     * @access private
+     * @static
+     *
+     * @param {string} request Request slug.
+     *
+     * @return {string} Correct slug.
+     */
+
+  }, {
+    key: "_timelineTmpl",
+
     /**
      * Parse JS templates.
      *
@@ -20352,9 +21636,6 @@ var Request = /*#__PURE__*/function () {
      *
      * @param {JSON} data AJAX API response data.
      */
-
-  }, {
-    key: "_timelineTmpl",
     value: function _timelineTmpl(data) {
       if (_globals._.isString(data)) {
         return;
@@ -20365,8 +21646,103 @@ var Request = /*#__PURE__*/function () {
           template = _globals.wp.template(tmpl),
           result = template(data);
 
-      console.log(template);
       return $selector.append(result);
+    }
+  }], [{
+    key: "_endpointMap",
+    value: function _endpointMap(request) {
+      var term = {
+        club: 'union',
+        match: 'match',
+        staff: 'staff',
+        player: 'player',
+        opponent: 'union',
+        venue: 'venue',
+        wpcm_club: 'union',
+        wpcm_match: 'match',
+        wpcm_staff: 'staff',
+        wpcm_player: 'player',
+        wpcm_venue: 'venue'
+      };
+      var terms = {
+        club: 'unions',
+        match: 'matches',
+        staff: 'staff',
+        player: 'players',
+        opponent: 'unions',
+        venue: 'venues',
+        wpcm_club: 'unions',
+        wpcm_staff: 'staff',
+        wpcm_match: 'matches',
+        wpcm_player: 'players',
+        wpcm_venue: 'venues'
+      };
+
+      if (this.collection && !_globals._.isUndefined(terms[request])) {
+        return terms[request];
+      } else if (!_globals._.isUndefined(term[request])) {
+        return term[request];
+      }
+
+      return request;
+    }
+    /**
+     * Parse JS filters.
+     *
+     * @since 1.0.0
+     * @access private
+     * @static
+     *
+     * @param {object} data      Key-value pair.
+     * @param {jQuery} $selector The 'select' tag.
+     */
+
+  }, {
+    key: "_filterTmpl",
+    value: function _filterTmpl(data, $selector) {
+      var isPage = data.postName === _globals.rdb.post_name && "page-".concat(data.postName, ".php") === _globals.rdb.template,
+          isVenue = data.postName === _globals.rdb.term_name && 'taxonomy-wpcm_venue.php' === _globals.rdb.template;
+
+      if (!(isPage || isVenue)) {
+        return;
+      }
+
+      if (_globals.rdb.is_mobile) {
+        (0, _globals.$)('.chosen_select').on('change', function () {
+          return Request.__filterTmpl(this.value, $selector, data);
+        });
+      } else {
+        (0, _globals.$)('.chosen_select').on('change', function (e, params) {
+          return Request.__filterTmpl(params.selected, $selector, data);
+        });
+      }
+    }
+    /**
+     * Parse filter value.
+     *
+     * @since 1.0.0
+     * @access private
+     * @static
+     *
+     * @param {number|string} filterValue The selected value.
+     * @param {jQuery}        $selector   The 'select' tag.
+     * @param {object}        data        Object-literal containing values.
+     */
+
+  }, {
+    key: "__filterTmpl",
+    value: function __filterTmpl(filterValue, $selector, data) {
+      if ('*' === filterValue) {
+        $selector.isotope({
+          filter: '*'
+        });
+      } else {
+        var _context;
+
+        $selector.isotope({
+          filter: (0, _concat["default"])(_context = "[data-".concat(data.attrName, "=")).call(_context, filterValue, "]")
+        });
+      }
     }
   }]);
   return Request;
@@ -20447,6 +21823,8 @@ var _foundationUtil9 = __webpack_require__(/*! foundation-sites/js/foundation.ut
 
 var _foundation2 = __webpack_require__(/*! foundation-sites/js/foundation.interchange */ "./node_modules/foundation-sites/js/foundation.interchange.js");
 
+var _foundation3 = __webpack_require__(/*! foundation-sites/js/foundation.tabs */ "./node_modules/foundation-sites/js/foundation.tabs.js");
+
 // import { Abide } from 'foundation-sites/js/foundation.abide';
 // import { Accordion } from 'foundation-sites/js/foundation.accordion';
 // import { AccordionMenu } from 'foundation-sites/js/foundation.accordionMenu';
@@ -20463,7 +21841,6 @@ var _foundation2 = __webpack_require__(/*! foundation-sites/js/foundation.interc
 // import { Slider } from 'foundation-sites/js/foundation.slider';
 // import { SmoothScroll } from 'foundation-sites/js/foundation.smoothScroll';
 // import { Sticky } from 'foundation-sites/js/foundation.sticky';
-// import { Tabs } from 'foundation-sites/js/foundation.tabs';
 // import { Toggler } from 'foundation-sites/js/foundation.toggler';
 // import { Tooltip } from 'foundation-sites/js/foundation.tooltip';
 // import { ResponsiveAccordionTabs } from 'foundation-sites/js/foundation.responsiveAccordionTabs';
@@ -20510,8 +21887,9 @@ _foundation.Foundation.plugin(_foundation2.Interchange, 'Interchange'); // Found
 // Foundation.plugin(Slider, 'Slider');
 // Foundation.plugin(SmoothScroll, 'SmoothScroll');
 // Foundation.plugin(Sticky, 'Sticky');
-// Foundation.plugin(Tabs, 'Tabs');
-// Foundation.plugin(Toggler, 'Toggler');
+
+
+_foundation.Foundation.plugin(_foundation3.Tabs, 'Tabs'); // Foundation.plugin(Toggler, 'Toggler');
 // Foundation.plugin(Tooltip, 'Tooltip');
 // Foundation.plugin(ResponsiveAccordionTabs, 'ResponsiveAccordionTabs');
 
@@ -20535,7 +21913,8 @@ module.exports = {
   // Dropdown,
   // DropdownMenu,
   // Equalizer,
-  Interchange: _foundation2.Interchange // Magellan,
+  Interchange: _foundation2.Interchange,
+  // Magellan,
   // OffCanvas,
   // Orbit,
   // ResponsiveMenu,
@@ -20544,8 +21923,7 @@ module.exports = {
   // Slider,
   // SmoothScroll,
   // Sticky,
-  // Tabs,
-  // Toggler,
+  Tabs: _foundation3.Tabs // Toggler,
   // Tooltip,
   // ResponsiveAccordionTabs
 

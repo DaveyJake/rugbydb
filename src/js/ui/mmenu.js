@@ -1,12 +1,10 @@
 import '../vendor/mmenu/mmenu.polyfills';
 import { Mmenu, Mhead } from '../vendor/mmenu/mmenu';
-import { rdb } from '../utils/globals';
+import { rdb } from '../utils';
 /**
  * jQuery.mmenu.
  *
  * @since 1.0.0
- *
- * @param {object} rdb WordPress localized variables.
  */
 /* eslint-disable array-bracket-spacing, no-multi-spaces */
 const mmenu = function() {
@@ -26,7 +24,7 @@ const mmenu = function() {
             {
                 position: 'bottom',
                 content: [
-                    '<a href="mailto:info@rugbydb.us" rel="external"><i class="fas fa-envelope"></i></a>',
+                    '<a href="mailto:info@rugbydb.com" rel="external"><i class="fas fa-envelope"></i></a>',
                     '<a href="#" rel="external"><i class="fab fa-facebook-f"></i></a>',
                     '<a href="#" rel="external"><i class="fab fa-instagram"></i></a>'
                 ]
@@ -63,12 +61,13 @@ const mmenu = function() {
 
     document.addEventListener( 'DOMContentLoaded', function() {
         /* eslint-disable no-new */
-        const menu   = new Mmenu( "#menu", mmenuOpts, mmenuConf ),
+        /* const menu   = new Mmenu( "#menu", mmenuOpts, mmenuConf ),
               api    = menu.API,
-              header = document.querySelector( '#masthead' );
+              header = document.querySelector( '#masthead' );*/
 
+        new Mmenu( "#menu", mmenuOpts, mmenuConf )
         new Mhead( '#masthead' );
-    } );
+    });
 };
 
 module.exports = { mmenu };

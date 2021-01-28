@@ -1,4 +1,4 @@
-import { util } from '../utils';
+import { util, dtTimestampSort } from '../utils';
 
 /**
  * Single club/union page.
@@ -23,21 +23,6 @@ const singleWpcmClub = ( function( rdb, $ ) {
         $wpcmClub.prop( 'style' ).setProperty( '--background', primaryColor );
     } else {
         $wpcmClub.prop( 'style' ).setProperty( '--background', secondaryColor );
-    }
-
-    // DataTables timestamp render sort.
-    function dtTimestampSort( data, type, row, meta ) {
-        if ( 'sort' === type || 'type' === type ) {
-            const api      = new $.fn.dataTable.Api( meta.settings ),
-                  $td      = $( api.cell( { row: meta.row, column: meta.col } ).node() ),
-                  sortData = $td.data( 'sort' );
-
-            return ( typeof sortData !== undefined ) ? sortData : data;
-        }
-
-        const val = $.fn.dataTable.render.number().display( data, type, row, meta );
-
-        return val;
     }
 
     // Column width.
@@ -72,7 +57,7 @@ const singleWpcmClub = ( function( rdb, $ ) {
     };
     // Lineup tables.
     const table = $( '.wpcm-matches-list' ).DataTable( options ); // eslint-disable-line
-    table.order( [ [ 0, 'asc' ] ] ).draw();
-} )( window.rdb, window.jQuery );
+    table.order([[ 0, 'asc' ]]).draw();
+})( window.rdb, window.jQuery );
 
 module.exports = { singleWpcmClub };

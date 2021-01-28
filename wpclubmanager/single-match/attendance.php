@@ -19,7 +19,7 @@ if ( $played ) {
 	if ( $attendance && 'yes' === $show_attendance ) {
 		echo '<div class="wpcm-match-attendance">';
 		  _e( 'Attendance', 'wp-club-manager' );
-          echo ': ' . $attendance;
+          echo ': ' . number_format( $attendance );
 		echo '</div>';
 	}
 }

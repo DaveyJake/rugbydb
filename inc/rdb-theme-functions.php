@@ -382,6 +382,7 @@ function rdb_dropdown_menu( $args = '' ) {
         'id'          => '',
         'class'       => '',
         'name'        => '',
+        'options'     => '',
         'placeholder' => '',
         'icon'        => 'chevron',
         'echo'        => true,
@@ -397,17 +398,59 @@ function rdb_dropdown_menu( $args = '' ) {
         $icon = '<i class="' . esc_attr( 'fa fa-' . $args['icon'] ) . '"></i>';
     }
 
+    // Term map.
+    $taxes = array(
+        'wpcm_comp'     => 'Competitions',
+        'wpcm_position' => 'Positions',
+        'wpcm_season'   => 'Seasons',
+        'wpcm_team'     => 'Teams',
+    );
+
+    // If options are set...
+    $options = array();
+    if ( ! empty( $args['options'] ) ) {
+        $tax = $args['options'][0];
+
+        foreach ( $args['options'] as $term ) {
+            if ( $term->parent > 0 ) {
+                $parent = get_term( $term->parent );
+
+                $option_name = sprintf( '%s - %s', $parent->name, $term->name );
+            } else {
+                $option_name = $term->name;
+            }
+
+            $options[] = '<option value="' . esc_attr( $term->slug ) . '">' . esc_html( $option_name ) . '</option>';
+        }
+
+        if ( isset( $taxes[ $tax->taxonomy ] ) ) {
+            array_unshift_assoc( $options, '*', $taxes[ $tax->taxonomy ] );
+        }
+    }
+
+    // Parse and reset options argument.
+    $args['options'] = implode( '', $options );
+
     if ( $args['echo'] ) {
         printf(
-            '<select id="%s" class="%s" name="%s" placeholder="%s"></select>%s',
+            '<select id="%s" class="%s" name="%s" placeholder="%s">%s</select>%s',
             esc_attr( $args['id'] ),
             esc_attr( $args['class'] ),
             esc_attr( $args['name'] ),
             esc_attr( $args['placeholder'] ),
+            $args['options'],
             wp_kses_post( $icon )
         );
     } else {
-        return '<select ' . _rdb_attr_value( $args ) . '></select>' . $icon;
+        return sprintf(
+            '<select id="%s" class="%s" name="%s" placeholder="%s">%s</select>%s',
+            esc_attr( $args['id'] ),
+            esc_attr( $args['class'] ),
+            esc_attr( $args['name'] ),
+            esc_attr( $args['placeholder'] ),
+            $args['options'],
+            wp_kses_post( $icon )
+        );
     }
 }
 
@@ -661,6 +704,39 @@ function rdb_svgs() {
 add_action( 'rdb_body_open', 'rdb_svgs' );
 
 /**
+ * Taxonomy dropdown menus.
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term[] $terms Term objects.
+ */
+function rdb_taxonomy_dropdown( $terms ) {
+    $_term = $terms[0];
+
+    // Term map.
+    $taxes = array(
+        'wpcm_comp'     => 'Competitions',
+        'wpcm_position' => 'Positions',
+        'wpcm_season'   => 'Seasons',
+        'wpcm_team'     => 'Teams',
+    );
+
+    $html = '<select id="' . esc_attr( $_term->taxonomy ) . '" class="chosen_select" name="' . esc_attr( $_term->taxonomy ) . '">';
+
+    if ( isset( $taxes[ $_term->taxonomy ] ) ) {
+        $html .= '<option value="*">All ' . esc_html( $taxes[ $_term->taxonomy ] ) . '</option>';
+    }
+
+    foreach ( $terms as $term ) :
+        $html .= '<option value="' . esc_attr( $term->slug ) . '">' . esc_html( $term->name ) . '</option>';
+    endforeach;
+
+    $html .= '</select>';
+
+    return wp_kses_post( $html );
+}
+
+/**
  * Insert JS template into DOM.
  *
  * @since 1.0.0
@@ -673,7 +749,7 @@ function rdb_tmpl() {
      *
      * @var array
      */
-    $rdb_tmpls = array( 'players', 'staff', 'opponents', 'timeline' );
+    $rdb_tmpls = array( 'players', 'staff', 'opponents', 'timeline', 'venues' );
 
     // Iterate through each page.
     foreach ( $rdb_tmpls as $rdb_page ) {

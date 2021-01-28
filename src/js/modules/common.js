@@ -7,15 +7,15 @@ import { util } from '../utils';
  *
  * @since 1.0.0
  */
-const common = ( function( win, doc, rdb, $ ) {
+const common = ( function( doc, $ ) {
     const $doc = $( doc );
 
     $doc.foundation();
 
-    $.ajaxSetup( { cache: true } );
+    $.ajaxSetup({ cache: true });
 
     if ( $.fn.DataTable || $.fn.dataTable ) {
-        $.extend( $.fn.dataTable.defaults, { lengthChange: false } );
+        $.extend( $.fn.dataTable.defaults, { lengthChange: false });
     }
 
     $.when( Modernizr ).then( navigation );
@@ -24,7 +24,7 @@ const common = ( function( win, doc, rdb, $ ) {
 
     util.init();
 
-    mmenu( rdb );
-} )( window, document, window.rdb, window.jQuery );
+    mmenu();
+})( document, window.jQuery );
 
 module.exports = { common };

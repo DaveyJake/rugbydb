@@ -15,10 +15,11 @@ const singleWpcmMatch = ( function( rdb, _, $ ) {
     // Lazy-load club badges.
     $( '.wpcm-match-club-badge' ).each( function() {
         return new Foundation.Interchange( $( this ) );
-    } );
+    });
 
     // DataTables config.
     const options = {
+        autoWidth: true,
         responsive: true,
         searching: false,
         paging: false,
@@ -38,6 +39,6 @@ const singleWpcmMatch = ( function( rdb, _, $ ) {
 
         return new Request( 'match', nonce, 'timeline', wrId );
     }
-} )( window.rdb, window._, window.jQuery );
+})( window.rdb, window._, window.jQuery );
 
 module.exports = { singleWpcmMatch };
