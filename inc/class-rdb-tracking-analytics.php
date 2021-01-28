@@ -23,12 +23,7 @@ class RDB_Tracking_Analytics {
      * @since 1.0.0
      */
     public function __construct() {
-        if ( wp_get_environment_type() === 'production' ) {
-            define( 'GOOGLE_TAG_MANAGER', 'GTM-K9TQFT7' ); // phpcs:ignore
-        } else {
-            // Local analytics testing.
-            define( 'GOOGLE_TAG_MANAGER', 'GTM-KX5RN6C' ); // phpcs:ignore
-        }
+        define( 'GOOGLE_TAG_MANAGER', analytics_tracker() ); // phpcs:ignore
 
         add_action( 'wp_head', array( $this, 'google_tag_manager' ), 1 );
         add_action( 'rdb_body_open', array( $this, 'google_tag_manager_noscript' ), 1 );
