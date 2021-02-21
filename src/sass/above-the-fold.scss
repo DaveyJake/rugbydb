@@ -2,13 +2,14 @@
 @import 'abstracts/fontawesome/fontawesome';
 @import 'abstracts/fontawesome/solid';
 @import 'generic/normalize';
-@import 'generic/box-sizing';
 @import 'base/base';
 @import 'utilities/accessibility';
 @import 'utilities/alignments';
 @import 'utilities/flex';
 @import 'utilities/visibility';
 @import './plugins/mmenu/mmenu';
+@import './plugins/wpclubmanager';
 @import 'components/components';
 @import 'templates/page';
 @import 'templates/wpcm';
+//@include foundation-typography;

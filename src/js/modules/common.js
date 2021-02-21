@@ -1,14 +1,14 @@
 import { Modernizr } from '../vendor';
 import { logoLettering, mmenu, navigation } from '../ui';
-import { util } from '../utils';
+import { util, $ } from '../utils';
 
 /**
  * Common-use modules.
  *
  * @since 1.0.0
  */
-const common = ( function( doc, $ ) {
-    const $doc = $( doc );
+const common = function() {
+    const $doc = $( document );
 
     $doc.foundation();
 
@@ -18,13 +18,7 @@ const common = ( function( doc, $ ) {
         $.extend( $.fn.dataTable.defaults, { lengthChange: false });
     }
 
-    $.when( Modernizr ).then( navigation );
-
     logoLettering();
-
-    util.init();
-
-    mmenu();
-})( document, window.jQuery );
+};
 
 module.exports = { common };

@@ -1,1 +1,15 @@
-@import '../components/content/cards'
+@import '../components/content/cards';
+
+.site-main {
+    grid-template-columns: repeat(3, 100%);
+    padding: 5px 0;
+
+    .card {
+        padding-bottom: 0.5rem;
+        float: left;
+
+        @include breakpoint(xlarge) {
+            width: 20%;
+        }
+    }
+}

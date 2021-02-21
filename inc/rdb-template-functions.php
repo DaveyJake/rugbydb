@@ -5,9 +5,9 @@
  * @package Rugby_Database
  */
 
-// phpcs:disable Squiz.Commenting.BlockComment.WrongEnd
-
 defined( 'ABSPATH' ) || exit;
+
+// phpcs:disable Squiz.Commenting.BlockComment.WrongEnd,Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace
 
 /**
  * Set the short initialization when AJAX requesting custom endpoints.
@@ -19,9 +19,42 @@ defined( 'ABSPATH' ) || exit;
 function rdb_ajax() {
     $ajax_pages = array( 'players', 'staff', 'venues', 'opponents' );
 
-    if ( is_page( $ajax_pages ) || is_singular( 'wpcm_match' ) ) {
+    if ( is_page( $ajax_pages ) || is_singular( 'wpcm_match' ) || is_singular( 'wpcm_club' ) || is_tax( 'wpcm_team' ) ) {
         echo '<input type="hidden" name="dbi-ajax" value="1" />';
     }
+}
+
+/**
+ * Auto-hyperlink known URLs found in {@see 'the_content'}.
+ *
+ * @since 1.0.0
+ *
+ * @global WP_Post $post Current post object.
+ *
+ * @param mixed $content Current post content.
+ */
+function rdb_auto_hyperlink( $content ) {
+    global $post;
+    // The RegEx formula for all URLs.
+    $regex = '/^([^\[]])[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,5}(\/\S*)?/';
+    // Find 'em all!
+    preg_match_all( $regex, $content, $matches, PREG_PATTERN_ORDER );
+    // Get the important chunk.
+    $matches = $matches[0];
+    // The replacements.
+    $replacements = array();
+    // Iterate over matches.
+    foreach ( $matches as $i => $match ) {
+        $slug   = sanitize_title( $match );
+        $url_id = "post-{$post->ID}-to-{$slug}";
+
+        $replacements[ $i ] = '<a id="' . esc_attr( $url_id ) . '" href="' . esc_url( 'http://' . $match ) . '" rel="external">' . $match . '</a>';
+    }
+
+    // Update content.
+    $content = str_replace( $matches, $replacements, $content );
+    // Return the content.
+    return $content;
 }
 
 /**
@@ -315,10 +348,307 @@ function rdb_purge_term_transient( $term_id, $tt_id, $update ) {
     delete_transient( $transient );
 }
 
+/**
+ * Disable or modify WPCM's LS+JSON integration.
+ *
+ * @since 1.0.0
+ *
+ * @see 'wp_head'
+ */
+function rdb_schema_ld_json() {
+    add_filter( 'wpclubmanager_schema_front_page', 'rdb_schema_front_page' );
+    add_filter( 'wpclubmanager_schema_sports_event', 'rdb_schema_sports_event' );
+
+    if ( ! ( has_filter( 'wpclubmanager_schema_front_page' ) && has_filter( 'wpclubmanager_schema_sports_event' ) ) ) {
+        rdb_remove_class_method( 'wp_head', 'WPCM_Frontend_Scripts', 'load_json_ld' );
+        // Front page.
+        if ( is_front_page() ) {
+            add_action( 'wp_head', 'rdb_schema_front_page', 5 );
+        }
+        // Single match.
+        elseif ( is_singular( 'wpcm_match' ) ) {
+            add_action( 'wp_head', 'rdb_schema_sports_event' );
+        }
+    }
+}
+
+/**
+ * SchemaOrg integration on `front-page` with WP Club Manager.
+ *
+ * @since 1.0.0
+ *
+ * @param array $data Attribute-value pairs.
+ */
+function rdb_schema_front_page( $data = null ) {
+    if ( is_null( $data ) ) {
+        $data = array(
+            '@context'      => 'http://schema.org/',
+            '@type'         => 'WebSite',
+            'name'          => 'RugbyDB.com',
+            'about'         => 'The authoritative database for national team rugby union in the United States.',
+            'genre'         => 'https://www.wikidata.org/wiki/Q349',
+            'creator'       => 'Davey Jacobson',
+            'copyrightYear' => 2021,
+            'image'         => get_theme_file_uri( 'dist/img/rugbydb@2x.png' ),
+            'url'           => site_url(),
+        );
+
+        echo wp_kses_post( '<script type="application/ld+json">' . wp_json_encode( $data ) . '</script>' );
+    } else {
+        unset( $data['logo'] );
+
+        $data['@type']         = 'WebSite';
+        $data['name']          = 'RugbyDB.com';
+        $data['about']         = 'The authoritative database for national team rugby union in the United States.';
+        $data['genre']         = 'https://www.wikidata.org/wiki/Q349';
+        $data['creator']       = 'Davey Jacobson';
+        $data['copyrightYear'] = 2021;
+        $data['image']         = get_theme_file_uri( 'dist/img/rugbydb@2x.png' );
+
+        return $data;
+    }//end if
+}
+
+/**
+ * SchemaOrg integration on `wpcm_match` post type with WP Club Manager.
+ *
+ * @since 1.0.0
+ *
+ * @global WP_Post $post Current post object.
+ *
+ * @param array $data Attribute-value pairs.
+ */
+function rdb_schema_sports_event( $data = null ) {
+    global $post;
+
+    // Has the event already happened?
+    $is_played = get_post_meta( $post->ID, 'wpcm_played', true );
+    // Was the event at a neutral venue?
+    $is_neutral = get_post_meta( $post->ID, 'wpcm_neutral', true );
+    // The `wpcm_competition` & `wpcm_season` values collectively make-up the 'name'.
+    $competition = get_the_terms( $post->ID, 'wpcm_comp' );
+    $comp_name   = $competition[0]->name;
+    if ( $competition[0]->parent > 0 ) {
+        $parent    = get_term_by( 'term_id', $competition[0]->parent, 'wpcm_comp' );
+        $comp_name = sprintf( '%s - %s', $parent->name, $comp_name );
+    }
+
+    $season = get_the_terms( $post->ID, 'wpcm_season' );
+    $name   = sprintf( '%s %s', $season[0]->name, $comp_name );
+    // Competition status.
+    $comp_status = get_post_meta( $post->ID, 'wpcm_comp_status', true );
+    // The US team that competed.
+    $team = get_the_terms( $post->ID, 'wpcm_team' );
+    // The `wpcm_venue` serves, collectively, as location and handles the timezone.
+    $venue      = get_the_terms( $post->ID, 'wpcm_venue' );
+    $venue_name = $venue[0]->name;
+    $venue_meta = get_term_meta( $venue[0]->term_id );
+    $venue_cap  = $venue_meta['wpcm_capacity'][0];
+    $venue_tz   = $venue_meta['usar_timezone'][0];
+    // Match attendance.
+    $attendance = get_post_meta( $post->ID, 'wpcm_attendance', true );
+    // Match date.
+    $start_date = new DateTime( $post->post_date, wp_timezone() );
+    $start_date->setTimezone( new DateTimeZone( $venue_tz ) );
+    // Venue address data.
+    $address = array(
+        '@type'          => 'PostalAddress',
+        'addressCountry' => $venue_meta['addressCountry'][0],
+    );
+    // Check for venue's state/provice/etc.
+    if ( ! empty( $venue_meta['addressRegion'][0] ) ) {
+        $address['addressRegion'] = $venue_meta['addressRegion'][0];
+    }
+
+    // Check for venue's city.
+    if ( ! empty( $venue_meta['addressLocality'][0] ) ) {
+        $address['addressLocality'] = $venue_meta['addressLocality'][0];
+    }
+
+    // Check for venue's postal code.
+    if ( ! empty( $venue_meta['postalCode'][0] ) ) {
+        $address['postalCode'] = $venue_meta['postalCode'][0];
+    }
+
+    // Check for venue's street address.
+    if ( ! empty( $venue_meta['streetAddress'][0] ) ) {
+        $address['streetAddress'] = $venue_meta['streetAddress'][0];
+    }
+
+    // Gather the teams that competed.
+    $home_id = get_post_meta( $post->ID, 'wpcm_home_club', true );
+    $home    = get_post( $home_id );
+    $away_id = get_post_meta( $post->ID, 'wpcm_away_club', true );
+    $away    = get_post( $away_id );
+
+    // The match title serves as the event description.
+    $description = preg_split( '/\sv\s/', $post->post_title );
+    $team_one    = preg_replace( '/(Women(\'s)?|(7s))/', '', $description[0] );
+    $team_two    = preg_replace( '/(Women(\'s)?|(7s))/', '', $description[1] );
+    $description = sprintf( '%s v %s', trim( $team_one ), trim( $team_two ) );
+
+    // Check for 7s matches and if USA men's sevens were listed as home when visiting.
+    if ( 'United States' === $home->post_title ) {
+        $home_team = sprintf( '%s %s', $home->post_title, $team[0]->name );
+    } else {
+        $home_team = $home->post_title;
+    }
+
+    // Check for 7s matches and if USA men's sevens were listed as away when home.
+    if ( 'United States' === $away->post_title ) {
+        $away_team = sprintf( '%s %s', $away->post_title, $team[0]->name );
+    } else {
+        $away_team = $away->post_title;
+    }
+
+    // Home team competitor.
+    $home_team_property = array(
+        '@type' => 'SportsTeam',
+        'name'  => $home_team,
+    );
+    // Away team competitor.
+    $away_team_property = array(
+        '@type' => 'SportsTeam',
+        'name'  => $away_team,
+    );
+    // Neutral venue?
+    if ( $is_neutral ) {
+        $competitor = array( $home_team_property, $away_team_property );
+    } else {
+        if ( 'US' === $address['addressCountry'] ) {
+            if ( 'United States' === $home->post_title ) {
+                $_home_team = $home_team_property;
+                $_away_team = $away_team_property;
+            } else {
+                $_home_team = $away_team_property;
+                $_away_team = $home_team_property;
+            }
+        } else {
+            if ( 'United States' === $away->post_title ) {
+                $_home_team = $home_team_property;
+                $_away_team = $away_team_property;
+            } else {
+                $_home_team = $away_team_property;
+                $_away_team = $home_team_property;
+            }
+        }
+    }//end if
+
+    if ( is_null( $data ) ) {
+        /**
+         * SchemaOrg model if hooked into {@see 'rdb_ld_json'}.
+         */
+        $data = array(
+            '@context'    => 'http://schema.org',
+            '@type'       => 'SportsEvent',
+            'name'        => $name,
+            'description' => $description,
+            'url'         => get_permalink( $post->ID ),
+            'sport'       => 'https://www.wikidata.org/wiki/Q5849',
+            'startDate'   => $start_date->format( DATE_W3C ),
+        );
+
+        // Check for competition status.
+        if ( ! empty( $comp_status ) ) {
+            $data['subEvent'] = array(
+                '@type' => 'SportsEvent',
+                '@id'   => '#' . sanitize_title( $comp_status ),
+                'name'  => sprintf( '%s - %s', $name, $comp_status ),
+            );
+        }
+
+        // Competitors.
+        if ( $is_neutral ) {
+            $data['competitor'] = $competitor;
+        } else {
+            $data['homeTeam'] = $_hway_team;
+            $data['awayTeam'] = $_away_team;
+        }
+
+        // Check for featured image.
+        if ( has_post_thumbnail( $post->ID ) ) {
+            $data['image'] = get_the_post_thumbnail_url( $post->ID, 'full' );
+        }
+
+        // Match venue location.
+        $data['location'] = array(
+            '@type'     => 'Place',
+            'name'      => $venue_name,
+            'address'   => $address,
+            'latitude'  => (float) $venue_meta['wpcm_latitude'][0],
+            'longitude' => (float) $venue_meta['wpcm_longitude'][0],
+        );
+
+        // Venue capacity.
+        $data['maximumAttendeeCapacity'] = absint( $venue_cap );
+
+        // Match attendance.
+        if ( $is_played && $attendance > 0 ) {
+            $data['remainingAttendeeCapacity'] = absint( $venue_cap - $attendance );
+        }
+
+        echo wp_kses_post( '<script type="ld+json">' . wp_json_encode( $data ) . '</script>' );
+    } else {
+        /**
+         * SchemaOrg model if hooked into {@see 'wpclubmanager_schema_sports_event'}.
+         */
+        $data['name']        = $name;
+        $data['description'] = $description;
+        $data['sport']       = 'https://www.wikidata.org/wiki/Q5849';
+        $data['startDate']   = $start_date->format( DATE_W3C );
+
+        // Check for competition status.
+        if ( ! empty( $comp_status ) ) {
+            $data['subEvent'] = array(
+                '@type' => 'SportsEvent',
+                '@id'   => '#' . sanitize_title( $comp_status ),
+                'name'  => sprintf( '%s - %s', $name, $comp_status ),
+            );
+        }
+
+        // Competitors.
+        if ( $is_neutral ) {
+            $data['competitor'] = $competitor;
+        } else {
+            $data['homeTeam'] = $_home_team;
+            $data['awayTeam'] = $_away_team;
+        }
+
+        // Check for featured image.
+        if ( has_post_thumbnail( $post->ID ) ) {
+            $data['image'] = get_the_post_thumbnail_url( $post->ID, 'full' );
+        } else {
+            unset( $data['image'] );
+        }
+
+        // Match venue location.
+        $data['location'] = array(
+            '@type'     => 'Place',
+            'name'      => $venue_name,
+            'address'   => $address,
+            'latitude'  => (float) $venue_meta['wpcm_latitude'][0],
+            'longitude' => (float) $venue_meta['wpcm_longitude'][0],
+        );
+
+        // Venue capacity.
+        $data['maximumAttendeeCapacity'] = absint( $venue_cap );
+
+        // Match attendance.
+        if ( $is_played && $attendance > 0 ) {
+            $data['remainingAttendeeCapacity'] = absint( $venue_cap - $attendance );
+        }
+
+        return $data;
+    }//end if
+}
+
 /** Filters *******************************************************************/
 
 // Custom body classes.
 add_filter( 'body_class', 'rdb_body_classes' );
+
+// Make sure escaped URLs have a trailing slash.
+add_filter( 'esc_url', 'trailingslashit' );
 
 // Menu item classes.
 add_filter( 'nav_menu_css_class', 'rdb_menu_item_classes', 10, 4 );
@@ -327,8 +657,13 @@ add_filter( 'nav_menu_css_class', 'rdb_menu_item_classes', 10, 4 );
 add_filter( 'intermediate_image_sizes', 'rdb_prevent_post_type_image_resize' );
 add_filter( 'intermediate_image_sizes_advanced', 'rdb_prevent_post_type_image_resize' );
 
+// Content corrections.
+add_filter( 'the_content', 'rdb_auto_hyperlink' );
 
 /** Actions *******************************************************************/
+
+// SchemaOrg integration.
+add_action( 'before_wpcm_init', 'rdb_schema_ld_json' );
 
 // Pingback head tag.
 add_action( 'wp_head', 'rdb_pingback_header' );

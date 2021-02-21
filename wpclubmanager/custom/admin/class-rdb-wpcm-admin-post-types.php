@@ -442,7 +442,13 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 break;
             case 'comp':
                 $terms = get_the_terms( $post->ID, 'wpcm_comp' );
-                echo $terms[0]->name;
+                if ( $terms[0]->parent > 0 ) {
+                    $parent    = get_term_by( 'term_id', $terms[0]->parent, 'wpcm_comp' );
+                    $term_name = sprintf( '%s - %s', $parent->name, $terms[0]->name );
+                } else {
+                    $term_name = $terms[0]->name;
+                }
+                echo $term_name;
                 break;
             case 'season':
                 $terms = get_the_terms( $post->ID, 'wpcm_season' );

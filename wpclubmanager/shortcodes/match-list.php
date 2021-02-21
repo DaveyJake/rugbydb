@@ -4,7 +4,7 @@
  *
  * @author 		Clubpress
  * @package 	WPClubManager/Templates
- * @version     2.1.0
+ * @version     2.5.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 		$played = get_post_meta( $match->ID, 'wpcm_played', true );
 		$timestamp = strtotime( $match->post_date );
 		$time_format = get_option( 'time_format' );
-		//$class = wpcm_get_match_outcome( $match->ID );	
+		//$class = wpcm_get_match_outcome( $match->ID );
 		$comp = wpcm_get_match_comp( $match->ID );
 		if( $show_abbr == true ) {
 			$sides = wpcm_get_match_clubs( $match->ID, true );
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 		$side1 = $sides[0];
 		$side2 = $sides[1];
 		$result = wpcm_get_match_result( $match->ID );
-		
+
 		// Display Badge
 		$home_badge = '';
 		$away_badge = '';
@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 		<li class="wpcm-matches-list-item">
 			<a href="<?php echo get_post_permalink( $match->ID, false, true ); ?>" class="wpcm-matches-list-link">
 				<span class="wpcm-matches-list-col wpcm-matches-list-date">
-					<?php echo date_i18n( 'D d M', $timestamp ); ?>	
+					<?php echo date_i18n( 'D d M', $timestamp ); ?>
 				</span>
 				<span class="wpcm-matches-list-col wpcm-matches-list-club1">
 					<?php echo $side1; ?>
@@ -76,5 +76,5 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 			<?php echo $linktext; ?>
 		</a>
 	<?php } ?>
-	
+
 </div>

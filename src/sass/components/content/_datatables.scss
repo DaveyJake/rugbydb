@@ -1,74 +1,4 @@
-@import '../../abstracts/abstracts';
-
 .dataTable {
-    .control {
-        @include breakpoint(mobile down) {
-            max-width: 20px;
-        }
-
-        &::before {
-            line-height: 0.845 !important;
-        }
-    }
-
-    th {
-        .sorting {
-            width: 50% !important;
-
-            @include breakpoint(medium) {
-                width: 33.333% !important;
-            }
-
-            @include breakpoint(large) {
-                width: 25% !important;
-            }
-        }
-    }
-
-    th,
-    td {
-        white-space: nowrap !important;
-    }
-
-    tbody {
-        th,
-        td {
-            padding: {
-                top: 0 !important;
-                bottom: 0 !important;
-            }
-            font-size: 87.5%;
-        }
-
-        td {
-            &.date {
-                white-space: nowrap !important;
-            }
-
-            .inline-cell {
-                @include relative {
-                    width: 33%;
-                    height: rem-calc(36px);
-                }
-
-                .icon,
-                .result {
-                    @include absolute-center;
-                    white-space: nowrap !important;
-                }
-            }
-        }
-    }
-
-    .fixture-result {
-        flex-direction: row !important;
-        justify-content: space-between;
-
-        @include breakpoint(medium) {
-            justify-content: space-evenly;
-        }
-    }
-
     &s {
         &_wrapper,
         &_paginate {
@@ -92,7 +22,6 @@
 
             img {
                 height: 1rem;
-                margin-top: 7px;
             }
         }
 
@@ -105,13 +34,12 @@
             }
 
             @include breakpoint(large) {
-                width: 50% !important;
+                width: 50%;
                 font-size: 91%;
             }
         }
 
         &_filter {
-            @include full-width;
             @include text(center);
 
             label {
@@ -129,6 +57,83 @@
             margin-top: 0;
             padding-bottom: 0.25em;
             @include text(center);
+        }
+    }
+}
+
+table.dataTable {
+    .control {
+        &::before {
+            line-height: 0.845 !important;
+        }
+    }
+
+    th,
+    td {
+        white-space: nowrap !important;
+
+        &:not(.control) {
+            width: 50% !important;
+
+            @include breakpoint(medium) {
+                width: 33.3333% !important;
+            }
+
+            @include breakpoint(large) {
+                width: 25% !important;
+            }
+        }
+    }
+    /* stylelint-disable */
+    tbody {
+        tr {
+            &.even {
+                background-color: $color__table-border;
+            }
+
+            &.child ul.dtr-details > li {
+                padding-top: 0.5em !important;
+            }
+        }
+
+        th,
+        td {
+            padding: {
+                top: 0 !important;
+                bottom: 0 !important;
+            }
+            font-size: 87.5%;
+        }
+
+        td:not(.control) {
+            .inline-cell {
+                @include relative {
+                    width: 33%;
+                    height: rem-calc(36px);
+                }
+
+                .icon,
+                .result {
+                    @include absolute-center;
+                }
+            }
+        }
+    }
+    /* stylelint-enable */
+    .fixture-result {
+        flex-direction: row !important;
+        justify-content: space-between;
+
+        @include breakpoint(medium) {
+            justify-content: space-evenly;
+        }
+    }
+
+    &.no-footer {
+        .dataTables_empty {
+            img {
+                margin-bottom: 7px;
+            }
         }
     }
 }

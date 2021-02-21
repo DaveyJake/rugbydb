@@ -13,24 +13,16 @@ defined( 'ABSPATH' ) || exit;
 
 get_header();
 
-$rdb_result_columns = array( 'ID', 'Date', 'Fixture', 'Event', 'Venue', 'Timestamp', 'Team', 'Friendly' );
+$rdb_result_columns = array( 'ID', 'Date', 'Fixture', 'Event', 'Venue', 'Label', 'Timestamp', 'Team', 'Friendly' );
 
 echo '<main id="primary" class="site-main">';
 
     rdb_before_match_table();
 
     echo '<table id="all-matches" class="wpcm-table dataTable display" width="100%" cellspacing="0" cellpadding="0">';
-        echo '<thead>';
-            echo '<tr>';
-            rdb_table_columns( $rdb_result_columns );
-            echo '</tr>';
-        echo '</thead>';
+        echo '<thead></thead>';
+        echo '<tfoot>' . wp_kses_post( rdb_table_columns( $rdb_result_columns, true, false ) ) . '</tfoot>';
         echo '<tbody></tbody>';
-        echo '<tfoot>';
-            echo '<tr>';
-            rdb_table_columns( $rdb_result_columns );
-            echo '</tr>';
-        echo '</tfoot>';
     echo '</table>';
 
     rdb_after_match_table();
@@ -38,4 +30,5 @@ echo '<main id="primary" class="site-main">';
 echo '</main>';
 
 wp_nonce_field( 'get_matches', 'nonce' );
+wp_nonce_field( 'get_venues-dropdown', 'nonce2' );
 get_footer();

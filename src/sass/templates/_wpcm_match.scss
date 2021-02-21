@@ -1,5 +1,3 @@
-@import '../abstracts/abstracts';
-
 $block: 145px;
 $badge: 150px;
 $badge-overflow-height: 13rem;
@@ -11,7 +9,7 @@ $icons: (venue: right, referee: left);
 $padding: 0.5em;
 $position: (home: before, away: after);
 $offset: (before: -8.5rem, after: 0.5rem );
-$offset--small: (before: -2.5rem, after: 1.5rem);
+$offset--small: (before: -6.5rem, after: 1.5rem);
 $offset--medium: (before: -4.5rem, after: 1.5rem);
 $offset--large: (before: -3.5rem, after: 1.5rem);
 
@@ -51,6 +49,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             height: rem-calc($badge);
             background: {
                 size: contain;
+                position: center;
                 repeat: no-repeat;
             }
             z-index: 1;
@@ -181,9 +180,123 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 }
             }
 
+            &[data-away='australia'] {
+                &::after {
+                    background-position-y: 0;
+                    background-position-x: -8.5rem;
+
+                    @include breakpoint(medium) {
+                        background-position-x: -3.5rem;
+                    }
+                }
+            }
+
+            &[data-home='australia-7s'] {
+                &::before {
+                    background-position-x: 100%;
+                }
+            }
+
+            &[data-away='australia-7s'] {
+                &::after {
+                    @include breakpoint(small only) {
+                        background-position: 0 -6rem;
+                    }
+                }
+            }
+
+            &[data-home*='england'] {
+                &::before {
+                    background-position: 100% 15%;
+
+                    @include breakpoint(large) {
+                        background-position-x: -6rem;
+                    }
+                }
+            }
+
+            &[data-away*='england'] {
+                &::after {
+                    background-position-y: -1rem;
+
+                    @include breakpoint(mobile) {
+                        background-position-y: -4rem;
+                    }
+                }
+            }
+
+            &[data-away*='harlequins'] {
+                @include breakpoint(large) {
+                    &::after {
+                        background-position-y: 10%;
+                    }
+                }
+            }
+
             &[data-home='france-xv'] {
                 &::before {
                     background-position-y: 8%;
+                }
+            }
+
+            &[data-home='france-7s'] {
+                &::before {
+                    @include breakpoint(small only) {
+                        background-position: -4rem -2rem;
+                    }
+                    @include breakpoint(mobile) {
+                        background-position: -5rem -3rem;
+                    }
+                    @include breakpoint(medium) {
+                        background-position-y: -4rem;
+                    }
+                    @include breakpoint(wordpress) {
+                        background-position-y: -5rem;
+                    }
+                    @include breakpoint(large) {
+                        background-position-x: -2rem;
+                    }
+                }
+            }
+
+            &[data-home*='ireland'] {
+                &::before {
+                    @include breakpoint(small only) {
+                        background-position: -8rem -1.5rem;
+                    }
+                    @include breakpoint(mobile) {
+                        background-position-x: -5.5rem;
+                        background-position-y: -2.5rem;
+                    }
+                    @include breakpoint(medium) {
+                        background-position-y: -4rem;
+                    }
+                    @include breakpoint(large) {
+                        background-position: -1.5rem -6rem;
+                    }
+                }
+            }
+
+            &[data-away*='japan'] {
+                &::after {
+                    background-position-y: -8rem;
+                }
+            }
+
+            &[data-home*='new-zealand'] {
+                &::before {
+                    background-position: -7rem -2rem;
+                }
+            }
+
+            &[data-away*='new-zealand'] {
+                &::after {
+                    background-position-x: 12%;
+                    background-position-y: center;
+
+                    @include breakpoint(medium) {
+                        background-position-y: 48%;
+                    }
                 }
             }
 
@@ -193,18 +306,104 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 }
             }
 
-            @each $side, $pos in $position {
-                &[data-#{$side}='united-states'] {
-                    &::#{$pos} {
-                        background: {
-                            size: cover;
-                            position: map-get($offset--small, $pos);
-                        }
+            &[data-away*='russia'] {
+                &::after {
+                    background-position-x: -1rem;
+                    @include breakpoint(mobile) {
+                        background-position-y: -2rem;
+                    }
+                    @include breakpoint(wordpress) {
+                        background-position: -3rem -5rem;
+                    }
+                }
+            }
+
+            &[data-away*='samoa'] {
+                &::after {
+                    background-position-y: -3rem;
+
+                    @include breakpoint(mobile) {
+                        background-position-y: -5rem;
                     }
 
+                    @include breakpoint(wordpress) {
+                        background-position-y: -8rem;
+                    }
+                }
+            }
+
+            &[data-away*='scotland'] {
+                &::after {
+                    background-position-x: 3rem;
+                }
+            }
+
+            &[data-home*='south-africa'] {
+                &::before {
+                    background-position-x: 100%;
+                    @include breakpoint(small only) {
+                        background-position-y: -4rem;
+                    }
+                    @include breakpoint(mobile) {
+                        background-position-y: -5rem;
+                    }
+                    @include breakpoint(wordpress) {
+                        background-position: -9rem -6rem;
+                    }
+                }
+            }
+
+            &[data-home='united-states'] {
+                &::before {
+                    @include breakpoint(small only) {
+                        background-position: -10rem -2rem;
+                    }
+                    @include breakpoint(mobile) {
+                        background-position: -8rem -3.5rem;
+                    }
+                    @include breakpoint(medium) {
+                        background-position-x: -5rem;
+                    }
+                    @include breakpoint(wordpress) {
+                        background-position: -6rem -4rem;
+                    }
                     @include breakpoint(large) {
-                        &::#{$pos} {
-                            background-position-y: -5rem;
+                        background-position-x: -4rem;
+                    }
+                }
+            }
+
+            &[data-away='united-states'] {
+                &::after {
+                    @include breakpoint(small only) {
+                        background-position-x: 1rem;
+                        background-position-y: -2rem;
+                    }
+                    @include breakpoint(mobile) {
+                        background-position-x: 1.5rem;
+                        background-position-y: -1.75rem;
+                    }
+                    @include breakpoint(medium) {
+                        background-position-y: -3rem;
+                    }
+                    @include breakpoint(wordpress) {
+                        background-position-y: -4rem;
+                    }
+                    @include breakpoint(large) {
+                        background-position-y: -5.5rem;
+                    }
+                }
+            }
+
+            // Dynamic positioning.
+            @each $side, $pos in $position {
+                &[data-#{$side}*='united-states'] {
+                    &::#{$pos} {
+                        @include breakpoint(small only) {
+                            background-size: 330px;
+                        }
+                        @include breakpoint(mobile only) {
+                            background-size: 140%;
                         }
                     }
                 }
@@ -212,16 +411,10 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 &[data-#{$side}*='canada'] {
                     &::#{$pos} {
                         background-position: map-get($offset--small, $pos);
-                    }
-
-                    @include breakpoint(medium) {
-                        &::#{$pos} {
+                        @include breakpoint(medium) {
                             background-position: map-get($offset--medium, $pos);
                         }
-                    }
-
-                    @include breakpoint(large) {
-                        &::#{$pos} {
+                        @include breakpoint(large) {
                             background-position: map-get($offset--large, $pos);
                         }
                     }
@@ -233,6 +426,33 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                     }
                 }
 
+                &[data-#{$side}='australia'] {
+                    &::#{$pos} {
+                        @include breakpoint(small only) {
+                            background-size: 200%;
+                        }
+                    }
+                }
+
+                &[data-#{$side}='australia-7s'] {
+                    &::#{$pos} {
+                        @include breakpoint(small only) {
+                            background-size: 246%;
+                        }
+                        @include breakpoint(mobile) {
+                            background-size: 160%;
+                        }
+                    }
+                }
+
+                &[data-#{$side}='england'] {
+                    &::#{$pos} {
+                        @include breakpoint(large) {
+                            background-size: 120%;
+                        }
+                    }
+                }
+
                 &[data-#{$side}*='fiji'] {
                     @include breakpoint(large) {
                         &::#{$pos} {
@@ -241,29 +461,47 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                     }
                 }
 
-                &[data-#{$side}*='england'],
-                &[data-#{$side}*='harlequins'] {
-                    @include breakpoint(large) {
-                        &::#{$pos} {
-                            background-position-y: 10%;
+                &[data-#{$side}*='ireland'] {
+                    &::#{$pos} {
+                        @include breakpoint(small only) {
+                            background-size: 160%;
                         }
                     }
                 }
 
                 &[data-#{$side}*='new-zealand'] {
                     &::#{$pos} {
-                        background-size: 137%;
-                        @if ($pos == after) {
-                            background-position: 12% 17%;
-                        } @else if ($pos == before) {
-                            background-position: -7rem -2rem;
+                        background-size: 333%;
 
-                            @include breakpoint(wordpress) {
-                                background: {
-                                    size: 120%;
-                                    position: -7rem -5rem;
-                                }
-                            }
+                        @include breakpoint(mobile) {
+                            background-size: 250%;
+                        }
+
+                        @include breakpoint(wordpress) {
+                            background-size: 180%;
+                        }
+
+                        @include breakpoint(large) {
+                            background-size: 150%;
+                        }
+                    }
+                }
+
+                &[data-#{$side}*='russia'] {
+                    &::#{$pos} {
+                        @include breakpoint(small only) {
+                            background-size: 215%;
+                        }
+                        @include breakpoint(wordpress) {
+                            background-size: 130%;
+                        }
+                    }
+                }
+
+                &[data-#{$side}*='samoa'] {
+                    &::#{$pos} {
+                        @include breakpoint(small only) {
+                            background-size: 175%;
                         }
                     }
                 }
@@ -271,6 +509,24 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 &[data-#{$side}*='scotland'] {
                     &::#{$pos} {
                         background-position-y: 27%;
+
+                        @include breakpoint(small only) {
+                            background-size: 160%;
+                        }
+                    }
+                }
+
+                &[data-#{$side}*='south-africa'] {
+                    &::#{$pos} {
+                        @include breakpoint(small only) {
+                            background-size: 300%;
+                        }
+                        @include breakpoint(mobile) {
+                            background-size: 200%;
+                        }
+                        @include breakpoint(wordpress) {
+                            background-size: 125%;
+                        }
                     }
                 }
 
@@ -343,34 +599,32 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                     weight: 500;
                 }
             }
-        }
 
-        &-stats {
-            &-start,
-            &-subs {
-                @include breakpoint(wordpress) {
-                    @include full-width;
-                }
-
-                .dtr-inline.collapsed > tbody > tr[role='row'] {
-                    > td,
-                    > th {
-                        &.dtr-control::before {
-                            line-height: 13px !important;
-
-                            @include breakpoint(large) {
-                                line-height: 17px !important;
-                            }
+            &.no-halftime-score {
+                .wpcm-match-score {
+                    &__fulltime,
+                    &__halftime {
+                        span {
+                            position: absolute;
+                            top: 81%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
                         }
                     }
                 }
+            }
+        }
 
-                .name {
-                    text-align: left;
-                }
+        &-stats {
+            @include breakpoint(wordpress) {
+                @include full-width;
             }
 
-            &-subs {
+            .name {
+                text-align: left;
+            }
+
+            &-subs-rows {
                 padding-top: 0;
             }
 
@@ -389,7 +643,7 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         @each $icon, $dir in $icons {
             &-#{$icon} {
                 .icon {
-                    width: 20px;
+                    width: 17px;
                     height: 13px;
                     display: inline-block;
                     padding: 0;
@@ -471,6 +725,12 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                     &-date-website {
                         order: 6;
                     }
+                }
+            }
+
+            &-right {
+                .wpcm-match-team:first-child {
+                    padding-top: 0;
                 }
             }
         }
@@ -619,12 +879,15 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         }
     }
 
-    &-lineup,
-    &-subs {
+    &-lineup {
         &-table {
-            .shirt-number {
+            border-bottom: 0;
+            margin-bottom: 0;
+
+            th.shirt-number {
                 white-space: nowrap;
                 min-width: rem-calc(88px);
+                width: rem-calc(88px);
                 max-width: rem-calc(88px);
                 text-align: center !important;
             }
@@ -637,16 +900,15 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 width: rem-calc(50px);
                 @include text(center);
             }
+
+            &.dataTable {
+                tbody {
+                    tr {
+                        background-color: $color__background-screen;
+                    }
+                }
+            }
         }
-    }
-
-    &-lineup-table {
-        border-bottom: 0;
-        margin-bottom: 0;
-    }
-
-    &-subs-table {
-        border-top: 0;
     }
 
     &_match {
@@ -661,8 +923,10 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         table {
             background: $color__text-inset;
 
-            thead {
-                background-color: $color__blue;
+            thead,
+            .wpcm-subs-rows,
+            .wpcm-subs-rows:hover {
+                background-color: $color__blue !important;
             }
         }
     }

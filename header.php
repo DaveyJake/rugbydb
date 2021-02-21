@@ -36,8 +36,8 @@ defined( 'ABSPATH' ) || exit;
             echo '<div class="wpcm-row">';
 
                 echo '<div class="main-navigation">';
-                    echo '<div class="site-branding">';
-                        echo '<a href="' . esc_url( home_url( '/' ) ) . '" rel="bookmark"><span class="logo"><span class="word-rugby">RUGBY</span><span class="word-db">DB</span></span></a>';
+                    echo '<div class="site-branding" itemscope itemtype="http://schema.org/Brand">';
+                        echo '<a href="' . esc_url( home_url( '/' ) ) . '" rel="bookmark">' . wp_kses_post( rdb_site_logo() ) . '</a>';
                     echo '</div><!-- .site-branding -->';
 
                     rdb_nav_menu(

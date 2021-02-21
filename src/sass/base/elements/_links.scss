@@ -2,11 +2,13 @@ a {
     color: $color__link;
 
     text-decoration: none;
+    text-decoration-skip-ink: auto;
 
     &:visited {
         color: $color__link-visited;
     }
 
+    .current-menu-item &,
     &:hover,
     &:focus,
     &:active {

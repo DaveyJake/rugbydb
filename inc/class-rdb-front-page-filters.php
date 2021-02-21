@@ -100,43 +100,6 @@ class RDB_Front_Page_Filters {
     }
 
     /**
-     * Season filter.
-     *
-     * @since 1.0.0
-     * @access private
-     */
-    private function season_filter() {
-        $options = array();
-
-        $args = array(
-            'taxonomy'   => 'wpcm_season',
-            'hide_empty' => false,
-            'orderby'    => 'name',
-            'order'      => 'DESC',
-        );
-
-        $seasons = get_terms( $args );
-
-        foreach ( $seasons as $season ) {
-            $options[ $season->term_id ] = $season->name;
-        }
-
-        $options = array_flip( $options );
-        krsort( $options );
-        $options = array_flip( $options );
-
-        array_unshift_assoc( $options, '*', 'All Seasons' );
-
-        $fields = array(
-            'id'      => 'season',
-            'name'    => 'wpcm_season',
-            'options' => $options,
-        );
-
-        rdb_wpcm_wp_select( $fields );
-    }
-
-    /**
      * Opponent filter.
      *
      * @since 1.0.0
@@ -184,43 +147,6 @@ class RDB_Front_Page_Filters {
         $fields = array(
             'id'      => 'opponents',
             'name'    => 'opponents',
-            'options' => $options,
-        );
-
-        rdb_wpcm_wp_select( $fields );
-    }
-
-    /**
-     * Competition filter.
-     *
-     * @since 1.0.0
-     * @access private
-     */
-    private function competition_filter() {
-        $options = array();
-
-        $args = array(
-            'taxonomy'   => 'wpcm_comp',
-            'hide_empty' => false,
-            'orderby'    => 'name',
-            'order'      => 'DESC',
-        );
-
-        $competitions = get_terms( $args );
-
-        foreach ( $competitions as $competition ) {
-            $options[ $competition->term_id ] = $competition->name;
-        }
-
-        $options = array_flip( $options );
-        krsort( $options );
-        $options = array_flip( $options );
-
-        array_unshift_assoc( $options, '*', 'All Competitions' );
-
-        $fields = array(
-            'id'      => 'competition',
-            'name'    => 'wpcm_comp',
             'options' => $options,
         );
 

@@ -1,11 +1,19 @@
-@import '../abstracts/abstracts';
-
 #page {
     min-height: 100vh;
 
     #primary {
         @include breakpoint(wordpress) {
             margin-top: $size__navbar-height--desktop;
+
+            .tax-wpcm_team & {
+                margin-top: 0;
+                padding-top: 0;
+            }
+        }
+
+        .ua-mobile &,
+        .ua-tablet & {
+            margin-top: $size__navbar-height;
         }
     }
 }

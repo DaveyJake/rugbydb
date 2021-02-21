@@ -22,7 +22,8 @@ $wales:(brecon cardiff colwyn-bay crosskeys ebbw-vale neath newport pontypool po
     }
     position: relative;
     display: inline-block;
-    width: 1.33333333em;
+    height: 0.75em;
+    width: 1em;
     line-height: 1;
     padding: 0.15em;
     box-shadow: 0 0 1px;
@@ -46,6 +47,37 @@ $wales:(brecon cardiff colwyn-bay crosskeys ebbw-vale neath newport pontypool po
 
     &-squared {
         width: 1em;
+        height: 1em;
+
+        @each $town in $england {
+            &-#{unquote($town)} {
+                background-image: url(#{$square}en.svg);
+            }
+        }
+
+        @each $town in $ireland {
+            &-#{unquote($town)} {
+                background-image: url(#{$square}ie.svg);
+            }
+        }
+
+        @each $town in $scotland {
+            &-#{unquote($town)} {
+                background-image: url(#{$square}sf.svg);
+            }
+        }
+
+        @each $town in $wales {
+            &-#{unquote($town)} {
+                background-image: url(#{$square}wl.svg);
+            }
+        }
+
+        @each $country in $countries {
+            &-#{$country} {
+                background-image: url(#{$square}#{$country}.svg);
+            }
+        }
     }
 
     @each $town in $england {

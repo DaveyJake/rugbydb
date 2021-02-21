@@ -41,6 +41,8 @@ do_action( 'wpclubmanager_before_single_venue' );
          */
         do_action( 'rdb_before_single_venue_widget' );
 
+        echo '<hr />';
+
         /**
          * Widget content hooks.
          *
@@ -50,31 +52,23 @@ do_action( 'wpclubmanager_before_single_venue' );
 
     echo '</div>';
 
-    if ( $rdb_term->name !== $rdb_term->description ) :
-        echo '<div class="wpcm-entry-content wpcm-row term-description">';
+    echo '<hr />';
 
-            /**
-             * Entry content hooks.
-             *
-             * @hooked rdb_single_venue_description - 5
-             */
-            do_action( 'rdb_single_venue_content' );
-
-        echo '</div>';
-    endif;
+    /**
+     * Entry content hooks.
+     *
+     * @hooked rdb_single_venue_description - 5
+     */
+    do_action( 'rdb_single_venue_content' );
 
     echo '<hr />';
 
-    echo '<footer class="wpcm-entry-footer wpcm-row">';
-
-        /**
-         * Entry footer hooks.
-         *
-         * @hooked $rdb_single_venue_match_list - 10
-         */
-        do_action( 'rdb_single_venue_footer' );
-
-    echo '</footer>';
+    /**
+     * Entry footer hooks.
+     *
+     * @hooked rdb_single_venue_match_list - 10
+     */
+    do_action( 'rdb_single_venue_footer' );
 ?>
 </article>
 <?php

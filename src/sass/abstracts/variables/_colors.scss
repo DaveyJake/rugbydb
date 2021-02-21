@@ -1,5 +1,5 @@
-$color__blue: #152C53;
-$color__red: #C42032;
+$color__blue: #152c53;
+$color__red: #c42032;
 $color__black: #000;
 $color__white: #fff;
 
@@ -7,27 +7,12 @@ $color__background-body: $color__blue;
 $color__background-header: rgba(16, 33, 63, 0.85);
 $color__background-combo: #102342;
 $color__background-main: #f5f5f5;
-$color__background-screen: #f1f1f1;
+$color__background-screen: #efefef;
 $color__background-hr: #e0e0e0;
 $color__background-button: #e6e6e6;
 $color__background-pre: #eee;
 $color__background-ins: #fff9c0;
 $color__background-th: $color__blue;
-
-$color__text-screen: #21759b;
-$color__text-input: #555;
-$color__text-input-focus: #111;
-$color__text-inset: $color__white;
-$color__text-shadow: $color__black;
-
-$color__link: #9e0b2a;
-$color__link-visited: #9e0b2a;
-$color__link-hover: #191970;
-
-$color__logo-blue: #06355e;
-$color__logo-red: #9e0b2a;
-
-$color__text-main: #404040;
 
 $color__border-button: #ccc #ccc #bbb;
 $color__border-button-hover: #ccc #bbb #aaa;
@@ -36,7 +21,28 @@ $color__border-header: rgba(255, 255, 255, 0.4);
 $color__border-input: #ccc;
 $color__border-abbr: #777;
 
+$color__link: $color__red;
+$color__link-visited: $color__link;
+$color__link-hover: $color__blue;
+
+$color__logo-blue: #06355e;
+$color__logo-red: $color__link;
 $color__logo-text: $color__background-main;
+
+$color__table-background: #fefefe;
+$color__table-border: $color__background-screen;
+$color__table-font: #0a0a0a;
+$color__thead-hover: #f3f3f3;
+$color__tbody: #f8f8f8;
+$color__tbody-hover: #f9f9f9;
+$color__tfoot-hover: #ececec;
+
+$color__text-main: #404040;
+$color__text-screen: #21759b;
+$color__text-input: #555;
+$color__text-input-focus: #111;
+$color__text-inset: $color__white;
+$color__text-shadow: $color__black;
 
 // Foundation.
 $white: $color__text-inset;

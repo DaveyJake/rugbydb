@@ -29,5 +29,12 @@
 
 // Icon images.
 .icon {
-    height: $size__icon-height - 4px;
+    height: $size__icon-height + 2px;
+}
+
+// Featured images.
+.featured-image {
+    img {
+        width: 100%;
+    }
 }

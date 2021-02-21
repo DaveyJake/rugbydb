@@ -44,12 +44,22 @@
                 th,
                 td {
                     height: rem-calc(36px);
+
+                    &:not(.control) {
+                        width: 50% !important;
+
+                        @include breakpoint(medium) {
+                            width: 33.3333% !important;
+                        }
+
+                        @include breakpoint(wordpress) {
+                            width: 25% !important;
+                        }
+                    }
                 }
 
-                td {
-                    &.venue {
-                        @include text(right);
-                    }
+                td.venue {
+                    @include text(right);
                 }
             }
 

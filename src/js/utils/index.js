@@ -1,9 +1,10 @@
 export { _, $, dtTimestampSort, moment, rdb, ux, wp, yadcf } from './globals';
-export { BREAKPOINTS, FIFTEEN_MINUTES, ISO_DATE, ISO_TIME, LOCALE, TIMEZONE, US_DATE, US_TIME, UTC } from './constants';
+export { BREAKPOINTS, COUNTRIES, DT_LOADING, FIFTEEN_MINUTES, ISO_DATE, ISO_TIME, LOCALE, TIMEZONE, US_DATE, US_TIME, UTC } from './constants';
 export { Date } from './date'
 export { textNode } from './string';
-export { ucfirst, parseArgs } from './php';
+export { ucfirst, ksort } from './php';
 export { util } from './helpers';
+export { DTHelper } from './datatable-helpers';
 export { Request } from './request';
 
 /**

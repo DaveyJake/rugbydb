@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 770.82 209.42">
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="rugby-db">
+      <g id="logo">
+        <g id="rugby">
+          <text transform="translate(3.05 171.25)" font-size="194" fill="#73202a" stroke="#fff" stroke-miterlimit="10" stroke-width="3" font-family="AGLettericaCondL-BoldItalic, AGLettericaCondL" font-weight="700" font-style="italic">R</text>
+          <text transform="translate(111.56 171.25)" font-size="194" fill="#73202a" stroke="#fff" stroke-miterlimit="10" stroke-width="3" font-family="AGLettericaCondL-BoldItalic, AGLettericaCondL" font-weight="700" font-style="italic">U</text>
+          <text transform="matrix(1, 0, 0.02, 1, 224.49, 171.25)" font-size="194.03" fill="#73202a" stroke="#fff" stroke-miterlimit="10" stroke-width="3" font-family="AGLettericaCondL-BoldItalic, AGLettericaCondL" font-weight="700" font-style="italic">G</text>
+          <text transform="matrix(1, 0, 0.03, 1, 335.32, 171.25)" font-size="194.12" fill="#73202a" stroke="#fff" stroke-miterlimit="10" stroke-width="3" font-family="AGLettericaCondL-BoldItalic, AGLettericaCondL" font-weight="700" font-style="italic">B</text>
+          <text transform="matrix(1, 0, 0.05, 1, 440.76, 171.25)" font-size="194.27" fill="#73202a" stroke="#fff" stroke-miterlimit="10" stroke-width="3" font-family="AGLettericaCondL-BoldItalic, AGLettericaCondL" font-weight="700" font-style="italic">Y</text>
+        </g>
+        <g id="db">
+          <text transform="matrix(1, 0, 0.02, 1, 547.89, 171.25)" font-size="194.03" fill="#0a1e32" stroke="#fff" stroke-miterlimit="10" stroke-width="3" font-family="AGLettericaCondL-BoldItalic, AGLettericaCondL" font-weight="700" font-style="italic">D</text>
+          <text transform="matrix(1, 0, 0.03, 1, 659.05, 171.25)" font-size="194.12" fill="#0a1e32" stroke="#fff" stroke-miterlimit="10" stroke-width="3" font-family="AGLettericaCondL-BoldItalic, AGLettericaCondL" font-weight="700" font-style="italic">B</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

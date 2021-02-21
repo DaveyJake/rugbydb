@@ -20,7 +20,7 @@ if ( 'yes' === get_option( 'wpcm_club_settings_h2h' ) ) {
 	$outcome = wpcm_head_to_head_count( $matches );
 
 	echo '<table class="wpcm-h2h-list">';
-
+		echo '<colgroup><col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" /></colgroup>';
 		echo '</tr>';
 
 			echo '<td class="wpcm-h2h-list-p">';

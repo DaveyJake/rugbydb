@@ -1,4 +1,5 @@
 $cards: opponents players staff;
+$cpts: player match venue;
 
 .site {
     &-header {
@@ -90,5 +91,13 @@ $cards: opponents players staff;
         color: $color__background-main;
         background: $color__background-header;
         z-index: 3;
+
+        .site-info {
+            font-size: 0.8em;
+
+            @include breakpoint(medium) {
+                font-size: 1em;
+            }
+        }
     }
 }

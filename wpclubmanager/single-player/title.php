@@ -22,7 +22,7 @@ foreach ( $teams as $team ) {
 
 if ( 'mens-eagles' === $slug ) {
     if ( $badge >= 62 ) {
-        $post_title = sprintf( '%s %s', $nickname, $last );
+        $post_title = sprintf( '%1$s %2$s', $nickname, $last );
 
         echo '<h1 class="entry-title">';
         echo esc_html( $post_title );

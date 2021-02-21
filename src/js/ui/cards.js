@@ -1,5 +1,4 @@
 import { _, $, rdb, util, Request } from '../utils';
-const { parseArgs } = util;
 
 /**
  * Generate cards from API.
@@ -8,35 +7,34 @@ const { parseArgs } = util;
  *
  * @param {string}   template Name of target template.
  * @param {string}   endpoint Name of target API endpoint.
- * @param {object}   args     Custom arguments & values to be used.
+ * @param {object}   args     Object is documented in `rugbydb/src/js/utils/requests.js`.
  * @param {Function} callback Callback function to fire.
  *
  * @return {Request}          API request and response.
  */
 
-/* eslint-disable array-bracket-spacing */
-
-const cards = function( template, endpoint, args, callback ) {
+const cards = function( template, endpoint, args, callback = null ) {
     if ( template !== rdb.template ) {
         return;
     }
-
-    const defaults = {
-        collection: true,
-        postId: 0,
-        venue: '',
-        grid: '#grid'
-    };
-
-    args = parseArgs( args, defaults );
 
     if ( typeof callback === 'function' ) {
         callback();
     }
 
-    return new Request( endpoint, $( '#nonce' ).val(), args.collection, args.postId, args.grid );
+    return new Request( endpoint, args );
 };
 
+/**
+ * United Kingdom country to city for venues.
+ *
+ * @since 1.0.0
+ *
+ * @param {string}  addressLocality Venue's city or postal town.
+ * @param {string}  addressCountry  Venue's country.
+ *
+ * @return {string}                 Respective country abbreviation.
+ */
 const ukCountry = function( addressLocality, addressCountry ) {
     let abbr;
 

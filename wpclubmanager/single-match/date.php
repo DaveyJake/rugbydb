@@ -2,9 +2,9 @@
 /**
  * Single Match - Date
  *
- * @author 		ClubPress
- * @package 	WPClubManager/Templates
- * @version     1.4.0
+ * @author 	ClubPress
+ * @package WPClubManager/Templates
+ * @version 2.5.0
  */
 
 defined( 'ABSPATH' ) || exit;

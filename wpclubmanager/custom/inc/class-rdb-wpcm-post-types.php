@@ -35,7 +35,7 @@ class RDB_WPCM_Post_Types {
         'match'  => 'matches',
         'player' => 'players',
         'roster' => 'rosters',
-        'sstaff' => 'staff',
+        'staff'  => 'staff',
         'venue'  => 'venues',
     );
 
@@ -76,7 +76,7 @@ class RDB_WPCM_Post_Types {
     }
 
     /**
-     * Extend WP Club Manager post types via {@see 'wpclubmanager_register_post_type_$type'}.
+     * Extend WP Club Manager taxonomies via {@see 'wpclubmanager_taxonomy_args_wpcm_$type'}.
      *
      * @param array $args Default arguments.
      *
@@ -93,7 +93,7 @@ class RDB_WPCM_Post_Types {
     }
 
     /**
-     * Extend WP Club Manager post types via {@see 'wpclubmanager_register_post_type_$type'}.
+     * Extend WP Club Manager taxonomies via {@see 'wpclubmanager_taxonomy_args_wpcm_$type'}.
      *
      * @param array $args Default arguments.
      *
@@ -110,7 +110,7 @@ class RDB_WPCM_Post_Types {
     }
 
     /**
-     * Extend WP Club Manager post types via {@see 'wpclubmanager_register_post_type_$type'}.
+     * Extend WP Club Manager taxonomies via {@see 'wpclubmanager_taxonomy_args_wpcm_$type'}.
      *
      * @param array $args Default arguments.
      *
@@ -127,7 +127,7 @@ class RDB_WPCM_Post_Types {
     }
 
     /**
-     * Extend WP Club Manager post types via {@see 'wpclubmanager_register_post_type_$type'}.
+     * Extend WP Club Manager taxonomies via {@see 'wpclubmanager_taxonomy_args_wpcm_$type'}.
      *
      * @param array $args Default arguments.
      *
@@ -136,15 +136,18 @@ class RDB_WPCM_Post_Types {
     public function wpcm_rest_api_args_team( $args ) {
         $permalink = _x( 'team', 'slug', 'wp-club-manager' );
 
-        $args['rewrite']               = $permalink ? array( 'slug' => untrailingslashit( $permalink ) ) : false;
+        $args['public']                = true;
+        $args['publicly_queryable']    = true;
+        $args['rewrite']               = array( 'slug' => untrailingslashit( $permalink ) );
         $args['rest_base']             = 'teams';
         $args['rest_controller_class'] = 'WP_REST_Terms_Controller';
+        $args['show_in_nav_menus']     = true;
 
         return $args;
     }
 
     /**
-     * Extend WP Club Manager post types via {@see 'wpclubmanager_register_post_type_$type'}.
+     * Extend WP Club Manager taxonomies via {@see 'wpclubmanager_taxonomy_args_wpcm_$type'}.
      *
      * @param array $args Default arguments.
      *

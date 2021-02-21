@@ -9,6 +9,15 @@ textarea {
     font-size: $size__site-main;
     line-height: $font__line-height-body;
 }
+
+// Quotes.
+blockquote {
+    cite {
+        display: inherit;
+        @include text(right);
+    }
+}
+
 // Heading and copied items.
 @import 'headings';
 @import 'copy';

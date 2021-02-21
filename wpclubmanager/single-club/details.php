@@ -70,7 +70,7 @@ echo '<table class="union-details stack">';
 	if ( ! empty( $details['website'] ) ) :
 		echo '<tr class="website">';
 			echo '<th>Main Website</th>';
-			echo '<td><a href="' . esc_url( $details['website'] ) . '" target="_blank">' . esc_html( $details['website'] ) . '</a></td>';
+			echo '<td><a href="' . esc_url( $details['website'] ) . '" target="_blank" rel="external">' . esc_html( $details['website'] ) . '</a></td>';
 		echo '</tr>';
 	endif;
 
@@ -88,7 +88,7 @@ echo '<table class="union-details stack">';
 			echo '<th>Teams</th>';
 			echo '<td>';
 			foreach ( $children as $child ) :
-				$child_urls[ $child->post_name ] = '<a id="team-' . esc_attr( $child->ID . '-' . $child->post_name ) . '" href="' . esc_url( rdb_slash_permalink( $child->ID ) ) . '">' . esc_html( rdb_team_nickname( $child->ID ) ) . '</a>';
+				$child_urls[ $child->post_name ] = '<a id="' . $post->post_name . '-to-team-' . esc_attr( $child->ID . '-' . $child->post_name ) . '" href="' . esc_url( rdb_slash_permalink( $child->ID ) ) . '">' . esc_html( rdb_team_nickname( $child->ID ) ) . '</a>';
 			endforeach;
 			ksort( $child_urls );
 			echo implode( ' • ', array_values( $child_urls ) );

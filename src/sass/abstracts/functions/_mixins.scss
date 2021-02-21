@@ -56,10 +56,19 @@
     @content;
 }
 
-// Absolute bottom.
-@mixin absolute-bottom {
+// Absolute top.
+@mixin absolute-top($top: 0) {
     position: absolute;
-    bottom: 0;
+    top: $top;
+    bottom: auto;
+    @content;
+}
+
+// Absolute bottom.
+@mixin absolute-bottom($bottom: 0) {
+    position: absolute;
+    top: auto;
+    bottom: $bottom;
     @content;
 }
 
@@ -127,6 +136,15 @@
     width: 50%;
 }
 
+// Equal width amongst child elemnts.
+//
+// @param {number} $elements Total number of elements.
+//
+@mixin equal-width($elements: 4) {
+    $width: (100 / $elements);
+    width: unquote('#{$width}%');
+}
+
 // Level 2 List.
 @mixin level-two-list {
     ul {
@@ -172,6 +190,13 @@
 // Flex center.
 @mixin flex-center {
     @include flex;
+}
+
+// Flex column.
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+    @content;
 }
 
 // Flex evenly.
@@ -240,6 +265,6 @@
 // Menu item hover.
 @mixin menu-item-hover {
     background: #fff;
-    color: darken($color__blue, 5%);
-    transition: $hove-transition;
+    color: darken($color__blue, 5%) !important;
+    transition: $hover-transition;
 }

@@ -1,11 +1,3 @@
-$color__table-background: #fefefe;
-$color__table-border: #f1f1f1;
-$color__table-font: #0a0a0a;
-$color__thead-hover: #f3f3f3;
-$color__tbody: #f8f8f8;
-$color__tbody-hover: #f9f9f9;
-$color__tfoot-hover: #ececec;
-
 table {
     &:not(.dataTable) {
         border: 1px solid #ddd;
@@ -74,22 +66,22 @@ table {
         }
     }
 
-    &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
-        > .dtr-control:before {
-            line-height: 14px !important;
+    // &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
+    //     > .dtr-control:before {
+    //         line-height: 14px !important;
 
-            @include breakpoint(large) {
-                line-height: 1rem !important;
-            }
-        }
-    }
+    //         @include breakpoint(large) {
+    //             line-height: 1rem !important;
+    //         }
+    //     }
+    // }
 
     &.wpcm-subs-table {
-        &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
-            > .dtr-control:before {
-                line-height: 18px !important;
-            }
-        }
+        // &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
+        //     > .dtr-control:before {
+        //         line-height: 18px !important;
+        //     }
+        // }
     }
 }
 
@@ -140,7 +132,6 @@ tbody {
     tr {
         &:nth-child(even) {
             border-bottom: 0;
-            background-color: $color__table-border;
         }
     }
 }
@@ -161,6 +152,11 @@ caption {
         }
         tr {
             display: block;
+
+            th {
+                background: $color__blue;
+                color: $color__white;
+            }
 
             &:not(.description) {
                 text-align: center;

@@ -62,7 +62,7 @@ echo '<tr>';
 
         if ( ! in_array( $key, wpcm_exclude_keys() ) && get_option( "wpcm_show_stats_{$key}" ) && get_option( "wpcm_match_show_stats_{$key}" ) )
         {
-            echo "<td class='stats {$key}'>{$stat}</td>";
+            echo "<td class='stat {$key}'>{$stat}</td>";
         }
     }
 

@@ -273,6 +273,40 @@ if ( ! function_exists( 'rdb_posted_on' ) ) :
 endif;
 
 // phpcs:disable Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen, Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+if ( ! function_exists( 'rdb_site_logo' ) ) :
+    /**
+     * Main site logo.
+     *
+     * @since 1.0.0
+     *
+     * @return mixed    HTML text logo.
+     */
+    function rdb_site_logo() {
+        if ( ! file_exists( get_theme_file_path( 'dist/img/rugbydb.svg' ) ) ) {
+            return rdb_site_logo_text();
+        }
+
+        $html = '<span class="logo">';
+            $html .= '<img itemprop="logo" src="' . esc_url( get_theme_file_uri( 'dist/img/rugbydb.svg' ) ) . '" alt="RugbyDB logo" width="221" height="77" />';
+        $html .= '</span>';
+
+        return $html;
+    }
+endif;
+
+if ( ! function_exists( 'rdb_site_logo_text' ) ) :
+    /**
+     * Fallback for main site logo.
+     *
+     * @since 1.0.0
+     *
+     * @return mixed    HTML text logo.
+     */
+    function rdb_site_logo_text() {
+        return '<span class="logo"><span class="word-rugby">RUGBY</span><span class="word-db">DB</span></span>';
+    }
+endif;
+
 if ( ! function_exists( 'rdb_site_menu' ) ) :
     /**
      * Main site navigation menu.
@@ -313,9 +347,10 @@ if ( ! function_exists( 'rdb_table_columns' ) ) :
      * Output table column headers.
      *
      * @param array $columns Column header names.
+     * @param bool  $tfoot   Inside `tfoot` tag? Default: false.
      * @param bool  $echo    Print output. Default true.
      */
-    function rdb_table_columns( $columns, $echo = true ) {
+    function rdb_table_columns( $columns, $tfoot = false, $echo = true ) {
         $ids = array( 'id', 'ID', 'timestamp', 'Timestamp' );
 
         if ( is_front_page() ) {
@@ -329,7 +364,11 @@ if ( ! function_exists( 'rdb_table_columns' ) ) :
                 $column = '<span class="hide">' . $column . '</span>';
             }
 
-            $html[] = '<th scope="column">' . wp_kses_post( $column ) . '</th>';
+            if ( $tfoot ) {
+                $html[] = '<th rowspan="1" colspan="1">' . wp_kses_post( $column ) . '</th>';
+            } else {
+                $html[] = '<th scope="column">' . wp_kses_post( $column ) . '</th>';
+            }
         }
 
         if ( $echo ) {
@@ -404,7 +443,9 @@ if ( ! function_exists( 'rdb_unions' ) ) :
         echo '<div class="opponent-filter">';
             echo '<select id="opponent-picker" class="chosen_select">';
             foreach ( $options as $k => $v ) {
-                echo '<option value="' . esc_attr( $k ) . '">' . esc_html( $v ) . '</option>';
+                if ( 'United States' !== $v ) {
+                    echo '<option value="' . esc_attr( $k ) . '">' . esc_html( $v ) . '</option>';
+                }
             }
             echo '</select>';
         echo '</div>';

@@ -1,3 +1,5 @@
+import { _ } from './globals';
+
 /**
  * PHP functions for JavaScript.
  *
@@ -6,6 +8,8 @@
 
 /**
  * Recreate PHP's `ucfirst` function for JavaScript.
+ *
+ * @since 1.0.0
  *
  * @example {
  *
@@ -25,4 +29,24 @@ const ucfirst = function( string ) {
     return upperCaseFirst + remainingLetters;
 };
 
-module.exports = { ucfirst };
+/**
+ * Recreate PHP's `ksort` function for JavaScript, powered by Lodash.
+ *
+ * @since 1.0.0
+ *
+ * @example {
+ *
+ *     ksort( {'some': 'val', 'random': 'val', 'object': 'value'} ) => {'object': value, 'random': 'val', 'some': 'val'}
+ *
+ * }
+ *
+ * @param {Object} object Object ot sort by keys.
+ */
+const ksort = ( object ) => {
+    const keys       = Object.keys( object ),
+          sortedKeys = _.sortBy( keys );
+
+    return _.fromPairs( _.map( sortedKeys, ( key ) => [ key, object[ key ] ] ) );
+};
+
+module.exports = { ksort, ucfirst };

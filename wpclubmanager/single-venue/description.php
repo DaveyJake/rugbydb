@@ -11,8 +11,11 @@ defined( 'ABSPATH' ) || exit;
 
 global $rdb_tax, $rdb_term;
 
-$rdb_term_content = term_description( $rdb_term, $rdb_tax );
-
 if ( $rdb_term->name !== $rdb_term->description ) :
-    echo wpautop( $rdb_term_content );
+    $rdb_term_content = term_description( $rdb_term, $rdb_tax );
+
+    echo '<div class="wpcm-entry-content wpcm-row wpcm-venue-description">';
+        echo '<h3>' . __( 'Overview', 'wp-club-manager' ) . '</h3>';
+        echo wpautop( $rdb_term_content );
+    echo '</div>';
 endif;

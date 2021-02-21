@@ -28,6 +28,9 @@ class RDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
 
         add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20 );
 
+        // Custom country options for referee.
+        add_filter( 'wpclubmanager_countries', array( $this, 'match_meta_boxes_referee_country' ) );
+
         // Custom club details.
         add_action( 'wpclubmanager_process_wpcm_club_meta', 'RDB_WPCM_Meta_Box_Club_Details::save', 10, 2 );
 
@@ -187,6 +190,26 @@ class RDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
         }
 
         return $post;
+    }
+
+    /**
+     * Add default empty option for referee countries via {@see 'wpclubmanager_countries'}.
+     *
+     * @since 1.0.0
+     *
+     * @global string $pagenow Name of the current admin page.
+     * @global string $typenow Current post type being viewed.
+     *
+     * @param array $countries List of countries.
+     */
+    public function match_meta_boxes_referee_country( $countries ) {
+        global $pagenow, $typenow;
+
+        if ( ! ( 'wpcm_match' === $typenow && 'edit.php' === $pagenow ) ) {
+            array_shift( $countries );
+        }
+
+        return $countries;
     }
 
     /**

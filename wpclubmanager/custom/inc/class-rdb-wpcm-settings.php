@@ -67,7 +67,7 @@ class RDB_WPCM_Settings {
      */
     public function rugby_only( $sports ) {
         // Grab only rugby.
-        $rugby  = $sports['rugby'];
+        $rugby = $sports['rugby'];
 
         // Remove rating.
         unset( $rugby['stats_labels']['rating'] );
@@ -265,7 +265,7 @@ class RDB_WPCM_Settings {
         $matches = get_posts( $args );
 
         foreach ( $matches as $match ) {
-            if ( metadata_exists( 'post', $match->ID, 'wr_usa_team' ) ) {
+            if ( post_meta_exists( $match->ID, 'wr_usa_team' ) ) {
                 continue;
             }
 
@@ -280,9 +280,7 @@ class RDB_WPCM_Settings {
     }
 
     /**
-     * Adjust player header labels.
-     *
-     * @link {@see 'wpclubmanager_player_header_labels'}
+     * Adjust player header labels via {@see 'wpclubmanager_player_header_labels'}.
      *
      * @param array $labels Associative array of slugs to labels.
      *
@@ -297,9 +295,7 @@ class RDB_WPCM_Settings {
     }
 
     /**
-     * Adjust player header labels.
-     *
-     * @link {@see 'wpclubmanager_players_settings'}
+     * Adjust player header labels {@see 'wpclubmanager_players_settings'}.
      *
      * @param array $labels Associative array of slugs to labels.
      *

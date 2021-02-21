@@ -1,7 +1,5 @@
-@import '../../abstracts/abstracts';
-
 $card-pages: opponents staff venues;
-$card-types: unquote("[class$='-side']") venue;
+$card-types: unquote("[class$='-side']") venue player;
 $card-background: #ececec;
 $card-container-width: 90%;
 $card-margin: 0.75%;
@@ -9,13 +7,11 @@ $card-size: 250px;
 
 $image-height: rem-calc(190px);
 $meta-height: rem-calc(30px);
-$unit: rem-calc(15px);
+$unit: rem-calc(10px);
 
 #primary {
-    padding-top: rem-calc(8px);
-
-    .page-players & {
-        padding-top: 0;
+    @include breakpoint(wordpress) {
+        padding-top: rem-calc(8px);
     }
 }
 
@@ -29,6 +25,14 @@ $unit: rem-calc(15px);
 
 #scroll-status {
     @include absolute-center;
+
+    .page-load-status & {
+        @include absolute-top(1.25rem);
+    }
+
+    .absolute-bottom & {
+        @include absolute-bottom(-1.25rem);
+    }
 }
 
 .card {
@@ -42,7 +46,7 @@ $unit: rem-calc(15px);
     }
 
     @include breakpoint(medium) {
-        width: 33.3333%;
+        width: 33%;
     }
 
     @include breakpoint(large) {
@@ -89,6 +93,8 @@ $unit: rem-calc(15px);
             @each $card-type in $card-types {
                 @if venue == $card-type {
                     font-size: 0.7em;
+                } @else if player == $card-type {
+                    font-size: 0.9em;
                 }
             }
 
@@ -107,13 +113,62 @@ $unit: rem-calc(15px);
         height: $image-height;
         background: {
             repeat: no-repeat;
-            position: center 10%;
+            position: center -30px;
             size: cover;
         }
         z-index: 1;
 
         &[style*='placeholder.png'] {
             background-size: cover;
+        }
+
+        &[style*='ainuu'],
+        &[style*='al-jiboori'],
+        &[style*='augspurger'],
+        &[style*='audsley'],
+        &[style*='blaine-scully'],
+        &[style*='boyer'],
+        &[style*='brache'],
+        &[style*='brakeley'],
+        &[style*='cam-dolan'],
+        &[style*='campbell'],
+        &[style*='civetta'],
+        &[style*='danny-barrett'],
+        &[style*='faanana-schultz'],
+        &[style*='fawsitt'],
+        &[style*='giessen'],
+        &[style*='hanco'],
+        &[style*='haas'],
+        &[style*='hilterbrand'],
+        &[style*='hooley'],
+        &[style*='kilifi'],
+        &[style*='kort-schubert']
+        &[style*='lamositele'],
+        &[style*='landry'],
+        &[style*='lasike'],
+        &[style*='maclellan'],
+        &[style*='magie'],
+        &[style*='manoa'],
+        &[style*='maughan'],
+        &[style*='macginty'],
+        &[style*='moore'],
+        &[style*='mullen'],
+        &[style*='paddy-ryan'],
+        &[style*='paul-emerick'],
+        &[style*='payne'],
+        &[style*='peterson'],
+        &[style*='pifeleti'],
+        &[style*='pinkelman'],
+        &[style*='quill'],
+        &[style*='shaun-davies'],
+        &[style*='tadhg-leader'],
+        &[style*='taufetee'],
+        &[style*='teo'],
+        &[style*='thretton-palamo'],
+        &[style*='tony-lamborn'],
+        &[style*='wenglewski'],
+        &[style*='whippy'], {
+            background-position-y: 0;
         }
     }
 

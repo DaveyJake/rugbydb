@@ -7,7 +7,16 @@
     }
 
     @include breakpoint(wordpress) {
+        top: -12%;
+        bottom: 50%;
         font-size: 3.375em;
+    }
+
+    img {
+        @include breakpoint(medium down) {
+            height: 30px;
+            margin-left: -1.5rem;
+        }
     }
 
     span {
@@ -90,6 +99,7 @@
 
         a {
             display: block;
+            height: inherit;
             text-decoration: none;
         }
 
@@ -127,7 +137,7 @@
                     margin: auto;
                     width: 100%;
                     border-radius: 20px;
-                    transition: $hove-transition;
+                    transition: $hover-transition;
 
                     &:hover {
                         @include menu-item-hover;
@@ -157,11 +167,14 @@
 
 // Site menu.
 .menu {
-    padding-right: 1rem;
     height: inherit;
 
-    @include breakpoint(wordpress) {
-        padding: 1rem;
+    &:not(.mm-listview) {
+        padding-right: 1rem;
+
+        @include breakpoint(wordpress) {
+            padding: 1rem;
+        }
     }
 
     &-main-menu-container {
@@ -189,12 +202,16 @@
             margin: 0 1px;
         }
 
-        a:not(.mm-listitem__text) {
+        a:not(.mm-listitem__text):not(.mm-listitem__btn) {
             position: relative;
             top: 50%;
             transform: translateY(-50%);
             font-family: $font__post-content;
             color: #fff;
+
+            &:hover {
+                @include menu-item-hover;
+            }
         }
     }
 }

@@ -1,4 +1,3 @@
-@import '../abstracts/abstracts';
 @import '../components/content/wpcm-matches-list';
 @import '../components/content/datatables';
 
@@ -9,7 +8,7 @@
             justify-content: space-between;
             align-items: center;
             flex-direction: column;
-            @include breakpoint(large) {
+            @include breakpoint(1134px) {
                 flex-direction: row;
             }
 
@@ -18,8 +17,15 @@
                     padding-top: 0.25em;
                 }
 
-                @include breakpoint(large) {
+                @include breakpoint(1134px) {
                     padding-top: 1rem;
+                }
+
+                .flag-icon {
+                    margin: {
+                        bottom: -2px;
+                        right: 5px;
+                    }
                 }
             }
 
@@ -36,39 +42,75 @@
     }
 
     &-venue {
-        &-info {
-            text-align: center;
-            @include breakpoint(medium) {
-                text-align: left;
+        &-capacity {
+            p {
+                margin-bottom: 0;
             }
+        }
 
-            [class^='wpcm-venue-'] {
-                padding-bottom: 0.7em;
+        &-info,
+        &-description {
+            p {
+                padding: 0 0.5em;
 
-                h3 {
-                    padding-bottom: 0;
-                    @include breakpoint(mobile down) {
-                        justify-content: center;
-                    }
+                &:last-child {
+                    margin-bottom: 0;
                 }
+            }
+        }
 
-                p {
-                    padding: 0 0.5em;
+        &-map {
+            .wpcm-column {
+                flex-direction: column;
+
+                @include breakpoint(1134px) {
+                    flex-direction: row;
+                }
+            }
+        }
+
+        &-info {
+            padding: 0 0.9375rem 0.7rem;
+
+            h3 {
+                @include text(center);
+                @include breakpoint(medium) {
+                    @include text(left);
                 }
             }
         }
 
         &-image {
             img {
-                @include breakpoint(medium down) {
+                @include breakpoint(1133px down) {
                     @include full-width;
                 }
             }
         }
 
+        &-description {
+            h3 {
+                padding: {
+                    top: 0;
+                    left: 0.4em;
+                }
+            }
+
+            @include breakpoint(mobile down) {
+                justify-content: flex-start;
+            }
+        }
+
         &-select {
             width: 300px;
-            margin-right: 1rem;
+
+            @include breakpoint(1133px down) {
+                margin-bottom: 1rem;
+            }
+
+            @include breakpoint(1134px) {
+                margin-right: 1rem;
+            }
 
             #venue {
                 @include full-width;

@@ -1,9 +1,10 @@
 export { common } from './common';
 export { FrontPage } from './front-page';
-export { pagePlayers } from './page-players';
 export { pageOpponents } from './page-opponents';
 export { pageStaff } from './page-staff';
 export { pageVenues } from './page-venues';
 export { singleWpcmClub } from './single-wpcm-club';
 export { singleWpcmMatch } from './single-wpcm-match';
-export { TaxWPCMVenue } from './taxonomy-wpcm-venue';
+export { singleWpcmPlayer } from './single-wpcm-player';
+export { TaxWpcmTeam } from './taxonomy-wpcm-team';
+export { TaxWpcmVenue } from './taxonomy-wpcm-venue';

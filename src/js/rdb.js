@@ -1,4 +1,4 @@
-import { FrontPage, TaxWPCMVenue, common, pageOpponents, pagePlayers, pageStaff, pageVenues, singleWpcmClub, singleWpcmMatch } from './modules';
+import { FrontPage, TaxWpcmVenue, TaxWpcmTeam, common, pageOpponents, pageStaff, pageVenues, singleWpcmClub, singleWpcmPlayer, singleWpcmMatch } from './modules';
 import { master } from './utils';
 
 /**
@@ -9,16 +9,13 @@ import { master } from './utils';
 ( function( win, $ ) {
     const scope = {
         common: {
-            init: common
+            init: common()
         },
         front_page: {
             init: new FrontPage()
         },
         page_opponents: {
             init: pageOpponents()
-        },
-        page_players: {
-            init: pagePlayers()
         },
         page_staff: {
             init: pageStaff()
@@ -27,13 +24,19 @@ import { master } from './utils';
             init: pageVenues()
         },
         single_wpcm_club: {
-            init: singleWpcmClub
+            init: singleWpcmClub()
         },
         single_wpcm_match: {
-            init: singleWpcmMatch
+            init: singleWpcmMatch()
+        },
+        single_wpcm_player: {
+            init: singleWpcmPlayer()
+        },
+        taxonomy_wpcm_team: {
+            init: new TaxWpcmTeam()
         },
         taxonomy_wpcm_venue: {
-            init: new TaxWPCMVenue()
+            init: new TaxWpcmVenue()
         }
     };
 

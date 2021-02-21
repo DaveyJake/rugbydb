@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "foundation-sites": "6.5.1",
+    "infinite-scroll": "^4.0.1",
     "isotope-layout": "^3.0.6",
     "isotope-packery": "^2.0.1",
     "jquery-bridget": "^2.0.1",

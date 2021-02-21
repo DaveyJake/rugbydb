@@ -16,17 +16,12 @@ $post_id = get_the_ID();
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 <?php
     echo '<header class="wpcm-entry-header wpcm-player-info wpcm-row">';
-
         rdb_player_images( $post_id, 'staff_single' );
 
         echo '<div class="wpcm-profile-meta">';
-
-            echo '<h1 class="entry-title">';
-                the_title();
-            echo '</h1>';
+            the_title( '<h1 class="entry-title">', '</h1>' );
 
             echo '<table>';
-
                 echo '<tbody>';
 
                 if ( get_option( 'wpcm_staff_profile_show_dob' ) === 'yes' ) {
@@ -56,12 +51,13 @@ $post_id = get_the_ID();
                         foreach ( $seasons as $value ) {
                             $player_seasons[] = $value->name;
                         }
-                        ?>
-                        <tr>
-                            <th><?php esc_html_e( 'Season', 'wp-club-manager' ); ?></th>
-                            <td><?php echo implode( ', ', $player_seasons ); ?></td>
-                        </tr>
-                        <?php
+
+                        sort( $player_seasons );
+
+                        echo '<tr>';
+                            echo '<th>' . esc_html__( 'Season', 'wp-club-manager' ) . '</th>';
+                            echo '<td>' . implode( ', ', $player_seasons ) . '</td>';
+                        echo '</tr>';
                     }
                 }
 
@@ -140,16 +136,31 @@ $post_id = get_the_ID();
                 }
 
                 echo '</tbody>';
-
             echo '</table>';
-
         echo '</div>';
-
     echo '</header>';
 
     echo '<div class="wpcm-entry-content wpcm-profile-bio wpcm-row">';
-        if ( get_the_content() ) :
-            the_content();
+        $rdb_staff_content = get_the_content();
+
+        if ( $rdb_staff_content ) :
+            preg_match_all( '/(\[citation.*\])/', $rdb_staff_content, $rdb_shorts );
+
+            if ( ! empty( $rdb_shorts[0] ) ) :
+                $rdb_shortcode_content = array();
+
+                foreach ( $rdb_shorts[0] as $shortcode ) :
+                    $rdb_shortcode_content[] = preg_replace( '/Source\:\s/', '', do_shortcode( $shortcode ) );
+                endforeach;
+
+                $rdb_staff_content  = preg_replace( '/(\[citation.*\])/', '', $rdb_staff_content );
+                $rdb_staff_content .= 'Source' . ( count( $rdb_shorts[0] ) > 1 ? 's' : '' ) . ': ';
+                $rdb_staff_content .= implode( ', ', $rdb_shortcode_content );
+
+                echo apply_filters( 'the_content', $rdb_staff_content );
+            else :
+                the_content();
+            endif;
         endif;
     echo '</div>';
 

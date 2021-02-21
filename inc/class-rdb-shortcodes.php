@@ -17,7 +17,6 @@ defined( 'ABSPATH' ) || exit;
  * Begin shortcodes.
  */
 class RDB_Shortcodes {
-
     /**
      * Primary constructor.
      */
@@ -32,11 +31,13 @@ class RDB_Shortcodes {
      */
     public function init() {
         add_shortcode( 'article_image', array( $this, 'article_image' ) );
+        add_shortcode( 'card', array( $this, 'card' ) );
         add_shortcode( 'citation', array( $this, 'citation' ) );
         add_shortcode( 'current_club', array( $this, 'current_club' ) );
         add_shortcode( 'dots', array( $this, 'dots' ) );
         add_shortcode( 'flag', array( $this, 'flag' ) );
-        add_shortcode( 'tabs', array( $this, 'tabs' ) );
+        add_shortcode( 'qlink', array( $this, 'qlink' ) );
+        add_shortcode( 'tabs_menu', array( $this, 'tabs_menu' ) );
     }
 
     /**
@@ -112,9 +113,8 @@ class RDB_Shortcodes {
         $top_class    = ! empty( $caption ) ? 'has-caption ' . $class : $class;
         $photo_credit = trim( get_post_meta( $attachment_id, 'usar_photo_credit', true ) );
         $photo_credit = ! empty( $photo_credit ) ? preg_replace( '/\s/', '&nbsp;', $photo_credit ) : '';
-        $width        = ( '100%' === $width ) ? '' : ' style="width: ' . esc_attr( $width ) . ';"';
 
-        $content = "<figure class='{$top_class}{$float}'{$width}>";
+        $content = "<figure class='{$top_class}{$float}'>";
 
             $content .= '<div class="wpcm-column relative">';
 
@@ -140,6 +140,56 @@ class RDB_Shortcodes {
 
         $content .= '</figure>';
         // phpcs:enable
+
+        return $content;
+    }
+
+    /**
+     * Quick card.
+     *
+     * @since 1.0.0
+     *
+     * @param array $atts {
+     *     Each attribute is required.
+     *
+     *     @type string $team Team name.
+     *     @type string $img  Team logo URL.
+     * }
+     * @param mixed $content Shortcode output.
+     *
+     * @return mixed    Final HTML.
+     */
+    public function card( $atts = null, $content = null ) {
+        $atts = shortcode_atts(
+            array(
+                'team' => '',
+                'img'  => '',
+            ),
+            $atts,
+            'card'
+        );
+
+        $team = sanitize_text_field( $atts['team'] );
+        $slug = sanitize_title( $team );
+        $img  = sanitize_text_field( $atts['img'] );
+        $url  = trailingslashit( '/team/' . $slug );
+
+        // phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+        $content = '<div id="' . esc_attr( $slug ) . '" class="card team">';
+            $content .= '<div class="card__container">';
+                $content .= '<div class="card__container__background" shadow><span style="background-image: url(' . esc_url( $img ) . ');"></span></div>';
+                $content .= '<div class="card__container__image">';
+                    $content .= '<a class="help_tip" href="' . esc_url( $url ) . '" title="' . esc_attr( $team ) . '">';
+                        $content .= '<span class="card__image" style="background-image: url(' . esc_url( $img ) . ');"></span>';
+                    $content .= '</a>';
+                    $content .= '<span class="card__container__title">';
+                        $content .= '<a class="help_tip" href="' . esc_url( $url ) . '" title="' . esc_attr( $team ) . '">';
+                            $content .= '<span class="card__title">' . esc_html( $team ) . '</span>';
+                        $content .= '</a>';
+                    $content .= '</span>';
+                $content .= '</div>';
+            $content .= '</div>';
+        $content .= '</div>';
 
         return $content;
     }
@@ -198,7 +248,7 @@ class RDB_Shortcodes {
             $type = preg_replace( '/^wpcm_$/', '', $type );
         }
 
-        $id = ! empty( $atts['id'] ) ? $atts['id'] : sanitize_title( $title . '-' . $type );
+        $id = ! empty( $atts['id'] ) ? $atts['id'] : sanitize_title( $title . '-' . $name );
 
         if ( preg_match( '/wiki(pedia)?/', $name ) ) {
             $slug = preg_replace( '/(\s|-)/', '_', $slug );
@@ -208,7 +258,7 @@ class RDB_Shortcodes {
             $url = ! empty( $url ) ? $url : sanitize_text_field( $atts['source_url'] );
         }
 
-        $content = 'Source: <a id="' . esc_attr( $id ) . '" href="' . esc_url( $url ) . '" rel="external noopener noreferrer" target="_blank">';
+        $content = '<strong>Source: <a id="' . esc_attr( $id ) . '" href="' . esc_url( $url ) . '" rel="external noopener noreferrer" target="_blank">';
 
         if ( in_array( $name, $sources, true ) ) {
             if ( 'usrugbyfoundation' === $name ) {
@@ -220,9 +270,9 @@ class RDB_Shortcodes {
             $content .= esc_html( $name );
         }
 
-        $content .= '</a>';
+        $content .= '</a></strong>';
 
-        return "<p>{$content}</p>";
+        return $content;
     }
 
     /**
@@ -252,7 +302,7 @@ class RDB_Shortcodes {
         $site  = sanitize_text_field( $atts['website'] );
         $url   = sanitize_text_field( "https://usarugbystats.com/assets/img/clublogos/{$atts['cms']}.png" );
 
-        $content  = '<a href="' . esc_url( $site ) . '" target="_blank">';
+        $content  = '<a id="previous-club-post-' . get_the_ID() . '-to-' . sanitize_title( $name ) . '" class="previous-club-url" href="' . esc_url( $site ) . '" target="_blank" rel="external noopener noreferrer">';
         $content .= '<img class="' . esc_attr( $class ) . '" src="' . esc_url( $url ) . '" alt="' . esc_attr( $name ) . '" />';
         $content .= '&nbsp;<span>' . esc_html( $name ) . '</span>';
         $content .= '</a>';
@@ -281,13 +331,15 @@ class RDB_Shortcodes {
         $active_class = empty( $active_class ) ? '' : ".{$active_class} ";
 
         // phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
-        $content = '<div id="scroll-status" class="infinite-scroll-request">';
-            $content .= '<style> ' . $active_class . '.loader-ellips{font-size:20px;position:relative;width:4em;height:1em;margin:10px auto}' . $active_class . '.loader-ellips__dot{display:block;width:1em;height:1em;border-radius:.5em;background:#555;position:absolute;animation-duration:.5s;animation-timing-function:ease;animation-iteration-count:infinite}' . $active_class . '.loader-ellips__dot:nth-child(1),' . $active_class . '.loader-ellips__dot:nth-child(2){left:0}' . $active_class . '.loader-ellips__dot:nth-child(3){left:1.5em}' . $active_class . '.loader-ellips__dot:nth-child(4){left:3em}@keyframes reveal{from{transform:scale(0.001)}to{transform:scale(1)}}@keyframes slide{to{transform:translateX(1.5em)}}' . $active_class . '.loader-ellips__dot:nth-child(1){animation-name:reveal}' . $active_class . '.loader-ellips__dot:nth-child(2),' . $active_class . '.loader-ellips__dot:nth-child(3){animation-name:slide}' . $active_class . '.loader-ellips__dot:nth-child(4){animation-name:reveal;animation-direction:reverse} </style>';
-            $content .= '<div class="loader-ellips">';
-                $content .= '<span class="loader-ellips__dot"></span>';
-                $content .= '<span class="loader-ellips__dot"></span>';
-                $content .= '<span class="loader-ellips__dot"></span>';
-                $content .= '<span class="loader-ellips__dot"></span>';
+        $content = '<div class="page-load-status">';
+            $content .= '<div id="scroll-status" class="infinite-scroll-request">';
+                $content .= '<style> ' . $active_class . '.loader-ellips{font-size:20px;position:relative;width:4em;height:1em;margin:10px auto}' . $active_class . '.loader-ellips__dot{display:block;width:1em;height:1em;border-radius:.5em;background:#555;position:absolute;animation-duration:.5s;animation-timing-function:ease;animation-iteration-count:infinite}' . $active_class . '.loader-ellips__dot:nth-child(1),' . $active_class . '.loader-ellips__dot:nth-child(2){left:0}' . $active_class . '.loader-ellips__dot:nth-child(3){left:1.5em}' . $active_class . '.loader-ellips__dot:nth-child(4){left:3em}@keyframes reveal{from{transform:scale(0.001)}to{transform:scale(1)}}@keyframes slide{to{transform:translateX(1.5em)}}' . $active_class . '.loader-ellips__dot:nth-child(1){animation-name:reveal}' . $active_class . '.loader-ellips__dot:nth-child(2),' . $active_class . '.loader-ellips__dot:nth-child(3){animation-name:slide}' . $active_class . '.loader-ellips__dot:nth-child(4){animation-name:reveal;animation-direction:reverse} </style>';
+                $content .= '<div class="loader-ellips">';
+                    $content .= '<span class="loader-ellips__dot"></span>';
+                    $content .= '<span class="loader-ellips__dot"></span>';
+                    $content .= '<span class="loader-ellips__dot"></span>';
+                    $content .= '<span class="loader-ellips__dot"></span>';
+                $content .= '</div>';
             $content .= '</div>';
         $content .= '</div>';
 
@@ -352,69 +404,92 @@ class RDB_Shortcodes {
     }
 
     /**
-     * Tabs.
+     * Quick link to known post.
      *
      * @since 1.0.0
      *
-     * @global WP_Post|object $post Current post object.
+     * @param array|null $atts    {
+     *     Shortcode attributes.
      *
-     * @param array|null $atts    Shortcode attributes.
+     *     @type string $type Accepts 'player', 'staff', 'match', or 'union'.
+     * }
      * @param mixed|null $content Shortcode output.
      *
      * @return mixed Final HTML.
      */
-    public function tabs( $atts = null, $content = null ) {
+    public function qlink( $atts = null, $content = null ) {
+        $atts = shortcode_atts(
+            array( 'type' => 'player' ),
+            $atts,
+            'qlink'
+        );
+
+        $whitelist = array( 'match', 'player', 'staff', 'union' );
+
+        $type = sanitize_text_field( $atts['type'] );
+        if ( ! in_array( $type, $whitelist, true ) ) {
+            return sprintf( 'The type `%s` is not allowed in this shortcode.', $type );
+        }
+
+        $slug   = sanitize_title( $content );
+        $origin = get_the_ID();
+
+        $final_link = '/' . esc_html( $type ) . '/' . esc_html( $slug ) . '/';
+
+        return '<a id="quick-link-post-' . esc_attr( $origin ) . '-to-' . esc_attr( $slug ) . '" href="' . esc_url( $final_link ) . '">' . $content . '</a>';
+    }
+
+    /**
+     * Tabs menu only.
+     *
+     * @since 1.0.0
+     *
+     * @global WP_Post $post Current post object.
+     *
+     * @param array|null $atts    {
+     *     Labels are required. The rest are optional.
+     *
+     *     @type string $labels    Comma-separated values.
+     *     @type string $menu_id   The menu's ID attribute value.
+     *     @type string $tab_class Menu item's class attribute value.
+     *     @type string $tab_hrefs Comma-separated values.
+     * }
+     * @param mixed|null $content Shortcode output.
+     *
+     * @return mixed Final HTML.
+     */
+    public function tabs_menu( $atts = null, $content = null ) {
         global $post;
 
         $atts = shortcode_atts(
             array(
-                'labels'       => '',
-                'menu_id'      => '',
-                'tab_class'    => 'tabs-title',
-                'tab_hrefs'    => '',
+                'labels'    => '',
+                'menu_id'   => get_query_var( 'wpcm_team', false ),
+                'tab_class' => 'tabs-title',
+                'tab_hrefs' => '',
             ),
             $atts,
             'tabs_menu'
         );
 
         $labels    = sanitize_text_field( $atts['labels'] );
-        $menu_id   = sanitize_title( $atts['menu_id'] );
+        $menu_id   = ! empty( $atts['menu_id'] ) ? sanitize_title( $atts['menu_id'] ) : sanitize_title( $post->post_title );
         $tab_class = sanitize_title( $atts['tab_class'] );
         $tab_hrefs = ! empty( $atts['tab_hrefs'] ) ? sanitize_text_field( $atts['tab_hrefs'] ) : $labels;
 
         $labels    = array_trim( explode( ',', $labels ) );
         $tab_hrefs = array_trim( explode( ',', $tab_hrefs ) );
 
-        $content = '<div class="tabs-container clearfix">';
-            $content .= '<ul class="tabs no-bullets" data-tabs id="' . esc_attr( $menu_id ) . '">';
-            foreach ( $labels as $i => $label ) : // phpcs:ignore Generic.WhiteSpace.ScopeIndent.IncorrectExact
-                $content .= '<li class="' . esc_attr( $tab_class ) . ( empty( $i ) ? ' is-active' : '' ) . '">';
-                    $content .= '<a href="#' . esc_attr( sanitize_title( $tab_hrefs[ $i ] ) ) . '" aria-selected="' . ( empty( $i ) ? 'true' : 'false' ) . '">';
-                        $content .= esc_html( $labels[ $i ] );
-                    $content .= '</a>';
-                $content .= '</li>';
-            endforeach;
-            $content .= '</ul>';
-        $content .= '</div>';
-
-        $content .= '<div class="tabs-content" data-tabs-content="' . esc_attr( $menu_id ) . '">';
-        /**
-         * Fires after tabs container is rendered.
-         *
-         * @since 1.0.0
-         *
-         * @param int $post_id Current post ID.
-         */
-        $content .= do_action( 'rdb_shortcodes_tabs', $post->ID );
-
-        foreach ( $labels as $i => $label ) :
-            $content .= '<div class="tabs-panel' . ( empty( $i ) ? ' is-active' : '' ) . '" id="' . esc_attr( sanitize_title( $tab_hrefs[ $i ] ) ) . '">';
-                $content .= '<div class="grid" data-tmpl="player">' . do_shortcode( '[dots active_class="is-active"]' ) . '</div>';
-            $content .= '</div>';
+        $content .= '<ul class="tabs no-bullets" data-tabs id="' . esc_attr( $menu_id ) . '">';
+        foreach ( $labels as $i => $label ) : // phpcs:ignore Generic.WhiteSpace.ScopeIndent.IncorrectExact
+            $content .= '<li class="' . esc_attr( $tab_class ) . ( empty( $i ) ? ' is-active' : '' ) . '">';
+                $content .= '<a href="#' . esc_attr( sanitize_title( $tab_hrefs[ $i ] ) ) . '" aria-selected="' . ( empty( $i ) ? 'true' : 'false' ) . '">';
+                    $content .= esc_html( $labels[ $i ] );
+                $content .= '</a>';
+            $content .= '</li>';
         endforeach;
-        $content .= '</div>';
+        $content .= '</ul>';
 
         return $content;
     }
-
 }

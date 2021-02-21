@@ -1,48 +1,76 @@
 import jQueryBridget from 'jquery-bridget';
 import Isotope from 'isotope-layout';
 import 'isotope-packery';
+import InfiniteScroll from 'infinite-scroll';
 import { _, $, rdb, wp } from './globals';
-
+import { util } from './helpers';
+InfiniteScroll.imagesLoaded = window.imagesLoaded;
 jQueryBridget( 'isotope', Isotope, $ );
+jQueryBridget( 'infiniteScroll', InfiniteScroll, $ );
+
+const { adminUrl, parseArgs } = util;
 
 /**
  * Make AJAX request to REST API.
  *
  * @since 1.0.0
  *
- * @param {String} postType The post type slug.
+ * @param {String} route The post type slug.
  *
  * @return {jQuery}
  */
+
+/* eslint-disable no-extra-parens, computed-property-spacing */
+
 class Request {
     /**
      * Primary constructor.
      *
      * @since 1.0.0
      *
-     * @param {string} postType   Slug of requested post type.
-     * @param {string} nonce      Generated nonce key.
-     * @param {bool}   collection Is the request for multiple items? Default true.
-     * @param {number} postId     Post ID of requested item.
-     * @param {string} grid       The grid attribute selector.
+     * @param {string} route   Slug of requested post type.
+     * @param {object} args {
+     *     The optional argument properties.
+     *
+     *     @type {string} nonce      Generated nonce key.
+     *     @type {bool}   collection Is the request for multiple items? Default true.
+     *     @type {number} postId     Post ID of requested item.
+     *     @type {string} postName   Post slug of the requested item.
+     *     @type {string} venue      The venue slug.
+     *     @type {string} grid       The grid attribute selector.
+     * }
      *
      * @return {Request} JSON response from API.
      */
-    constructor( postType = '', nonce = '', collection = true, postId = 0, venue = '', grid = '#grid' ) {
-        this.postType = postType.match( /\// ) ? postType.split( '/' ) : postType;
-        this.team     = postType.match( /\// ) ? this.postType[1] : ''; // eslint-disable-line
-        this.postType = postType.match( /\// ) ? this.postType[0] : this.postType; // eslint-disable-line
+    constructor( route = '', args ) {
+        this.defaults = {
+            nonce: '',
+            collection: true,
+            postId: 0,
+            postName: '',
+            venue: '',
+            grid: '#grid',
+            per_page: '',
+            page: ''
+        };
 
-        this.nonce = nonce;
-        this.venue = venue;
-        this.collection = collection;
-        this.postId = postId;
+        args = parseArgs( args, this.defaults );
 
-        this.grid = grid;
+        this.route = route.match( /\// ) ? route.split( '/' ) : route;
+        this.team = route.match( /\// ) ? this.route[1] : '';
+        this.route = route.match( /\// ) ? this.route[0] : this.route; // eslint-disable-line
 
-        this.endpoint = Request._endpointMap( this.postType );
+        this.nonce = args.nonce;
+        this.venue = args.venue;
+        this.collection = args.collection;
+        this.postId = args.postId;
+        this.postName = args.postName;
+        this.grid = args.grid;
+        this.perPage = args.per_page;
+        this.page = args.page;
 
-        // this._adaptiveBackground();
+        this.endpoint = Request._endpointMap( this.route );
+
         this._ajax();
     }
 
@@ -52,6 +80,8 @@ class Request {
      * @since 1.0.0
      * @access private
      *
+     * @todo Paginate player profile requests. Limit response to 20.
+     *
      * @return {jQuery.ajax} AJAX response from API.
      */
     _ajax() {
@@ -59,9 +89,9 @@ class Request {
 
         const args = {
             action: `get_${ this.endpoint }`,
-            nonce: this.nonce,
+            route: this.route,
             collection: this.collection,
-            post_type: this.postType
+            nonce: this.nonce
         };
 
         if ( ! _.isEmpty( this.team ) ) {
@@ -72,31 +102,45 @@ class Request {
             args.venue = this.venue;
         }
 
+        if ( ! _.isEmpty( this.postName ) ) {
+            args.post_name = this.postName;
+        }
+
         if ( this.postId > 0 ) {
             args.post_id = this.postId;
         }
 
+        if ( ! _.isEmpty( this.perPage ) ) {
+            args.per_page = this.perPage;
+        }
+
+        if ( ! _.isEmpty( this.page ) ) {
+            args.page = this.page;
+        }
+
         $.ajax({
-            url: wp.ajax.settings.url,
+            url: adminUrl( 'admin-ajax.php' ),
             data: args,
             dataType: 'json',
             success: function( response ) {
-                if ( ! response.success ) {
+                if ( ! response.success || ( response.success && _.isUndefined( response.data ) ) ) {
                     return this.error();
                 }
 
-                const isoTmpls = ['players', 'staff', 'venues', 'opponents']; // eslint-disable-line
+                const isoTmpls = ['mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens', 'team-usa-men', 'team-usa-women', 'staff', 'venues', 'opponents']; // eslint-disable-line
 
-                if ( _.includes( isoTmpls, rdb.post_name ) || _.includes( isoTmpls, rdb.term_name ) ) {
+                if ( _.includes( isoTmpls, rdb.post_name ) || _.includes( isoTmpls, rdb.term_slug ) ) {
                     return self._isoTmpls( response.data );
-                } else if ( 'match' === self.postType && self.postId > 0 ) {
+                } else if ( 'match' === self.route && self.postId > 0 ) {
                     return self._timelineTmpl( response.data );
                 }
 
                 return response.data;
             },
             error: function( xhr, textStatus, errorThrown ) {
-                console.log( xhr + '\n' + textStatus + '\n' + errorThrown );
+                console.dir( xhr ); // eslint-disable-line
+                console.log( textStatus );
+                console.log( errorThrown );
             },
             complete: function() {
                 $( '#scroll-status' ).remove();
@@ -126,6 +170,7 @@ class Request {
                     order: '[data-order]'
                 },
                 sortBy: 'order',
+                layoutMode: 'packery',
                 packery: {
                     columnWidth: '.card',
                     gutter: 0
@@ -233,6 +278,10 @@ class Request {
             });
         } else {
             $( '.chosen_select' ).on( 'change', function( e, params ) {
+                if ( _.isUndefined( params ) ) {
+                    return Request.__filterTmpl( e.target.value, $selector, data );
+                }
+
                 return Request.__filterTmpl( params.selected, $selector, data );
             });
         }
@@ -253,7 +302,9 @@ class Request {
         if ( '*' === filterValue ) {
             $selector.isotope({ filter: '*' });
         } else {
-            $selector.isotope({ filter: `[data-${ data.attrName }=${ filterValue }]` });
+            const optNode = $( `option[value="${ filterValue }"]` ).text();
+
+            $selector.isotope({ filter: `[data-${ data.attrName }="${ filterValue }"], [data-order="${ optNode }"]` });
         }
     }
 

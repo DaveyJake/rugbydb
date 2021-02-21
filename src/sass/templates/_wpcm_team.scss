@@ -1,0 +1,184 @@
+@import '../components/content/tabs';
+@import '../components/content/cards';
+@import '../components/content/datatables';
+@import '../components/content/wpcm-matches-list';
+
+$unit: 1rem;
+
+#primary,
+.site-main {
+    min-height: inherit;
+}
+
+.site-main {
+    .wpcm {
+        &_team {
+            .tabs {
+                &-container {
+                    margin-bottom: 0;
+                }
+
+                &-title {
+                    @include equal-width(2);
+                }
+            }
+        }
+
+        &-row {
+            align-items: center;
+
+            &:not(.tabs-container) {
+                flex-direction: column;
+                justify-content: space-between;
+
+                @include breakpoint(medium) {
+                    flex-direction: row;
+                }
+            }
+        }
+
+        &-row:not(.site-info),
+        &-column {
+            display: flex;
+        }
+
+        &-column {
+            flex-direction: column;
+        }
+
+        &-entry {
+            &-header {
+                background: #001830;
+                color: $color__white;
+                @include text(center);
+
+                .entry-title {
+                    font-size: 2em;
+                    padding: 0.25em;
+                    padding-left: 0.5em;
+                    text-transform: uppercase;
+
+                    @include breakpoint(medium) {
+                        @include full-width;
+                    }
+
+                    @include breakpoint(medium down) {
+                        padding-top: 0.25em;
+                    }
+
+                    @include breakpoint(wordpress) {
+                        font-size: 4em;
+                        line-height: 1.3;
+                    }
+                }
+            }
+
+            &-content {
+                padding: 0 0;
+
+                #players {
+                    .filters {
+                        flex-direction: column;
+                        @include full-width;
+                        @include text(center);
+
+                        @include breakpoint(medium) {
+                            flex-direction: row;
+                            justify-content: space-around;
+                            padding-top: 0.5rem;
+                        }
+
+                        .filter,
+                        select {
+                            width: 100% !important;
+                            padding-top: 0.5rem;
+
+                            @include breakpoint(medium) {
+                                padding-top: 0;
+                                @include equal-width(3);
+                            }
+                        }
+                    }
+
+                    .grid {
+                        margin-top: 2rem;
+                        padding-bottom: 2rem;
+                    }
+                }
+            }
+
+            &-footer {
+                padding: 0;
+            }
+        }
+
+        &-team {
+            &-description {
+                padding: 0.625rem;
+                @include breakpoint(medium) {
+                    padding: 0.9375rem;
+                }
+
+                flex-direction: column;
+
+                h3 {
+                    padding-left: 0;
+                }
+
+                @include breakpoint(mobile down) {
+                    justify-content: flex-start;
+                }
+            }
+
+            &-select {
+                width: 123px;
+                margin-right: 0.5rem;
+
+                @include breakpoint(medium) {
+                    margin-right: $unit;
+                }
+
+                @include breakpoint(1133px down) {
+                    margin-bottom: $unit;
+                }
+
+                #team {
+                    @include full-width;
+                }
+            }
+        }
+
+        &-matches-list-info {
+            @include text(center);
+        }
+    }
+
+    .dt {
+        &-foot,
+        &-head {
+            &-wpcm-row {
+                .dataTables_paginate {
+                    @include full-width;
+                }
+            }
+        }
+
+        &-head-wpcm-row {
+            .dt-wpcm-column {
+                flex-direction: column;
+                padding: {
+                    top: 0.5rem;
+                    bottom: 0.25rem;
+                }
+
+                @include breakpoint(1128px) {
+                    flex-direction: row;
+                }
+
+                .dataTables_paginate {
+                    padding-top: 0.5rem;
+                }
+            }
+        }
+    }
+}

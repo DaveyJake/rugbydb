@@ -196,6 +196,17 @@ module.exports = __webpack_require__(/*! core-js-pure/stable/instance/sort */ ".
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/splice.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/core-js-stable/instance/splice.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js-pure/stable/instance/splice */ "./node_modules/core-js-pure/stable/instance/splice.js");
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/trim.js":
 /*!*****************************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs3/core-js-stable/instance/trim.js ***!
@@ -229,6 +240,17 @@ module.exports = __webpack_require__(/*! core-js-pure/stable/object/define-prope
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs3/core-js-stable/object/keys.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/core-js-stable/object/keys.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js-pure/stable/object/keys */ "./node_modules/core-js-pure/stable/object/keys.js");
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs3/core-js-stable/parse-int.js":
 /*!*************************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs3/core-js-stable/parse-int.js ***!
@@ -237,6 +259,17 @@ module.exports = __webpack_require__(/*! core-js-pure/stable/object/define-prope
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(/*! core-js-pure/stable/parse-int */ "./node_modules/core-js-pure/stable/parse-int.js");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs3/core-js-stable/reflect/construct.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/core-js-stable/reflect/construct.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js-pure/stable/reflect/construct */ "./node_modules/core-js-pure/stable/reflect/construct.js");
 
 /***/ }),
 
@@ -284,6 +317,17 @@ module.exports = __webpack_require__(/*! core-js-pure/features/get-iterator */ "
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs3/core-js/object/create.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/core-js/object/create.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js-pure/features/object/create */ "./node_modules/core-js-pure/features/object/create.js");
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs3/core-js/object/define-property.js":
 /*!*******************************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs3/core-js/object/define-property.js ***!
@@ -303,6 +347,28 @@ module.exports = __webpack_require__(/*! core-js-pure/features/object/define-pro
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(/*! core-js-pure/features/object/get-own-property-descriptor */ "./node_modules/core-js-pure/features/object/get-own-property-descriptor.js");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs3/core-js/object/get-prototype-of.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/core-js/object/get-prototype-of.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js-pure/features/object/get-prototype-of */ "./node_modules/core-js-pure/features/object/get-prototype-of.js");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs3/core-js/object/set-prototype-of.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/core-js/object/set-prototype-of.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js-pure/features/object/set-prototype-of */ "./node_modules/core-js-pure/features/object/set-prototype-of.js");
 
 /***/ }),
 
@@ -336,6 +402,25 @@ module.exports = __webpack_require__(/*! core-js-pure/features/symbol/iterator *
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(/*! core-js-pure/features/weak-map */ "./node_modules/core-js-pure/features/weak-map/index.js");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs3/helpers/assertThisInitialized.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/helpers/assertThisInitialized.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
 
 /***/ }),
 
@@ -383,6 +468,58 @@ function _createClass(Constructor, protoProps, staticProps) {
 }
 
 module.exports = _createClass;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs3/helpers/getPrototypeOf.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/helpers/getPrototypeOf.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _Object$getPrototypeOf = __webpack_require__(/*! @babel/runtime-corejs3/core-js/object/get-prototype-of */ "./node_modules/@babel/runtime-corejs3/core-js/object/get-prototype-of.js");
+
+var _Object$setPrototypeOf = __webpack_require__(/*! @babel/runtime-corejs3/core-js/object/set-prototype-of */ "./node_modules/@babel/runtime-corejs3/core-js/object/set-prototype-of.js");
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = _Object$setPrototypeOf ? _Object$getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || _Object$getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs3/helpers/inherits.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/helpers/inherits.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _Object$create = __webpack_require__(/*! @babel/runtime-corejs3/core-js/object/create */ "./node_modules/@babel/runtime-corejs3/core-js/object/create.js");
+
+var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf */ "./node_modules/@babel/runtime-corejs3/helpers/setPrototypeOf.js");
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = _Object$create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
 
 /***/ }),
 
@@ -471,6 +608,51 @@ function _interopRequireWildcard(obj) {
 }
 
 module.exports = _interopRequireWildcard;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs3/helpers/possibleConstructorReturn.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/helpers/possibleConstructorReturn.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(/*! @babel/runtime-corejs3/helpers/typeof */ "./node_modules/@babel/runtime-corejs3/helpers/typeof.js");
+
+var assertThisInitialized = __webpack_require__(/*! ./assertThisInitialized */ "./node_modules/@babel/runtime-corejs3/helpers/assertThisInitialized.js");
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs3/helpers/setPrototypeOf.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs3/helpers/setPrototypeOf.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _Object$setPrototypeOf = __webpack_require__(/*! @babel/runtime-corejs3/core-js/object/set-prototype-of */ "./node_modules/@babel/runtime-corejs3/core-js/object/set-prototype-of.js");
+
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = _Object$setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
 
 /***/ }),
 
@@ -656,6 +838,21 @@ module.exports = entryVirtual('Array').sort;
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/es/array/virtual/splice.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js-pure/es/array/virtual/splice.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../../modules/es.array.splice */ "./node_modules/core-js-pure/modules/es.array.splice.js");
+var entryVirtual = __webpack_require__(/*! ../../../internals/entry-virtual */ "./node_modules/core-js-pure/internals/entry-virtual.js");
+
+module.exports = entryVirtual('Array').splice;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/es/instance/concat.js":
 /*!*********************************************************!*\
   !*** ./node_modules/core-js-pure/es/instance/concat.js ***!
@@ -794,6 +991,25 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/es/instance/splice.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js-pure/es/instance/splice.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var splice = __webpack_require__(/*! ../array/virtual/splice */ "./node_modules/core-js-pure/es/array/virtual/splice.js");
+
+var ArrayPrototype = Array.prototype;
+
+module.exports = function (it) {
+  var own = it.splice;
+  return it === ArrayPrototype || (it instanceof Array && own === ArrayPrototype.splice) ? splice : own;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/es/instance/trim.js":
 /*!*******************************************************!*\
   !*** ./node_modules/core-js-pure/es/instance/trim.js ***!
@@ -829,6 +1045,25 @@ if (!core.JSON) core.JSON = { stringify: JSON.stringify };
 // eslint-disable-next-line no-unused-vars
 module.exports = function stringify(it, replacer, space) {
   return core.JSON.stringify.apply(null, arguments);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/es/object/create.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js-pure/es/object/create.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es.object.create */ "./node_modules/core-js-pure/modules/es.object.create.js");
+var path = __webpack_require__(/*! ../../internals/path */ "./node_modules/core-js-pure/internals/path.js");
+
+var Object = path.Object;
+
+module.exports = function create(P, D) {
+  return Object.create(P, D);
 };
 
 
@@ -876,6 +1111,51 @@ if (Object.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor.sham = true;
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/es/object/get-prototype-of.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js-pure/es/object/get-prototype-of.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es.object.get-prototype-of */ "./node_modules/core-js-pure/modules/es.object.get-prototype-of.js");
+var path = __webpack_require__(/*! ../../internals/path */ "./node_modules/core-js-pure/internals/path.js");
+
+module.exports = path.Object.getPrototypeOf;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/es/object/keys.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js-pure/es/object/keys.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es.object.keys */ "./node_modules/core-js-pure/modules/es.object.keys.js");
+var path = __webpack_require__(/*! ../../internals/path */ "./node_modules/core-js-pure/internals/path.js");
+
+module.exports = path.Object.keys;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/es/object/set-prototype-of.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js-pure/es/object/set-prototype-of.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es.object.set-prototype-of */ "./node_modules/core-js-pure/modules/es.object.set-prototype-of.js");
+var path = __webpack_require__(/*! ../../internals/path */ "./node_modules/core-js-pure/internals/path.js");
+
+module.exports = path.Object.setPrototypeOf;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/es/parse-int.js":
 /*!***************************************************!*\
   !*** ./node_modules/core-js-pure/es/parse-int.js ***!
@@ -887,6 +1167,21 @@ __webpack_require__(/*! ../modules/es.parse-int */ "./node_modules/core-js-pure/
 var path = __webpack_require__(/*! ../internals/path */ "./node_modules/core-js-pure/internals/path.js");
 
 module.exports = path.parseInt;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/es/reflect/construct.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js-pure/es/reflect/construct.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es.reflect.construct */ "./node_modules/core-js-pure/modules/es.reflect.construct.js");
+var path = __webpack_require__(/*! ../../internals/path */ "./node_modules/core-js-pure/internals/path.js");
+
+module.exports = path.Reflect.construct;
 
 
 /***/ }),
@@ -1021,6 +1316,20 @@ module.exports = getIterator;
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/features/object/create.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js-pure/features/object/create.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(/*! ../../es/object/create */ "./node_modules/core-js-pure/es/object/create.js");
+
+module.exports = parent;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/features/object/define-property.js":
 /*!**********************************************************************!*\
   !*** ./node_modules/core-js-pure/features/object/define-property.js ***!
@@ -1043,6 +1352,34 @@ module.exports = parent;
 /***/ (function(module, exports, __webpack_require__) {
 
 var parent = __webpack_require__(/*! ../../es/object/get-own-property-descriptor */ "./node_modules/core-js-pure/es/object/get-own-property-descriptor.js");
+
+module.exports = parent;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/features/object/get-prototype-of.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/core-js-pure/features/object/get-prototype-of.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(/*! ../../es/object/get-prototype-of */ "./node_modules/core-js-pure/es/object/get-prototype-of.js");
+
+module.exports = parent;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/features/object/set-prototype-of.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/core-js-pure/features/object/set-prototype-of.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(/*! ../../es/object/set-prototype-of */ "./node_modules/core-js-pure/es/object/set-prototype-of.js");
 
 module.exports = parent;
 
@@ -2536,6 +2873,45 @@ module.exports = function (fn, that, length) {
   return function (/* ...args */) {
     return fn.apply(that, arguments);
   };
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/internals/function-bind.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js-pure/internals/function-bind.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var aFunction = __webpack_require__(/*! ../internals/a-function */ "./node_modules/core-js-pure/internals/a-function.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js-pure/internals/is-object.js");
+
+var slice = [].slice;
+var factories = {};
+
+var construct = function (C, argsLength, args) {
+  if (!(argsLength in factories)) {
+    for (var list = [], i = 0; i < argsLength; i++) list[i] = 'a[' + i + ']';
+    // eslint-disable-next-line no-new-func
+    factories[argsLength] = Function('C,a', 'return new C(' + list.join(',') + ')');
+  } return factories[argsLength](C, args);
+};
+
+// `Function.prototype.bind` method implementation
+// https://tc39.github.io/ecma262/#sec-function.prototype.bind
+module.exports = Function.bind || function bind(that /* , ...args */) {
+  var fn = aFunction(this);
+  var partArgs = slice.call(arguments, 1);
+  var boundFunction = function bound(/* args... */) {
+    var args = partArgs.concat(slice.call(arguments));
+    return this instanceof boundFunction ? construct(fn, args.length, args) : fn.apply(that, args);
+  };
+  if (isObject(fn.prototype)) boundFunction.prototype = fn.prototype;
+  return boundFunction;
 };
 
 
@@ -4638,6 +5014,88 @@ $({ target: 'Array', proto: true, forced: FORCED }, {
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/modules/es.array.splice.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js-pure/modules/es.array.splice.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js-pure/internals/export.js");
+var toAbsoluteIndex = __webpack_require__(/*! ../internals/to-absolute-index */ "./node_modules/core-js-pure/internals/to-absolute-index.js");
+var toInteger = __webpack_require__(/*! ../internals/to-integer */ "./node_modules/core-js-pure/internals/to-integer.js");
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js-pure/internals/to-length.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js-pure/internals/to-object.js");
+var arraySpeciesCreate = __webpack_require__(/*! ../internals/array-species-create */ "./node_modules/core-js-pure/internals/array-species-create.js");
+var createProperty = __webpack_require__(/*! ../internals/create-property */ "./node_modules/core-js-pure/internals/create-property.js");
+var arrayMethodHasSpeciesSupport = __webpack_require__(/*! ../internals/array-method-has-species-support */ "./node_modules/core-js-pure/internals/array-method-has-species-support.js");
+var arrayMethodUsesToLength = __webpack_require__(/*! ../internals/array-method-uses-to-length */ "./node_modules/core-js-pure/internals/array-method-uses-to-length.js");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
+var USES_TO_LENGTH = arrayMethodUsesToLength('splice', { ACCESSORS: true, 0: 0, 1: 2 });
+
+var max = Math.max;
+var min = Math.min;
+var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
+var MAXIMUM_ALLOWED_LENGTH_EXCEEDED = 'Maximum allowed length exceeded';
+
+// `Array.prototype.splice` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.splice
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  splice: function splice(start, deleteCount /* , ...items */) {
+    var O = toObject(this);
+    var len = toLength(O.length);
+    var actualStart = toAbsoluteIndex(start, len);
+    var argumentsLength = arguments.length;
+    var insertCount, actualDeleteCount, A, k, from, to;
+    if (argumentsLength === 0) {
+      insertCount = actualDeleteCount = 0;
+    } else if (argumentsLength === 1) {
+      insertCount = 0;
+      actualDeleteCount = len - actualStart;
+    } else {
+      insertCount = argumentsLength - 2;
+      actualDeleteCount = min(max(toInteger(deleteCount), 0), len - actualStart);
+    }
+    if (len + insertCount - actualDeleteCount > MAX_SAFE_INTEGER) {
+      throw TypeError(MAXIMUM_ALLOWED_LENGTH_EXCEEDED);
+    }
+    A = arraySpeciesCreate(O, actualDeleteCount);
+    for (k = 0; k < actualDeleteCount; k++) {
+      from = actualStart + k;
+      if (from in O) createProperty(A, k, O[from]);
+    }
+    A.length = actualDeleteCount;
+    if (insertCount < actualDeleteCount) {
+      for (k = actualStart; k < len - actualDeleteCount; k++) {
+        from = k + actualDeleteCount;
+        to = k + insertCount;
+        if (from in O) O[to] = O[from];
+        else delete O[to];
+      }
+      for (k = len; k > len - actualDeleteCount + insertCount; k--) delete O[k - 1];
+    } else if (insertCount > actualDeleteCount) {
+      for (k = len - actualDeleteCount; k > actualStart; k--) {
+        from = k + actualDeleteCount - 1;
+        to = k + insertCount - 1;
+        if (from in O) O[to] = O[from];
+        else delete O[to];
+      }
+    }
+    for (k = 0; k < insertCount; k++) {
+      O[k + actualStart] = arguments[k + 2];
+    }
+    O.length = len - actualDeleteCount + insertCount;
+    return A;
+  }
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/modules/es.json.stringify.js":
 /*!****************************************************************!*\
   !*** ./node_modules/core-js-pure/modules/es.json.stringify.js ***!
@@ -4710,6 +5168,26 @@ setToStringTag(global.JSON, 'JSON', true);
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/modules/es.object.create.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js-pure/modules/es.object.create.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js-pure/internals/export.js");
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js-pure/internals/descriptors.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js-pure/internals/object-create.js");
+
+// `Object.create` method
+// https://tc39.github.io/ecma262/#sec-object.create
+$({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+  create: create
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/modules/es.object.define-property.js":
 /*!************************************************************************!*\
   !*** ./node_modules/core-js-pure/modules/es.object.define-property.js ***!
@@ -4757,6 +5235,77 @@ $({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS }, {
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/modules/es.object.get-prototype-of.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/core-js-pure/modules/es.object.get-prototype-of.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js-pure/internals/export.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js-pure/internals/fails.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js-pure/internals/to-object.js");
+var nativeGetPrototypeOf = __webpack_require__(/*! ../internals/object-get-prototype-of */ "./node_modules/core-js-pure/internals/object-get-prototype-of.js");
+var CORRECT_PROTOTYPE_GETTER = __webpack_require__(/*! ../internals/correct-prototype-getter */ "./node_modules/core-js-pure/internals/correct-prototype-getter.js");
+
+var FAILS_ON_PRIMITIVES = fails(function () { nativeGetPrototypeOf(1); });
+
+// `Object.getPrototypeOf` method
+// https://tc39.github.io/ecma262/#sec-object.getprototypeof
+$({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES, sham: !CORRECT_PROTOTYPE_GETTER }, {
+  getPrototypeOf: function getPrototypeOf(it) {
+    return nativeGetPrototypeOf(toObject(it));
+  }
+});
+
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/modules/es.object.keys.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js-pure/modules/es.object.keys.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js-pure/internals/export.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js-pure/internals/to-object.js");
+var nativeKeys = __webpack_require__(/*! ../internals/object-keys */ "./node_modules/core-js-pure/internals/object-keys.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js-pure/internals/fails.js");
+
+var FAILS_ON_PRIMITIVES = fails(function () { nativeKeys(1); });
+
+// `Object.keys` method
+// https://tc39.github.io/ecma262/#sec-object.keys
+$({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+  keys: function keys(it) {
+    return nativeKeys(toObject(it));
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/modules/es.object.set-prototype-of.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/core-js-pure/modules/es.object.set-prototype-of.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js-pure/internals/export.js");
+var setPrototypeOf = __webpack_require__(/*! ../internals/object-set-prototype-of */ "./node_modules/core-js-pure/internals/object-set-prototype-of.js");
+
+// `Object.setPrototypeOf` method
+// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+$({ target: 'Object', stat: true }, {
+  setPrototypeOf: setPrototypeOf
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/modules/es.object.to-string.js":
 /*!******************************************************************!*\
   !*** ./node_modules/core-js-pure/modules/es.object.to-string.js ***!
@@ -4783,6 +5332,68 @@ var parseIntImplementation = __webpack_require__(/*! ../internals/number-parse-i
 // https://tc39.github.io/ecma262/#sec-parseint-string-radix
 $({ global: true, forced: parseInt != parseIntImplementation }, {
   parseInt: parseIntImplementation
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/modules/es.reflect.construct.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js-pure/modules/es.reflect.construct.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js-pure/internals/export.js");
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js-pure/internals/get-built-in.js");
+var aFunction = __webpack_require__(/*! ../internals/a-function */ "./node_modules/core-js-pure/internals/a-function.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js-pure/internals/an-object.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js-pure/internals/is-object.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js-pure/internals/object-create.js");
+var bind = __webpack_require__(/*! ../internals/function-bind */ "./node_modules/core-js-pure/internals/function-bind.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js-pure/internals/fails.js");
+
+var nativeConstruct = getBuiltIn('Reflect', 'construct');
+
+// `Reflect.construct` method
+// https://tc39.github.io/ecma262/#sec-reflect.construct
+// MS Edge supports only 2 arguments and argumentsList argument is optional
+// FF Nightly sets third argument as `new.target`, but does not create `this` from it
+var NEW_TARGET_BUG = fails(function () {
+  function F() { /* empty */ }
+  return !(nativeConstruct(function () { /* empty */ }, [], F) instanceof F);
+});
+var ARGS_BUG = !fails(function () {
+  nativeConstruct(function () { /* empty */ });
+});
+var FORCED = NEW_TARGET_BUG || ARGS_BUG;
+
+$({ target: 'Reflect', stat: true, forced: FORCED, sham: FORCED }, {
+  construct: function construct(Target, args /* , newTarget */) {
+    aFunction(Target);
+    anObject(args);
+    var newTarget = arguments.length < 3 ? Target : aFunction(arguments[2]);
+    if (ARGS_BUG && !NEW_TARGET_BUG) return nativeConstruct(Target, args, newTarget);
+    if (Target == newTarget) {
+      // w/o altered newTarget, optimization for 0-4 arguments
+      switch (args.length) {
+        case 0: return new Target();
+        case 1: return new Target(args[0]);
+        case 2: return new Target(args[0], args[1]);
+        case 3: return new Target(args[0], args[1], args[2]);
+        case 4: return new Target(args[0], args[1], args[2], args[3]);
+      }
+      // w/o altered newTarget, lot of arguments case
+      var $args = [null];
+      $args.push.apply($args, args);
+      return new (bind.apply(Target, $args))();
+    }
+    // with altered newTarget, not support built-in constructors
+    var proto = newTarget.prototype;
+    var instance = create(isObject(proto) ? proto : Object.prototype);
+    var result = Function.apply.call(Target, instance, args);
+    return isObject(result) ? result : instance;
+  }
 });
 
 
@@ -5933,6 +6544,20 @@ module.exports = parent;
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/stable/instance/splice.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js-pure/stable/instance/splice.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(/*! ../../es/instance/splice */ "./node_modules/core-js-pure/es/instance/splice.js");
+
+module.exports = parent;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/stable/instance/trim.js":
 /*!***********************************************************!*\
   !*** ./node_modules/core-js-pure/stable/instance/trim.js ***!
@@ -5975,6 +6600,20 @@ module.exports = parent;
 
 /***/ }),
 
+/***/ "./node_modules/core-js-pure/stable/object/keys.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js-pure/stable/object/keys.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(/*! ../../es/object/keys */ "./node_modules/core-js-pure/es/object/keys.js");
+
+module.exports = parent;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js-pure/stable/parse-int.js":
 /*!*******************************************************!*\
   !*** ./node_modules/core-js-pure/stable/parse-int.js ***!
@@ -5983,6 +6622,20 @@ module.exports = parent;
 /***/ (function(module, exports, __webpack_require__) {
 
 var parent = __webpack_require__(/*! ../es/parse-int */ "./node_modules/core-js-pure/es/parse-int.js");
+
+module.exports = parent;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js-pure/stable/reflect/construct.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js-pure/stable/reflect/construct.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(/*! ../../es/reflect/construct */ "./node_modules/core-js-pure/es/reflect/construct.js");
 
 module.exports = parent;
 
@@ -9552,6 +10205,1540 @@ function getSize( elem ) {
 return getSize;
 
 });
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/js/button.js":
+/*!***************************************************!*\
+  !*** ./node_modules/infinite-scroll/js/button.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// button
+( function( window, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        __webpack_require__(/*! ./core */ "./node_modules/infinite-scroll/js/core.js"),
+        __webpack_require__(/*! fizzy-ui-utils */ "./node_modules/infinite-scroll/node_modules/fizzy-ui-utils/utils.js"),
+    );
+  } else {
+    // browser global
+    factory(
+        window,
+        window.InfiniteScroll,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( window, function factory( window, InfiniteScroll, utils ) {
+
+// -------------------------- InfiniteScrollButton -------------------------- //
+
+class InfiniteScrollButton {
+  constructor( element, infScroll ) {
+    this.element = element;
+    this.infScroll = infScroll;
+    // events
+    this.clickHandler = this.onClick.bind( this );
+    this.element.addEventListener( 'click', this.clickHandler );
+    infScroll.on( 'request', this.disable.bind( this ) );
+    infScroll.on( 'load', this.enable.bind( this ) );
+    infScroll.on( 'error', this.hide.bind( this ) );
+    infScroll.on( 'last', this.hide.bind( this ) );
+  }
+
+  onClick( event ) {
+    event.preventDefault();
+    this.infScroll.loadNextPage();
+  }
+
+  enable() {
+    this.element.removeAttribute('disabled');
+  }
+
+  disable() {
+    this.element.disabled = 'disabled';
+  }
+
+  hide() {
+    this.element.style.display = 'none';
+  }
+
+  destroy() {
+    this.element.removeEventListener( 'click', this.clickHandler );
+  }
+
+}
+
+// -------------------------- InfiniteScroll methods -------------------------- //
+
+// InfiniteScroll.defaults.button = null;
+
+InfiniteScroll.create.button = function() {
+  let buttonElem = utils.getQueryElement( this.options.button );
+  if ( buttonElem ) {
+    this.button = new InfiniteScrollButton( buttonElem, this );
+  }
+};
+
+InfiniteScroll.destroy.button = function() {
+  if ( this.button ) this.button.destroy();
+};
+
+// --------------------------  -------------------------- //
+
+InfiniteScroll.Button = InfiniteScrollButton;
+
+return InfiniteScroll;
+
+} ) );
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/js/core.js":
+/*!*************************************************!*\
+  !*** ./node_modules/infinite-scroll/js/core.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// core
+( function( window, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        __webpack_require__(/*! ev-emitter */ "./node_modules/infinite-scroll/node_modules/ev-emitter/ev-emitter.js"),
+        __webpack_require__(/*! fizzy-ui-utils */ "./node_modules/infinite-scroll/node_modules/fizzy-ui-utils/utils.js"),
+    );
+  } else {
+    // browser global
+    window.InfiniteScroll = factory(
+        window,
+        window.EvEmitter,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( window, function factory( window, EvEmitter, utils ) {
+
+let jQuery = window.jQuery;
+// internal store of all InfiniteScroll intances
+let instances = {};
+
+function InfiniteScroll( element, options ) {
+  let queryElem = utils.getQueryElement( element );
+
+  if ( !queryElem ) {
+    console.error( 'Bad element for InfiniteScroll: ' + ( queryElem || element ) );
+    return;
+  }
+  element = queryElem;
+  // do not initialize twice on same element
+  if ( element.infiniteScrollGUID ) {
+    let instance = instances[ element.infiniteScrollGUID ];
+    instance.option( options );
+    return instance;
+  }
+
+  this.element = element;
+  // options
+  this.options = { ...InfiniteScroll.defaults };
+  this.option( options );
+  // add jQuery
+  if ( jQuery ) {
+    this.$element = jQuery( this.element );
+  }
+
+  this.create();
+}
+
+// defaults
+InfiniteScroll.defaults = {
+  // path: null,
+  // hideNav: null,
+  // debug: false,
+};
+
+// create & destroy methods
+InfiniteScroll.create = {};
+InfiniteScroll.destroy = {};
+
+let proto = InfiniteScroll.prototype;
+// inherit EvEmitter
+Object.assign( proto, EvEmitter.prototype );
+
+// --------------------------  -------------------------- //
+
+// globally unique identifiers
+let GUID = 0;
+
+proto.create = function() {
+  // create core
+  // add id for InfiniteScroll.data
+  let id = this.guid = ++GUID;
+  this.element.infiniteScrollGUID = id; // expando
+  instances[ id ] = this; // associate via id
+  // properties
+  this.pageIndex = 1; // default to first page
+  this.loadCount = 0;
+  this.updateGetPath();
+  // bail if getPath not set, or returns falsey #776
+  let hasPath = this.getPath && this.getPath();
+  if ( !hasPath ) {
+    console.error('Disabling InfiniteScroll');
+    return;
+  }
+  this.updateGetAbsolutePath();
+  this.log( 'initialized', [ this.element.className ] );
+  this.callOnInit();
+  // create features
+  for ( let method in InfiniteScroll.create ) {
+    InfiniteScroll.create[ method ].call( this );
+  }
+};
+
+proto.option = function( opts ) {
+  Object.assign( this.options, opts );
+};
+
+// call onInit option, used for binding events on init
+proto.callOnInit = function() {
+  let onInit = this.options.onInit;
+  if ( onInit ) {
+    onInit.call( this, this );
+  }
+};
+
+// ----- events ----- //
+
+proto.dispatchEvent = function( type, event, args ) {
+  this.log( type, args );
+  let emitArgs = event ? [ event ].concat( args ) : args;
+  this.emitEvent( type, emitArgs );
+  // trigger jQuery event
+  if ( !jQuery || !this.$element ) {
+    return;
+  }
+  // namespace jQuery event
+  type += '.infiniteScroll';
+  let $event = type;
+  if ( event ) {
+    // create jQuery event
+    /* eslint-disable-next-line new-cap */
+    let jQEvent = jQuery.Event( event );
+    jQEvent.type = type;
+    $event = jQEvent;
+  }
+  this.$element.trigger( $event, args );
+};
+
+let loggers = {
+  initialized: ( className ) => `on ${className}`,
+  request: ( path ) => `URL: ${path}`,
+  load: ( response, path ) => `${response.title || ''}. URL: ${path}`,
+  error: ( error, path ) => `${error}. URL: ${path}`,
+  append: ( response, path, items ) => `${items.length} items. URL: ${path}`,
+  last: ( response, path ) => `URL: ${path}`,
+  history: ( title, path ) => `URL: ${path}`,
+  pageIndex: function( index, origin ) {
+    return `current page determined to be: ${index} from ${origin}`;
+  },
+};
+
+// log events
+proto.log = function( type, args ) {
+  if ( !this.options.debug ) return;
+
+  let message = `[InfiniteScroll] ${type}`;
+  let logger = loggers[ type ];
+  if ( logger ) message += '. ' + logger.apply( this, args );
+  console.log( message );
+};
+
+// -------------------------- methods used amoung features -------------------------- //
+
+proto.updateMeasurements = function() {
+  this.windowHeight = window.innerHeight;
+  let rect = this.element.getBoundingClientRect();
+  this.top = rect.top + window.scrollY;
+};
+
+proto.updateScroller = function() {
+  let elementScroll = this.options.elementScroll;
+  if ( !elementScroll ) {
+    // default, use window
+    this.scroller = window;
+    return;
+  }
+  // if true, set to element, otherwise use option
+  this.scroller = elementScroll === true ? this.element :
+    utils.getQueryElement( elementScroll );
+  if ( !this.scroller ) {
+    throw new Error(`Unable to find elementScroll: ${elementScroll}`);
+  }
+};
+
+// -------------------------- page path -------------------------- //
+
+proto.updateGetPath = function() {
+  let optPath = this.options.path;
+  if ( !optPath ) {
+    console.error(`InfiniteScroll path option required. Set as: ${optPath}`);
+    return;
+  }
+  // function
+  let type = typeof optPath;
+  if ( type == 'function' ) {
+    this.getPath = optPath;
+    return;
+  }
+  // template string: '/pages/{{#}}.html'
+  let templateMatch = type == 'string' && optPath.match('{{#}}');
+  if ( templateMatch ) {
+    this.updateGetPathTemplate( optPath );
+    return;
+  }
+  // selector: '.next-page-selector'
+  this.updateGetPathSelector( optPath );
+};
+
+proto.updateGetPathTemplate = function( optPath ) {
+  // set getPath with template string
+  this.getPath = () => {
+    let nextIndex = this.pageIndex + 1;
+    return optPath.replace( '{{#}}', nextIndex );
+  };
+  // get pageIndex from location
+  // convert path option into regex to look for pattern in location
+  // escape query (?) in url, allows for parsing GET parameters
+  let regexString = optPath
+    .replace( /(\\\?|\?)/, '\\?' )
+    .replace( '{{#}}', '(\\d\\d?\\d?)' );
+  let templateRe = new RegExp( regexString );
+  let match = location.href.match( templateRe );
+
+  if ( match ) {
+    this.pageIndex = parseInt( match[1], 10 );
+    this.log( 'pageIndex', [ this.pageIndex, 'template string' ] );
+  }
+};
+
+let pathRegexes = [
+  // WordPress & Tumblr - example.com/page/2
+  // Jekyll - example.com/page2
+  /^(.*?\/?page\/?)(\d\d?\d?)(.*?$)/,
+  // Drupal - example.com/?page=1
+  /^(.*?\/?\?page=)(\d\d?\d?)(.*?$)/,
+  // catch all, last occurence of a number
+  /(.*?)(\d\d?\d?)(?!.*\d)(.*?$)/,
+];
+
+// try matching href to pathRegexes patterns
+let getPathParts = InfiniteScroll.getPathParts = function( href ) {
+  if ( !href ) return;
+  for ( let regex of pathRegexes ) {
+    let match = href.match( regex );
+    if ( match ) {
+      let [ , begin, index, end ] = match;
+      return { begin, index, end };
+    }
+  }
+};
+
+proto.updateGetPathSelector = function( optPath ) {
+  // parse href of link: '.next-page-link'
+  let hrefElem = document.querySelector( optPath );
+  if ( !hrefElem ) {
+    console.error(`Bad InfiniteScroll path option. Next link not found: ${optPath}`);
+    return;
+  }
+
+  let href = hrefElem.getAttribute('href');
+  let pathParts = getPathParts( href );
+  if ( !pathParts ) {
+    console.error(`InfiniteScroll unable to parse next link href: ${href}`);
+    return;
+  }
+
+  let { begin, index, end } = pathParts;
+  this.isPathSelector = true; // flag for checkLastPage()
+  this.getPath = () => begin + ( this.pageIndex + 1 ) + end;
+  // get pageIndex from href
+  this.pageIndex = parseInt( index, 10 ) - 1;
+  this.log( 'pageIndex', [ this.pageIndex, 'next link' ] );
+};
+
+proto.updateGetAbsolutePath = function() {
+  let path = this.getPath();
+  // path doesn't start with http or /
+  let isAbsolute = path.match( /^http/ ) || path.match( /^\// );
+  if ( isAbsolute ) {
+    this.getAbsolutePath = this.getPath;
+    return;
+  }
+
+  let { pathname } = location;
+  // query parameter #829. example.com/?pg=2
+  let isQuery = path.match( /^\?/ );
+  // /foo/bar/index.html => /foo/bar
+  let directory = pathname.substring( 0, pathname.lastIndexOf('/') );
+  let pathStart = isQuery ? pathname : directory + '/';
+
+  this.getAbsolutePath = () => pathStart + this.getPath();
+};
+
+// -------------------------- nav -------------------------- //
+
+// hide navigation
+InfiniteScroll.create.hideNav = function() {
+  let nav = utils.getQueryElement( this.options.hideNav );
+  if ( !nav ) return;
+
+  nav.style.display = 'none';
+  this.nav = nav;
+};
+
+InfiniteScroll.destroy.hideNav = function() {
+  if ( this.nav ) this.nav.style.display = '';
+};
+
+// -------------------------- destroy -------------------------- //
+
+proto.destroy = function() {
+  this.allOff(); // remove all event listeners
+  // call destroy methods
+  for ( let method in InfiniteScroll.destroy ) {
+    InfiniteScroll.destroy[ method ].call( this );
+  }
+
+  delete this.element.infiniteScrollGUID;
+  delete instances[ this.guid ];
+  // remove jQuery data. #807
+  if ( jQuery && this.$element ) {
+    jQuery.removeData( this.element, 'infiniteScroll' );
+  }
+};
+
+// -------------------------- utilities -------------------------- //
+
+// https://remysharp.com/2010/07/21/throttling-function-calls
+InfiniteScroll.throttle = function( fn, threshold ) {
+  threshold = threshold || 200;
+  let last, timeout;
+
+  return function() {
+    let now = +new Date();
+    let args = arguments;
+    let trigger = () => {
+      last = now;
+      fn.apply( this, args );
+    };
+    if ( last && now < last + threshold ) {
+      // hold on to it
+      clearTimeout( timeout );
+      timeout = setTimeout( trigger, threshold );
+    } else {
+      trigger();
+    }
+  };
+};
+
+InfiniteScroll.data = function( elem ) {
+  elem = utils.getQueryElement( elem );
+  let id = elem && elem.infiniteScrollGUID;
+  return id && instances[ id ];
+};
+
+// set internal jQuery, for Webpack + jQuery v3
+InfiniteScroll.setJQuery = function( jqry ) {
+  jQuery = jqry;
+};
+
+// -------------------------- setup -------------------------- //
+
+utils.htmlInit( InfiniteScroll, 'infinite-scroll' );
+
+// add noop _init method for jQuery Bridget. #768
+proto._init = function() {};
+
+let { jQueryBridget } = window;
+if ( jQuery && jQueryBridget ) {
+  jQueryBridget( 'infiniteScroll', InfiniteScroll, jQuery );
+}
+
+// --------------------------  -------------------------- //
+
+return InfiniteScroll;
+
+} ) );
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/js/history.js":
+/*!****************************************************!*\
+  !*** ./node_modules/infinite-scroll/js/history.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// history
+( function( window, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        __webpack_require__(/*! ./core */ "./node_modules/infinite-scroll/js/core.js"),
+        __webpack_require__(/*! fizzy-ui-utils */ "./node_modules/infinite-scroll/node_modules/fizzy-ui-utils/utils.js"),
+    );
+  } else {
+    // browser global
+    factory(
+        window,
+        window.InfiniteScroll,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( window, function factory( window, InfiniteScroll, utils ) {
+
+let proto = InfiniteScroll.prototype;
+
+Object.assign( InfiniteScroll.defaults, {
+  history: 'replace',
+  // historyTitle: false,
+} );
+
+let link = document.createElement('a');
+
+// ----- create/destroy ----- //
+
+InfiniteScroll.create.history = function() {
+  if ( !this.options.history ) return;
+
+  // check for same origin
+  link.href = this.getAbsolutePath();
+  // MS Edge does not have origin on link
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12236493/
+  let linkOrigin = link.origin || link.protocol + '//' + link.host;
+  let isSameOrigin = linkOrigin == location.origin;
+  if ( !isSameOrigin ) {
+    console.error( '[InfiniteScroll] cannot set history with different origin: ' +
+      `${link.origin} on ${location.origin} . History behavior disabled.` );
+    return;
+  }
+
+  // two ways to handle changing history
+  if ( this.options.append ) {
+    this.createHistoryAppend();
+  } else {
+    this.createHistoryPageLoad();
+  }
+};
+
+proto.createHistoryAppend = function() {
+  this.updateMeasurements();
+  this.updateScroller();
+  // array of scroll positions of appended pages
+  this.scrollPages = [
+    // first page
+    {
+      top: 0,
+      path: location.href,
+      title: document.title,
+    },
+  ];
+  this.scrollPage = this.scrollPages[0];
+  // events
+  this.scrollHistoryHandler = this.onScrollHistory.bind( this );
+  this.unloadHandler = this.onUnload.bind( this );
+  this.scroller.addEventListener( 'scroll', this.scrollHistoryHandler );
+  this.on( 'append', this.onAppendHistory );
+  this.bindHistoryAppendEvents( true );
+};
+
+proto.bindHistoryAppendEvents = function( isBind ) {
+  let addRemove = isBind ? 'addEventListener' : 'removeEventListener';
+  this.scroller[ addRemove ]( 'scroll', this.scrollHistoryHandler );
+  window[ addRemove ]( 'unload', this.unloadHandler );
+};
+
+proto.createHistoryPageLoad = function() {
+  this.on( 'load', this.onPageLoadHistory );
+};
+
+InfiniteScroll.destroy.history =
+proto.destroyHistory = function() {
+  let isHistoryAppend = this.options.history && this.options.append;
+  if ( isHistoryAppend ) {
+    this.bindHistoryAppendEvents( false );
+  }
+};
+
+// ----- append history ----- //
+
+proto.onAppendHistory = function( response, path, items ) {
+  // do not proceed if no items. #779
+  if ( !items || !items.length ) return;
+
+  let firstItem = items[0];
+  let elemScrollY = this.getElementScrollY( firstItem );
+  // resolve path
+  link.href = path;
+  // add page data to hash
+  this.scrollPages.push({
+    top: elemScrollY,
+    path: link.href,
+    title: response.title,
+  });
+};
+
+proto.getElementScrollY = function( elem ) {
+  if ( this.options.elementScroll ) {
+    return elem.offsetTop - this.top;
+  } else {
+    let rect = elem.getBoundingClientRect();
+    return rect.top + window.scrollY;
+  }
+};
+
+proto.onScrollHistory = function() {
+  // cycle through positions, find biggest without going over
+  let scrollPage = this.getClosestScrollPage();
+  // set history if changed
+  if ( scrollPage != this.scrollPage ) {
+    this.scrollPage = scrollPage;
+    this.setHistory( scrollPage.title, scrollPage.path );
+  }
+};
+
+utils.debounceMethod( InfiniteScroll, 'onScrollHistory', 150 );
+
+proto.getClosestScrollPage = function() {
+  let scrollViewY;
+  if ( this.options.elementScroll ) {
+    scrollViewY = this.scroller.scrollTop + this.scroller.clientHeight / 2;
+  } else {
+    scrollViewY = window.scrollY + this.windowHeight / 2;
+  }
+
+  let scrollPage;
+  for ( let page of this.scrollPages ) {
+    if ( page.top >= scrollViewY ) break;
+
+    scrollPage = page;
+  }
+  return scrollPage;
+};
+
+proto.setHistory = function( title, path ) {
+  let optHistory = this.options.history;
+  let historyMethod = optHistory && history[ optHistory + 'State' ];
+  if ( !historyMethod ) return;
+
+  history[ optHistory + 'State' ]( null, title, path );
+  if ( this.options.historyTitle ) document.title = title;
+  this.dispatchEvent( 'history', null, [ title, path ] );
+};
+
+// scroll to top to prevent initial scroll-reset after page refresh
+// https://stackoverflow.com/a/18633915/182183
+proto.onUnload = function() {
+  if ( this.scrollPage.top === 0 ) return;
+
+  // calculate where scroll position would be on refresh
+  let scrollY = window.scrollY - this.scrollPage.top + this.top;
+  // disable scroll event before setting scroll #679
+  this.destroyHistory();
+  scrollTo( 0, scrollY );
+};
+
+// ----- load history ----- //
+
+// update URL
+proto.onPageLoadHistory = function( response, path ) {
+  this.setHistory( response.title, path );
+};
+
+// --------------------------  -------------------------- //
+
+return InfiniteScroll;
+
+} ) );
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/js/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/infinite-scroll/js/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * Infinite Scroll v4.0.1
+ * Automatically add next page
+ *
+ * Licensed GPLv3 for open source use
+ * or Infinite Scroll Commercial License for commercial use
+ *
+ * https://infinite-scroll.com
+ * Copyright 2018-2020 Metafizzy
+ */
+
+( function( window, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        __webpack_require__(/*! ./core */ "./node_modules/infinite-scroll/js/core.js"),
+        __webpack_require__(/*! ./page-load */ "./node_modules/infinite-scroll/js/page-load.js"),
+        __webpack_require__(/*! ./scroll-watch */ "./node_modules/infinite-scroll/js/scroll-watch.js"),
+        __webpack_require__(/*! ./history */ "./node_modules/infinite-scroll/js/history.js"),
+        __webpack_require__(/*! ./button */ "./node_modules/infinite-scroll/js/button.js"),
+        __webpack_require__(/*! ./status */ "./node_modules/infinite-scroll/js/status.js"),
+    );
+  }
+
+} )( window, function factory( InfiniteScroll ) {
+  return InfiniteScroll;
+} );
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/js/page-load.js":
+/*!******************************************************!*\
+  !*** ./node_modules/infinite-scroll/js/page-load.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// page-load
+( function( window, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        __webpack_require__(/*! ./core */ "./node_modules/infinite-scroll/js/core.js"),
+    );
+  } else {
+    // browser global
+    factory(
+        window,
+        window.InfiniteScroll,
+    );
+  }
+
+}( window, function factory( window, InfiniteScroll ) {
+
+let proto = InfiniteScroll.prototype;
+
+Object.assign( InfiniteScroll.defaults, {
+  // append: false,
+  loadOnScroll: true,
+  checkLastPage: true,
+  responseBody: 'text',
+  domParseResponse: true,
+  // prefill: false,
+  // outlayer: null,
+} );
+
+InfiniteScroll.create.pageLoad = function() {
+  this.canLoad = true;
+  this.on( 'scrollThreshold', this.onScrollThresholdLoad );
+  this.on( 'load', this.checkLastPage );
+  if ( this.options.outlayer ) {
+    this.on( 'append', this.onAppendOutlayer );
+  }
+};
+
+proto.onScrollThresholdLoad = function() {
+  if ( this.options.loadOnScroll ) this.loadNextPage();
+};
+
+let domParser = new DOMParser();
+
+proto.loadNextPage = function() {
+  if ( this.isLoading || !this.canLoad ) return;
+
+  let { responseBody, domParseResponse, fetchOptions } = this.options;
+  let path = this.getAbsolutePath();
+  this.isLoading = true;
+  if ( typeof fetchOptions == 'function' ) fetchOptions = fetchOptions();
+
+  let fetchPromise = fetch( path, fetchOptions )
+    .then( ( response ) => {
+      if ( !response.ok ) {
+        let error = new Error( response.statusText );
+        this.onPageError( error, path, response );
+        return { response };
+      }
+
+      return response[ responseBody ]().then( ( body ) => {
+        let canDomParse = responseBody == 'text' && domParseResponse;
+        if ( canDomParse ) {
+          body = domParser.parseFromString( body, 'text/html' );
+        }
+        if ( response.status == 204 ) {
+          this.lastPageReached( body, path );
+          return { body, response };
+        } else {
+          return this.onPageLoad( body, path, response );
+        }
+      } );
+    } )
+    .catch( ( error ) => {
+      this.onPageError( error, path );
+    } );
+
+  this.dispatchEvent( 'request', null, [ path, fetchPromise ] );
+
+  return fetchPromise;
+};
+
+proto.onPageLoad = function( body, path, response ) {
+  // done loading if not appending
+  if ( !this.options.append ) {
+    this.isLoading = false;
+  }
+  this.pageIndex++;
+  this.loadCount++;
+  this.dispatchEvent( 'load', null, [ body, path, response ] );
+  return this.appendNextPage( body, path, response );
+};
+
+proto.appendNextPage = function( body, path, response ) {
+  let { append, responseBody, domParseResponse } = this.options;
+  // do not append json
+  let isDocument = responseBody == 'text' && domParseResponse;
+  if ( !isDocument || !append ) return { body, response };
+
+  let items = body.querySelectorAll( append );
+  let promiseValue = { body, response, items };
+  // last page hit if no items. #840
+  if ( !items || !items.length ) {
+    this.lastPageReached( body, path );
+    return promiseValue;
+  }
+
+  let fragment = getItemsFragment( items );
+  let appendReady = () => {
+    this.appendItems( items, fragment );
+    this.isLoading = false;
+    this.dispatchEvent( 'append', null, [ body, path, items, response ] );
+    return promiseValue;
+  };
+
+  // TODO add hook for option to trigger appendReady
+  if ( this.options.outlayer ) {
+    return this.appendOutlayerItems( fragment, appendReady );
+  } else {
+    return appendReady();
+  }
+};
+
+proto.appendItems = function( items, fragment ) {
+  if ( !items || !items.length ) return;
+
+  // get fragment if not provided
+  fragment = fragment || getItemsFragment( items );
+  refreshScripts( fragment );
+  this.element.appendChild( fragment );
+};
+
+function getItemsFragment( items ) {
+  // add items to fragment
+  let fragment = document.createDocumentFragment();
+  if ( items ) fragment.append( ...items );
+  return fragment;
+}
+
+// replace <script>s with copies so they load
+// <script>s added by InfiniteScroll will not load
+// similar to https://stackoverflow.com/questions/610995
+function refreshScripts( fragment ) {
+  let scripts = fragment.querySelectorAll('script');
+  for ( let script of scripts ) {
+    let freshScript = document.createElement('script');
+    // copy attributes
+    let attrs = script.attributes;
+    for ( let attr of attrs ) {
+      freshScript.setAttribute( attr.name, attr.value );
+    }
+    // copy inner script code. #718, #782
+    freshScript.innerHTML = script.innerHTML;
+    script.parentNode.replaceChild( freshScript, script );
+  }
+}
+
+// ----- outlayer ----- //
+
+proto.appendOutlayerItems = function( fragment, appendReady ) {
+  let imagesLoaded = InfiniteScroll.imagesLoaded || window.imagesLoaded;
+  if ( !imagesLoaded ) {
+    console.error('[InfiniteScroll] imagesLoaded required for outlayer option');
+    this.isLoading = false;
+    return;
+  }
+  // append once images loaded
+  return new Promise( function( resolve ) {
+    imagesLoaded( fragment, function() {
+      let bodyResponse = appendReady();
+      resolve( bodyResponse );
+    } );
+  } );
+};
+
+proto.onAppendOutlayer = function( response, path, items ) {
+  this.options.outlayer.appended( items );
+};
+
+// ----- checkLastPage ----- //
+
+// check response for next element
+proto.checkLastPage = function( body, path ) {
+  let { checkLastPage, path: pathOpt } = this.options;
+  if ( !checkLastPage ) return;
+
+  // if path is function, check if next path is truthy
+  if ( typeof pathOpt == 'function' ) {
+    let nextPath = this.getPath();
+    if ( !nextPath ) {
+      this.lastPageReached( body, path );
+      return;
+    }
+  }
+  // get selector from checkLastPage or path option
+  let selector;
+  if ( typeof checkLastPage == 'string' ) {
+    selector = checkLastPage;
+  } else if ( this.isPathSelector ) {
+    // path option is selector string
+    selector = pathOpt;
+  }
+  // check last page for selector
+  // bail if no selector or not document response
+  if ( !selector || !body.querySelector ) return;
+
+  // check if response has selector
+  let nextElem = body.querySelector( selector );
+  if ( !nextElem ) this.lastPageReached( body, path );
+};
+
+proto.lastPageReached = function( body, path ) {
+  this.canLoad = false;
+  this.dispatchEvent( 'last', null, [ body, path ] );
+};
+
+// ----- error ----- //
+
+proto.onPageError = function( error, path, response ) {
+  this.isLoading = false;
+  this.canLoad = false;
+  this.dispatchEvent( 'error', null, [ error, path, response ] );
+  return error;
+};
+
+// -------------------------- prefill -------------------------- //
+
+InfiniteScroll.create.prefill = function() {
+  if ( !this.options.prefill ) return;
+
+  let append = this.options.append;
+  if ( !append ) {
+    console.error(`append option required for prefill. Set as :${append}`);
+    return;
+  }
+  this.updateMeasurements();
+  this.updateScroller();
+  this.isPrefilling = true;
+  this.on( 'append', this.prefill );
+  this.once( 'error', this.stopPrefill );
+  this.once( 'last', this.stopPrefill );
+  this.prefill();
+};
+
+proto.prefill = function() {
+  let distance = this.getPrefillDistance();
+  this.isPrefilling = distance >= 0;
+  if ( this.isPrefilling ) {
+    this.log('prefill');
+    this.loadNextPage();
+  } else {
+    this.stopPrefill();
+  }
+};
+
+proto.getPrefillDistance = function() {
+  // element scroll
+  if ( this.options.elementScroll ) {
+    return this.scroller.clientHeight - this.scroller.scrollHeight;
+  }
+  // window
+  return this.windowHeight - this.element.clientHeight;
+};
+
+proto.stopPrefill = function() {
+  this.log('stopPrefill');
+  this.off( 'append', this.prefill );
+};
+
+// --------------------------  -------------------------- //
+
+return InfiniteScroll;
+
+} ) );
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/js/scroll-watch.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/infinite-scroll/js/scroll-watch.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// scroll-watch
+( function( window, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        __webpack_require__(/*! ./core */ "./node_modules/infinite-scroll/js/core.js"),
+        __webpack_require__(/*! fizzy-ui-utils */ "./node_modules/infinite-scroll/node_modules/fizzy-ui-utils/utils.js"),
+    );
+  } else {
+    // browser global
+    factory(
+        window,
+        window.InfiniteScroll,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( window, function factory( window, InfiniteScroll, utils ) {
+
+let proto = InfiniteScroll.prototype;
+
+// default options
+Object.assign( InfiniteScroll.defaults, {
+  scrollThreshold: 400,
+  // elementScroll: null,
+} );
+
+InfiniteScroll.create.scrollWatch = function() {
+  // events
+  this.pageScrollHandler = this.onPageScroll.bind( this );
+  this.resizeHandler = this.onResize.bind( this );
+
+  let scrollThreshold = this.options.scrollThreshold;
+  let isEnable = scrollThreshold || scrollThreshold === 0;
+  if ( isEnable ) this.enableScrollWatch();
+};
+
+InfiniteScroll.destroy.scrollWatch = function() {
+  this.disableScrollWatch();
+};
+
+proto.enableScrollWatch = function() {
+  if ( this.isScrollWatching ) return;
+
+  this.isScrollWatching = true;
+  this.updateMeasurements();
+  this.updateScroller();
+  // TODO disable after error?
+  this.on( 'last', this.disableScrollWatch );
+  this.bindScrollWatchEvents( true );
+};
+
+proto.disableScrollWatch = function() {
+  if ( !this.isScrollWatching ) return;
+
+  this.bindScrollWatchEvents( false );
+  delete this.isScrollWatching;
+};
+
+proto.bindScrollWatchEvents = function( isBind ) {
+  let addRemove = isBind ? 'addEventListener' : 'removeEventListener';
+  this.scroller[ addRemove ]( 'scroll', this.pageScrollHandler );
+  window[ addRemove ]( 'resize', this.resizeHandler );
+};
+
+proto.onPageScroll = InfiniteScroll.throttle( function() {
+  let distance = this.getBottomDistance();
+  if ( distance <= this.options.scrollThreshold ) {
+    this.dispatchEvent('scrollThreshold');
+  }
+} );
+
+proto.getBottomDistance = function() {
+  let bottom, scrollY;
+  if ( this.options.elementScroll ) {
+    bottom = this.scroller.scrollHeight;
+    scrollY = this.scroller.scrollTop + this.scroller.clientHeight;
+  } else {
+    bottom = this.top + this.element.clientHeight;
+    scrollY = window.scrollY + this.windowHeight;
+  }
+  return bottom - scrollY;
+};
+
+proto.onResize = function() {
+  this.updateMeasurements();
+};
+
+utils.debounceMethod( InfiniteScroll, 'onResize', 150 );
+
+// --------------------------  -------------------------- //
+
+return InfiniteScroll;
+
+} ) );
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/js/status.js":
+/*!***************************************************!*\
+  !*** ./node_modules/infinite-scroll/js/status.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// status
+( function( window, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        __webpack_require__(/*! ./core */ "./node_modules/infinite-scroll/js/core.js"),
+        __webpack_require__(/*! fizzy-ui-utils */ "./node_modules/infinite-scroll/node_modules/fizzy-ui-utils/utils.js"),
+    );
+  } else {
+    // browser global
+    factory(
+        window,
+        window.InfiniteScroll,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( window, function factory( window, InfiniteScroll, utils ) {
+
+let proto = InfiniteScroll.prototype;
+
+// InfiniteScroll.defaults.status = null;
+
+InfiniteScroll.create.status = function() {
+  let statusElem = utils.getQueryElement( this.options.status );
+  if ( !statusElem ) return;
+
+  // elements
+  this.statusElement = statusElem;
+  this.statusEventElements = {
+    request: statusElem.querySelector('.infinite-scroll-request'),
+    error: statusElem.querySelector('.infinite-scroll-error'),
+    last: statusElem.querySelector('.infinite-scroll-last'),
+  };
+  // events
+  this.on( 'request', this.showRequestStatus );
+  this.on( 'error', this.showErrorStatus );
+  this.on( 'last', this.showLastStatus );
+  this.bindHideStatus('on');
+};
+
+proto.bindHideStatus = function( bindMethod ) {
+  let hideEvent = this.options.append ? 'append' : 'load';
+  this[ bindMethod ]( hideEvent, this.hideAllStatus );
+};
+
+proto.showRequestStatus = function() {
+  this.showStatus('request');
+};
+
+proto.showErrorStatus = function() {
+  this.showStatus('error');
+};
+
+proto.showLastStatus = function() {
+  this.showStatus('last');
+  // prevent last then append event race condition from showing last status #706
+  this.bindHideStatus('off');
+};
+
+proto.showStatus = function( eventName ) {
+  show( this.statusElement );
+  this.hideStatusEventElements();
+  let eventElem = this.statusEventElements[ eventName ];
+  show( eventElem );
+};
+
+proto.hideAllStatus = function() {
+  hide( this.statusElement );
+  this.hideStatusEventElements();
+};
+
+proto.hideStatusEventElements = function() {
+  for ( let type in this.statusEventElements ) {
+    let eventElem = this.statusEventElements[ type ];
+    hide( eventElem );
+  }
+};
+
+// --------------------------  -------------------------- //
+
+function hide( elem ) {
+  setDisplay( elem, 'none' );
+}
+
+function show( elem ) {
+  setDisplay( elem, 'block' );
+}
+
+function setDisplay( elem, value ) {
+  if ( elem ) {
+    elem.style.display = value;
+  }
+}
+
+// --------------------------  -------------------------- //
+
+return InfiniteScroll;
+
+} ) );
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/node_modules/ev-emitter/ev-emitter.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/infinite-scroll/node_modules/ev-emitter/ev-emitter.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * EvEmitter v2.0.0
+ * Lil' event emitter
+ * MIT License
+ */
+
+( function( global, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS - Browserify, Webpack
+    module.exports = factory();
+  } else {
+    // Browser globals
+    global.EvEmitter = factory();
+  }
+
+}( typeof window != 'undefined' ? window : this, function() {
+
+function EvEmitter() {}
+
+let proto = EvEmitter.prototype;
+
+proto.on = function( eventName, listener ) {
+  if ( !eventName || !listener ) return this;
+
+  // set events hash
+  let events = this._events = this._events || {};
+  // set listeners array
+  let listeners = events[ eventName ] = events[ eventName ] || [];
+  // only add once
+  if ( !listeners.includes( listener ) ) {
+    listeners.push( listener );
+  }
+
+  return this;
+};
+
+proto.once = function( eventName, listener ) {
+  if ( !eventName || !listener ) return this;
+
+  // add event
+  this.on( eventName, listener );
+  // set once flag
+  // set onceEvents hash
+  let onceEvents = this._onceEvents = this._onceEvents || {};
+  // set onceListeners object
+  let onceListeners = onceEvents[ eventName ] = onceEvents[ eventName ] || {};
+  // set flag
+  onceListeners[ listener ] = true;
+
+  return this;
+};
+
+proto.off = function( eventName, listener ) {
+  let listeners = this._events && this._events[ eventName ];
+  if ( !listeners || !listeners.length ) return this;
+
+  let index = listeners.indexOf( listener );
+  if ( index != -1 ) {
+    listeners.splice( index, 1 );
+  }
+
+  return this;
+};
+
+proto.emitEvent = function( eventName, args ) {
+  let listeners = this._events && this._events[ eventName ];
+  if ( !listeners || !listeners.length ) return this;
+
+  // copy over to avoid interference if .off() in listener
+  listeners = listeners.slice( 0 );
+  args = args || [];
+  // once stuff
+  let onceListeners = this._onceEvents && this._onceEvents[ eventName ];
+
+  for ( let listener of listeners ) {
+    let isOnce = onceListeners && onceListeners[ listener ];
+    if ( isOnce ) {
+      // remove listener
+      // remove before trigger to prevent recursion
+      this.off( eventName, listener );
+      // unset once flag
+      delete onceListeners[ listener ];
+    }
+    // trigger listener
+    listener.apply( this, args );
+  }
+
+  return this;
+};
+
+proto.allOff = function() {
+  delete this._events;
+  delete this._onceEvents;
+  return this;
+};
+
+return EvEmitter;
+
+} ) );
+
+
+/***/ }),
+
+/***/ "./node_modules/infinite-scroll/node_modules/fizzy-ui-utils/utils.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/infinite-scroll/node_modules/fizzy-ui-utils/utils.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Fizzy UI utils v3.0.0
+ * MIT license
+ */
+
+( function( global, factory ) {
+  // universal module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( global );
+  } else {
+    // browser global
+    global.fizzyUIUtils = factory( global );
+  }
+
+}( this, function factory( global ) {
+
+let utils = {};
+
+// ----- extend ----- //
+
+// extends objects
+utils.extend = function( a, b ) {
+  return Object.assign( a, b );
+};
+
+// ----- modulo ----- //
+
+utils.modulo = function( num, div ) {
+  return ( ( num % div ) + div ) % div;
+};
+
+// ----- makeArray ----- //
+
+// turn element or nodeList into an array
+utils.makeArray = function( obj ) {
+  // use object if already an array
+  if ( Array.isArray( obj ) ) return obj;
+
+  // return empty array if undefined or null. #6
+  if ( obj === null || obj === undefined ) return [];
+
+  let isArrayLike = typeof obj == 'object' && typeof obj.length == 'number';
+  // convert nodeList to array
+  if ( isArrayLike ) return [ ...obj ];
+
+  // array of single index
+  return [ obj ];
+};
+
+// ----- removeFrom ----- //
+
+utils.removeFrom = function( ary, obj ) {
+  let index = ary.indexOf( obj );
+  if ( index != -1 ) {
+    ary.splice( index, 1 );
+  }
+};
+
+// ----- getParent ----- //
+
+utils.getParent = function( elem, selector ) {
+  while ( elem.parentNode && elem != document.body ) {
+    elem = elem.parentNode;
+    if ( elem.matches( selector ) ) return elem;
+  }
+};
+
+// ----- getQueryElement ----- //
+
+// use element as selector string
+utils.getQueryElement = function( elem ) {
+  if ( typeof elem == 'string' ) {
+    return document.querySelector( elem );
+  }
+  return elem;
+};
+
+// ----- handleEvent ----- //
+
+// enable .ontype to trigger from .addEventListener( elem, 'type' )
+utils.handleEvent = function( event ) {
+  let method = 'on' + event.type;
+  if ( this[ method ] ) {
+    this[ method ]( event );
+  }
+};
+
+// ----- filterFindElements ----- //
+
+utils.filterFindElements = function( elems, selector ) {
+  // make array of elems
+  elems = utils.makeArray( elems );
+
+  return elems
+    // check that elem is an actual element
+    .filter( ( elem ) => elem instanceof HTMLElement )
+    .reduce( ( ffElems, elem ) => {
+      // add elem if no selector
+      if ( !selector ) {
+        ffElems.push( elem );
+        return ffElems;
+      }
+      // filter & find items if we have a selector
+      // filter
+      if ( elem.matches( selector ) ) {
+        ffElems.push( elem );
+      }
+      // find children
+      let childElems = elem.querySelectorAll( selector );
+      // concat childElems to filterFound array
+      ffElems = ffElems.concat( ...childElems );
+      return ffElems;
+    }, [] );
+};
+
+// ----- debounceMethod ----- //
+
+utils.debounceMethod = function( _class, methodName, threshold ) {
+  threshold = threshold || 100;
+  // original method
+  let method = _class.prototype[ methodName ];
+  let timeoutName = methodName + 'Timeout';
+
+  _class.prototype[ methodName ] = function() {
+    clearTimeout( this[ timeoutName ] );
+
+    let args = arguments;
+    this[ timeoutName ] = setTimeout( () => {
+      method.apply( this, args );
+      delete this[ timeoutName ];
+    }, threshold );
+  };
+};
+
+// ----- docReady ----- //
+
+utils.docReady = function( onDocReady ) {
+  let readyState = document.readyState;
+  if ( readyState == 'complete' || readyState == 'interactive' ) {
+    // do async to allow for other scripts to run. metafizzy/flickity#441
+    setTimeout( onDocReady );
+  } else {
+    document.addEventListener( 'DOMContentLoaded', onDocReady );
+  }
+};
+
+// ----- htmlInit ----- //
+
+// http://bit.ly/3oYLusc
+utils.toDashed = function( str ) {
+  return str.replace( /(.)([A-Z])/g, function( match, $1, $2 ) {
+    return $1 + '-' + $2;
+  } ).toLowerCase();
+};
+
+let console = global.console;
+
+// allow user to initialize classes via [data-namespace] or .js-namespace class
+// htmlInit( Widget, 'widgetName' )
+// options are parsed from data-namespace-options
+utils.htmlInit = function( WidgetClass, namespace ) {
+  utils.docReady( function() {
+    let dashedNamespace = utils.toDashed( namespace );
+    let dataAttr = 'data-' + dashedNamespace;
+    let dataAttrElems = document.querySelectorAll( `[${dataAttr}]` );
+    let jQuery = global.jQuery;
+
+    [ ...dataAttrElems ].forEach( ( elem ) => {
+      let attr = elem.getAttribute( dataAttr );
+      let options;
+      try {
+        options = attr && JSON.parse( attr );
+      } catch ( error ) {
+        // log error, do not initialize
+        if ( console ) {
+          console.error( `Error parsing ${dataAttr} on ${elem.className}: ${error}` );
+        }
+        return;
+      }
+      // initialize
+      let instance = new WidgetClass( elem, options );
+      // make available via $().data('namespace')
+      if ( jQuery ) {
+        jQuery.data( elem, namespace, instance );
+      }
+    } );
+
+  } );
+};
+
+// -----  ----- //
+
+return utils;
+
+} ) );
 
 
 /***/ }),
@@ -18816,26 +21003,22 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
  *
  * @since 1.0.0
  */
-var common = function (doc, $) {
-  var $doc = $(doc);
+var common = function common() {
+  var $doc = (0, _utils.$)(document);
   $doc.foundation();
-  $.ajaxSetup({
+
+  _utils.$.ajaxSetup({
     cache: true
   });
 
-  if ($.fn.DataTable || $.fn.dataTable) {
-    $.extend($.fn.dataTable.defaults, {
+  if (_utils.$.fn.DataTable || _utils.$.fn.dataTable) {
+    _utils.$.extend(_utils.$.fn.dataTable.defaults, {
       lengthChange: false
     });
   }
 
-  $.when(_vendor.Modernizr).then(_ui.navigation);
   (0, _ui.logoLettering)();
-
-  _utils.util.init();
-
-  (0, _ui.mmenu)();
-}(document, window.jQuery);
+};
 
 module.exports = {
   common: common
@@ -18855,7 +21038,11 @@ module.exports = {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
 
+var _Reflect$construct = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/reflect/construct */ "./node_modules/@babel/runtime-corejs3/core-js-stable/reflect/construct.js");
+
 var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
+
+var _find = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/find */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/find.js"));
 
 var _stringify = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/json/stringify */ "./node_modules/@babel/runtime-corejs3/core-js-stable/json/stringify.js"));
 
@@ -18869,7 +21056,17 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/createClass */ "./node_modules/@babel/runtime-corejs3/helpers/createClass.js"));
 
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/inherits */ "./node_modules/@babel/runtime-corejs3/helpers/inherits.js"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs3/helpers/possibleConstructorReturn.js"));
+
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/getPrototypeOf */ "./node_modules/@babel/runtime-corejs3/helpers/getPrototypeOf.js"));
+
 var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(_Reflect$construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 /**
  * The front page module.
@@ -18881,16 +21078,7 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
  * @author Davey Jacobson <daveyjake21@gmail.com>
  * @since  1.0.0
  */
-
-/**
- * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
- *
- * @since 1.0.0
- *
- * @type {Function}
- */
-var adminUrl = _utils.util.adminUrl,
-    sanitizeTitle = _utils.util.sanitizeTitle;
+var adminUrl = _utils.util.adminUrl;
 /* eslint-disable computed-property-spacing, no-else-return, arrow-parens, new-cap, no-unused-vars */
 
 /**
@@ -18898,59 +21086,64 @@ var adminUrl = _utils.util.adminUrl,
  *
  * @since 1.0.0
  *
- * @type     {Object}
- * @property {jQuery}   table          The main table.
- * @property {jQuery}   $tableSelector The target DOM node.
- * @property {Function} dtErrorHandler Custom DataTable error handler.
+ * @type     {FrontPage}
+ * @property {jQuery}    table          The main table.
+ * @property {jQuery}    $tableSelector The target DOM node.
+ * @property {Function}  dtErrorHandler Custom DataTable error handler.
  */
 
-var FrontPage = /*#__PURE__*/function () {
+var FrontPage = /*#__PURE__*/function (_DTHelper) {
+  (0, _inherits2["default"])(FrontPage, _DTHelper);
+
+  var _super = _createSuper(FrontPage);
+
   /**
    * Primary constructor.
    *
    * @since 1.0.0
    */
   function FrontPage() {
+    var _this;
+
     (0, _classCallCheck2["default"])(this, FrontPage);
+    _this = _super.call(this);
 
     if (!_utils.rdb.is_front_page) {
-      return;
+      return (0, _possibleConstructorReturn2["default"])(_this);
     }
 
-    this.filters();
-    this.$table = (0, _utils.$)('#all-matches');
-    this.nonce = (0, _utils.$)('#nonce').val();
-    this.table = this._dataTable();
+    FrontPage._filters();
 
-    this._yadcf();
+    _this.$win = (0, _utils.$)(window);
+    _this.$table = (0, _utils.$)('#all-matches');
+    _this.nonce = (0, _utils.$)('#nonce').val();
+    _this.table = _this._dataTable();
+
+    _this._yadcf();
+
+    return _this;
   }
   /**
-   * Initialize Chosen.js on non-mobile screens.
+   * Initialize YetAnotherDataTablesCustomFilter.js
    *
    * @since 1.0.0
+   * @access private
+   *
+   * @param {string} data  Option group response.
    */
 
 
   (0, _createClass2["default"])(FrontPage, [{
-    key: "filters",
-    value: function filters() {
-      if (!_utils.rdb.is_mobile) {
-        (0, _utils.$)('.chosen_select').chosen({
-          width: '49%'
-        });
-      }
-    }
-    /**
-     * Initialize YetAnotherDataTablesCustomFilter.js
-     *
-     * @access private
-     * @since 1.0.0
-     */
-
-  }, {
     key: "_yadcf",
     value: function _yadcf() {
-      _utils.yadcf.init(this.table, [{
+      /**
+       * Season filter config.
+       *
+       * @since 1.0.0
+       *
+       * @type {Object}
+       */
+      var season = {
         column_number: 1,
         column_data_type: 'text',
         filter_type: 'select',
@@ -18963,7 +21156,16 @@ var FrontPage = /*#__PURE__*/function () {
         select_type_options: {
           width: '100%'
         }
-      }, {
+      };
+      /**
+       * Opponent filter config.
+       *
+       * @since 1.0.0
+       *
+       * @type {Object}
+       */
+
+      var opponent = {
         column_number: 2,
         column_data_type: 'text',
         filter_type: 'select',
@@ -18975,9 +21177,17 @@ var FrontPage = /*#__PURE__*/function () {
         select_type: _utils.rdb.is_mobile ? '' : 'chosen',
         select_type_options: {
           width: '100%'
-        },
-        html5_data: 'data-filter'
-      }, {
+        }
+      };
+      /**
+       * Competition filter config.
+       *
+       * @since 1.0.0
+       *
+       * @type {Object}
+       */
+
+      var competition = {
         column_number: 3,
         column_data_type: 'text',
         filter_type: 'select',
@@ -18992,9 +21202,18 @@ var FrontPage = /*#__PURE__*/function () {
           width: '100%'
         },
         text_data_delimeter: '&nbsp;'
-      }, {
+      };
+      /**
+       * Venue filter config.
+       *
+       * @since 1.0.0
+       *
+       * @type {Object}
+       */
+
+      var venue = {
         column_number: 4,
-        column_data_type: 'text',
+        column_data_type: _utils._.isEmpty(sessionStorage.venueOptions) ? 'text' : 'html',
         filter_type: 'select',
         filter_container_id: 'venue',
         filter_default_label: 'Select Venue',
@@ -19002,16 +21221,28 @@ var FrontPage = /*#__PURE__*/function () {
         reset_button_style_class: false,
         select_type: _utils.rdb.is_mobile ? '' : 'chosen',
         select_type_options: {
+          include_group_label_in_selected: true,
           width: '100%'
         },
         text_data_delimeter: '&nbsp;'
-      }]);
+      };
+
+      if ('html' === venue.column_data_type) {
+        venue.data = [sessionStorage.venueOptions];
+        venue.data_as_is = true;
+      }
+      /**
+       * Initialize YADCF.
+       */
+
+
+      _utils.yadcf.init(this.table, [season, opponent, competition, venue]);
     }
     /**
      * Initialize DataTables.js.
      *
-     * @access private
      * @since 1.0.0
+     * @access private
      *
      * @link https://datatables.net/reference/event/
      * @see init.dt search.dt page.dt order.dt length.dt
@@ -19022,7 +21253,7 @@ var FrontPage = /*#__PURE__*/function () {
   }, {
     key: "_dataTable",
     value: function _dataTable() {
-      var _this = this;
+      var _this2 = this;
 
       var self = this; // Filter by team checkbox.
 
@@ -19040,16 +21271,19 @@ var FrontPage = /*#__PURE__*/function () {
           return true;
         }
 
-        if (!(0, _includes["default"])(_utils._).call(_utils._, ['mens-eagles', 'womens-eagles'], searchData[6])) {
+        if (!(0, _includes["default"])(_utils._).call(_utils._, ['mens-eagles', 'womens-eagles'], searchData[7])) {
           friendlies[0] = '*';
         }
 
-        if ((0, _indexOf["default"])(teams).call(teams, searchData[6]) !== -1 && ('*' === friendlies[0] || (0, _indexOf["default"])(friendlies).call(friendlies, searchData[7]) !== -1)) {
+        if ((0, _indexOf["default"])(teams).call(teams, searchData[7]) !== -1 && ('*' === friendlies[0] || (0, _indexOf["default"])(friendlies).call(friendlies, searchData[8]) !== -1)) {
           return true;
         }
 
         return false;
-      });
+      }); // No more error alerts.
+
+
+      _utils.$.fn.dataTable.ext.errMode = 'throw'; // DataTable initializer.
 
       var table = this.$table.DataTable({
         // eslint-disable-line
@@ -19060,51 +21294,54 @@ var FrontPage = /*#__PURE__*/function () {
           url: adminUrl('admin-ajax.php'),
           data: {
             action: 'get_matches',
-            post_type: 'matches',
             nonce: this.nonce
           },
           dataSrc: function dataSrc(response) {
             if (!response.success) {
-              _utils.$.fn.dataTable.ext.errMode = 'none';
-
-              _this.$table.on('error.dt', function (e, settings, techNote, message) {
+              (0, _utils.$)('#all-matches').on('error.dt', function (e, settings, techNote, message) {
                 console.log('An error has been reported by DataTables: ', message);
               }).DataTable(); // eslint-disable-line
 
+              return window.location.reload();
             }
 
-            var oldData = sessionStorage.allMatches,
-                newData = (0, _stringify["default"])(response.data);
+            var oldData = sessionStorage.allMatches;
+            var newData = (0, _stringify["default"])(response.data);
 
             if (newData !== oldData) {
               sessionStorage.removeItem('allMatches');
               sessionStorage.setItem('allMatches', newData);
+              oldData = newData;
             }
 
-            var responseData = JSON.parse(sessionStorage.allMatches),
-                _final = [];
+            var responseData = JSON.parse(oldData),
+                _final = []; // Venue options.
+
+            _this2._venueOptions(responseData); // Parse response.
+
 
             _utils._.each(responseData, function (match) {
               var api = {
                 ID: match.ID,
                 idStr: "match-".concat(match.ID),
                 competition: {
-                  display: _this.competition(match.competition),
-                  filter: _this.competition(match.competition)
+                  display: _utils.DTHelper.competition(match),
+                  filter: _utils.DTHelper.competition(match)
                 },
                 date: {
-                  display: _this.formatDate(match.ID, match.date.GMT, match.links),
+                  display: _utils.DTHelper.formatDate(match.ID, match.date.GMT, match.links),
                   filter: match.season
                 },
                 fixture: {
-                  display: _this.logoResult(match),
-                  filter: _this.opponent(match.fixture)
+                  display: _utils.DTHelper.logoResult(match),
+                  filter: _utils.DTHelper.opponent(match.fixture)
                 },
-                friendly: match.friendly ? 'friendly' : 'test',
                 venue: {
-                  display: _this.venueLink(match.venue),
+                  display: _utils.DTHelper.venueLink(match.venue),
                   filter: match.venue.name
                 },
+                friendly: match.friendly ? 'friendly' : 'test',
+                label: match.competition.label,
                 neutral: match.venue.neutral,
                 sort: match.date.timestamp,
                 team: match.team.slug,
@@ -19134,56 +21371,64 @@ var FrontPage = /*#__PURE__*/function () {
           className: 'venue min-wordpress',
           targets: 4
         }, {
-          className: 'timestamp hide',
+          className: 'comp-label hide',
+          visible: false,
           targets: 5
         }, {
-          className: 'team hide',
+          className: 'timestamp hide',
+          visible: false,
           targets: 6
         }, {
-          className: 'friendly hide',
+          className: 'team hide',
+          visible: false,
           targets: 7
+        }, {
+          className: 'friendly hide',
+          visible: false,
+          targets: 8
         }],
         columns: [{
           data: 'ID',
           render: function render(data) {
             return "<span class=\"hide\">".concat(data, "</span>");
-          },
-          width: '1px'
+          }
         }, {
           data: 'date',
+          title: 'Date',
           render: {
             _: 'display',
             display: 'display',
             filter: 'filter'
           },
-          width: '25%',
-          orderData: 5,
+          orderData: 6,
           responsivePriority: 2
         }, {
           data: 'fixture',
+          title: 'Fixture',
           render: {
             _: 'display',
             display: 'display',
             filter: 'filter'
           },
-          width: '25%',
           responsivePriority: 1
         }, {
           data: 'competition',
+          title: 'Event',
           render: {
             _: 'display',
             display: 'display',
             filter: 'filter'
-          },
-          width: '25%'
+          }
         }, {
           data: 'venue',
+          title: 'Venue',
           render: {
             _: 'display',
             display: 'display',
             filter: 'filter'
-          },
-          width: '25%'
+          }
+        }, {
+          data: 'label'
         }, {
           data: 'sort'
         }, {
@@ -19194,12 +21439,12 @@ var FrontPage = /*#__PURE__*/function () {
         buttons: false,
         dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column pagination"p>>',
         language: {
-          loadingRecords: '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" alt="Loading matches..." />',
+          loadingRecords: _utils.DT_LOADING,
           search: '',
-          searchPlaceholder: 'Search Matches'
+          searchPlaceholder: 'Search Matches (Hint: Try "friendly", "ireland", or even "rwc")'
         },
-        order: [[5, 'desc']],
-        pageLength: 50,
+        order: [[6, 'desc']],
+        pageLength: 25,
         pagingType: 'full_numbers',
         scrollCollapse: true,
         searching: true,
@@ -19207,145 +21452,116 @@ var FrontPage = /*#__PURE__*/function () {
         responsive: {
           breakpoints: _utils.BREAKPOINTS,
           details: {
-            type: 'column'
+            type: 'column',
+            target: 0
           }
         },
         initComplete: function initComplete() {
           var api = this.api();
+          var $teamFilters = (0, _utils.$)('.team-filters');
+          $teamFilters.on('change', 'input[name="wpcm_team"]', function (e) {
+            var _context3;
+
+            (0, _utils.$)("#".concat(e.currentTarget.value)).toggleClass('active');
+
+            if ('mens-eagles' === e.currentTarget.value || 'womens-eagles' === e.currentTarget.value) {
+              (0, _find["default"])($teamFilters).call($teamFilters, '.match-type').removeClass('hide').addClass('active');
+            } else {
+              (0, _find["default"])($teamFilters).call($teamFilters, '.match-type').removeClass('active').addClass('hide');
+            }
+
+            var checkedBoxes = _utils._.compact((0, _map["default"])(_context3 = (0, _find["default"])($teamFilters).call($teamFilters, '.active')).call(_context3, function () {
+              return this.id;
+            }).get());
+
+            FrontPage._radioFilters(checkedBoxes);
+
+            api.draw();
+          });
+          $teamFilters.on('change', 'input[name="wpcm_friendly"]', function () {
+            api.draw();
+          });
+          (0, _utils.$)('.match-filters').on('change', 'select', function () {
+            api.draw();
+          });
+          self.$win.on('resize orientationchange', _utils._.throttle(function () {
+            api.draw();
+          }, 300));
+          api.columns.adjust();
         }
       });
-      (0, _utils.$)('.team-filters').on('change', 'input[name="wpcm_team"]', function (e) {
-        var _context3;
-
-        (0, _utils.$)("#".concat(e.currentTarget.value)).toggleClass('active');
-
-        if ('mens-eagles' === e.currentTarget.value || 'womens-eagles' === e.currentTarget.value) {
-          (0, _utils.$)('.team-filters .match-type').removeClass('hide').addClass('active');
-        } else {
-          (0, _utils.$)('.team-filters .match-type').removeClass('active').addClass('hide');
-        }
-
-        var checkedBoxes = _utils._.compact((0, _map["default"])(_context3 = (0, _utils.$)('.team-filters .active')).call(_context3, function () {
-          return this.id;
-        }).get());
-
-        FrontPage._radioFilters(checkedBoxes);
-
-        table.draw();
-      });
-      (0, _utils.$)('.team-filters').on('change', 'input[name="wpcm_friendly"]', function () {
-        table.draw();
-      });
-      (0, _utils.$)('.match-filters').on('change', 'select', function () {
-        table.draw();
-      });
-      (0, _utils.$)(window).on('resize orientationchange', _utils._.debounce(function () {
-        table.draw();
-      }, 300));
       return table;
     }
     /**
-     * Get competition name from API.
+     * Generate grouped venue dropdown options.
      *
      * @since 1.0.0
+     * @access private
      *
-     * @param {object} competition API response of competition object.
+     * @param {Object[]} responseData REST API response data.
      *
-     * @return {string}            Competition name.
+     * @return {string}    HTML sting of grouped options.
      */
 
   }, {
-    key: "competition",
-    value: function competition(_competition) {
-      if (_utils._.isUndefined(_competition)) {
-        location.reload();
+    key: "_venueOptions",
+    value: function _venueOptions(responseData) {
+      if (sessionStorage.venueOptions) {
+        return sessionStorage.venueOptions;
       }
 
-      return (!_utils._.isEmpty(_competition.parent) ? _competition.parent + ' - ' : '') + _competition.name;
+      var venueGroup = {},
+          venueOptions = '';
+
+      _utils._.each(responseData, function (match) {
+        venueGroup[_utils.COUNTRIES[match.venue.country.toUpperCase()]] = [];
+      });
+
+      _utils._.each(responseData, function (match) {
+        if (!(0, _includes["default"])(_utils._).call(_utils._, venueGroup[_utils.COUNTRIES[match.venue.country.toUpperCase()]], match.venue.name)) {
+          venueGroup[_utils.COUNTRIES[match.venue.country.toUpperCase()]].push(match.venue.name);
+        }
+      });
+
+      _utils._.each(responseData, function (match) {
+        venueGroup[_utils.COUNTRIES[match.venue.country.toUpperCase()]] = _utils._.sortBy(venueGroup[_utils.COUNTRIES[match.venue.country.toUpperCase()]], function (venue) {
+          return venue.toLowerCase();
+        });
+      });
+
+      venueGroup = (0, _utils.ksort)(venueGroup);
+      venueOptions += '<option value="">Select Venue</option>';
+
+      _utils._.each(venueGroup, function (venues, country) {
+        venueOptions += "<optgroup label=\"".concat(country, "\">");
+
+        _utils._.each(venues, function (venue) {
+          var _context4;
+
+          venueOptions += (0, _concat["default"])(_context4 = "<option value=\"".concat(venue, "\">")).call(_context4, venue, "</option>");
+        });
+
+        venueOptions += "</optgroup>";
+      });
+
+      sessionStorage.setItem('venueOptions', venueOptions);
     }
     /**
-     * Get formatted date.
+     * Initialize Chosen.js on non-mobile screens.
      *
      * @since 1.0.0
-     *
-     * @param {number} matchId Current match ID.
-     * @param {string} date    ISO-8601 string.
-     * @param {object} links   Match URLs.
-     *
-     * @return {string}        Human-readable date string.
+     * @access private
+     * @static
      */
 
-  }, {
-    key: "formatDate",
-    value: function formatDate(matchId, date, links) {
-      var _context4, _context5;
-
-      var m = (0, _utils.moment)(date),
-          human = m.tz(sessionStorage.timezone).format(_utils.US_DATE);
-      return (0, _concat["default"])(_context4 = (0, _concat["default"])(_context5 = "<a id=\"match-".concat(matchId, "-date-link\" class=\"wpcm-matches-list-link\" href=\"")).call(_context5, links.match, "\" rel=\"bookmark\">")).call(_context4, human, "</a>");
-    }
-    /**
-     * Hyperlink logo.
-     *
-     * @since 1.0.0
-     *
-     * @param {object} match Current match.
-     *
-     * @return {string}      HTML output.
-     */
-
-  }, {
-    key: "logoResult",
-    value: function logoResult(match) {
-      var _context6, _context7, _context8, _context9, _context10, _context11, _context12, _context13, _context14, _context15, _context16, _context17, _context18;
-
-      var matchId = match.ID,
-          fixture = match.fixture,
-          result = match.result,
-          homeLogo = match.logo.home,
-          awayLogo = match.logo.away,
-          links = match.links,
-          teams = fixture.split(/\sv\s/),
-          scores = result.split(/\s-\s/);
-      return (0, _concat["default"])(_context6 = (0, _concat["default"])(_context7 = (0, _concat["default"])(_context8 = (0, _concat["default"])(_context9 = (0, _concat["default"])(_context10 = (0, _concat["default"])(_context11 = (0, _concat["default"])(_context12 = (0, _concat["default"])(_context13 = (0, _concat["default"])(_context14 = (0, _concat["default"])(_context15 = (0, _concat["default"])(_context16 = (0, _concat["default"])(_context17 = (0, _concat["default"])(_context18 = "<div class=\"fixture-result flex\"><div class=\"inline-cell\"><a id=\"".concat(sanitizeTitle(teams[0]), "-link\" href=\"")).call(_context18, links.home_union, "\" title=\"")).call(_context17, teams[0], "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context16, homeLogo, "\" alt=\"")).call(_context15, teams[0], "\" height=\"22\" /></a></div><div class=\"inline-cell\"><span class=\"result\"><a id=\"match-")).call(_context14, matchId, "-result-link\" href=\"")).call(_context13, links.match, "\" rel=\"bookmark\">")).call(_context12, scores[0], " - ")).call(_context11, scores[1], "</a></span></div><div class=\"inline-cell\"><a id=\"")).call(_context10, sanitizeTitle(teams[1]), "-link\"href=\"")).call(_context9, links.away_union, "\" title=\"")).call(_context8, teams[1], "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context7, awayLogo, "\" alt=\"")).call(_context6, teams[1], "\" height=\"22\" /></a></div></div>");
-    }
-    /**
-     * Get opponent from API.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} fixture Post title of a match (i.e. "United States v Some Country").
-     *
-     * @return {string}        The opponent's name.
-     */
-
-  }, {
-    key: "opponent",
-    value: function opponent(fixture) {
-      var parts = fixture.split(/\sv\s/);
-
-      if ('United States' === parts[0]) {
-        return parts[1];
-      } else {
-        return parts[0];
+  }], [{
+    key: "_filters",
+    value: function _filters() {
+      if (!_utils.rdb.is_mobile) {
+        (0, _utils.$)('.chosen_select').chosen({
+          width: '49%'
+        });
       }
-    }
-    /**
-     * Hyperlink venue.
-     *
-     * @since 1.0.0
-     *
-     * @param {object} venue Match venue object.
-     *
-     * @return {string}      HTML output.
-     */
-
-  }, {
-    key: "venueLink",
-    value: function venueLink(venue) {
-      var _context19, _context20, _context21;
-
-      return (0, _concat["default"])(_context19 = (0, _concat["default"])(_context20 = (0, _concat["default"])(_context21 = "<a id=\"venue-".concat(venue.id, "-link\" href=\"")).call(_context21, venue.link, "\" title=\"")).call(_context20, venue.name, "\" rel=\"bookmark\">")).call(_context19, venue.name, "</a>");
     }
     /**
      * Show/Hide radio button filters based on selected teams.
@@ -19358,22 +21574,23 @@ var FrontPage = /*#__PURE__*/function () {
      * @param {string} currentValue Current selected value.
      */
 
-  }], [{
+  }, {
     key: "_radioFilters",
     value: function _radioFilters(checkedBoxes) {
       var me = 'mens-eagles',
           we = 'womens-eagles',
-          teams = [me, we];
+          teams = [me, we],
+          $chk = (0, _utils.$)('.team-filters .match-type');
 
       if (_utils._.xor(checkedBoxes, teams).length === 0 || checkedBoxes.length === 1 && (me === checkedBoxes[0] || we === checkedBoxes[0])) {
-        (0, _utils.$)('.team-filters .match-type').removeClass('hide').addClass('active');
+        $chk.removeClass('hide').addClass('active');
       } else {
-        (0, _utils.$)('.team-filters .match-type').removeClass('active').addClass('hide');
+        $chk.removeClass('active').addClass('hide');
       }
     }
   }]);
   return FrontPage;
-}();
+}(_utils.DTHelper);
 
 module.exports = {
   FrontPage: FrontPage
@@ -19408,13 +21625,6 @@ _Object$defineProperty(exports, "FrontPage", {
   enumerable: true,
   get: function get() {
     return _frontPage.FrontPage;
-  }
-});
-
-_Object$defineProperty(exports, "pagePlayers", {
-  enumerable: true,
-  get: function get() {
-    return _pagePlayers.pagePlayers;
   }
 });
 
@@ -19453,18 +21663,30 @@ _Object$defineProperty(exports, "singleWpcmMatch", {
   }
 });
 
-_Object$defineProperty(exports, "TaxWPCMVenue", {
+_Object$defineProperty(exports, "singleWpcmPlayer", {
   enumerable: true,
   get: function get() {
-    return _taxonomyWpcmVenue.TaxWPCMVenue;
+    return _singleWpcmPlayer.singleWpcmPlayer;
+  }
+});
+
+_Object$defineProperty(exports, "TaxWpcmTeam", {
+  enumerable: true,
+  get: function get() {
+    return _taxonomyWpcmTeam.TaxWpcmTeam;
+  }
+});
+
+_Object$defineProperty(exports, "TaxWpcmVenue", {
+  enumerable: true,
+  get: function get() {
+    return _taxonomyWpcmVenue.TaxWpcmVenue;
   }
 });
 
 var _common = __webpack_require__(/*! ./common */ "./src/js/modules/common.js");
 
 var _frontPage = __webpack_require__(/*! ./front-page */ "./src/js/modules/front-page.js");
-
-var _pagePlayers = __webpack_require__(/*! ./page-players */ "./src/js/modules/page-players.js");
 
 var _pageOpponents = __webpack_require__(/*! ./page-opponents */ "./src/js/modules/page-opponents.js");
 
@@ -19475,6 +21697,10 @@ var _pageVenues = __webpack_require__(/*! ./page-venues */ "./src/js/modules/pag
 var _singleWpcmClub = __webpack_require__(/*! ./single-wpcm-club */ "./src/js/modules/single-wpcm-club.js");
 
 var _singleWpcmMatch = __webpack_require__(/*! ./single-wpcm-match */ "./src/js/modules/single-wpcm-match.js");
+
+var _singleWpcmPlayer = __webpack_require__(/*! ./single-wpcm-player */ "./src/js/modules/single-wpcm-player.js");
+
+var _taxonomyWpcmTeam = __webpack_require__(/*! ./taxonomy-wpcm-team */ "./src/js/modules/taxonomy-wpcm-team.js");
 
 var _taxonomyWpcmVenue = __webpack_require__(/*! ./taxonomy-wpcm-venue */ "./src/js/modules/taxonomy-wpcm-venue.js");
 
@@ -19510,66 +21736,6 @@ var pageOpponents = function pageOpponents() {
 
 module.exports = {
   pageOpponents: pageOpponents
-};
-
-/***/ }),
-
-/***/ "./src/js/modules/page-players.js":
-/*!****************************************!*\
-  !*** ./src/js/modules/page-players.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
-
-var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
-
-var _ui = __webpack_require__(/*! ../ui */ "./src/js/ui/index.js");
-
-var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
-
-var _vendor = __webpack_require__(/*! ../vendor */ "./src/js/vendor/index.js");
-
-/**
- * Players page.
- *
- * @since 1.0.0
- */
-var pagePlayers = function pagePlayers() {
-  if ('page-players.php' !== _utils.rdb.template) {
-    return;
-  }
-
-  (0, _utils.$)(document).ready(function () {
-    var _context;
-
-    var $teams = (0, _utils.$)('#teams'),
-        endpoint = 'players',
-        teams = new _vendor.Foundation.Tabs($teams, {}),
-        args = {
-      grid: ''
-    };
-    var defaultPath = 'mens-eagles';
-    args.grid = "#".concat(defaultPath, " > .grid");
-    (0, _ui.cards)(_utils.rdb.template, (0, _concat["default"])(_context = "".concat(endpoint, "/")).call(_context, defaultPath), args);
-    $teams.on('change.zf.tabs', function (e, context) {
-      var _context2;
-
-      defaultPath = context[0].childNodes[0].hash.replace('#', ''); // eslint-disable-line
-
-      args.grid = "".concat(context[0].childNodes[0].hash, " > .grid"); // eslint-disable-line
-
-      (0, _ui.cards)(_utils.rdb.template, (0, _concat["default"])(_context2 = "".concat(endpoint, "/")).call(_context2, defaultPath), args);
-    });
-  });
-};
-
-module.exports = {
-  pagePlayers: pagePlayers
 };
 
 /***/ }),
@@ -19648,30 +21814,46 @@ module.exports = {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
 
+var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
+
 var _parseInt2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/parse-int */ "./node_modules/@babel/runtime-corejs3/core-js-stable/parse-int.js"));
 
 var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 
 /**
+ * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
+ *
+ * @since 1.0.0
+ *
+ * @type {Function}
+ */
+var adminUrl = _utils.util.adminUrl,
+    lightness = _utils.util.lightness,
+    sanitizeTitle = _utils.util.sanitizeTitle;
+/**
  * Single club/union page.
  *
  * @since 1.0.0
  */
-var singleWpcmClub = function (rdb, $) {
-  // Only run if viewing a match.
-  if ('single-club.php' !== rdb.template) {
+
+var singleWpcmClub = function singleWpcmClub() {
+  if ('single-club.php' !== _utils.rdb.template) {
     return;
+  } // Fire from DOM.
+
+
+  if ('function' === typeof window.unionMatchList) {
+    window.unionMatchList();
   }
 
-  var $wpcmClub = $('.wpcm_club'),
+  var $wpcmClub = (0, _utils.$)('.wpcm_club'),
       primaryColor = $wpcmClub.prop('style').getPropertyValue('--primary-color'),
       secondaryColor = $wpcmClub.prop('style').getPropertyValue('--secondary-color');
+  var primary = lightness(primaryColor),
+      secondary = lightness(secondaryColor),
+      actualLight = (0, _parseInt2["default"])(primary - secondary, 10);
 
-  var primary = _utils.util.lightness(primaryColor),
-      secondary = _utils.util.lightness(secondaryColor),
-      lightness = (0, _parseInt2["default"])(primary - secondary, 10);
-
-  if (lightness < 0) {
+  if (actualLight < 0) {
     $wpcmClub.prop('style').setProperty('--background', primaryColor);
   } else {
     $wpcmClub.prop('style').setProperty('--background', secondaryColor);
@@ -19681,31 +21863,87 @@ var singleWpcmClub = function (rdb, $) {
   var colWidth = '25%'; // DataTables config.
 
   var options = {
-    columns: [{
-      data: 'date',
-      render: _utils.dtTimestampSort,
-      width: colWidth
+    destroy: true,
+    deferRender: true,
+    data: JSON.parse(sessionStorage.unionMatchList),
+    columnDefs: [{
+      className: 'control',
+      width: colWidth,
+      orderable: false,
+      targets: 0
     }, {
-      data: 'fixture',
-      width: colWidth
+      className: 'wpcm-matches-list-col wpcm-matches-list-date',
+      width: colWidth,
+      targets: 1
+    }, {
+      className: 'wpcm-matches-list-col wpcm-matches-list-fixture',
+      width: colWidth,
+      targets: 2
+    }, {
+      className: 'wpcm-matches-list-col wpcm-matches-list-venue',
+      width: colWidth,
+      targets: 3
+    }, {
+      className: 'wpcm-matches-list-col wpcm-matches-list-info',
+      width: colWidth,
+      targets: 4
+    }],
+    columns: [{
+      data: 'ID',
+      render: function render(data) {
+        return "<span class=\"hide\">".concat(data, "</span>");
+      }
+    }, {
+      data: 'date',
+      title: 'Date',
+      render: {
+        _: 'display',
+        sort: 'timestamp'
+      },
+      responsivePriority: 2
+    }, {
+      data: 'result',
+      title: 'Fixture',
+      render: function render(data, type, row, meta) {
+        var _context;
+
+        return (0, _concat["default"])(_context = "<a id=\"".concat(data.referrer, "\" href=\"")).call(_context, data.permalink, "\" class=\"wpcm-matches-list-link\" target=\"_blank\" rel=\"bookmark\">") + "<span class=\"wpcm-matches-list-club1 ".concat(sanitizeTitle(data.home), "\">") + data.home + "</span>" + "<span class=\"wpcm-matches-list-status wpcm-matches-list-".concat(data.className, "\">") + data.score + "</span>" + "<span class=\"wpcm-matches-list-club2 ".concat(sanitizeTitle(data.away), "\">") + data.away + "</span>" + "</a>";
+      },
+      responsivePriority: 1
     }, {
       data: 'venue',
-      width: colWidth
+      title: 'Venue',
+      render: function render(data, type, row, meta) {
+        var _context2, _context3;
+
+        return "<td class=\"wpcm-matches-list-col wpcm-matches-list-venue\">" + (0, _concat["default"])(_context2 = (0, _concat["default"])(_context3 = "<a id=\"".concat(data.linkId, "\" href=\"")).call(_context3, data.link, "\" rel=\"bookmark\">")).call(_context2, data.name, "</a>") + "</td>";
+      }
     }, {
       data: 'competition',
-      width: colWidth
+      title: 'Competition',
+      render: function render(data) {
+        return "<td class=\"wpcm-matches-list-col wpcm-matches-list-info\">".concat(data, "</td>");
+      }
     }],
+    order: [],
     pageLength: 100,
     responsive: true,
     searching: false,
     paging: false,
-    info: false
+    info: false,
+    rowId: 'idStr',
+    initComplete: function initComplete(settings, json) {
+      var api = this.api();
+
+      _utils._.each(api.context[0].aoData, function (row) {
+        // eslint-disable-line
+        (0, _utils.$)(row.nTr).addClass("wpcm-matches-list-item ".concat(row._aData.result.outcome));
+      });
+    }
   }; // Lineup tables.
 
-  var table = $('.wpcm-matches-list').DataTable(options); // eslint-disable-line
-
-  table.order([[0, 'asc']]).draw();
-}(window.rdb, window.jQuery);
+  (0, _utils.$)('.wpcm-matches-list').DataTable(options); // eslint-disable-line
+};
 
 module.exports = {
   singleWpcmClub: singleWpcmClub
@@ -19732,42 +21970,674 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
  *
  * @since 1.0.0
  */
-var singleWpcmMatch = function (rdb, _, $) {
+var singleWpcmMatch = function singleWpcmMatch() {
   // Only run if viewing a match.
-  if ('single-match.php' !== rdb.template) {
+  if ('single-match.php' !== _utils.rdb.template) {
     return;
   } // Lazy-load club badges.
 
 
-  $('.wpcm-match-club-badge').each(function () {
-    return new _vendor.Foundation.Interchange($(this));
-  }); // DataTables config.
+  (0, _utils.$)('.wpcm-match-club-badge').each(function () {
+    return new _vendor.Foundation.Interchange((0, _utils.$)(this));
+  });
+  /**
+   * DataTables config.
+   *
+   * @type {Object}
+   */
 
   var options = {
     autoWidth: true,
     responsive: true,
     searching: false,
+    order: [],
     paging: false,
-    info: false
+    info: false,
+    columnDefs: [{
+      orderable: false,
+      targets: 0
+    }, {
+      orderable: false,
+      targets: 1
+    }, {
+      orderable: false,
+      targets: 2
+    }, {
+      orderable: false,
+      targets: 3
+    }, {
+      orderable: false,
+      targets: 4
+    }, {
+      orderable: false,
+      targets: 5
+    }, {
+      orderable: false,
+      targets: 6
+    }],
+    initComplete: function initComplete() {
+      var table = this.api();
+      (0, _utils.$)(window).on('resize orientationchange', _vendor.Foundation.util.throttle(function () {
+        table.draw();
+      }, 300));
+      table.columns.adjust();
+    }
   }; // Lineup tables.
 
-  $('.wpcm-lineup-table, .wpcm-subs-table').DataTable(options); // eslint-disable-line
+  (0, _utils.$)('.wpcm-lineup-table, .wpcm-subs-table').DataTable(options); // eslint-disable-line
   // AJAX timeline request.
 
-  if ('1' === $('[name="dbi-ajax"]').val()) {
-    var nonce = $('#nonce').val(),
-        wrId = $('#rdb-match-timeline').data('wr-id');
+  if ('1' === (0, _utils.$)('[name="dbi-ajax"]').val()) {
+    var nonce = (0, _utils.$)('#nonce').val(),
+        wrId = (0, _utils.$)('#rdb-match-timeline').data('wr-id');
 
-    if (_.isEmpty(wrId)) {
+    if (_utils._.isEmpty(wrId)) {
       return '';
     }
 
     return new _utils.Request('match', nonce, 'timeline', wrId);
   }
-}(window.rdb, window._, window.jQuery);
+};
 
 module.exports = {
   singleWpcmMatch: singleWpcmMatch
+};
+
+/***/ }),
+
+/***/ "./src/js/modules/single-wpcm-player.js":
+/*!**********************************************!*\
+  !*** ./src/js/modules/single-wpcm-player.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+var _wpcmPlayerAppearances = __webpack_require__(/*! ../vendor/wpcm-player-appearances */ "./src/js/vendor/wpcm-player-appearances.js");
+
+/**
+ * Single player page.
+ *
+ * @since 1.0.0
+ */
+var singleWpcmPlayer = function singleWpcmPlayer() {
+  if ('single-player.php' !== _utils.rdb.template) {
+    return;
+  } // WPCM Player Appearances.
+
+
+  (0, _utils.$)((0, _wpcmPlayerAppearances.wpcmPA)()); // Auto-adjust header height.
+
+  _utils.util.matchHeight('.wpcm-entry-header .wpcm-profile__image', '.wpcm-profile__meta table');
+
+  (0, _utils.$)('.fade-in').css({
+    opacity: 1,
+    transition: 'opacity 0.75s ease-in'
+  });
+  (0, _utils.$)('.wpcm-profile__image').fadeIn('slow');
+  /**
+   * DataTables config.
+   *
+   * @todo Add colDefs and set column properties.
+   *
+   * @type {Object}
+   */
+
+  var stats = {
+    destroy: true,
+    deferRender: true,
+    autoWidth: true,
+    info: false,
+    order: [],
+    paging: false,
+    responsive: {
+      breakpoints: _utils.BREAKPOINTS,
+      details: {
+        type: 'column',
+        target: 0
+      }
+    },
+    searching: false,
+    columns: [{
+      orderable: false
+    }, {
+      orderable: false
+    }, {
+      orderable: false
+    }, {
+      orderable: false
+    }, {
+      orderable: false
+    }, {
+      orderable: false
+    }, {
+      orderable: false
+    }, {
+      orderable: false
+    }]
+  };
+  (0, _utils.$)('.tabs-panel table').each(function () {
+    (0, _utils.$)(this).DataTable(stats); // eslint-disable-line
+  });
+  /**
+   * DataTables config.
+   *
+   * @todo Add colDefs and set column properties.
+   *
+   * @type {Object}
+   */
+
+  var options = {
+    destroy: true,
+    deferRender: true,
+    autoWidth: true,
+    info: false,
+    order: [[0, 'desc']],
+    paging: false,
+    responsive: {
+      breakpoints: _utils.BREAKPOINTS,
+      details: {
+        type: 'column',
+        target: 0
+      }
+    },
+    searching: false,
+    columnDefs: [{
+      responsivePriority: 1,
+      targets: 1
+    }, {
+      targets: 2
+    }, {
+      responsivePriority: 2,
+      targets: 3
+    }, {
+      targets: 4
+    }, {
+      responsivePriority: 3,
+      targets: 5
+    }, {
+      responsivePriority: 2,
+      targets: 6
+    }]
+  };
+  (0, _utils.$)('.wpcm-pa-table').each(function () {
+    (0, _utils.$)(this).DataTable(options); // eslint-disable-line
+  });
+};
+
+module.exports = {
+  singleWpcmPlayer: singleWpcmPlayer
+};
+
+/***/ }),
+
+/***/ "./src/js/modules/taxonomy-wpcm-team.js":
+/*!**********************************************!*\
+  !*** ./src/js/modules/taxonomy-wpcm-team.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _Reflect$construct = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/reflect/construct */ "./node_modules/@babel/runtime-corejs3/core-js-stable/reflect/construct.js");
+
+var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
+
+var _stringify = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/json/stringify */ "./node_modules/@babel/runtime-corejs3/core-js-stable/json/stringify.js"));
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/classCallCheck */ "./node_modules/@babel/runtime-corejs3/helpers/classCallCheck.js"));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/createClass */ "./node_modules/@babel/runtime-corejs3/helpers/createClass.js"));
+
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/inherits */ "./node_modules/@babel/runtime-corejs3/helpers/inherits.js"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs3/helpers/possibleConstructorReturn.js"));
+
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/getPrototypeOf */ "./node_modules/@babel/runtime-corejs3/helpers/getPrototypeOf.js"));
+
+var _vendor = __webpack_require__(/*! ../vendor */ "./src/js/vendor/index.js");
+
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(_Reflect$construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
+ *
+ * @since 1.0.0
+ *
+ * @type {Function}
+ */
+var adminUrl = _utils.util.adminUrl,
+    sanitizeTitle = _utils.util.sanitizeTitle;
+window.sanitizeTitle = sanitizeTitle;
+/**
+ * Venue template.
+ *
+ * @since 1.0.0
+ */
+
+/* eslint-disable no-unused-vars, computed-property-spacing, new-cap, object-shorthand */
+
+var TaxWpcmTeam = /*#__PURE__*/function (_DTHelper) {
+  (0, _inherits2["default"])(TaxWpcmTeam, _DTHelper);
+
+  var _super = _createSuper(TaxWpcmTeam);
+
+  /**
+   * Primary constructor.
+   *
+   * @since 1.0.0
+   */
+  function TaxWpcmTeam() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, TaxWpcmTeam);
+    _this = _super.call(this);
+
+    if ('taxonomy-wpcm_team.php' !== _utils.rdb.template) {
+      return (0, _possibleConstructorReturn2["default"])(_this);
+    }
+
+    _this.isoOps = {
+      itemSelector: '.card',
+      percentPosition: true,
+      getSortData: {
+        order: '[data-order]'
+      },
+      sortBy: 'order',
+      layoutMode: 'packery',
+      packery: {
+        columnWidth: '.card',
+        gutter: 0
+      }
+    };
+    _this.$doc = (0, _utils.$)(document);
+    _this.tabs = new _vendor.Foundation.Tabs((0, _utils.$)("#".concat(_utils.rdb.term_slug)), {});
+    _this.endpoint = 'players';
+    _this.collection = true;
+    _this.perPage = '100';
+    _this.nonce = (0, _utils.$)('#nonce').val();
+    _this.nonce2 = (0, _utils.$)('#nonce2').val();
+    _this.$table = (0, _utils.$)('.wpcm-matches-list');
+
+    _this.dropdown();
+
+    _this._init();
+
+    return _this;
+  }
+  /**
+   * Initialize class.
+   *
+   * @since 1.0.0
+   * @access private
+   */
+
+
+  (0, _createClass2["default"])(TaxWpcmTeam, [{
+    key: "_init",
+    value: function _init() {
+      var _this2 = this;
+
+      (0, _utils.$)("#".concat(_utils.rdb.term_slug)).on('change.zf.tabs', function (e, context) {
+        _this2.players(context[0].childNodes[0].hash);
+
+        _this2.dataTable(context[0].childNodes[0].hash);
+      });
+    }
+    /**
+     * Team dropdown menu.
+     *
+     * @since 1.0.0
+     */
+
+  }, {
+    key: "dropdown",
+    value: function dropdown() {
+      // Dropdown team options.
+      var $select = (0, _utils.$)('#team.chosen_select'),
+          prefix = location.origin;
+
+      if (!_utils.rdb.is_mobile) {
+        // Chosen.js
+        $select.chosen({
+          disable_search: true,
+          width: '123px'
+        });
+        $select.on('change', function (e, param) {
+          e.preventDefault();
+          window.location = prefix + '/team/' + param.selected;
+        }).trigger('chosen:updated');
+      } else {
+        $select.on('change', function (e) {
+          e.preventDefault();
+          window.location = prefix + '/team/' + this.value;
+        }).trigger('chosen:updated');
+      }
+    }
+    /**
+     * Players tab.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} hash The tab hash.
+     */
+
+  }, {
+    key: "players",
+    value: function players(hash) {
+      var _this3 = this;
+
+      if ('#players' !== hash) {
+        return;
+      }
+
+      var $container = (0, _utils.$)("".concat(hash, " > .grid")).isotope(this.isoOps),
+          $filter = (0, _utils.$)('.filter .chosen_select'),
+          filters = {};
+
+      this._infScroll($container);
+
+      $filter.chosen({
+        width: '96%',
+        include_group_label_in_selected: true
+      });
+      (0, _utils.$)('.filters').on('change', function (evt, param) {
+        var group = (0, _utils.$)(evt.target).parent().data('filter-group');
+        filters[group] = param.selected;
+
+        if ('*' === param.selected) {
+          _utils._.unset(filters, "".concat(group));
+        }
+
+        var filterValue = _this3._concatValues(filters);
+
+        $container.isotope({
+          filter: filterValue
+        });
+      }).trigger('chosen:updated');
+    }
+    /**
+     * DataTables configuration.
+     *
+     * @since 1.0.0
+     *
+     * @param {string} hash The tab hash.
+     */
+
+  }, {
+    key: "dataTable",
+    value: function dataTable(hash) {
+      if ('#matches' !== hash) {
+        return;
+      } // DOM instance.
+
+
+      var self = this; // Column width.
+
+      var colWidth = '25%'; // No more error alerts.
+
+      _utils.$.fn.dataTable.ext.errMode = 'throw'; // DataTable initializer.
+
+      var table = this.$table.DataTable({
+        // eslint-disable-line
+        destroy: true,
+        autoWidth: false,
+        deferRender: true,
+        ajax: {
+          url: adminUrl('admin-ajax.php'),
+          data: {
+            action: 'get_matches',
+            nonce: this.nonce2,
+            team: _utils.rdb.term_slug
+          },
+          dataSrc: function dataSrc(response) {
+            if (!response.success) {
+              (0, _utils.$)('#all-matches').on('error.dt', function (e, settings, techNote, message) {
+                console.log('An error has been reported by DataTables: ', message);
+              }).DataTable(); // eslint-disable-line
+
+              return window.location.reload();
+            }
+
+            var oldData = sessionStorage.allMatches;
+            var newData = (0, _stringify["default"])(response.data);
+
+            if (newData !== oldData) {
+              sessionStorage.removeItem('allMatches');
+              sessionStorage.setItem('allMatches', newData);
+              oldData = newData;
+            }
+
+            var responseData = JSON.parse(oldData),
+                _final = []; // Parse response.
+
+            _utils._.each(responseData, function (match) {
+              var api = {
+                ID: match.ID,
+                idStr: "match-".concat(match.ID),
+                competition: {
+                  display: _utils.DTHelper.competition(match),
+                  filter: _utils.DTHelper.competition(match)
+                },
+                date: {
+                  display: _utils.DTHelper.formatDate(match.ID, match.date.GMT, match.links),
+                  filter: match.season
+                },
+                fixture: {
+                  display: _utils.DTHelper.logoResult(match),
+                  filter: _utils.DTHelper.opponent(match.fixture)
+                },
+                venue: {
+                  display: _utils.DTHelper.venueLink(match.venue),
+                  filter: match.venue.name
+                },
+                friendly: match.friendly ? 'friendly' : 'test',
+                label: match.competition.label,
+                neutral: match.venue.neutral,
+                sort: match.date.timestamp,
+                links: match.links
+              };
+
+              _final.push(api);
+            });
+
+            return _final;
+          }
+        },
+        columnDefs: [{
+          className: 'control match-id sorting_disabled',
+          orderable: false,
+          targets: 0
+        }, {
+          className: 'date',
+          targets: 1
+        }, {
+          className: 'fixture-result',
+          targets: 2
+        }, {
+          className: 'competition min-medium',
+          targets: 3
+        }, {
+          className: 'venue min-wordpress',
+          targets: 4
+        }, {
+          className: 'comp-label hide',
+          visible: false,
+          targets: 5
+        }, {
+          className: 'timestamp hide',
+          visible: false,
+          targets: 6
+        }, {
+          className: 'friendly hide',
+          visible: false,
+          targets: 7
+        }],
+        columns: [{
+          data: 'ID',
+          render: function render(data) {
+            return "<span class=\"hide\">".concat(data, "</span>");
+          }
+        }, {
+          data: 'date',
+          title: 'Date',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          },
+          orderData: 6,
+          responsivePriority: 2
+        }, {
+          data: 'fixture',
+          title: 'Fixture',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          },
+          responsivePriority: 1
+        }, {
+          data: 'competition',
+          title: 'Event',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          }
+        }, {
+          data: 'venue',
+          title: 'Venue',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          }
+        }, {
+          data: 'label'
+        }, {
+          data: 'sort'
+        }, {
+          data: 'friendly'
+        }],
+        buttons: false,
+        dom: '<"dt-head-wpcm-row clearfix"<"dt-wpcm-column flex"fp>> + t + <"dt-foot-wpcm-row clearfix"<"dt-wpcm-column pagination"p>>',
+        language: {
+          loadingRecords: _utils.DT_LOADING,
+          search: '',
+          searchPlaceholder: 'Search Matches (Hint: Can be a country, "friendly" or even "rwc")'
+        },
+        order: [[6, 'desc']],
+        pageLength: 25,
+        pagingType: 'full_numbers',
+        scrollCollapse: true,
+        searching: true,
+        rowId: 'idStr',
+        responsive: {
+          breakpoints: _utils.BREAKPOINTS,
+          details: {
+            type: 'column',
+            target: 0
+          }
+        },
+        initComplete: function initComplete() {
+          var api = this.api();
+          self.$doc.on('resize orientationchange', _utils._.throttle(function () {
+            api.draw();
+          }, 300));
+          api.columns.adjust();
+        }
+      });
+    }
+    /**
+     * InfiniteScroll configuation.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param {jQuery} $container Content container.
+     */
+
+  }, {
+    key: "_infScroll",
+    value: function _infScroll($container) {
+      var self = this,
+          iso = $container.data('isotope');
+      $container.infiniteScroll({
+        path: function path() {
+          var _context, _context2, _context3, _context4, _context5;
+
+          return adminUrl('admin-ajax.php') + (0, _concat["default"])(_context = (0, _concat["default"])(_context2 = (0, _concat["default"])(_context3 = (0, _concat["default"])(_context4 = (0, _concat["default"])(_context5 = "?action=get_".concat(self.endpoint, "&nonce=")).call(_context5, self.nonce, "&collection=")).call(_context4, self.collection, "&team=")).call(_context3, _utils.rdb.term_slug, "&per_page=")).call(_context2, self.perPage, "&page=")).call(_context, this.loadCount + 1);
+        },
+        responseBody: 'json',
+        history: false,
+        outlayer: iso,
+        status: '.page-load-status',
+        debug: true
+      }).infiniteScroll('loadNextPage');
+      var $loader = (0, _utils.$)('.page-load-status');
+      $container.on('load.infiniteScroll', function (e, body) {
+        var tmpl = $container.data('tmpl'),
+            template = _utils.wp.template(tmpl),
+            result = template(body.data),
+            cards = (0, _utils.$)(result);
+
+        $container.append(cards).isotope('appended', cards).isotope();
+        $container.append($loader);
+        $loader.addClass('absolute-bottom');
+      }); // Google Analytics tracking.
+
+      if (!_utils._.isUndefined(window.ga)) {
+        var link = document.createElement('a');
+        $container.on('append.infiniteScroll', function (event, response, path) {
+          link.href = path;
+          window.ga('set', 'page', link.pathname);
+          window.ga('send', 'pageview');
+        });
+      }
+    }
+    /**
+     * Flatten filter values into string.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param {Object} obj Filter object values.
+     *
+     * @return {string}    Queryable class.
+     */
+
+  }, {
+    key: "_concatValues",
+    value: function _concatValues(obj) {
+      var value = '';
+
+      for (var prop in obj) {
+        if (obj[prop]) {
+          value += obj[prop];
+        }
+      }
+
+      return value;
+    }
+  }]);
+  return TaxWpcmTeam;
+}(_utils.DTHelper);
+
+module.exports = {
+  TaxWpcmTeam: TaxWpcmTeam
 };
 
 /***/ }),
@@ -19784,7 +22654,7 @@ module.exports = {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
 
-var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
+var _Reflect$construct = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/reflect/construct */ "./node_modules/@babel/runtime-corejs3/core-js-stable/reflect/construct.js");
 
 var _sort = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/sort */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/sort.js"));
 
@@ -19794,7 +22664,17 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/createClass */ "./node_modules/@babel/runtime-corejs3/helpers/createClass.js"));
 
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/inherits */ "./node_modules/@babel/runtime-corejs3/helpers/inherits.js"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs3/helpers/possibleConstructorReturn.js"));
+
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/getPrototypeOf */ "./node_modules/@babel/runtime-corejs3/helpers/getPrototypeOf.js"));
+
 var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(_Reflect$construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -19803,17 +22683,7 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
  *
  * @type {Function}
  */
-var adminUrl = _utils.util.adminUrl,
-    sanitizeTitle = _utils.util.sanitizeTitle;
-/**
- * Ensure `moment.js` is available.
- *
- * @since 1.0.0
- *
- * @type {Function}
- */
-
-var moment = window.moment;
+var adminUrl = _utils.util.adminUrl;
 /**
  * Venue template.
  *
@@ -19822,22 +22692,31 @@ var moment = window.moment;
 
 /* eslint-disable no-unused-vars, computed-property-spacing, new-cap, object-shorthand */
 
-var TaxWPCMVenue = /*#__PURE__*/function () {
+var TaxWpcmVenue = /*#__PURE__*/function (_DTHelper) {
+  (0, _inherits2["default"])(TaxWpcmVenue, _DTHelper);
+
+  var _super = _createSuper(TaxWpcmVenue);
+
   /**
    * Primary constructor.
    *
    * @since 1.0.0
    */
-  function TaxWPCMVenue() {
-    (0, _classCallCheck2["default"])(this, TaxWPCMVenue);
+  function TaxWpcmVenue() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, TaxWpcmVenue);
+    _this = _super.call(this);
 
     if ('taxonomy-wpcm_venue.php' !== _utils.rdb.template) {
-      return;
+      return (0, _possibleConstructorReturn2["default"])(_this);
     }
 
-    this.$table = (0, _utils.$)('.wpcm-matches-list');
+    _this.$table = (0, _utils.$)('.wpcm-matches-list');
 
-    this._dataTable();
+    _this._dataTable();
+
+    return _this;
   }
   /**
    * DataTables configuration.
@@ -19846,7 +22725,7 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
    */
 
 
-  (0, _createClass2["default"])(TaxWPCMVenue, [{
+  (0, _createClass2["default"])(TaxWpcmVenue, [{
     key: "_dataTable",
     value: function _dataTable() {
       // Column width.
@@ -19867,7 +22746,7 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
           },
           dataSrc: function dataSrc(response) {
             if (!response.success) {
-              return TaxWPCMVenue.dtErrorHandler();
+              return _utils.DTHelper.dtErrorHandler();
             }
 
             var oldData = sessionStorage.allMatches,
@@ -19886,16 +22765,16 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
                 ID: match.ID,
                 idStr: "match-".concat(match.ID),
                 competition: {
-                  display: TaxWPCMVenue.competition(match.competition),
+                  display: _utils.DTHelper.competition(match),
                   filter: match.competition.name
                 },
                 date: {
-                  display: TaxWPCMVenue.formatDate(match.date.GMT, match.links),
+                  display: _utils.DTHelper.formatDate(match.ID, match.date.GMT, match.links),
                   filter: match.season
                 },
                 fixture: {
-                  display: TaxWPCMVenue.logoResult(match.fixture, match.result, match.logo.home, match.logo.away, match.links),
-                  filter: TaxWPCMVenue.opponent(match.fixture)
+                  display: _utils.DTHelper.logoResult(match),
+                  filter: _utils.DTHelper.opponent(match.fixture)
                 },
                 outcome: match.outcome,
                 friendly: match.friendly,
@@ -19954,7 +22833,7 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
             display: 'display',
             filter: 'filter'
           },
-          width: '25%',
+          width: '21%',
           responsivePriority: 2
         }, {
           data: 'fixture',
@@ -19963,7 +22842,7 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
             display: 'display',
             filter: 'filter'
           },
-          width: '25%',
+          width: '37%',
           responsivePriority: 1
         }, {
           data: 'team',
@@ -19972,7 +22851,8 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
             display: 'name',
             filter: 'slug'
           },
-          width: '25%'
+          width: '21%',
+          responsivePriority: 9
         }, {
           data: 'competition',
           className: 'min-medium',
@@ -19981,7 +22861,8 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
             display: 'display',
             filter: 'filter'
           },
-          width: '25%'
+          width: '21%',
+          responsivePriority: 9
         }, {
           data: 'sort',
           className: 'timestamp hide',
@@ -19995,7 +22876,7 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
         buttons: false,
         info: false,
         language: {
-          loadingRecords: '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" />'
+          loadingRecords: _utils.DT_LOADING
         },
         order: [[5, 'desc']],
         paging: false,
@@ -20014,6 +22895,8 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
           prefix = location.origin;
 
       if (!_utils.rdb.is_mobile) {
+        // Chosen.js
+        $select.chosen();
         $select.on('change', function (e, param) {
           e.preventDefault();
           window.location = prefix + '/venue/' + param.selected;
@@ -20025,105 +22908,12 @@ var TaxWPCMVenue = /*#__PURE__*/function () {
         }).trigger('chosen:updated');
       }
     }
-    /**
-     * DataTables custom handler.
-     *
-     * @since 1.0.0
-     */
-
-  }], [{
-    key: "dtErrorHandler",
-    value: function dtErrorHandler() {
-      _utils.$.fn.dataTable.ext.errMode = 'none';
-      this.$table.on('error.dt', function (e, settings, techNote, message) {
-        console.log('An error has been reported by DataTables: ', message);
-      }).DataTable(); // eslint-disable-line
-    }
-    /**
-     * Get formatted date.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} date  ISO-8601 string.
-     * @param {object} links Match URLs.
-     *
-     * @return {string}     Human-readable date string.
-     */
-
-  }, {
-    key: "formatDate",
-    value: function formatDate(date, links) {
-      var _context, _context2;
-
-      var m = moment(date),
-          human = m.tz(sessionStorage.timezone).format('MMMM D, YYYY');
-      return (0, _concat["default"])(_context = (0, _concat["default"])(_context2 = "<a id=\"".concat(sanitizeTitle(links.match), "\" class=\"wpcm-matches-list-link\" href=\"")).call(_context2, links.match, "\" rel=\"bookmark\">")).call(_context, human, "</a>");
-    }
-    /**
-     * Hyperlink logo.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} fixture  Post title of a match (i.e. "United States v Some Country").
-     * @param {string} result   Match result.
-     * @param {string} homeLogo URL of home team logo.
-     * @param {string} awayLogo URL of away team logo.
-     * @param {object} links    Object containing links to the clubs.
-     *
-     * @return {string}         HTML output.
-     */
-
-  }, {
-    key: "logoResult",
-    value: function logoResult(fixture, result, homeLogo, awayLogo, links) {
-      var _context3, _context4, _context5, _context6, _context7, _context8;
-
-      var teams = fixture.split(/\sv\s/),
-          scores = result.split(/\s-\s/);
-      return (0, _concat["default"])(_context3 = (0, _concat["default"])(_context4 = (0, _concat["default"])(_context5 = (0, _concat["default"])(_context6 = (0, _concat["default"])(_context7 = (0, _concat["default"])(_context8 = "<a class=\"wpcm-matches-list-link\" href=\"".concat(links.match, "\" rel=\"bookmark\"><span class=\"wpcm-matches-list-club1\"><img class=\"icon\" src=\"")).call(_context8, homeLogo, "\" alt=\"")).call(_context7, teams[0], "\" height=\"22\" /></span><span class=\"wpcm-matches-list-status wpcm-matches-list-result\">")).call(_context6, scores[0], " - ")).call(_context5, scores[1], "</span><span class=\"wpcm-matches-list-club2\"><img class=\"icon\" src=\"")).call(_context4, awayLogo, "\" alt=\"")).call(_context3, teams[1], "\" height=\"22\" /></span></a>");
-    }
-    /**
-     * Get competition name from API.
-     *
-     * @since 1.0.0
-     *
-     * @param {object} competition API response of competition object.
-     *
-     * @return {string}            Competition name.
-     */
-
-  }, {
-    key: "competition",
-    value: function competition(_competition) {
-      return (!_utils._.isEmpty(_competition.parent) ? _competition.parent + ' - ' : '') + _competition.name;
-    }
-    /**
-     * Get opponent from API.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} fixture Post title of a match (i.e. "United States v Some Country").
-     *
-     * @return {string}        The opponent's name.
-     */
-
-  }, {
-    key: "opponent",
-    value: function opponent(fixture) {
-      var parts = fixture.split(/\sv\s/);
-
-      if ('United States' === parts[0]) {
-        return parts[1];
-      }
-
-      return parts[0];
-    }
   }]);
-  return TaxWPCMVenue;
-}();
+  return TaxWpcmVenue;
+}(_utils.DTHelper);
 
 module.exports = {
-  TaxWPCMVenue: TaxWPCMVenue
+  TaxWpcmVenue: TaxWpcmVenue
 };
 
 /***/ }),
@@ -20150,16 +22940,13 @@ var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils/index.js");
 (function (win, $) {
   var scope = {
     common: {
-      init: _modules.common
+      init: (0, _modules.common)()
     },
     front_page: {
       init: new _modules.FrontPage()
     },
     page_opponents: {
       init: (0, _modules.pageOpponents)()
-    },
-    page_players: {
-      init: (0, _modules.pagePlayers)()
     },
     page_staff: {
       init: (0, _modules.pageStaff)()
@@ -20168,13 +22955,19 @@ var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils/index.js");
       init: (0, _modules.pageVenues)()
     },
     single_wpcm_club: {
-      init: _modules.singleWpcmClub
+      init: (0, _modules.singleWpcmClub)()
     },
     single_wpcm_match: {
-      init: _modules.singleWpcmMatch
+      init: (0, _modules.singleWpcmMatch)()
+    },
+    single_wpcm_player: {
+      init: (0, _modules.singleWpcmPlayer)()
+    },
+    taxonomy_wpcm_team: {
+      init: new _modules.TaxWpcmTeam()
     },
     taxonomy_wpcm_venue: {
-      init: new _modules.TaxWPCMVenue()
+      init: new _modules.TaxWpcmVenue()
     }
   };
   var $win = $(win);
@@ -20199,7 +22992,6 @@ var _includes = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-co
 
 var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 
-var parseArgs = _utils.util.parseArgs;
 /**
  * Generate cards from API.
  *
@@ -20207,33 +22999,35 @@ var parseArgs = _utils.util.parseArgs;
  *
  * @param {string}   template Name of target template.
  * @param {string}   endpoint Name of target API endpoint.
- * @param {object}   args     Custom arguments & values to be used.
+ * @param {object}   args     Object is documented in `rugbydb/src/js/utils/requests.js`.
  * @param {Function} callback Callback function to fire.
  *
  * @return {Request}          API request and response.
  */
+var cards = function cards(template, endpoint, args) {
+  var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
-/* eslint-disable array-bracket-spacing */
-
-var cards = function cards(template, endpoint, args, callback) {
   if (template !== _utils.rdb.template) {
     return;
   }
-
-  var defaults = {
-    collection: true,
-    postId: 0,
-    venue: '',
-    grid: '#grid'
-  };
-  args = parseArgs(args, defaults);
 
   if (typeof callback === 'function') {
     callback();
   }
 
-  return new _utils.Request(endpoint, (0, _utils.$)('#nonce').val(), args.collection, args.postId, args.grid);
+  return new _utils.Request(endpoint, args);
 };
+/**
+ * United Kingdom country to city for venues.
+ *
+ * @since 1.0.0
+ *
+ * @param {string}  addressLocality Venue's city or postal town.
+ * @param {string}  addressCountry  Venue's country.
+ *
+ * @return {string}                 Respective country abbreviation.
+ */
+
 
 var ukCountry = function ukCountry(addressLocality, addressCountry) {
   var abbr;
@@ -20456,7 +23250,15 @@ module.exports = {
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _splice = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/splice */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/splice.js"));
+
+var _indexOf = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/index-of */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/index-of.js"));
+
 __webpack_require__(/*! ../vendor/mmenu/mmenu.polyfills */ "./src/js/vendor/mmenu/mmenu.polyfills.js");
+
+var _vendor = __webpack_require__(/*! ../vendor */ "./src/js/vendor/index.js");
 
 var _mmenu2 = __webpack_require__(/*! ../vendor/mmenu/mmenu */ "./src/js/vendor/mmenu/mmenu.js");
 
@@ -20469,7 +23271,8 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
  */
 
 /* eslint-disable array-bracket-spacing, no-multi-spaces */
-var mmenu = function mmenu() {
+var mmenu = function () {
+  // Options.
   var mmenuOpts = {
     autoHeight: false,
     dropdown: false,
@@ -20482,17 +23285,20 @@ var mmenu = function mmenu() {
       content: ['prev', 'title']
     }, {
       position: 'bottom',
-      content: ['<a href="mailto:info@rugbydb.com" rel="external"><i class="fas fa-envelope"></i></a>', '<a href="#" rel="external"><i class="fab fa-facebook-f"></i></a>', '<a href="#" rel="external"><i class="fab fa-instagram"></i></a>']
+      content: ['<a href="https://www.daveyjake.dev/contact/" rel="external"><i class="fas fa-envelope"></i></a>']
     }],
     searchfield: {
-      panel: true
+      panel: {
+        dividers: false
+      }
     },
     setSelected: {
       hover: true,
       parent: true
     },
     wrappers: ['wordpress']
-  };
+  }; // Configuration.
+
   var mmenuConf = {
     searchfield: {
       clear: true
@@ -20502,14 +23308,28 @@ var mmenu = function mmenu() {
         selector: '#page'
       }
     }
-  };
+  }; // Tablet vs Mobile.
 
   if (_utils.rdb.is_tablet) {
     mmenuOpts.autoHeight = true;
     mmenuOpts.dropdown = true;
     mmenuOpts.extensions.push('popup');
-  } else {
+  } else if (!(_utils.rdb.is_tablet && _utils.rdb.is_mobile)) {
     mmenuOpts.extensions.push('position-right');
+  }
+
+  if (_vendor.Foundation.MediaQuery.atLeast('large')) {
+    mmenuOpts.extensions.push('position-front');
+  } else {
+    var _context;
+
+    var index = (0, _indexOf["default"])(_context = mmenuOpts.extensions).call(_context, 'position-front');
+
+    if (index > -1) {
+      var _context2;
+
+      (0, _splice["default"])(_context2 = mmenuOpts.extensions).call(_context2, index, 1);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -20521,7 +23341,7 @@ var mmenu = function mmenu() {
     new _mmenu2.Mmenu("#menu", mmenuOpts, mmenuConf);
     new _mmenu2.Mhead('#masthead');
   });
-};
+}();
 
 module.exports = {
   mmenu: mmenu
@@ -20700,6 +23520,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _jsCookie = _interopRequireDefault(__webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js"));
+
+var _helpers = __webpack_require__(/*! ./helpers */ "./src/js/utils/helpers.js");
+
+var adminUrl = _helpers.util.adminUrl;
 /**
  * Global JavaScript constants.
  *
@@ -20711,10 +23538,272 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
  */
 
 /**
+ * ISO-2 country abbreviation to name.
+ *
+ * @author Marius <m@marius.in>
+ * @see https://gist.github.com/maephisto/9228207
+ *
+ * @since 1.0.0
+ *
+ * @type {Object}
+ */
+
+var COUNTRIES = {
+  AF: 'Afghanistan',
+  AX: 'Aland Islands',
+  AL: 'Albania',
+  DZ: 'Algeria',
+  AS: 'American Samoa',
+  AD: 'Andorra',
+  AO: 'Angola',
+  AI: 'Anguilla',
+  AQ: 'Antarctica',
+  AG: 'Antigua and Barbuda',
+  AR: 'Argentina',
+  AM: 'Armenia',
+  AW: 'Aruba',
+  AU: 'Australia',
+  AT: 'Austria',
+  AZ: 'Azerbaijan',
+  BS: 'Bahamas',
+  BH: 'Bahrain',
+  BD: 'Bangladesh',
+  BB: 'Barbados',
+  BY: 'Belarus',
+  BE: 'Belgium',
+  BZ: 'Belize',
+  BJ: 'Benin',
+  BM: 'Bermuda',
+  BT: 'Bhutan',
+  BO: 'Bolivia',
+  BA: 'Bosnia and Herzegovina',
+  BW: 'Botswana',
+  BV: 'Bouvet Island',
+  BR: 'Brazil',
+  IO: 'British Indian Ocean Territory',
+  BN: 'Brunei Darussalam',
+  BG: 'Bulgaria',
+  BF: 'Burkina Faso',
+  BI: 'Burundi',
+  KH: 'Cambodia',
+  CM: 'Cameroon',
+  CA: 'Canada',
+  CV: 'Cape Verde',
+  KY: 'Cayman Islands',
+  CF: 'Central African Republic',
+  TD: 'Chad',
+  CL: 'Chile',
+  CN: 'China',
+  CX: 'Christmas Island',
+  CC: 'Cocos (Keeling) Islands',
+  CO: 'Colombia',
+  KM: 'Comoros',
+  CG: 'Congo',
+  CD: 'Congo, Democratic Republic',
+  CK: 'Cook Islands',
+  CR: 'Costa Rica',
+  CI: 'Cote D\'Ivoire',
+  HR: 'Croatia',
+  CU: 'Cuba',
+  CY: 'Cyprus',
+  CZ: 'Czech Republic',
+  DK: 'Denmark',
+  DJ: 'Djibouti',
+  DM: 'Dominica',
+  DO: 'Dominican Republic',
+  EC: 'Ecuador',
+  EG: 'Egypt',
+  EN: 'England',
+  SV: 'El Salvador',
+  GQ: 'Equatorial Guinea',
+  ER: 'Eritrea',
+  EE: 'Estonia',
+  ET: 'Ethiopia',
+  FK: 'Falkland Islands (Malvinas)',
+  FO: 'Faroe Islands',
+  FJ: 'Fiji',
+  FI: 'Finland',
+  FR: 'France',
+  GF: 'French Guiana',
+  PF: 'French Polynesia',
+  TF: 'French Southern Territories',
+  GA: 'Gabon',
+  GM: 'Gambia',
+  GE: 'Georgia',
+  DE: 'Germany',
+  GH: 'Ghana',
+  GI: 'Gibraltar',
+  GR: 'Greece',
+  GL: 'Greenland',
+  GD: 'Grenada',
+  GP: 'Guadeloupe',
+  GU: 'Guam',
+  GT: 'Guatemala',
+  GG: 'Guernsey',
+  GN: 'Guinea',
+  GW: 'Guinea-Bissau',
+  GY: 'Guyana',
+  HT: 'Haiti',
+  HM: 'Heard Island & Mcdonald Islands',
+  VA: 'Holy See (Vatican City State)',
+  HN: 'Honduras',
+  HK: 'Hong Kong',
+  HU: 'Hungary',
+  IS: 'Iceland',
+  IN: 'India',
+  ID: 'Indonesia',
+  IR: 'Iran, Islamic Republic Of',
+  IQ: 'Iraq',
+  IE: 'Ireland',
+  IM: 'Isle Of Man',
+  IL: 'Israel',
+  IT: 'Italy',
+  JM: 'Jamaica',
+  JP: 'Japan',
+  JE: 'Jersey',
+  JO: 'Jordan',
+  KZ: 'Kazakhstan',
+  KE: 'Kenya',
+  KI: 'Kiribati',
+  KR: 'Korea',
+  KW: 'Kuwait',
+  KG: 'Kyrgyzstan',
+  LA: 'Lao People\'s Democratic Republic',
+  LV: 'Latvia',
+  LB: 'Lebanon',
+  LS: 'Lesotho',
+  LR: 'Liberia',
+  LY: 'Libyan Arab Jamahiriya',
+  LI: 'Liechtenstein',
+  LT: 'Lithuania',
+  LU: 'Luxembourg',
+  MO: 'Macao',
+  MK: 'Macedonia',
+  MG: 'Madagascar',
+  MW: 'Malawi',
+  MY: 'Malaysia',
+  MV: 'Maldives',
+  ML: 'Mali',
+  MT: 'Malta',
+  MH: 'Marshall Islands',
+  MQ: 'Martinique',
+  MR: 'Mauritania',
+  MU: 'Mauritius',
+  YT: 'Mayotte',
+  MX: 'Mexico',
+  FM: 'Micronesia, Federated States Of',
+  MD: 'Moldova',
+  MC: 'Monaco',
+  MN: 'Mongolia',
+  ME: 'Montenegro',
+  MS: 'Montserrat',
+  MA: 'Morocco',
+  MZ: 'Mozambique',
+  MM: 'Myanmar',
+  NA: 'Namibia',
+  NR: 'Nauru',
+  NP: 'Nepal',
+  NL: 'Netherlands',
+  AN: 'Netherlands Antilles',
+  NC: 'New Caledonia',
+  NZ: 'New Zealand',
+  NI: 'Nicaragua',
+  NE: 'Niger',
+  NG: 'Nigeria',
+  NU: 'Niue',
+  NF: 'Norfolk Island',
+  MP: 'Northern Mariana Islands',
+  NO: 'Norway',
+  OM: 'Oman',
+  PK: 'Pakistan',
+  PW: 'Palau',
+  PS: 'Palestinian Territory, Occupied',
+  PA: 'Panama',
+  PG: 'Papua New Guinea',
+  PY: 'Paraguay',
+  PE: 'Peru',
+  PH: 'Philippines',
+  PN: 'Pitcairn',
+  PL: 'Poland',
+  PT: 'Portugal',
+  PR: 'Puerto Rico',
+  QA: 'Qatar',
+  RE: 'Reunion',
+  RO: 'Romania',
+  RU: 'Russian Federation',
+  RW: 'Rwanda',
+  BL: 'Saint Barthelemy',
+  SH: 'Saint Helena',
+  KN: 'Saint Kitts and Nevis',
+  LC: 'Saint Lucia',
+  MF: 'Saint Martin',
+  PM: 'Saint Pierre and Miquelon',
+  VC: 'Saint Vincent and Grenadines',
+  WS: 'Samoa',
+  SM: 'San Marino',
+  ST: 'Sao Tome and Principe',
+  SA: 'Saudi Arabia',
+  SF: 'Scotland',
+  SN: 'Senegal',
+  RS: 'Serbia',
+  SC: 'Seychelles',
+  SL: 'Sierra Leone',
+  SG: 'Singapore',
+  SK: 'Slovakia',
+  SI: 'Slovenia',
+  SB: 'Solomon Islands',
+  SO: 'Somalia',
+  ZA: 'South Africa',
+  GS: 'South Georgia and Sandwich Isl.',
+  ES: 'Spain',
+  LK: 'Sri Lanka',
+  SD: 'Sudan',
+  SR: 'Suriname',
+  SJ: 'Svalbard and Jan Mayen',
+  SZ: 'Swaziland',
+  SE: 'Sweden',
+  CH: 'Switzerland',
+  SY: 'Syrian Arab Republic',
+  TW: 'Taiwan',
+  TJ: 'Tajikistan',
+  TZ: 'Tanzania',
+  TH: 'Thailand',
+  TL: 'Timor-Leste',
+  TG: 'Togo',
+  TK: 'Tokelau',
+  TO: 'Tonga',
+  TT: 'Trinidad And Tobago',
+  TN: 'Tunisia',
+  TR: 'Turkey',
+  TM: 'Turkmenistan',
+  TC: 'Turks And Caicos Islands',
+  TV: 'Tuvalu',
+  UG: 'Uganda',
+  UA: 'Ukraine',
+  AE: 'United Arab Emirates',
+  GB: 'United Kingdom',
+  US: 'United States',
+  UM: 'United States Outlying Islands',
+  UY: 'Uruguay',
+  UZ: 'Uzbekistan',
+  VU: 'Vanuatu',
+  VE: 'Venezuela',
+  VN: 'Viet Nam',
+  VG: 'Virgin Islands, British',
+  VI: 'Virgin Islands, U.S.',
+  WL: 'Wales',
+  WF: 'Wallis and Futuna',
+  EH: 'Western Sahara',
+  YE: 'Yemen',
+  ZM: 'Zambia',
+  ZW: 'Zimbabwe'
+};
+/**
  * DataTables breakpoints.
  *
  * @type {array}
  */
+
 var BREAKPOINTS = [{
   name: 'desktop',
   width: Infinity
@@ -20770,26 +23859,43 @@ var BREAKPOINTS = [{
 /**
  * Fifteen minutes.
  *
+ * @since 1.0.0
+ *
  * @type {Date}
  */
 
 var FIFTEEN_MINUTES = new Date((new Date().getTime() + 15) * 60 * 1000);
 /**
+ * DataTables loading records animation.
+ *
+ * @since 1.0.0
+ *
+ * @type {string}
+ */
+
+var DT_LOADING = '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" alt="Loading data..." />';
+/**
  * Internationalization instance.
+ *
+ * @since 1.0.0
  *
  * @type {Intl}
  */
 
 var INTL = new Intl.DateTimeFormat().resolvedOptions();
 /**
- * ISO-8601 date.
+ * ISO-8601 date for Moment.js.
+ *
+ * @since 1.0.0
  *
  * @type {string}
  */
 
 var ISO_DATE = 'YYYY-MM-DD';
 /**
- * ISO-8601 time.
+ * ISO-8601 time for Moment.js.
+ *
+ * @since 1.0.0
  *
  * @type {string}
  */
@@ -20798,12 +23904,16 @@ var ISO_TIME = 'hh:mm:ss';
 /**
  * User's locale settings.
  *
+ * @since 1.0.0
+ *
  * @type {string}
  */
 
 var LOCALE = INTL.locale.toLowerCase();
 /**
  * User's local timezone.
+ *
+ * @since 1.0.0
  *
  * @type {string}
  */
@@ -20812,12 +23922,16 @@ var TIMEZONE = INTL.timeZone;
 /**
  * US date format for Moment.js.
  *
+ * @since 1.0.0
+ *
  * @type {string}
  */
 
 var US_DATE = 'MMMM D, YYYY';
 /**
  * US time format for Moment.js.
+ *
+ * @since 1.0.0
  *
  * @type {string}
  */
@@ -20826,13 +23940,42 @@ var US_TIME = 'h:mma z';
 /**
  * UTC timezone identifier.
  *
+ * @since 1.0.0
+ *
  * @type {string}
  */
 
 var UTC = 'Etc/UTC';
+/**
+ * Session storage IIFE.
+ *
+ * @since 1.0.0
+ */
+
+(function () {
+  _jsCookie["default"].set('rdb', {
+    locale: LOCALE,
+    timezone: TIMEZONE
+  }, {
+    expires: 7
+  });
+
+  var rdbCookie = JSON.parse(_jsCookie["default"].get('rdb'));
+
+  if (!sessionStorage.locale) {
+    sessionStorage.setItem('locale', rdbCookie.locale);
+  }
+
+  if (!sessionStorage.timezone) {
+    sessionStorage.setItem('timezone', rdbCookie.timezone);
+  }
+})();
+
 module.exports = {
   BREAKPOINTS: BREAKPOINTS,
+  COUNTRIES: COUNTRIES,
   FIFTEEN_MINUTES: FIFTEEN_MINUTES,
+  DT_LOADING: DT_LOADING,
   ISO_DATE: ISO_DATE,
   ISO_TIME: ISO_TIME,
   LOCALE: LOCALE,
@@ -20840,6 +23983,178 @@ module.exports = {
   US_DATE: US_DATE,
   US_TIME: US_TIME,
   UTC: UTC
+};
+
+/***/ }),
+
+/***/ "./src/js/utils/datatable-helpers.js":
+/*!*******************************************!*\
+  !*** ./src/js/utils/datatable-helpers.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
+
+var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/classCallCheck */ "./node_modules/@babel/runtime-corejs3/helpers/classCallCheck.js"));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/createClass */ "./node_modules/@babel/runtime-corejs3/helpers/createClass.js"));
+
+var _globals = __webpack_require__(/*! ./globals */ "./src/js/utils/globals.js");
+
+var _constants = __webpack_require__(/*! ./constants */ "./src/js/utils/constants.js");
+
+/**
+ * DataTables Helper Functions.
+ *
+ * @since 1.0.0
+ */
+
+/* eslint-disable computed-property-spacing */
+var DTHelper = /*#__PURE__*/function () {
+  function DTHelper() {
+    (0, _classCallCheck2["default"])(this, DTHelper);
+  }
+
+  (0, _createClass2["default"])(DTHelper, null, [{
+    key: "competition",
+
+    /**
+     * Get competition name from API.
+     *
+     * @since 1.0.0
+     * @static
+     *
+     * @param {object} match API response of match object.
+     *
+     * @return {string}    Competition name.
+     */
+    value: function competition(match) {
+      if (_globals._.isUndefined(match.competition)) {
+        location.reload();
+      }
+
+      return (!_globals._.isEmpty(match.competition.parent) ? match.competition.parent + ' - ' : '') + match.competition.name;
+    }
+    /**
+     * Get formatted date.
+     *
+     * @since 1.0.0
+     * @static
+     *
+     * @param {number} matchId Current match ID.
+     * @param {string} date    ISO-8601 string.
+     * @param {object} links   Match URLs.
+     *
+     * @return {string}        Human-readable date string.
+     */
+
+  }, {
+    key: "formatDate",
+    value: function formatDate(matchId, date, links) {
+      var _context, _context2;
+
+      var m = (0, _globals.moment)(date),
+          human = m.tz(_constants.TIMEZONE).format(_constants.US_DATE);
+      return (0, _concat["default"])(_context = (0, _concat["default"])(_context2 = "<a id=\"match-".concat(matchId, "-date-link\" class=\"wpcm-matches-list-link\" href=\"")).call(_context2, links.match, "\" rel=\"bookmark\">")).call(_context, human, "</a>");
+    }
+    /**
+     * Hyperlink logo.
+     *
+     * @since 1.0.0
+     * @static
+     *
+     * @param {object} match Current match.
+     *
+     * @return {string}      HTML output.
+     */
+
+  }, {
+    key: "logoResult",
+    value: function logoResult(match) {
+      var _context3, _context4, _context5, _context6, _context7, _context8, _context9, _context10, _context11;
+
+      var matchId = match.ID,
+          fixture = match.fixture,
+          result = match.result,
+          homeLogo = match.logo.home,
+          awayLogo = match.logo.away,
+          links = match.links,
+          teams = fixture.split(/\sv\s/),
+          scores = result.split(/\s-\s/);
+      return (0, _concat["default"])(_context3 = (0, _concat["default"])(_context4 = (0, _concat["default"])(_context5 = (0, _concat["default"])(_context6 = (0, _concat["default"])(_context7 = (0, _concat["default"])(_context8 = (0, _concat["default"])(_context9 = (0, _concat["default"])(_context10 = (0, _concat["default"])(_context11 = "<div class=\"fixture-result flex\"><div class=\"inline-cell\"><a id=\"".concat(_globals.rdb.template.replace(/\.php/, ''), "-match-")).call(_context11, matchId, "-result-link\" href=\"")).call(_context10, links.match, "\" title=\"")).call(_context9, fixture, "\" rel=\"bookmark\"><img class=\"icon\" src=\"")).call(_context8, homeLogo, "\" alt=\"")).call(_context7, teams[0], "\" height=\"22\" /></div><div class=\"inline-cell\"><span class=\"result\">")).call(_context6, scores[0], " - ")).call(_context5, scores[1], "</span></div><div class=\"inline-cell\"><img class=\"icon\" src=\"")).call(_context4, awayLogo, "\" alt=\"")).call(_context3, teams[1], "\" height=\"22\" /></a></div></div>");
+    }
+    /**
+     * Get opponent from API.
+     *
+     * @since 1.0.0
+     * @static
+     *
+     * @param {string} fixture Post title of a match (i.e. "United States v Some Country").
+     *
+     * @return {string}        The opponent's name.
+     */
+
+  }, {
+    key: "opponent",
+    value: function opponent(fixture) {
+      var parts = fixture.split(/\sv\s/);
+
+      if ('United States' === parts[0]) {
+        return parts[1];
+      }
+
+      return parts[0];
+    }
+    /**
+     * Hyperlink venue.
+     *
+     * @since 1.0.0
+     * @static
+     *
+     * @param {object} venue Match venue object.
+     *
+     * @return {string}      HTML output.
+     */
+
+  }, {
+    key: "venueLink",
+    value: function venueLink(venue) {
+      var _context12, _context13, _context14, _context15, _context16;
+
+      return (0, _concat["default"])(_context12 = (0, _concat["default"])(_context13 = (0, _concat["default"])(_context14 = (0, _concat["default"])(_context15 = (0, _concat["default"])(_context16 = "<a id=\"venue-".concat(venue.id, "-link\" href=\"")).call(_context16, venue.link, "\" title=\"")).call(_context15, venue.name, "\" rel=\"bookmark\"><span class=\"flag-icon flag-icon-squared flag-icon-squared-")).call(_context14, venue.country, "\" title=\"")).call(_context13, _constants.COUNTRIES[venue.country.toUpperCase()], "\"></span> ")).call(_context12, venue.name, "</a>");
+    }
+    /**
+     * DataTables custom handler.
+     *
+     * @since 1.0.0
+     *
+     * @param {jQuery} table DataTable or selector.
+     */
+
+  }, {
+    key: "dtErrorHandler",
+    value: function dtErrorHandler(table) {
+      if (!(table instanceof jQuery)) {
+        table = (0, _globals.$)(table);
+      }
+
+      _globals.$.fn.dataTable.ext.errMode = 'none';
+      table.on('error.dt', function (e, settings, techNote, message) {
+        console.log('An error has been reported by DataTables: ', message);
+      }).DataTable(); // eslint-disable-line
+    }
+  }]);
+  return DTHelper;
+}();
+
+module.exports = {
+  DTHelper: DTHelper
 };
 
 /***/ }),
@@ -20895,10 +24210,6 @@ module.exports = Date;
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
-
-var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/helpers/typeof */ "./node_modules/@babel/runtime-corejs3/helpers/typeof.js"));
-
 /**
  * Global variables that are used sitewide.
  *
@@ -20917,27 +24228,10 @@ var ux = 'load resize orientationchange'; // WordPress JS object.
 
 var wp = window.wp; // Yet another dataTables custom filter.
 
-var yadcf = window.yadcf; // DataTables timestamp render sort.
-
-var dtTimestampSort = function dtTimestampSort(data, type, row, meta) {
-  if ('sort' === type || 'type' === type) {
-    var api = new $.fn.dataTable.Api(meta.settings),
-        $td = $(api.cell({
-      row: meta.row,
-      column: meta.col
-    }).node()),
-        sortData = $td.data('sort');
-    return (0, _typeof2["default"])(sortData) !== undefined ? sortData : data; // eslint-disable-line
-  }
-
-  var val = $.fn.dataTable.render.number().display(data, type, row, meta);
-  return val;
-};
-
+var yadcf = window.yadcf;
 module.exports = {
   _: _,
   $: $,
-  dtTimestampSort: dtTimestampSort,
   moment: moment,
   rdb: rdb,
   ux: ux,
@@ -20967,11 +24261,7 @@ var _find = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs
 
 var _concat = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/concat */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/concat.js"));
 
-var _jsCookie = _interopRequireDefault(__webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js"));
-
 var _globals = __webpack_require__(/*! ./globals */ "./src/js/utils/globals.js");
-
-var _constants = __webpack_require__(/*! ./constants */ "./src/js/utils/constants.js");
 
 /**
  * Helper functions.
@@ -20992,20 +24282,6 @@ var util = {
     var _context;
 
     return (0, _concat["default"])(_context = "".concat(location.origin, "/wp-admin/")).call(_context, path);
-  },
-
-  /**
-   * Set sitewide cookie to personalize dates and times.
-   *
-   * @since 1.0.0
-   */
-  cookie: function cookie() {
-    _jsCookie["default"].set('rdb', {
-      locale: _constants.LOCALE,
-      timezone: _constants.TIMEZONE
-    }, {
-      expires: 7
-    });
   },
 
   /**
@@ -21056,16 +24332,63 @@ var util = {
    * @return {number}    Color lightness.
    */
   lightness: function lightness(hex) {
-    var color = this.hex2rgb(hex);
+    var color = util.hex2rgb(hex);
 
     if (null !== color) {
       return 1 / 2 * (Math.max(color.r, color.g, color.b) + Math.min(color.r, color.g, color.b));
     }
   },
-  locale: function locale() {
-    if (!sessionStorage.locale) {
-      sessionStorage.setItem('locale', _constants.LOCALE);
+
+  /**
+   * Match HTML element height.
+   *
+   * @since 1.0.0
+   *
+   * @param {HTMLElement} elA Some HTML element.
+   * @param {HTMLElement} elB HTML element whose height to match.
+   */
+  matchHeight: function matchHeight(elA, elB) {
+    if (!(elA instanceof jQuery)) {
+      elA = (0, _globals.$)(elA);
     }
+
+    if (!(elB instanceof jQuery)) {
+      elB = (0, _globals.$)(elB);
+    }
+
+    var $win = (0, _globals.$)(window),
+        height = elB.height();
+    elA.css({
+      height: height
+    }).addClass('rdb-equalizer');
+    $win.on('changed.zf.mediaquery', function (e, newSize, oldSize) {
+      if (newSize) {
+        elA.css({
+          height: elB.height()
+        });
+      }
+    });
+  },
+
+  /**
+   * Match element width.
+   *
+   * @since 1.0.0
+   *
+   * @param {HTMLELement} elA Some HTML element.
+   * @param {HTMLElement} elB Another HTML element with the width we need.
+   */
+  matchWidth: function matchWidth(elA, elB) {
+    if (!(elA instanceof jQuery)) {
+      elA = (0, _globals.$)(elA);
+    }
+
+    if (!(elB instanceof jQuery)) {
+      elB = (0, _globals.$)(elB);
+    }
+
+    var targetWidth = elB.width();
+    elA.width(targetWidth);
   },
 
   /**
@@ -21116,19 +24439,10 @@ var util = {
     .replace(/\//g, '') // collapse all forward-slashes by a dash
     .replace(/[^a-z0-9 -]/g, '') // remove invalid chars
     .replace(/\s+/g, '-') // collapse whitespace and replace by a dash
-    .replace(/-+/g, '-'); // collapse dashes
+    .replace(/-+/g, '-') // collapse dashes
+    .replace(/([a-z])('|\’|8217\-)([a-z])/, '$1$3'); // collapse apostrophes
 
     return string;
-  },
-  timezone: function timezone() {
-    if (!sessionStorage.timezone) {
-      sessionStorage.setItem('timezone', _constants.TIMEZONE);
-    }
-  },
-  init: function init() {
-    this.cookie();
-    this.locale();
-    this.timezone();
   }
 };
 module.exports = {
@@ -21216,6 +24530,20 @@ _Object$defineProperty(exports, "BREAKPOINTS", {
   }
 });
 
+_Object$defineProperty(exports, "COUNTRIES", {
+  enumerable: true,
+  get: function get() {
+    return _constants.COUNTRIES;
+  }
+});
+
+_Object$defineProperty(exports, "DT_LOADING", {
+  enumerable: true,
+  get: function get() {
+    return _constants.DT_LOADING;
+  }
+});
+
 _Object$defineProperty(exports, "FIFTEEN_MINUTES", {
   enumerable: true,
   get: function get() {
@@ -21293,10 +24621,10 @@ _Object$defineProperty(exports, "ucfirst", {
   }
 });
 
-_Object$defineProperty(exports, "parseArgs", {
+_Object$defineProperty(exports, "ksort", {
   enumerable: true,
   get: function get() {
-    return _php.parseArgs;
+    return _php.ksort;
   }
 });
 
@@ -21304,6 +24632,13 @@ _Object$defineProperty(exports, "util", {
   enumerable: true,
   get: function get() {
     return _helpers.util;
+  }
+});
+
+_Object$defineProperty(exports, "DTHelper", {
+  enumerable: true,
+  get: function get() {
+    return _datatableHelpers.DTHelper;
   }
 });
 
@@ -21327,6 +24662,8 @@ var _string = __webpack_require__(/*! ./string */ "./src/js/utils/string.js");
 var _php = __webpack_require__(/*! ./php */ "./src/js/utils/php.js");
 
 var _helpers = __webpack_require__(/*! ./helpers */ "./src/js/utils/helpers.js");
+
+var _datatableHelpers = __webpack_require__(/*! ./datatable-helpers */ "./src/js/utils/datatable-helpers.js");
 
 var _request = __webpack_require__(/*! ./request */ "./src/js/utils/request.js");
 
@@ -21390,7 +24727,13 @@ exports.master = master;
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
 
+var _map = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/map */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/map.js"));
+
+var _keys = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/object/keys */ "./node_modules/@babel/runtime-corejs3/core-js-stable/object/keys.js"));
+
 var _slice = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/slice */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/slice.js"));
+
+var _globals = __webpack_require__(/*! ./globals */ "./src/js/utils/globals.js");
 
 /**
  * PHP functions for JavaScript.
@@ -21400,6 +24743,8 @@ var _slice = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corej
 
 /**
  * Recreate PHP's `ucfirst` function for JavaScript.
+ *
+ * @since 1.0.0
  *
  * @example {
  *
@@ -21417,8 +24762,32 @@ var ucfirst = function ucfirst(string) {
       remainingLetters = '#' === string.charAt(0) ? (0, _slice["default"])(string).call(string, 2) : (0, _slice["default"])(string).call(string, 1);
   return upperCaseFirst + remainingLetters;
 };
+/**
+ * Recreate PHP's `ksort` function for JavaScript, powered by Lodash.
+ *
+ * @since 1.0.0
+ *
+ * @example {
+ *
+ *     ksort( {'some': 'val', 'random': 'val', 'object': 'value'} ) => {'object': value, 'random': 'val', 'some': 'val'}
+ *
+ * }
+ *
+ * @param {Object} object Object ot sort by keys.
+ */
+
+
+var ksort = function ksort(object) {
+  var keys = (0, _keys["default"])(object),
+      sortedKeys = _globals._.sortBy(keys);
+
+  return _globals._.fromPairs((0, _map["default"])(_globals._).call(_globals._, sortedKeys, function (key) {
+    return [key, object[key]];
+  }));
+};
 
 module.exports = {
+  ksort: ksort,
   ucfirst: ucfirst
 };
 
@@ -21450,18 +24819,28 @@ var _isotopeLayout = _interopRequireDefault(__webpack_require__(/*! isotope-layo
 
 __webpack_require__(/*! isotope-packery */ "./node_modules/isotope-packery/packery-mode.js");
 
+var _infiniteScroll = _interopRequireDefault(__webpack_require__(/*! infinite-scroll */ "./node_modules/infinite-scroll/js/index.js"));
+
 var _globals = __webpack_require__(/*! ./globals */ "./src/js/utils/globals.js");
 
+var _helpers = __webpack_require__(/*! ./helpers */ "./src/js/utils/helpers.js");
+
+_infiniteScroll["default"].imagesLoaded = window.imagesLoaded;
 (0, _jqueryBridget["default"])('isotope', _isotopeLayout["default"], _globals.$);
+(0, _jqueryBridget["default"])('infiniteScroll', _infiniteScroll["default"], _globals.$);
+var adminUrl = _helpers.util.adminUrl,
+    parseArgs = _helpers.util.parseArgs;
 /**
  * Make AJAX request to REST API.
  *
  * @since 1.0.0
  *
- * @param {String} postType The post type slug.
+ * @param {String} route The post type slug.
  *
  * @return {jQuery}
  */
+
+/* eslint-disable no-extra-parens, computed-property-spacing */
 
 var Request = /*#__PURE__*/function () {
   /**
@@ -21469,33 +24848,48 @@ var Request = /*#__PURE__*/function () {
    *
    * @since 1.0.0
    *
-   * @param {string} postType   Slug of requested post type.
-   * @param {string} nonce      Generated nonce key.
-   * @param {bool}   collection Is the request for multiple items? Default true.
-   * @param {number} postId     Post ID of requested item.
-   * @param {string} grid       The grid attribute selector.
+   * @param {string} route   Slug of requested post type.
+   * @param {object} args {
+   *     The optional argument properties.
+   *
+   *     @type {string} nonce      Generated nonce key.
+   *     @type {bool}   collection Is the request for multiple items? Default true.
+   *     @type {number} postId     Post ID of requested item.
+   *     @type {string} postName   Post slug of the requested item.
+   *     @type {string} venue      The venue slug.
+   *     @type {string} grid       The grid attribute selector.
+   * }
    *
    * @return {Request} JSON response from API.
    */
   function Request() {
-    var postType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var nonce = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var collection = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-    var postId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-    var venue = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
-    var grid = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : '#grid';
+    var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var args = arguments.length > 1 ? arguments[1] : undefined;
     (0, _classCallCheck2["default"])(this, Request);
-    this.postType = postType.match(/\//) ? postType.split('/') : postType;
-    this.team = postType.match(/\//) ? this.postType[1] : ''; // eslint-disable-line
+    this.defaults = {
+      nonce: '',
+      collection: true,
+      postId: 0,
+      postName: '',
+      venue: '',
+      grid: '#grid',
+      per_page: '',
+      page: ''
+    };
+    args = parseArgs(args, this.defaults);
+    this.route = route.match(/\//) ? route.split('/') : route;
+    this.team = route.match(/\//) ? this.route[1] : '';
+    this.route = route.match(/\//) ? this.route[0] : this.route; // eslint-disable-line
 
-    this.postType = postType.match(/\//) ? this.postType[0] : this.postType; // eslint-disable-line
-
-    this.nonce = nonce;
-    this.venue = venue;
-    this.collection = collection;
-    this.postId = postId;
-    this.grid = grid;
-    this.endpoint = Request._endpointMap(this.postType); // this._adaptiveBackground();
+    this.nonce = args.nonce;
+    this.venue = args.venue;
+    this.collection = args.collection;
+    this.postId = args.postId;
+    this.postName = args.postName;
+    this.grid = args.grid;
+    this.perPage = args.per_page;
+    this.page = args.page;
+    this.endpoint = Request._endpointMap(this.route);
 
     this._ajax();
   }
@@ -21504,6 +24898,8 @@ var Request = /*#__PURE__*/function () {
    *
    * @since 1.0.0
    * @access private
+   *
+   * @todo Paginate player profile requests. Limit response to 20.
    *
    * @return {jQuery.ajax} AJAX response from API.
    */
@@ -21515,9 +24911,9 @@ var Request = /*#__PURE__*/function () {
       var self = this;
       var args = {
         action: "get_".concat(this.endpoint),
-        nonce: this.nonce,
+        route: this.route,
         collection: this.collection,
-        post_type: this.postType
+        nonce: this.nonce
       };
 
       if (!_globals._.isEmpty(this.team)) {
@@ -21528,31 +24924,46 @@ var Request = /*#__PURE__*/function () {
         args.venue = this.venue;
       }
 
+      if (!_globals._.isEmpty(this.postName)) {
+        args.post_name = this.postName;
+      }
+
       if (this.postId > 0) {
         args.post_id = this.postId;
       }
 
+      if (!_globals._.isEmpty(this.perPage)) {
+        args.per_page = this.perPage;
+      }
+
+      if (!_globals._.isEmpty(this.page)) {
+        args.page = this.page;
+      }
+
       _globals.$.ajax({
-        url: _globals.wp.ajax.settings.url,
+        url: adminUrl('admin-ajax.php'),
         data: args,
         dataType: 'json',
         success: function success(response) {
-          if (!response.success) {
+          if (!response.success || response.success && _globals._.isUndefined(response.data)) {
             return this.error();
           }
 
-          var isoTmpls = ['players', 'staff', 'venues', 'opponents']; // eslint-disable-line
+          var isoTmpls = ['mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens', 'team-usa-men', 'team-usa-women', 'staff', 'venues', 'opponents']; // eslint-disable-line
 
-          if ((0, _includes["default"])(_globals._).call(_globals._, isoTmpls, _globals.rdb.post_name) || (0, _includes["default"])(_globals._).call(_globals._, isoTmpls, _globals.rdb.term_name)) {
+          if ((0, _includes["default"])(_globals._).call(_globals._, isoTmpls, _globals.rdb.post_name) || (0, _includes["default"])(_globals._).call(_globals._, isoTmpls, _globals.rdb.term_slug)) {
             return self._isoTmpls(response.data);
-          } else if ('match' === self.postType && self.postId > 0) {
+          } else if ('match' === self.route && self.postId > 0) {
             return self._timelineTmpl(response.data);
           }
 
           return response.data;
         },
         error: function error(xhr, textStatus, errorThrown) {
-          console.log(xhr + '\n' + textStatus + '\n' + errorThrown);
+          console.dir(xhr); // eslint-disable-line
+
+          console.log(textStatus);
+          console.log(errorThrown);
         },
         complete: function complete() {
           (0, _globals.$)('#scroll-status').remove();
@@ -21584,6 +24995,7 @@ var Request = /*#__PURE__*/function () {
             order: '[data-order]'
           },
           sortBy: 'order',
+          layoutMode: 'packery',
           packery: {
             columnWidth: '.card',
             gutter: 0
@@ -21713,6 +25125,10 @@ var Request = /*#__PURE__*/function () {
         });
       } else {
         (0, _globals.$)('.chosen_select').on('change', function (e, params) {
+          if (_globals._.isUndefined(params)) {
+            return Request.__filterTmpl(e.target.value, $selector, data);
+          }
+
           return Request.__filterTmpl(params.selected, $selector, data);
         });
       }
@@ -21737,10 +25153,11 @@ var Request = /*#__PURE__*/function () {
           filter: '*'
         });
       } else {
-        var _context;
+        var _context, _context2;
 
+        var optNode = (0, _globals.$)("option[value=\"".concat(filterValue, "\"]")).text();
         $selector.isotope({
-          filter: (0, _concat["default"])(_context = "[data-".concat(data.attrName, "=")).call(_context, filterValue, "]")
+          filter: (0, _concat["default"])(_context = (0, _concat["default"])(_context2 = "[data-".concat(data.attrName, "=\"")).call(_context2, filterValue, "\"], [data-order=\"")).call(_context, optNode, "\"]")
         });
       }
     }
@@ -23886,6 +27303,49 @@ var _setTimeout2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime
   window.Modernizr = Modernizr;
   ;
 })(window, document);
+
+/***/ }),
+
+/***/ "./src/js/vendor/wpcm-player-appearances.js":
+/*!**************************************************!*\
+  !*** ./src/js/vendor/wpcm-player-appearances.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+/**
+ * WP Club Manager: Player Appearances.
+ *
+ * @since 1.0.0
+ */
+var wpcmPA = function wpcmPA() {
+  (0, _utils.$)('#wpcm-pa-season-content div').hide();
+  (0, _utils.$)('#wpcm-pa-season-tabs li:first').attr('id', 'current');
+  var activeTab = (0, _utils.$)('#current a').attr('href');
+  (0, _utils.$)(activeTab + ', ' + activeTab + ' .dataTables_wrapper').fadeIn();
+  (0, _utils.$)('#wpcm-pa-season-tabs li').on('click', 'a', function (e) {
+    e.preventDefault();
+
+    if ((0, _utils.$)(this).attr('id') === 'current') {
+      return;
+    } else {
+      (0, _utils.$)('#wpcm-pa-season-content div').hide();
+      (0, _utils.$)('#wpcm-pa-season-tabs li').attr('id', '');
+      (0, _utils.$)(this).parent().attr('id', 'current');
+      activeTab = (0, _utils.$)(this).attr('href');
+      (0, _utils.$)(activeTab + ', ' + activeTab + ' .dataTables_wrapper').fadeIn();
+    }
+  });
+};
+
+module.exports = {
+  wpcmPA: wpcmPA
+};
 
 /***/ }),
 

@@ -6,4 +6,18 @@
 body {
     background: $color__background-body;
     min-height: rem-calc(400px);
+
+    &.logged-in {
+        @include breakpoint(wordpress) {
+            .mm-navbars_top {
+                margin-top: $size__adminbar;
+            }
+        }
+    }
+}
+
+.rdb {
+    &-equalizer {
+        overflow: hidden;
+    }
 }

@@ -3,7 +3,7 @@
  * WPCM-Specific functions.
  *
  * @author Davey Jacobson <djacobson@usa.rugby>
- * @since RDB 1.0.0
+ * @since 1.0.0
  *
  * @package Rugby_Database
  */
@@ -62,18 +62,17 @@ function _rdb_taxonomy_template( $taxonomy, $slug ) {
  * @global string $rdb_tax_template Template's taxonomy slug.
  *
  * @param array|string $classes Class names to add to content container.
+ * @param string       $tax     Targeted taxonomy.
  *
  * @return array    HTML classes for this term.
  */
-function rdb_get_term_template_class( $class = '' ) {
-    $rdb_tax = 'wpcm_venue';
-
-    $query_var = get_query_var( $rdb_tax );
-    $term      = get_term_by( 'slug', $query_var, $rdb_tax );
+function rdb_get_term_template_class( $class = '', $tax = '' ) {
+    $query_var = get_query_var( $tax );
+    $term      = get_term_by( 'slug', $query_var, $tax );
 
     $classes = array(
         'taxonomy'
-        , $rdb_tax
+        , $tax
         , "term-{$term->term_id}"
         , $query_var
     );
@@ -193,8 +192,8 @@ function rdb_wpcm_decode_address( $address ) {
                 $coordinates = $data->results[0]->geometry->location;
                 $place_id    = $data->results[0]->place_id;
 
-                $cache_value['lat']      = $coordinates->lat;
-                $cache_value['lng']      = $coordinates->lng;
+                $cache_value['lat']      = (float) $coordinates->lat;
+                $cache_value['lng']      = (float) $coordinates->lng;
                 $cache_value['place_id'] = $place_id;
 
                 // cache coordinates for 1 month
@@ -478,12 +477,12 @@ function rdb_wpcm_get_match_team( $post_id ) {
  *     @type string $name        Venue name.
  *     @type int    $id          Venue ID.
  *     @type string $slug        Venue slug.
- *     @type string $description Venue's description.
- *     @type string $address     Venue's street address.
- *     @type string $city        Venue's city.
- *     @type string $country     Venue's country.
+ *     @type string $description Venue description.
+ *     @type string $address     Venue street address.
+ *     @type string $city        Venue city.
+ *     @type string $country     Venue country.
  *     @type int    $capacity    Venue capacity.
- *     @type string $timezone    Venue's timezone.
+ *     @type string $timezone    Venue timezone.
  *     @type string $status      Hosted as home or neutral venue.
  * }
  */
@@ -772,9 +771,33 @@ function rdb_wpcm_head_to_heads( $post_id ) {
 /** Front-End Functions *******************************************************/
 
 /**
+ * Remove default WP Club Manager stylesheet via {@see 'wpclubmanager_enqueue_styles'}.
+ *
+ * @since 1.0.0
+ *
+ * @param array $scripts Enqueued assets.
+ *
+ * @return array    Remaining assets.
+ */
+function rdb_dequeue_wpcm_style( $scripts ) {
+    if ( isset( $scripts['wpclubmanager-general'] ) ) {
+        unset( $scripts['wpclubmanager-general'] );
+    }
+
+    if ( isset( $scripts['wpcm-pa-style'] ) ) {
+        unset( $scripts['wpcm-pa-style'] );
+    }
+
+    return $scripts;
+}
+
+add_filter( 'wpclubmanager_enqueue_styles', 'rdb_dequeue_wpcm_style' );
+add_filter( 'wpcm_pa_enqueue_styles', 'rdb_dequeue_wpcm_style' );
+
+/**
  * Check for match timeline.
  *
- * @since RDB 1.0.0
+ * @since 1.0.0
  *
  * @param int $wr_id World Rugby ID.
  *
@@ -793,7 +816,7 @@ function rdb_has_timeline( $wr_id ) {
 /**
  * Check for empty match timeline.
  *
- * @since RDB 1.0.0
+ * @since 1.0.0
  *
  * @see rdb_has_timeline()
  *
@@ -816,6 +839,216 @@ function rdb_match_timeline( $wr_id ) {
 
     return $data;
 }
+
+/**
+ * Player filter dropdown menus via {@see 'rdb_player_{$name}_dropdown'}.
+ *
+ * @since 1.0.0
+ *
+ * @param array     $options   All positions found in the `wpcm_position` taxonomy.
+ * @param array     $group     Grouped terms.
+ * @param WP_Term[] $terms     Found term objects.
+ * @param string    $query_var Taxonomy term slug.
+ * @param string    $name      Dropdown slug-ified name. (ex: 'competition', 'season', 'position').
+ *
+ * @return array    Filtered dropdown options.
+ */
+function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name ) {
+    // phpcs:disable
+
+    // if ( 'season' === $name ) {
+    //     $special   = array();
+    //     $this_year = date( 'Y' );
+    //     $meta_key  = 'rdb_special_event_year';
+    //     foreach ( $terms as $term ) {
+    //         $term_meta = get_term_meta( $term->term_id, $meta_key, true );
+    //         if ( $term_meta ) {
+    //             $special[] = absint( $term->slug );
+    //         }
+    //     }
+    // }
+    /**
+     * @todo Figure out a mathematic solution to automatically generate all Olympic and RWC years.
+     */
+    $team_usa = array( '1920', '1924', '2016', '2021', '2024', '2028', '2032', '2036' );
+    $rwc      = array( '1', '5', '9', '3', '7' );
+    // phpcs:enable
+    $names = array( 'competition', 'position', 'season' );
+
+    $xv    = array( 'mens-eagles', 'womens-eagles' );
+    $sv    = array( 'mens-sevens', 'womens-sevens' );
+    $us    = array( 'team-usa-men', 'team-usa-women' );
+
+    $xv_positions  = array( 'prop', 'hooker', 'lock', 'flanker', 'number-8', 'scrum-half', 'fly-half', 'wing', 'center', 'full-back' );
+    $sv_positions = array( 'prop', 'hooker', 'scrum-half', 'fly-half', 'wing', 'full-back', 'back', 'forward' );
+
+    $women_xv_comps = array( 'triangular-99', 'nations-cup', 'can-am', 'womens', 'canada-cup', 'super-series', 'atlantic-cup', 'rugby-fest' );
+    $women_sv_comps = array( 'womens', 'glendale', 'biarritz', 'langford', 'kitakyushu', 'houston', 'atlanta', 'victoria', 'ferrand', 'amsterdam', 'china', 'sao-paulo' );
+
+    foreach ( $names as $dropdown ) {
+        $var  = "new_{$dropdown}";
+        $$var = array();
+
+        if ( in_array( $query_var, $xv, true ) ) :
+            switch ( $dropdown ) {
+                case 'competition':
+                    if ( 'competition' === $name ) {
+                        foreach ( $options as $html_class => $competition ) {
+                            $slug = sanitize_title( $competition );
+
+                            if ( ! ( preg_match( '/sevens|olympic/', $slug ) || preg_match( '/(\.comp-(275|3(58|81))([-0-9]+)?)/', $html_class ) ) ) {
+                                if ( 'mens-eagles' === $query_var && ! preg_match( '/(' . implode( '|', $women_xv_comps ) . ')/', $slug ) ) {
+                                    $$var[ $html_class ] = $competition;
+                                } elseif ( 'womens-eagles' === $query_var && preg_match( '/(' . implode( '|', $women_xv_comps ) . ')/', $slug ) ) {
+                                    $$var[ $html_class ] = $competition;
+                                }
+                            }
+                        }
+
+                        $options = $$var;
+                    }
+                break;
+                case 'position':
+                    if ( 'position' === $name ) {
+                        foreach ( $xv_positions as $position ) {
+                            $$var[ '.' . $position ] = $options[ '.' . $position ];
+                        }
+
+                        $options = $$var;
+                    }
+                break;
+                case 'season':
+                    if ( 'season' === $name ) {
+                        foreach ( $options as $slug => $season ) {
+                            if ( ! preg_match( '/(-|\/)/', $season ) && '2020' !== $season ) {
+                                $$var[ $slug ] = $season;
+                            }
+                        }
+
+                        $options = $$var;
+                    }
+                break;
+            }
+        elseif ( in_array( $query_var, $sv, true ) ) :
+            switch ( $dropdown ) {
+                case 'competition':
+                    if ( 'competition' === $name ) {
+                        $html  = '<option value="*">All Competitions</option>';
+                        $html .= '<option value=".comp-357">Rugby World Cup Sevens</option>';
+
+                        foreach ( $group as $label => $data ) {
+                            if ( 'Olympic Games' !== $label ) {
+                                $html .= '<optgroup label="' . esc_attr( $label ) . '">';
+
+                                $data = array_flip( $data );
+                                ksort( $data );
+                                $data = array_flip( $data );
+
+                                foreach ( $data as $class => $name ) {
+                                    $slug = sanitize_title( $name );
+
+                                    if ( preg_match( '/sevens/', $slug ) ) {
+                                        if ( 'womens-sevens' === $query_var && preg_match( '/(' . implode( '|', $women_sv_comps ) . ')/', $slug ) ) {
+                                            $part = preg_split( '/-/', $name );
+
+                                            $html .= '<option value=".' . esc_attr( $class ) . '">' . esc_html( $part[1] ) . '</option>';
+                                        } elseif ( 'mens-sevens' === $query_var && ! preg_match( '/(' . implode( '|', $women_sv_comps ) . ')/', $slug ) ) {
+                                            $part = preg_split( '/-/', $name );
+
+                                            $html .= '<option value=".' . esc_attr( $class ) . '">' . esc_html( $part[1] ) . '</option>';
+                                        }
+                                    }
+                                }
+
+                                $html .= '</optgroup>';
+                            }
+                        }
+
+                        $options = $html;
+                    }
+                break;
+                case 'position':
+                    if ( 'position' === $name ) {
+                        foreach ( $sv_positions as $position ) {
+                            $$var[ '.' . $position ] = $options[ '.' . $position ];
+                        }
+
+                        $options = $$var;
+                    }
+                break;
+                case 'season':
+                    if ( 'season' === $name ) {
+                        foreach ( $options as $slug => $season ) {
+                            if ( preg_match( '/(-|\/)/', $season ) || absint( $season ) >= 2018 ) {
+                                $$var[ $slug ] = $season;
+                            }
+                        }
+
+                        $options = $$var;
+                    }
+                break;
+            }
+        elseif ( in_array( $query_var, $us, true ) ) :
+            switch ( $dropdown ) {
+                case 'competition':
+                    if ( 'competition' === $name ) {
+                        foreach ( $options as $html_class => $competition ) {
+                            $slug = sanitize_title( $competition );
+
+                            if ( preg_match( '/olympic/', $slug ) ) {
+                                $html = '<option value="*">Select Competition</option>';
+
+                                foreach ( $group as $label => $comps ) {
+                                    $html .= '<optgroup label="' . esc_attr( $label ) . '">';
+
+                                    foreach ( $comps as $slug => $name ) {
+                                        $html .= '<option value="' . esc_attr( $slug ) . '">' . esc_html( $name ) . '</option>';
+                                    }
+
+                                    $html .= '</optgroup>';
+                                }
+
+                                foreach ( $options as $html_class => $competition ) {
+                                    $html .= '<option value="' . esc_attr( $html_class ) . '">' . esc_html( $competition ) . '</option>';
+                                }
+                            }
+                        }
+
+                        $options = $html;
+                    }
+                break;
+                case 'season':
+                    if ( 'season' === $name ) {
+                        foreach ( $options as $slug => $season ) {
+                            if ( in_array( $season, $team_usa, true ) ) {
+                                $$var[ $slug ] = $season;
+                            }
+                        }
+
+                        $options = $$var;
+                    }
+                break;
+            }
+        endif;
+    }
+
+    return $options;
+}
+
+/**
+ * Initialize player dropdown filter via {@see 'init'}.
+ *
+ * @since 1.0.0
+ */
+function rdb_player_dropdown_filters() {
+    $names = array( 'competition', 'position', 'season' );
+
+    foreach ( $names as $name ) {
+        add_filter( "rdb_player_{$name}_dropdown", 'rdb_player_dropdown_filter', 10, 5 );
+    }
+}
+
+add_action( 'init', 'rdb_player_dropdown_filters' );
 
 /**
  * Short-hand function for a permalink with a trailing slash.
@@ -845,7 +1078,7 @@ add_action( 'the_content', 'do_shortcode' );
 /**
  * Template hooks reset.
  *
- * @since RDB 1.0.0
+ * @since 1.0.0
  */
 function rdb_wpcm_match_home_badge() {
     echo wpclubmanager_template_single_match_home_club_badge();
@@ -862,6 +1095,15 @@ function rdb_wpcm_match_away_badge() {
  */
 function rdb_single_match_coach() {
     wpclubmanager_get_template( 'single-match/head-coach.php' );
+}
+
+/**
+ * Load single player title.
+ *
+ * @since 1.0.0
+ */
+function rdb_wpcm_player_title() {
+    echo wpclubmanager_template_single_player_title();
 }
 
 /**
@@ -885,11 +1127,11 @@ function rdb_wpcm_match_timeline() {
 }
 
 /**
- * Hooks to remove via {@see 'wpclubmanager_before_single_match'}.
+ * Match hooks to remove via {@see 'wpclubmanager_before_single_match'}.
  *
- * @see rdb_wpcm_template_hooks_match_badges()
+ * @since 1.0.0
  */
-function rdb_reset_wpcm_hooks() {
+function rdb_reset_wpcm_match_hooks() {
     global $post;
 
     remove_action( 'wpclubmanager_single_match_info', 'wpclubmanager_template_single_match_home_club_badge', 5 );
@@ -905,20 +1147,50 @@ function rdb_reset_wpcm_hooks() {
 
     add_action( 'wpclubmanager_single_match_badge_home', 'rdb_wpcm_match_home_badge', 5 );
     add_action( 'wpclubmanager_single_match_badge_away', 'rdb_wpcm_match_away_badge', 15 );
+    add_action( 'wpclubmanager_single_match_details', 'rdb_wpcm_match_timeline', 15, 1 );
     add_action( 'wpclubmanager_single_match_info', 'wpclubmanager_template_single_match_score', 10 );
     add_action( 'wpclubmanager_single_match_fixture', 'wpclubmanager_template_single_match_comp', 10 );
     add_action( 'wpclubmanager_single_match_fixture', 'rdb_single_match_coach', 15, 1 );
     add_action( 'wpclubmanager_single_match_meta', 'wpclubmanager_template_single_match_referee', 5 );
     add_action( 'wpclubmanager_single_match_meta', 'wpclubmanager_template_single_match_team', 10 );
     add_action( 'wpclubmanager_single_match_meta', 'wpclubmanager_template_single_match_date', 15 );
-
-    add_action( 'wpclubmanager_single_match_details', 'rdb_wpcm_match_timeline', 15, 1 );
-
     add_action( 'wpclubmanager_single_match_venue', 'wpclubmanager_template_single_match_date_local', 15 );
 }
 
-add_action( 'wpclubmanager_before_single_match', 'rdb_reset_wpcm_hooks' );
+add_action( 'wpclubmanager_before_single_match', 'rdb_reset_wpcm_match_hooks', 1 );
 
+/**
+ * Player hooks to remove via {@see 'wpclubmanager_before_single_player'}.
+ *
+ * @since 1.0.0
+ */
+function rdb_reset_wpcm_player_hooks() {
+    remove_action( 'wpclubmanager_single_player_info', 'wpclubmanager_template_single_player_title', 5 );
+    remove_action( 'wpclubmanager_single_player_bio', 'player_history_table', 10 );
+    remove_action( 'wpclubmanager_after_single_player', 'wpclubmanager_template_single_player_dropdown', 5 );
+
+    add_action( 'wpclubmanager_single_player_title', 'rdb_wpcm_player_title', 5 );
+    add_action( 'wpclubmanager_after_single_player', 'player_history_table', 4 );
+}
+
+add_action( 'wpclubmanager_before_single_player', 'rdb_reset_wpcm_player_hooks', 1 );
+
+/**
+ * Send single union match list data to client.
+ *
+ * @since 1.0.0
+ *
+ * @param array $data Formatted match list data.
+ */
+function rdb_wpcm_club_match_list( $data ) {
+    echo '<script> ';
+        echo 'window.unionMatchList = function() { ';
+            echo 'sessionStorage.setItem( "unionMatchList", JSON.stringify( ' . wp_json_encode( $data ) . ' ) ); ';
+        echo '};';
+    echo '</script>';
+}
+
+add_action( 'rdb_after_match_list', 'rdb_wpcm_club_match_list', 10 );
 
 /**
  * Get match timeline.
@@ -943,8 +1215,8 @@ function rdb_wpcm_match_timeline_data() {
     wp_die();
 }
 
-add_action( 'wp_ajax_get_match', 'rdb_wpcm_match_timeline_data', 10, 1 );
-add_action( 'wp_ajax_nopriv_get_match', 'rdb_wpcm_match_timeline_data', 10, 1 );
+add_action( 'wp_ajax_get_match', 'rdb_wpcm_match_timeline_data', 10 );
+add_action( 'wp_ajax_nopriv_get_match', 'rdb_wpcm_match_timeline_data', 10 );
 
 
 /** Admin-Use Functions *******************************************************/
@@ -1150,7 +1422,17 @@ function rdb_wpcm_wp_select( $field ) {
     // The select element tag.
     echo '<select id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['id'] ) . '" class="' . esc_attr( $field['class'] ) . '"' . ( ! empty( $field['placeholder'] ) ? ' data-placeholder="' . esc_attr( $field['placeholder'] ) . '"' : '' ) . '>';
     foreach ( $field['options'] as $key => $value ) {
-        echo '<option value="' . esc_attr( $key ) . '" ' . selected( esc_attr( $field['value'] ), esc_attr( $key ), false ) . '>' . esc_html( $value ) . '</option>';
+        if ( is_array( $value ) ) {
+            echo '<optgroup label="' . esc_attr( $key ) . '">';
+
+            foreach ( $value as $k => $v ) {
+                echo '<option value="' . esc_attr( $k ) . '" ' . selected( esc_attr( $field['value'] ), esc_attr( $k ), false ) . '>' . esc_html( $v ) . '</option>';
+            }
+
+            echo '</optgroup>';
+        } else {
+            echo '<option value="' . esc_attr( $key ) . '" ' . selected( esc_attr( $field['value'] ), esc_attr( $key ), false ) . '>' . esc_html( $value ) . '</option>';
+        }
     }
     echo '</select>';
 

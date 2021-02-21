@@ -2,9 +2,9 @@
 /**
  * Matche Opponents Shortcode
  *
- * @author 		Clubpress
- * @package 	WPClubManager/Templates
- * @version     2.1.0
+ * @author 	Clubpress
+ * @package WPClubManager/Templates
+ * @version 2.5.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="wpcm-fixtures-shortcode">
 
 	<?php echo ( $title ? '<h3>' . $title . '</h3>' : ''); ?>
-	
+
 	<table>
 		<tbody>
 
@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 				<?php } ?>
 				<td class="result <?php echo $class; ?>"><?php echo $result[0]; ?> <?php echo ( $played ? '<span class="' . $class . '"></span>' : '' ); ?></td>
 			</tr>
-			
+
 		<?php
 		} ?>
 

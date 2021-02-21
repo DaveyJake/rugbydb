@@ -2,9 +2,9 @@
 /**
  * Results Widget
  *
- * @author 		Clubpress
- * @package 	WPClubManager/Templates
- * @version     1.4.0
+ * @author 	Clubpress
+ * @package WPClubManager/Templates
+ * @version 2.5.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
@@ -39,10 +39,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 	<div class="wpcm-date">
 		<div class="kickoff">
 			<?php
-			echo ( $show_date ? the_time('j M Y') : '' ); 
+			echo ( $show_date ? the_time('j M Y') : '' );
 			echo ( $show_time ? ' - ' : '' );
 			echo ( $show_time ? the_time('g:i a') : '' );
 			?>
-		</div>			
+		</div>
 	</div>
 </li>

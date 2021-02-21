@@ -1,0 +1,138 @@
+// Foundation Sass Variables
+//
+// @since 1.0.0
+
+/// Font size attribute applied to `<html>` and `<body>`. We use 100% by default so the value is inherited from the user's browser settings.
+/// @type Number
+$global-font-size: 100% !default;
+
+/// Global width of your site. Used by the grid to determine row width.
+/// @type Number
+$global-width: $size__site-main-width !default;
+
+/// Default line height for all type. `$global-lineheight` is 24px while `$global-font-size` is 16px
+/// @type Number
+$global-lineheight: $font__line-height-body !default;
+
+/// Color used for light gray UI items.
+/// @type Color
+$light-gray: $color__background-main !default;
+
+/// Color used for medium gray UI items.
+/// @type Color
+$medium-gray: #cacaca !default;
+
+/// Color used for dark gray UI items.
+/// @type Color
+$dark-gray: #8a8a8a !default;
+
+/// Color used for black ui items.
+/// @type Color
+$black: $color__table-font !default;
+
+/// Color used for white ui items.
+/// @type Color
+$white: $color__text-inset !default;
+
+/// Background color of the body.
+/// @type Color
+$body-background: $color__background-body !default;
+
+/// Text color of the body.
+/// @type Color
+$body-font-color: $color__text-main !default;
+
+/// Font stack of the body.
+/// @type List
+$body-font-family: $font__main !default;
+
+/// Set to `true` to enable antialiased type, using the `-webkit-font-smoothing` and `-moz-osx-font-smoothing` CSS properties.
+/// @type Boolean
+$body-antialiased: true !default;
+
+/// The browser treats everything as a box. We will too.
+/// @type String
+$global-box-sizing: border-box !default;
+
+/// Global value used for margin on components.
+/// @type Number
+$global-margin: 1rem !default;
+
+/// Global value used for padding on components.
+/// @type Number
+$global-padding: 1rem !default;
+
+/// Global value used for positioning on components.
+/// @type Number
+$global-position: 1rem !default;
+
+/// Global font weight used for normal type.
+/// @type Keyword | Number
+$global-weight-normal: normal !default;
+
+/// Global font weight used for bold type.
+/// @type Keyword | Number
+$global-weight-bold: bold !default;
+
+/// Global value used for all elements that have a border radius.
+/// @type Number
+$global-radius: 0 !default;
+
+/// Global value used for all menu styles. Can be overwritten at individual menu component level.
+/// @type Number
+$global-menu-padding: 0.7rem 1rem !default;
+
+/// Global value used for all menu styles. Nested margin for submenu.
+$global-menu-nested-margin: 1rem !default;
+
+/// Sets the text direction of the CSS. Can be either `ltr` or `rtl`.
+/// @type Keyword
+$global-text-direction: ltr !default;
+
+/// Enables flexbox for components that support it.
+/// @type Boolean
+$global-flexbox: true !default;
+
+/// Enabled responsive breakpoints for prototypes if applicable
+/// @type Boolean
+$global-prototype-breakpoints: false !default;
+
+/// Button cursor's value, `auto` by default
+/// @type Keyword
+$global-button-cursor: auto !default;
+
+// Internal variables used for text direction
+$global-left: left !default;
+$global-right: right !default;
+
+/// Default font size for lead paragraphs.
+/// @type Number
+$lead-font-size: $global-font-size * 1.25 !default;
+
+/// Default line height for lead paragraphs.
+/// @type String
+$lead-lineheight: 1.6 !default;
+
+/// Default line height for subheaders.
+/// @type Number
+$subheader-lineheight: 1.4 !default;
+
+/// Default font color for subheaders.
+/// @type Color
+$subheader-color: $dark-gray !default;
+
+/// Default font weight for subheaders.
+/// @type String
+$subheader-font-weight: $global-weight-normal !default;
+
+/// Default top margin for subheaders.
+/// @type Number
+$subheader-margin-top: 0.2rem !default;
+
+/// Default bottom margin for subheaders.
+/// @type Number
+$subheader-margin-bottom: 0.5rem !default;
+
+/// Default font size for statistic numbers.
+/// @type Number
+$stat-font-size: 2.5em !default;

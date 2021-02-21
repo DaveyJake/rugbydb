@@ -1,25 +1,38 @@
-import { util, dtTimestampSort } from '../utils';
+import { _, rdb, wp, $, util } from '../utils';
+
+/**
+ * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
+ *
+ * @since 1.0.0
+ *
+ * @type {Function}
+ */
+const { adminUrl, lightness, sanitizeTitle } = util;
 
 /**
  * Single club/union page.
  *
  * @since 1.0.0
  */
-const singleWpcmClub = ( function( rdb, $ ) {
-    // Only run if viewing a match.
+const singleWpcmClub = function() {
     if ( 'single-club.php' !== rdb.template ) {
         return;
+    }
+
+    // Fire from DOM.
+    if ( 'function' === typeof window.unionMatchList ) {
+        window.unionMatchList();
     }
 
     const $wpcmClub      = $( '.wpcm_club' ),
           primaryColor   = $wpcmClub.prop( 'style' ).getPropertyValue( '--primary-color' ),
           secondaryColor = $wpcmClub.prop( 'style' ).getPropertyValue( '--secondary-color' );
 
-    const primary   = util.lightness( primaryColor ),
-          secondary = util.lightness( secondaryColor ),
-          lightness = parseInt( primary - secondary, 10 );
+    const primary     = lightness( primaryColor ),
+          secondary   = lightness( secondaryColor ),
+          actualLight = parseInt( primary - secondary, 10 );
 
-    if ( lightness < 0 ) {
+    if ( actualLight < 0 ) {
         $wpcmClub.prop( 'style' ).setProperty( '--background', primaryColor );
     } else {
         $wpcmClub.prop( 'style' ).setProperty( '--background', secondaryColor );
@@ -30,34 +43,105 @@ const singleWpcmClub = ( function( rdb, $ ) {
 
     // DataTables config.
     const options = {
-        columns: [
+        destroy: true,
+        deferRender: true,
+        data: JSON.parse( sessionStorage.unionMatchList ),
+        columnDefs: [
             {
-                data: 'date',
-                render: dtTimestampSort,
-                width: colWidth
+                className: 'control',
+                width: colWidth,
+                orderable: false,
+                targets: 0
             },
             {
-                data: 'fixture',
-                width: colWidth
+                className: 'wpcm-matches-list-col wpcm-matches-list-date',
+                width: colWidth,
+                targets: 1
+            },
+            {
+                className: 'wpcm-matches-list-col wpcm-matches-list-fixture',
+                width: colWidth,
+                targets: 2
+            },
+            {
+                className: 'wpcm-matches-list-col wpcm-matches-list-venue',
+                width: colWidth,
+                targets: 3
+            },
+            {
+                className: 'wpcm-matches-list-col wpcm-matches-list-info',
+                width: colWidth,
+                targets: 4
+            }
+        ],
+        columns: [
+            {
+                data: 'ID',
+                render: function( data ) {
+                    return `<span class="hide">${ data }</span>`;
+                }
+            },
+            {
+                data: 'date',
+                title: 'Date',
+                render: {
+                    _: 'display',
+                    sort: 'timestamp'
+                },
+                responsivePriority: 2
+            },
+            {
+                data: 'result',
+                title: 'Fixture',
+                render: function( data, type, row, meta ) {
+                    return `<a id="${ data.referrer }" href="${ data.permalink }" class="wpcm-matches-list-link" target="_blank" rel="bookmark">` +
+                                `<span class="wpcm-matches-list-club1 ${ sanitizeTitle( data.home ) }">` +
+                                    data.home +
+                                `</span>` +
+                                `<span class="wpcm-matches-list-status wpcm-matches-list-${ data.className }">` +
+                                    data.score +
+                                `</span>` +
+                                `<span class="wpcm-matches-list-club2 ${ sanitizeTitle( data.away ) }">` +
+                                    data.away +
+                                `</span>` +
+                            `</a>`;
+                },
+                responsivePriority: 1
             },
             {
                 data: 'venue',
-                width: colWidth
+                title: 'Venue',
+                render: function( data, type, row, meta ) {
+                    return `<td class="wpcm-matches-list-col wpcm-matches-list-venue">` +
+                                `<a id="${ data.linkId }" href="${ data.link }" rel="bookmark">${ data.name }</a>` +
+                            `</td>`;
+                }
             },
             {
                 data: 'competition',
-                width: colWidth
+                title: 'Competition',
+                render: function( data ) {
+                    return `<td class="wpcm-matches-list-col wpcm-matches-list-info">${ data }</td>`;
+                }
             }
         ],
+        order: [],
         pageLength: 100,
         responsive: true,
         searching: false,
         paging: false,
-        info: false
+        info: false,
+        rowId: 'idStr',
+        initComplete: function( settings, json ) {
+            const api = this.api();
+
+            _.each( api.context[0].aoData, function( row ) { // eslint-disable-line
+                $( row.nTr ).addClass( `wpcm-matches-list-item ${ row._aData.result.outcome }` );
+            });
+        }
     };
     // Lineup tables.
-    const table = $( '.wpcm-matches-list' ).DataTable( options ); // eslint-disable-line
-    table.order([[ 0, 'asc' ]]).draw();
-})( window.rdb, window.jQuery );
+    $( '.wpcm-matches-list' ).DataTable( options ); // eslint-disable-line
+};
 
 module.exports = { singleWpcmClub };

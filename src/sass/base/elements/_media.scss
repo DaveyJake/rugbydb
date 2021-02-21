@@ -8,6 +8,10 @@ object {
 img {
     height: auto;
     max-width: 100%;
+
+    &[class='wp-post-image'] {
+        @include full-width;
+    }
 }
 
 figure {

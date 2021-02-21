@@ -7,58 +7,71 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$rdb_match_cols = array( 'Date', 'Fixture', 'Venue', 'Competition' );
+echo '<table class="wpcm-matches-list dataTable display" width="100%">';
+echo '<thead></thead>';
+echo '<tfoot></tfoot>';
+echo '<tbody></tbody>';
+echo '</table>';
 
-echo '<table class="wpcm-matches-list display responsive nowrap" width="100%" cellspacing="0" cellpadding="0">';
-echo '<thead><tr>' . rdb_table_columns( $rdb_match_cols, false ) . '</tr></thead>';
+global $post;
 
+$data    = array();
+$final   = array();
 $matches = rdb_wpcm_head_to_heads( $post->ID );
 
-foreach ( $matches as $match ) {
-    $neutral     = get_post_meta( $match->ID, 'wpcm_neutral', true );
-    $played      = get_post_meta( $match->ID, 'wpcm_played', true );
-    $timestamp   = strtotime( $match->post_date );
+foreach ( $matches as $match ) :
+    $match_id    = $match->ID;
     $time_format = get_option( 'time_format' );
-    $class       = wpcm_get_match_outcome( $match->ID );
-    $comp        = rdb_wpcm_get_match_comp( $match->ID );
-    $sides       = rdb_wpcm_get_match_clubs( $match->ID, false, true );
-    $result      = rdb_wpcm_get_match_result( $match->ID );
-    $venue       = rdb_wpcm_get_match_venue( $match->ID );
+    $timestamp   = strtotime( $match->post_date_gmt );
+    $comp        = rdb_wpcm_get_match_comp( $match_id );
+    $played      = get_post_meta( $match_id, 'wpcm_played', true );
+    $outcome     = wpcm_get_match_outcome( $match_id );
+    $result      = rdb_wpcm_get_match_result( $match_id );
+    $sides       = rdb_wpcm_get_match_clubs( $match_id, false, true );
+    $venue       = rdb_wpcm_get_match_venue( $match_id );
 
-    echo '<tr id="match-' . $match->ID . '" class="wpcm-matches-list-item ' . $class . '">';
+    $api = array(
+        'ID'    => $match_id,
+        'date'  => array(
+            'timestamp' => $timestamp,
+            'display'   => '<a id="' . esc_attr( 'date-column-' . $post->post_name . '-to-match-' . $match_id ) . '" href="' . esc_url( rdb_slash_permalink( $match_id ) ) . '" rel="bookmark">' . date_i18n( 'D, F j, Y', $timestamp ) . '</a>',
+        ),
+        'result' => array(
+            'referrer'  => "fixture-column-{$post->post_name}-to-match-{$match_id}",
+            'className' => ( $played ? 'result' : 'time' ) . ' ' . $outcome,
+            'outcome'   => $outcome,
+            'permalink' => trailingslashit( get_post_permalink( $match_id, false, true ) ),
+            'home'      => $sides[0],
+            'score'     => ( $played ? $result[1] : date_i18n( $time_format, $timestamp ) ),
+            'away'      => $sides[1],
+        ),
+        'venue' => array(
+            'linkId' => sprintf( '%s-%d-%s', "venue-column-{$post->post_name}-to-venue", $venue['id'], $venue['slug'] ),
+            'link'   => get_term_link( $venue['id'] ),
+            'name'   => $venue['name'],
+        ),
+        'competition' => isset( $comp[0] ) ? $comp[0] : '',
+        'idStr'       => "match-{$match_id}",
+    );
 
-        echo '<td class="wpcm-matches-list-col wpcm-matches-list-date" data-sort="' . esc_attr( $timestamp ) . '">';
-            echo date_i18n( 'D, F j, Y', $timestamp );
-        echo '</td>';
+    $sort_key = date_i18n( DATE_TIME, $timestamp );
 
-        echo '<td class="wpcm-matches-list-col wpcm-matches-list-fixture">';
-            echo '<a href="' . get_post_permalink( $match->ID, false, true ) . '" class="wpcm-matches-list-link">';
-                echo '<span class="wpcm-matches-list-club1">';
-                    echo esc_html( $sides[0] );
-                echo '</span>';
+    $data[ $sort_key ] = $api;
+endforeach;
 
-                echo '<span class="wpcm-matches-list-status wpcm-matches-list-' . ( $played ? 'result' : 'time' ) . esc_attr( $class ) . '">';
-                    echo esc_html( ( $played ? $result[1] : date_i18n( $time_format, $timestamp ) ) );
-                echo '</span>';
+krsort( $data );
 
-                echo '<span class="wpcm-matches-list-club2">';
-                    echo esc_html( $sides[1] );
-                echo '</span>';
-            echo '</a>';
-        echo '</td>';
+$i = 0;
 
-        echo '<td class="wpcm-matches-list-col wpcm-matches-list-venue">';
-            echo '<a id="' . esc_attr( sprintf( '%s-%d-%s', 'venue', $venue['id'], $venue['slug'] ) ) . '" href="' . esc_url( get_term_link( $venue['id'] ) ) . '" rel="bookmark">' . esc_html( $venue['name'] ) . '</a>';
-        echo '</td>';
-
-        echo '<td class="wpcm-matches-list-col wpcm-matches-list-info">';
-            if ( empty( $comp ) ) {
-                d( $match->ID );
-            }
-            echo esc_html( $comp[0] );
-        echo '</td>';
-
-    echo '</tr>';
+foreach ( $data as $k => $api ) {
+    $final[ $i++ ] = $api;
 }
-echo '<tfoot><tr>' . rdb_table_columns( $rdb_match_cols, false ) . '</tr></tfoot>';
-echo '</table>';
+
+/**
+ * Callback for the union's match list table.
+ *
+ * @since 1.0.0
+ *
+ * @param array $final Sorted and formatted match list data.
+ */
+do_action( 'rdb_after_match_list', $final );

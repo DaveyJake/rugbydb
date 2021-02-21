@@ -1,6 +1,4 @@
-import Cookies from 'js-cookie';
 import { $ } from './globals';
-import { LOCALE, TIMEZONE } from './constants';
 
 /**
  * Helper functions.
@@ -19,14 +17,6 @@ const util = {
      */
     adminUrl: function( path ) {
         return `${ location.origin }/wp-admin/${ path }`;
-    },
-    /**
-     * Set sitewide cookie to personalize dates and times.
-     *
-     * @since 1.0.0
-     */
-    cookie: function() {
-        Cookies.set( 'rdb', { locale: LOCALE, timezone: TIMEZONE }, { expires: 7 });
     },
     /**
      * Check if Chosen.js dropdown goes beyond the DOM viewport.
@@ -78,16 +68,60 @@ const util = {
      * @return {number}    Color lightness.
      */
     lightness: function( hex ) {
-        const color = this.hex2rgb( hex );
+        const color = util.hex2rgb( hex );
 
         if ( null !== color ) {
            return ( 1/2 * ( Math.max( color.r, color.g, color.b ) + Math.min( color.r, color.g, color.b ) ) );
         }
     },
-    locale: function() {
-        if ( ! sessionStorage.locale ) {
-            sessionStorage.setItem( 'locale', LOCALE );
+    /**
+     * Match HTML element height.
+     *
+     * @since 1.0.0
+     *
+     * @param {HTMLElement} elA Some HTML element.
+     * @param {HTMLElement} elB HTML element whose height to match.
+     */
+    matchHeight: function( elA, elB ) {
+        if ( ! ( elA instanceof jQuery ) ) {
+            elA = $( elA );
         }
+
+        if ( ! ( elB instanceof jQuery ) ) {
+            elB = $( elB );
+        }
+
+        const $win   = $( window ),
+              height = elB.height();
+
+        elA.css({ height: height }).addClass( 'rdb-equalizer' );
+
+        $win.on( 'changed.zf.mediaquery', function( e, newSize, oldSize ) {
+            if ( newSize ) {
+                elA.css({ height: elB.height() });
+            }
+        });
+    },
+    /**
+     * Match element width.
+     *
+     * @since 1.0.0
+     *
+     * @param {HTMLELement} elA Some HTML element.
+     * @param {HTMLElement} elB Another HTML element with the width we need.
+     */
+    matchWidth: function( elA, elB ) {
+        if ( ! ( elA instanceof jQuery ) ) {
+            elA = $( elA );
+        }
+
+        if ( ! ( elB instanceof jQuery ) ) {
+            elB = $( elB );
+        }
+
+        const targetWidth = elB.width();
+
+        elA.width( targetWidth );
     },
     /**
      * Merges together defaults and args much like the WP `wp_parse_args` function
@@ -137,19 +171,10 @@ const util = {
             .replace( /\//g, '' ) // collapse all forward-slashes by a dash
             .replace( /[^a-z0-9 -]/g, '' ) // remove invalid chars
             .replace( /\s+/g, '-' ) // collapse whitespace and replace by a dash
-            .replace( /-+/g, '-' ); // collapse dashes
+            .replace( /-+/g, '-' ) // collapse dashes
+            .replace( /([a-z])('|\’|8217\-)([a-z])/, '$1$3' ); // collapse apostrophes
 
         return string;
-    },
-    timezone: function() {
-        if ( ! sessionStorage.timezone ) {
-            sessionStorage.setItem( 'timezone', TIMEZONE );
-        }
-    },
-    init: function() {
-        this.cookie();
-        this.locale();
-        this.timezone();
     }
 };
 

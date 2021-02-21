@@ -56,15 +56,14 @@ class RDB_WPCM_Shortcodes {
 
         $term_meta = get_term_meta( $id );
         $address   = trim( $term_meta['wpcm_address'][0] );
-        $q         = $title . ' ' . $address;
 
-        $latitude  = ( isset( $term_meta['wpcm_latitude'][0] ) ? $term_meta['wpcm_latitude'][0] : null );
-        $longitude = ( isset( $term_meta['wpcm_longitude'][0] ) ? $term_meta['wpcm_longitude'][0] : null );
+        $latitude  = (float) ( isset( $term_meta['wpcm_latitude'][0] ) ? $term_meta['wpcm_latitude'][0] : null );
+        $longitude = (float) ( isset( $term_meta['wpcm_longitude'][0] ) ? $term_meta['wpcm_longitude'][0] : null );
 
-        if ( $latitude === null && $longitude === null ) {
+        if ( empty( $latitude ) && empty( $longitude ) ) {
             $coordinates = rdb_wpcm_decode_address( $address );
-            $latitude    = $coordinates->lat;
-            $longitude   = $coordinates->lng;
+            $latitude    = (float) $coordinates->lat;
+            $longitude   = (float) $coordinates->lng;
         }
 
         $service = get_option( 'wpcm_map_select', 'google' );
@@ -87,6 +86,12 @@ class RDB_WPCM_Shortcodes {
         }
 
         if ( $latitude !== null && $longitude !== null ) {
+            if ( is_archive() ) {
+                $q = $address;
+            } else {
+                $q = wp_sprintf( '%s %s', $title, $address );
+            }
+
             // phpcs:disable
             $rdb_class    = ! empty( $class ) ? ' class="' . esc_attr( $class ) . '" ' : '';
             $rdb_map_args = array(
@@ -98,7 +103,7 @@ class RDB_WPCM_Shortcodes {
             );
             $rdb_url = add_query_arg( $rdb_map_args, '//maps.google.com/maps' );
 
-            $content = wp_sprintf( '<iframe width="%s" height="%s" src="%s" title="%s"' . $class . 'frameborder="0" allowfullscreen></iframe>', $width, $height, $rdb_url, $title );
+            $content = wp_sprintf( '<iframe width="%s" height="%s" src="%s" title="%s"' . $rdb_class . 'frameborder="0" allowfullscreen></iframe>', $width, $height, $rdb_url, $title );
             // phpcs:enable
             return $content;
         }

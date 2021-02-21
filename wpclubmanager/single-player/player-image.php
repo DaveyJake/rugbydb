@@ -11,6 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $post;
 
-echo '<div class="wpcm-profile-image">';
-    echo wpcm_get_player_thumbnail( $post->ID, 'player_single' );
-echo '</div>';
+$thumbnail = get_the_post_thumbnail_url( $post->ID, 'player_single' );
+$thumbnail = ! empty( $thumbnail ) ? $thumbnail : wpcm_placeholder_img_src();
+
+echo '<div class="wpcm-profile__image" style="display: none;" data-interchange="[' . esc_url( $thumbnail ) . ', small]"></div>';

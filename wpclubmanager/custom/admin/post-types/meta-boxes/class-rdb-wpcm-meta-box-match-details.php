@@ -140,7 +140,7 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
             <p>
                 <label><?php esc_html_e( 'Team', 'wp-club-manager' ); ?></label>
                 <?php
-                wp_dropdown_categories(array(
+                wp_dropdown_categories( array(
                     'orderby'    => 'tax_position',
                     'meta_key'   => 'tax_position',
                     'hide_empty' => false,
@@ -148,7 +148,7 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
                     'selected'   => $team,
                     'name'       => 'wpcm_match_team',
                     'class'      => 'chosen_select',
-                ));
+                ) );
                 ?>
             </p>
             <?php

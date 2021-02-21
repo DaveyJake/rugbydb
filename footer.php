@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 
         echo '<footer id="colophon" class="site-footer mm-slideout">';
 
-            echo '<div class="site-info wpcm-row">Copyright&nbsp;<i class="far fa-copyright"></i>&nbsp;' . esc_html( date( 'Y' ) ) . '. All rights reserved.</div><!-- .site-info -->';
+            echo '<div class="site-info wpcm-row">Copyright&nbsp;<i class="far fa-copyright"></i>&nbsp;' . esc_html( date( 'Y' ) ) . '. RugbyDB.com. All rights reserved.</div><!-- .site-info -->';
 
         echo '</footer><!-- #colophon -->';
 

@@ -72,6 +72,9 @@ class RDB_Styles_Scripts {
         // Preload scripts.
         add_filter( 'style_loader_tag', array( $this, 'preload_styles' ), 10, 4 );
 
+        // Remove WPCM Player Appearances assets.
+        remove_action( 'wp_enqueue_scripts', 'wpcm_pa_load_scripts' );
+
         // Theme styles & scripts.
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
@@ -103,6 +106,9 @@ class RDB_Styles_Scripts {
      */
     public function enqueue() {
         global $rdb_device_detect, $template;
+
+        // Disable unecessary assets.
+        $this->disable_unecessary_assets();
 
         // Essential WordPress items.
         $post      = get_post();
@@ -159,14 +165,25 @@ class RDB_Styles_Scripts {
         }
         // Archives.
         elseif ( is_archive() ) {
-            // Venue.
-            if ( false !== get_query_var( 'wpcm_venue', false ) ) {
+            // Team and venue.
+            if ( false !== get_query_var( 'wpcm_venue', false ) || false !== get_query_var( 'wpcm_team', false ) ) {
                 if ( ! wp_is_mobile() ) {
                     wp_enqueue_style( 'chosen' );
                     wp_enqueue_script( 'chosen' );
                 }
 
-                wp_enqueue_style( 'rdb-venue' );
+                $team = get_query_var( 'wpcm_team', false );
+                if ( false !== $team ) {
+                    wp_enqueue_style( 'rdb-team' );
+                    wp_enqueue_script( 'imagesloaded' );
+                    wp_enqueue_script( 'wp-util' );
+
+                    $this->deps[] = 'imagesloaded';
+                    $this->deps[] = 'wp-util';
+                } else {
+                    wp_enqueue_style( 'rdb-venue' );
+                }
+
                 wp_enqueue_style( 'datatables' );
 
                 wp_enqueue_script( 'moment' );
@@ -209,6 +226,8 @@ class RDB_Styles_Scripts {
         // Single player stylesheet.
         elseif ( 'wpcm_player' === $post_type ) {
             wp_enqueue_style( 'rdb-player' );
+            wp_enqueue_style( 'datatables' );
+            wp_enqueue_script( 'dt' );
         }
         // Single staff stylesheet.
         elseif ( 'wpcm_staff' === $post_type ) {
@@ -217,7 +236,7 @@ class RDB_Styles_Scripts {
         // Page.
         elseif ( 'page' === $post_type ) {
             // Pages with cards.
-            $cards = array( 'players', 'staff', 'teams', 'venues', 'opponents' );
+            $cards = array( 'staff', 'teams', 'venues', 'opponents' );
 
             if ( is_page( $cards ) ) {
                 // Stylesheet for a cards page.
@@ -246,6 +265,8 @@ class RDB_Styles_Scripts {
         wp_register_script( 'rdb-script', get_theme_file_uri( "dist/js/rdb{$this->dev}.js" ), $this->deps, rdb_file_version( 'dist/js/rdb.js' ), true );
 
         // Check if viewing term template page.
+        $team_query_var  = get_query_var( 'wpcm_team', false );
+        $team_term       = ( false !== $team_query_var ? get_term_by( 'slug', $team_query_var, 'wpcm_team' ) : false );
         $venue_query_var = get_query_var( 'wpcm_venue', false );
         $venue_term      = ( false !== $venue_query_var ? get_term_by( 'slug', $venue_query_var, 'wpcm_venue' ) : false );
 
@@ -267,9 +288,9 @@ class RDB_Styles_Scripts {
             'post_name'        => ( is_singular() && isset( $post->post_name ) ) ? $post->post_name : '',
             'post_type'        => ( is_singular() ? $post_type : '' ),
             'template'         => basename( $template ),
-            'term_id'          => ( false !== $venue_term ? $venue_term->term_id : false ),
-            'term_name'        => ( false !== $venue_term ? $venue_term->name : false ),
-            'term_slug'        => ( false !== $venue_term ? $venue_term->slug : false ),
+            'term_id'          => ( false !== $venue_term ? $venue_term->term_id : ( false !== $team_term ? $team_term->term_id : false ) ),
+            'term_name'        => ( false !== $venue_term ? $venue_term->name : ( false !== $team_term ? $team_term->name : false ) ),
+            'term_slug'        => ( false !== $venue_term ? $venue_term->slug : ( false !== $team_term ? $team_term->slug : false ) ),
         );
 
         wp_localize_script( 'rdb-script', 'rdb', $l10n );
@@ -286,6 +307,13 @@ class RDB_Styles_Scripts {
      * @see RDB_Styles_Scripts::moment_cdn()
      */
     private function register_scripts() {
+        /**
+         * Disable WPCM Player Appearances javascript.
+         *
+         * @since 1.0.0
+         */
+        wp_deregister_script( 'wpcm-pa-script' );
+
         /**
          * Use Lodash in place of Underscore.
          *
@@ -432,11 +460,6 @@ class RDB_Styles_Scripts {
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_player.css' ),
             ),
-            'rdb-players' => array(
-                'src' => get_theme_file_uri( "dist/css/page-players{$this->dev}.css" ),
-                'dep' => false,
-                'ver' => rdb_file_version( 'dist/css/page-players.css' ),
-            ),
             'rdb-single-staff' => array(
                 'src' => get_theme_file_uri( "dist/css/single-wpcm_staff{$this->dev}.css" ),
                 'dep' => false,
@@ -446,6 +469,11 @@ class RDB_Styles_Scripts {
                 'src' => get_theme_file_uri( "dist/css/page-staff{$this->dev}.css" ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-staff.css' ),
+            ),
+            'rdb-team' => array(
+                'src' => get_theme_file_uri( "dist/css/taxonomy-wpcm_team{$this->dev}.css" ),
+                'dep' => false,
+                'ver' => rdb_file_version( 'dist/css/taxonomy-wpcm_team.css' ),
             ),
             'rdb-teams' => array(
                 'src' => get_theme_file_uri( "dist/css/page-teams{$this->dev}.css" ),
@@ -485,6 +513,25 @@ class RDB_Styles_Scripts {
     }
 
     /**
+     * Deregister & dequeue unnecessary scripts and styles.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @see RDB_Styles_Scripts::enqueue()
+     */
+    private function disable_unecessary_assets() {
+        // Taxonomy images stylesheet should only run on the venue template.
+        if ( ! is_archive() ) {
+            add_filter( 'taxonomy_images_disable_theme_css', '__return_true', 5 );
+            wp_deregister_style( 'taxonomy-image-plugin-public' );
+        }
+
+        // This theme doesn't use WP blocks.
+        wp_deregister_style( 'wp-block-library' );
+    }
+
+    /**
      * Preload theme styles.
      *
      * @since 1.0.0
@@ -501,7 +548,18 @@ class RDB_Styles_Scripts {
             return $html;
         }
 
-        $html = '<link rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" id="' . esc_attr( $handle ) . '" href="' . esc_url( $href ) . '" type="text/css" media="' . esc_attr( $media ) . '" />';
+        // phpcs:disable
+        /**
+         * Browsers give `print` stylesheets lower priority.
+         *
+         * @link https://css-tricks.com/how-to-load-fonts-in-a-way-that-fights-fout-and-makes-lighthouse-happy/
+         *
+         * @todo Figure out why the `onload` attribute isn't firing.
+         */
+        // $media = 'all';
+        // phpcs:enable
+
+        $html = '<link rel="preload" as="style" id="' . esc_attr( $handle ) . '" href="' . esc_url( $href ) . '" type="text/css" media="' . esc_attr( $media ) . '" onload="this.rel=\'stylesheet\';this.media=\'all\';this.onload=null" />';
 
         return $html;
     }
@@ -536,43 +594,55 @@ class RDB_Styles_Scripts {
          * @var string $user_locale Default 'en-us';
          */
         if ( ! empty( $_COOKIE['rdb'] ) ) {
-            $rdb_cookie  = wp_unslash( $_COOKIE['rdb'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $cookie      = json_decode( urldecode( $rdb_cookie ) );
-            $user_locale = strtolower( $cookie->locale );
-        } else {
-            $user_locale = 'en-us';
+            $rdb_cookie = wp_unslash( $_COOKIE['rdb'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $cookie     = json_decode( urldecode( $rdb_cookie ) );
         }
 
-        // WordPress' Moment.js stock version.
-        $moment = 'moment.js';
-        $ver    = '2.26.0';
+        /**
+         * Set local if found in cookie. Default 'en-us'.
+         *
+         * @since 1.0.0
+         *
+         * @var string
+         */
+        $user_locale = isset( $cookie->locale ) ? strtolower( $cookie->locale ) : 'en-us';
 
+        // Moment.js file name.
+        $moment = 'moment.js';
+        $key    = md5( $moment );
+        $ver    = get_transient( $key );
+        // Get WordPress' stock Moment.js version.
+        if ( false === $ver ) {
+            // WordPress' stock Moment.js file.
+            $wp_moment = file_get_contents( ABSPATH . "wp-includes/js/dist/vendor/{$moment}" );
+            preg_match_all( '|\/\/\!\sversion\s\:\s([0-9\.]+)|', $wp_moment, $wp_moment_ver );
+            // Cache WP stock Moment.js version.
+            set_transient( $key, $wp_moment_ver[1], ONE_MONTH );
+            // WordPress' stock Moment.js version.
+            $ver = $wp_moment_ver[1];
+        }
+
+        // CDNJS essentials.
         $prefix      = 'https://api.cdnjs.com/libraries/';
         $file_prefix = 'https://cdnjs.cloudflare.com/ajax/libs/';
 
-        // Moment-Locale.
+        // Moment.js locale.
         if ( 'en-us' !== $user_locale ) {
             $intl = $file_prefix . $moment . '/' . $ver . '/locale/' . $user_locale . '.js';
         } else {
             $intl = '';
         }
 
-        // Moment-Timezone.
-        $file = 'moment-timezone';
-        $url  = add_query_arg(
-            array(
-                'fields' => 'name,version',
-                'output' => 'json',
-            ),
-            $prefix . $file
-        );
-
-        $data = rdb_remote_get( $url );
-
-        $timezone = $file_prefix . $file . '/' . $data->version . '/' . $file . "-with-data{$this->dev}.js";
-
+        /**
+         * Script registration container.
+         *
+         * @since 1.0.0
+         *
+         * @var array
+         */
         $register_scripts = array();
 
+        // Register `moment.js` locale.
         if ( ! empty( $intl ) ) {
             $register_scripts['moment-locale'] = array(
                 'src'    => $intl,
@@ -583,12 +653,29 @@ class RDB_Styles_Scripts {
             );
         }
 
-        $register_scripts['moment-timezone'] = array(
-            'src'    => $timezone,
-            'dep'    => array( 'moment' ),
-            'ver'    => $data->version,
-            'footer' => true,
+        // Filename for `moment-timezone.js`.
+        $file = 'moment-timezone';
+        // CDNJS results for `moment-timezone.js`.
+        $data = rdb_remote_get(
+            add_query_arg(
+                array(
+                    'fields' => 'name,version',
+                    'output' => 'json',
+                ),
+                $prefix . $file
+            )
         );
+        // Register latest version of `moment-timezone.js`.
+        if ( is_object( $data ) ) {
+            $timezone = $file_prefix . $file . '/' . $data->version . '/' . $file . "-with-data{$this->dev}.js";
+
+            $register_scripts['moment-timezone'] = array(
+                'src'    => $timezone,
+                'dep'    => array( 'moment' ),
+                'ver'    => $data->version,
+                'footer' => true,
+            );
+        }
 
         return $register_scripts;
     }
