@@ -241,7 +241,7 @@ gulp.task( 'webpack:watch', webpack.watch );
 // Copy images to the "dist" folder
 // In production, the images are compressed
 function images() {
-    return gulp.src( 'src/img/**/*' )
+    return gulp.src( PATHS.images )
         .pipe(
             $.if(
                 PRODUCTION,

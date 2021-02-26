@@ -11,6 +11,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+
+
 /**
  * Begin class.
  *
@@ -23,10 +25,26 @@ class RDB_Tracking_Analytics {
      * @since 1.0.0
      */
     public function __construct() {
-        define( 'GOOGLE_TAG_MANAGER', analytics_tracker() ); // phpcs:ignore
+        define( 'GOOGLE_TAG_MANAGER', $this->analytics_tracking() ); // phpcs:ignore
 
         add_action( 'wp_head', array( $this, 'google_tag_manager' ), 1 );
         add_action( 'rdb_body_open', array( $this, 'google_tag_manager_noscript' ), 1 );
+    }
+
+    /**
+     * Analytics tracker by environment.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @return string Tracking code.
+     */
+    private function analytics_tracking() {
+        if ( wp_get_environment_type() === 'production' ) {
+            return 'GTM-K9TQFT7';
+        }
+
+        return 'GTM-KX5RN6C';
     }
 
     /**

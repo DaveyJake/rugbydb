@@ -113,7 +113,10 @@ $unit: rem-calc(10px);
         height: $image-height;
         background: {
             repeat: no-repeat;
-            position: center -30px;
+            position: {
+                x: center;
+                y: -30px;
+            }
             size: cover;
         }
         z-index: 1;
@@ -133,16 +136,21 @@ $unit: rem-calc(10px);
         &[style*='cam-dolan'],
         &[style*='campbell'],
         &[style*='civetta'],
+        &[style*='cleaveland'],
         &[style*='danny-barrett'],
+        &[style*='dink'],
+        &[style*='erwin-righter'],
         &[style*='faanana-schultz'],
         &[style*='fawsitt'],
+        &[style*='fish'],
         &[style*='giessen'],
         &[style*='hanco'],
         &[style*='haas'],
         &[style*='hilterbrand'],
         &[style*='hooley'],
+        &[style*='Jack-Patrick'],
         &[style*='kilifi'],
-        &[style*='kort-schubert']
+        &[style*='kort-schubert'],
         &[style*='lamositele'],
         &[style*='landry'],
         &[style*='lasike'],
@@ -151,12 +159,14 @@ $unit: rem-calc(10px);
         &[style*='manoa'],
         &[style*='maughan'],
         &[style*='macginty'],
+        &[style*='mehan'],
         &[style*='moore'],
         &[style*='mullen'],
         &[style*='paddy-ryan'],
         &[style*='paul-emerick'],
         &[style*='payne'],
         &[style*='peterson'],
+        &[style*='phillip-clark'],
         &[style*='pifeleti'],
         &[style*='pinkelman'],
         &[style*='quill'],
@@ -165,9 +175,10 @@ $unit: rem-calc(10px);
         &[style*='taufetee'],
         &[style*='teo'],
         &[style*='thretton-palamo'],
+        &[style*='tilden'],
         &[style*='tony-lamborn'],
         &[style*='wenglewski'],
-        &[style*='whippy'], {
+        &[style*='whippy'] {
             background-position-y: 0;
         }
     }

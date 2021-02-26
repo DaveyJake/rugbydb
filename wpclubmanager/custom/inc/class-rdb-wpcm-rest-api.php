@@ -2248,8 +2248,8 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 'timestamp' => strtotime( $match->post_date_gmt ),
             ),
             'team' => array(
-                'name' => $team[0]->name,
-                'slug' => $team[0]->slug,
+                'name' => isset( $team[0] ) ? $team[0]->name : ( is_object( $team ) ? $team->name : error_log( "Team missing from match {$match->ID} in API" ) ),
+                'slug' => isset( $team[0] ) ? $team[0]->slug : ( is_object( $team ) ? $team->slug : error_log( "Team missing from match {$match->ID} in API" ) ),
             ),
             'logo' => array(
                 'home' => '',

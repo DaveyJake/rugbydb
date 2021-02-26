@@ -41,6 +41,10 @@ PATHS:
     - "vendor/mobiledetect/mobiledetectlib/Mobile_Detect.php"
     - "vendor/sinergi/browser-detector/src/*"
     - "!src/{img,js,sass}/**"
+  # Paths to the main image directory.
+  images:
+    - "src/img/**"
+    - "!src/img/{competitions,players,programs,timeline,unions,venues}/**"
   # Paths to the main JavaScript directory.
   js:
     - "src/js/**/*"

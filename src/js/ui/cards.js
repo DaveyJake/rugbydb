@@ -12,7 +12,6 @@ import { _, $, rdb, util, Request } from '../utils';
  *
  * @return {Request}          API request and response.
  */
-
 const cards = function( template, endpoint, args, callback = null ) {
     if ( template !== rdb.template ) {
         return;

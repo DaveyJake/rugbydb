@@ -63,7 +63,7 @@ class RDB_Styles_Scripts {
      * @since 1.0.0
      */
     public function __construct() {
-        $this->dev  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+        $this->dev  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
         $this->deps = array();
 
         // Inline styles.
@@ -89,9 +89,9 @@ class RDB_Styles_Scripts {
      */
     public function admin() {
         // Primary theme stylesheet.
-        wp_enqueue_style( 'rdb-admin-style', get_template_directory_uri() . "/admin/css/rdb-admin{$this->dev}.css", false, rdb_file_version( 'admin/css/rdb-admin.css' ) );
+        wp_enqueue_style( 'rdb-admin-style', get_template_directory_uri() . '/' . $this->revision( 'admin/css/rdb-admin.css' ), false, rdb_file_version( 'admin/css/rdb-admin.css' ) );
         // Primary theme JavaScript.
-        wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . "/admin/js/rdb-admin{$this->dev}.js", array( 'jquery' ), rdb_file_version( 'admin/js/rdb-admin.js' ), true );
+        wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . '/' . $this->revision( 'admin/js/rdb-admin.js' ), array( 'jquery' ), rdb_file_version( 'admin/js/rdb-admin.js' ), true );
     }
 
     /**
@@ -262,7 +262,7 @@ class RDB_Styles_Scripts {
         }
 
         // Primary theme JavaScript.
-        wp_register_script( 'rdb-script', get_theme_file_uri( "dist/js/rdb{$this->dev}.js" ), $this->deps, rdb_file_version( 'dist/js/rdb.js' ), true );
+        wp_register_script( 'rdb-script', get_template_directory_uri() . '/' . $this->revision( 'dist/js/rdb.js' ), $this->deps, rdb_file_version( 'dist/js/rdb.js' ), true );
 
         // Check if viewing term template page.
         $team_query_var  = get_query_var( 'wpcm_team', false );
@@ -278,6 +278,7 @@ class RDB_Styles_Scripts {
          * @var array
          */
         $l10n = array(
+            'is_dev'           => boolval( wp_get_environment_type() === 'local' ),
             'is_front_page'    => boolval( is_front_page() ),
             'is_page'          => boolval( is_page() && ! is_front_page() ),
             'is_mobile'        => boolval( $rdb_device_detect->mobile_detect() ),
@@ -308,25 +309,10 @@ class RDB_Styles_Scripts {
      */
     private function register_scripts() {
         /**
-         * Disable WPCM Player Appearances javascript.
-         *
-         * @since 1.0.0
-         */
-        wp_deregister_script( 'wpcm-pa-script' );
-
-        /**
-         * Use Lodash in place of Underscore.
-         *
-         * @since 1.0.0
-         */
-        wp_deregister_script( 'underscore' ); // phpcs:ignore WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found
-
-        /**
          * Move jQuery to footer.
          *
          * @since 1.0.0
          */
-        wp_deregister_script( 'jquery' ); // phpcs:ignore WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found
         wp_enqueue_script( 'jquery', includes_url( 'js/jquery/jquery.js' ), false, '1.12.4-wp', true );
 
         /**
@@ -342,32 +328,32 @@ class RDB_Styles_Scripts {
          * @var array
          */
         $register_scripts = array(
-            'dt-pdfmake'       => array(
-                'src'    => "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake{$this->dev}.js",
+            'dt-pdfmake' => array(
+                'src'    => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.js',
                 'dep'    => array( 'jquery' ),
                 'ver'    => self::DT_PLUGINS,
                 'footer' => true,
             ),
-            'dt-vfs-fonts'     => array(
+            'dt-vfs-fonts' => array(
                 'src'    => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js',
                 'dep'    => array( 'dt-pdfmake' ),
                 'ver'    => self::DT_PLUGINS,
                 'footer' => true,
             ),
-            'datatables'       => array(
+            'datatables' => array(
                 'src'    => "https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.22/af-2.3.5/b-1.6.4/b-colvis-1.6.4/b-html5-1.6.4/b-print-1.6.4/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.3/r-2.2.6/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.0/sp-1.2.0/sl-1.3.1/datatables{$this->dev}.js",
                 'dep'    => array( 'dt-vfs-fonts' ),
                 'ver'    => self::DT_VERSION,
                 'footer' => true,
             ),
             'datatables-yadcf' => array(
-                'src'    => get_theme_file_uri( 'dist/js/jquery.dataTables.yadcf.js' ),
+                'src'    => get_template_directory_uri() . '/dist/js/jquery.dataTables.yadcf.js',
                 'dep'    => array( 'dt' ),
                 'ver'    => '0.9.3',
                 'footer' => true,
             ),
             'moment-timezone'  => $moment_scripts['moment-timezone'],
-            'underscore'       => array(
+            'underscore' => array(
                 'src'    => includes_url( "js/dist/vendor/lodash{$this->dev}.js" ),
                 'dep'    => false,
                 'ver'    => '4.17.15',
@@ -414,6 +400,7 @@ class RDB_Styles_Scripts {
      * @see RDB_Styles_Scripts::enqueue()
      */
     private function register_styles() {
+
         /**
          * Styles to register.
          *
@@ -426,7 +413,7 @@ class RDB_Styles_Scripts {
                 'ver' => self::DT_VERSION,
             ),
             'datatables-yadcf' => array(
-                'src' => get_theme_file_uri( 'dist/css/jquery.dataTables.yadcf.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/jquery.dataTables.yadcf.css',
                 'dep' => array( 'datatables' ),
                 'ver' => '0.9.3',
             ),
@@ -436,62 +423,62 @@ class RDB_Styles_Scripts {
                 'ver' => '1.0.0',
             ),
             'rdb-front-page' => array(
-                'src' => get_theme_file_uri( "dist/css/front-page{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/front-page.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/front-page.css' ),
             ),
             'rdb-union' => array(
-                'src' => get_theme_file_uri( "dist/css/single-wpcm_club{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/single-wpcm_club.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_club.css' ),
             ),
             'rdb-match' => array(
-                'src' => get_theme_file_uri( "dist/css/single-wpcm_match{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/single-wpcm_match.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_match.css' ),
             ),
             'rdb-page' => array(
-                'src' => get_theme_file_uri( "dist/css/page{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page.css' ),
             ),
             'rdb-player' => array(
-                'src' => get_theme_file_uri( "dist/css/single-wpcm_player{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/single-wpcm_player.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_player.css' ),
             ),
             'rdb-single-staff' => array(
-                'src' => get_theme_file_uri( "dist/css/single-wpcm_staff{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/single-wpcm_staff.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_staff.css' ),
             ),
             'rdb-staff' => array(
-                'src' => get_theme_file_uri( "dist/css/page-staff{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page-staff.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-staff.css' ),
             ),
             'rdb-team' => array(
-                'src' => get_theme_file_uri( "dist/css/taxonomy-wpcm_team{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/taxonomy-wpcm_team.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/taxonomy-wpcm_team.css' ),
             ),
             'rdb-teams' => array(
-                'src' => get_theme_file_uri( "dist/css/page-teams{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page-teams.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-teams.css' ),
             ),
             'rdb-opponents' => array(
-                'src' => get_theme_file_uri( "dist/css/page-opponents{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page-opponents.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-opponents.css' ),
             ),
             'rdb-venue' => array(
-                'src' => get_theme_file_uri( "dist/css/taxonomy-wpcm_venue{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/taxonomy-wpcm_venue.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/taxonomy-wpcm_venue.css' ),
             ),
             'rdb-venues' => array(
-                'src' => get_theme_file_uri( "dist/css/page-venues{$this->dev}.css" ),
+                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page-venues.css' ),
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-venues.css' ),
             ),
@@ -529,6 +516,15 @@ class RDB_Styles_Scripts {
 
         // This theme doesn't use WP blocks.
         wp_deregister_style( 'wp-block-library' );
+
+        // Disable WPCM Player Appearances javascript.
+        wp_deregister_script( 'wpcm-pa-script' );
+
+        // Use Lodash in place of Underscore.
+        wp_deregister_script( 'underscore' ); // phpcs:ignore WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found
+
+        // Dergister jQuery to move it to footer.
+        wp_deregister_script( 'jquery' ); // phpcs:ignore WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found
     }
 
     /**
@@ -573,8 +569,33 @@ class RDB_Styles_Scripts {
      */
     public function inline_styles() {
         echo '<style>';
-            echo file_get_contents( get_theme_file_path( 'dist/css/above-the-fold.css' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+            echo file_get_contents( get_template_directory() . '/' . $this->revision( 'dist/css/above-the-fold.css' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
         echo '</style>';
+    }
+
+    /**
+     * Revision manifest map.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param string $file The file to check the map for.
+     *
+     * @return array    The map for `src` files to `dist` files.
+     */
+    private function revision( $file ) {
+        if ( wp_get_environment_type() === 'local' ) {
+            return $file;
+        }
+
+        $rev_css = json_decode( file_get_contents( get_template_directory() . '/dist/css/rev-manifest.json' ), true );
+        $rev_js  = json_decode( file_get_contents( get_template_directory() . '/dist/js/rev-manifest.json' ), true );
+
+        if ( preg_match( '/\.js$/', $file ) ) {
+            return $rev_js[ $file ];
+        }
+
+        return $rev_css[ $file ];
     }
 
     /**

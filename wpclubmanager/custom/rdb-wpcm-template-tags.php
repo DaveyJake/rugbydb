@@ -13,6 +13,8 @@ defined( 'ABSPATH' ) || exit;
  * Competition filter.
  *
  * @since 1.0.0
+ *
+ * @return bool|void    Only true if dropdown is printed prior to finishing.
  */
 function rdb_player_competition_dropdown() {
     $group   = array();

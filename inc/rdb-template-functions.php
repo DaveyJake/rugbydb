@@ -660,6 +660,9 @@ add_filter( 'intermediate_image_sizes_advanced', 'rdb_prevent_post_type_image_re
 // Content corrections.
 add_filter( 'the_content', 'rdb_auto_hyperlink' );
 
+// Taxonomy Images.
+add_filter( 'taxonomy_images/use_term_meta', '__return_true' );
+
 /** Actions *******************************************************************/
 
 // SchemaOrg integration.

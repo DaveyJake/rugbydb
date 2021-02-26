@@ -625,13 +625,13 @@ function rdb_google_venue_timezone( $venue, $match_id ) {
         require_once get_template_directory() . '/WR/wr-utilities.php';
     }
 
-    $match = WR_Utilities::get_match( $match_id );
-
     if ( ! metadata_exists( 'term', $venue->term_id, 'usar_timezone' ) ) {
         $venue_meta    = get_term_meta( $venue->term_id );
         $venue_wr_name = $venue_meta['wr_name'][0];
         $lat           = $venue_meta['wpcm_latitude'][0];
         $lng           = $venue_meta['wpcm_longitude'][0];
+
+        $match = WR_Utilities::get_match( $match_id );
 
         if ( $match['match']->venue->name === $venue_wr_name ) {
             $args = array(

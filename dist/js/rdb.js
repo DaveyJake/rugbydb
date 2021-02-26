@@ -22266,7 +22266,7 @@ var TaxWpcmTeam = /*#__PURE__*/function (_DTHelper) {
     _this.tabs = new _vendor.Foundation.Tabs((0, _utils.$)("#".concat(_utils.rdb.term_slug)), {});
     _this.endpoint = 'players';
     _this.collection = true;
-    _this.perPage = '100';
+    _this.perPage = '250';
     _this.nonce = (0, _utils.$)('#nonce').val();
     _this.nonce2 = (0, _utils.$)('#nonce2').val();
     _this.$table = (0, _utils.$)('.wpcm-matches-list');
@@ -24858,6 +24858,8 @@ var Request = /*#__PURE__*/function () {
    *     @type {string} postName   Post slug of the requested item.
    *     @type {string} venue      The venue slug.
    *     @type {string} grid       The grid attribute selector.
+   *     @type {string} per_page   The items per page to retrieve.
+   *     @type {string} page       The page number to retrieve.
    * }
    *
    * @return {Request} JSON response from API.

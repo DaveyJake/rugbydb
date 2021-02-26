@@ -26,11 +26,11 @@
         }
 
         &.is-active {
-            background: $color__white;
+            background: $color__background-main;
 
             a {
-                background: $color__white;
                 color: $color__red;
+                font-weight: 700;
             }
         }
     }

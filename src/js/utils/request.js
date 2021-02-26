@@ -38,6 +38,8 @@ class Request {
      *     @type {string} postName   Post slug of the requested item.
      *     @type {string} venue      The venue slug.
      *     @type {string} grid       The grid attribute selector.
+     *     @type {string} per_page   The items per page to retrieve.
+     *     @type {string} page       The page number to retrieve.
      * }
      *
      * @return {Request} JSON response from API.

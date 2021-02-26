@@ -258,7 +258,7 @@ class RDB_Shortcodes {
             $url = ! empty( $url ) ? $url : sanitize_text_field( $atts['source_url'] );
         }
 
-        $content = '<strong>Source: <a id="' . esc_attr( $id ) . '" href="' . esc_url( $url ) . '" rel="external noopener noreferrer" target="_blank">';
+        $content = '<p><strong>Source: <a id="' . esc_attr( $id ) . '" href="' . esc_url( $url ) . '" rel="external noopener noreferrer" target="_blank">';
 
         if ( in_array( $name, $sources, true ) ) {
             if ( 'usrugbyfoundation' === $name ) {
@@ -270,7 +270,7 @@ class RDB_Shortcodes {
             $content .= esc_html( $name );
         }
 
-        $content .= '</a></strong>';
+        $content .= '</a></strong></p>';
 
         return $content;
     }

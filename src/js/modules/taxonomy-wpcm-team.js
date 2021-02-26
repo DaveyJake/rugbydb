@@ -52,7 +52,7 @@ class TaxWpcmTeam extends DTHelper {
 
         this.endpoint = 'players';
         this.collection = true;
-        this.perPage = '100';
+        this.perPage = '250';
 
         this.nonce = $( '#nonce' ).val();
         this.nonce2 = $( '#nonce2' ).val();

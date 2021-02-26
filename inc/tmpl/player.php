@@ -16,7 +16,7 @@ function rdb_tmpl_player() {
         _.each( data, function( player ) {
             var image = new URL( player.image ),
                 img   = image.pathname,
-                name  = ( ! _.isEmpty( player.name.known_as ) ? player.name.known_as : player.name.first ) + ' ' + player.name.last;
+                name  = ( ! _.isEmpty( player.name.known_as ) ? player.name.first + ' "' + player.name.known_as + '" ' : player.name.first ) + ' ' + player.name.last;
 
             var seasons   = _.join( player.filters.seasons, ' ' ),
                 positions = _.join( _.map( player.positions, window.sanitizeTitle ), ' ' ),
