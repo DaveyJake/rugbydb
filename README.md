@@ -1,4 +1,4 @@
-# The OFFICIAL Theme for the USA Rugby Database
+# The OFFICIAL Theme for Rugby Database
 
 Installation Steps In Order
 ---------------------------
