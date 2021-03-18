@@ -2353,7 +2353,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         }
 
         $data['season']  = $season[0]->slug;
-        $data['result']  = wp_sprintf( '%d - %d', $meta['wpcm_home_goals'][0], $meta['wpcm_away_goals'][0] );
+        $data['result']  = wp_sprintf( '%1$d - %2$d', $meta['wpcm_home_goals'][0], $meta['wpcm_away_goals'][0] );
         $data['outcome'] = wpcm_get_match_outcome( $match->ID );
 
         $venue_meta     = get_term_meta( $venue[0]->term_id );

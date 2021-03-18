@@ -52,7 +52,7 @@ class RDB_WPCM_Seasons {
      */
     public function unset_wpcm_seasons() {
         rdb_remove_class_method( "manage_{$this->taxonomy}_custom_column", 'WPCM_Admin_Taxonomies', 'season_custom_columns', 5 );
-        rdb_remove_class_method( "manage_edit-{$this->taxonomy}_columns", 'WPCM_Admin_Taxonomies', 'season_edit_columns', 10 );
+        rdb_remove_class_method( "manage_edit-{$this->taxonomy}_columns", 'WPCM_Admin_Taxonomies', 'season_edit_columns' );
     }
 
     /**

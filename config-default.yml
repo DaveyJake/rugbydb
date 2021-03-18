@@ -61,9 +61,13 @@ PATHS:
   # Paths for the package task to include/exclude in .zip archive.
   package:
     - "**/*"
+    - "**/WR/match/{mens,womens}-{eagles,sevens}/**"
+    - "**/WR/wr-utilities.php"
     - "!**/.babelrc"
+    - "!**/.editorconfig"
     - "!**/.eslint*"
     - "!**/.git*"
+    - "!**/.stylelint*"
     - "!**/node_modules/**"
     - "!**/packaged/**"
     - "!**/src/**"
@@ -75,8 +79,9 @@ PATHS:
     - "!**/gulpfile.babel.js"
     - "!**/package.json"
     - "!**/package-lock.json"
-    - "!**/rdb.sublime-*"
+    - "!**/*.sublime-*"
     - "!**/webpack.config.js"
+    - "!**/WR/**"
   # Paths for PHP CodeSniffer.
   phpcs:
     - "**/*.php"

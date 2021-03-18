@@ -67,14 +67,17 @@ class RDB_WPCM_Admin_Menus {
      * Add menu items
      */
     public function taxonomy_menu() {
-
         add_submenu_page( 'wpcm-dashboard', __( 'Seasons', 'wp-club-manager' ),  __( 'Seasons', 'wp-club-manager' ) , 'manage_wpclubmanager', 'edit-tags.php?taxonomy=wpcm_season&amp;post_type=wpcm_club', false );
         add_submenu_page( 'wpcm-dashboard', __( 'Competitions', 'wp-club-manager' ),  __( 'Competitions', 'wp-club-manager' ) , 'manage_wpclubmanager', 'edit-tags.php?taxonomy=wpcm_comp&amp;post_type=wpcm_club', false );
+
         if ( is_club_mode() ) {
             add_submenu_page( 'wpcm-dashboard', __( 'Teams', 'wp-club-manager' ),  __( 'Teams', 'wp-club-manager' ) , 'manage_wpclubmanager', 'edit-tags.php?taxonomy=wpcm_team&amp;post_type=wpcm_player', false );
             add_submenu_page( 'wpcm-dashboard', __( 'Rosters', 'wp-club-manager' ),  __( 'Rosters', 'wp-club-manager' ) , 'manage_wpclubmanager', 'edit.php?post_type=wpcm_roster', false );
         }
-        add_submenu_page( 'wpcm-dashboard', __( 'League Tables', 'wp-club-manager' ),  __( 'League Tables', 'wp-club-manager' ) , 'manage_wpclubmanager', 'edit.php?post_type=wpcm_table', false );
+
+        if ( is_league_mode() ) {
+            add_submenu_page( 'wpcm-dashboard', __( 'League Tables', 'wp-club-manager' ),  __( 'League Tables', 'wp-club-manager' ) , 'manage_wpclubmanager', 'edit.php?post_type=wpcm_table', false );
+        }
     }
 
     /**
@@ -148,13 +151,9 @@ class RDB_WPCM_Admin_Menus {
         }
 
         switch ( $submenu_file ) {
-            case 'edit-tags.php?taxonomy=wpcm_season&amp;post_type=wpcm_club' :
-                $parent_file = 'wpcm-dashboard';
-            break;
-            case 'edit-tags.php?taxonomy=wpcm_comp&amp;post_type=wpcm_club' :
-                $parent_file = 'wpcm-dashboard';
-            break;
-            case 'edit-tags.php?taxonomy=wpcm_team&amp;post_type=wpcm_player' :
+            case 'edit-tags.php?taxonomy=wpcm_season&amp;post_type=wpcm_club':
+            case 'edit-tags.php?taxonomy=wpcm_comp&amp;post_type=wpcm_club':
+            case 'edit-tags.php?taxonomy=wpcm_team&amp;post_type=wpcm_player':
                 $parent_file = 'wpcm-dashboard';
             break;
         }

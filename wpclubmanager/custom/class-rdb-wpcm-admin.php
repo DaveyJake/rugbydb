@@ -45,6 +45,7 @@ class RDB_WPCM_Admin {
         require_once 'admin/class-rdb-wpcm-seasons.php';
         require_once 'admin/class-rdb-wpcm-teams.php';
         require_once 'admin/class-rdb-wpcm-venues.php';
+        require_once 'admin/rdb-wpcm-theme-editor.php';
     }
 
 }

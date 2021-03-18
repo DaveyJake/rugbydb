@@ -106,7 +106,7 @@ class RDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
             ) );
         }
 
-        // Edit venue pages
+        // Edit venue pages.
         if ( in_array( $screen_id, array( 'edit-wpcm_venue' ), true ) ) {
             $this->deps[] = 'wpclubmanager-admin-locationpicker';
 
@@ -115,7 +115,7 @@ class RDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
             wp_enqueue_script( 'wpclubmanager-admin-locationpicker' );
         }
 
-        // WPlubManager admin pages
+        // WPlubManager admin pages.
         if ( in_array( $screen_id, wpcm_get_screen_ids() ) ) {
             $this->deps[] = 'jquery-tiptip';
 

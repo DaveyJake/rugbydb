@@ -12,7 +12,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <!doctype html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> class="no-js">
 <head>
 <?php
     rdb_head_open();
@@ -37,7 +37,7 @@ defined( 'ABSPATH' ) || exit;
 
                 echo '<div class="main-navigation">';
                     echo '<div class="site-branding" itemscope itemtype="http://schema.org/Brand">';
-                        echo '<a href="' . esc_url( home_url( '/' ) ) . '" rel="bookmark">' . wp_kses_post( rdb_site_logo() ) . '</a>';
+                        echo '<a href="' . esc_url( home_url( '/' ) ) . '" rel="bookmark">' . wp_kses_post( rdb_site_logo() ) . '<sub>BETA</sub></a>';
                     echo '</div><!-- .site-branding -->';
 
                     rdb_nav_menu(

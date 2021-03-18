@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-// phpcs:disable Squiz.Commenting.BlockComment.WrongEnd,Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace
+// phpcs:disable WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd,Squiz.Commenting.BlockComment.WrongEnd,Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace,Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose,Squiz.WhiteSpace.ControlStructureSpacing.LineAfterClose
 
 /**
  * Set the short initialization when AJAX requesting custom endpoints.
@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 function rdb_ajax() {
     $ajax_pages = array( 'players', 'staff', 'venues', 'opponents' );
 
-    if ( is_page( $ajax_pages ) || is_singular( 'wpcm_match' ) || is_singular( 'wpcm_club' ) || is_tax( 'wpcm_team' ) ) {
+    if ( is_page( $ajax_pages ) || is_front_page() || is_singular( 'wpcm_match' ) || is_singular( 'wpcm_club' ) || is_tax( 'wpcm_team' ) ) {
         echo '<input type="hidden" name="dbi-ajax" value="1" />';
     }
 }
@@ -65,15 +65,15 @@ function rdb_auto_hyperlink( $content ) {
  * @return array
  */
 function rdb_body_classes( $classes ) {
-	// Adds a class of hfeed to non-singular pages.
-	if ( ! is_singular() ) {
-		$classes[] = 'hfeed';
-	}
+    // Adds a class of hfeed to non-singular pages.
+    if ( ! is_singular() ) {
+        $classes[] = 'hfeed';
+    }
 
-	// Adds a class of no-sidebar when there is no sidebar present.
-	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
-		$classes[] = 'no-sidebar';
-	}
+    // Adds a class of no-sidebar when there is no sidebar present.
+    if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+        $classes[] = 'no-sidebar';
+    }
 
     // Front page.
     if ( is_front_page() ) {
@@ -87,7 +87,7 @@ function rdb_body_classes( $classes ) {
         $classes[] = 'page-' . sanitize_title( $title );
     }
 
-	return $classes;
+    return $classes;
 }
 
 /**
@@ -118,9 +118,9 @@ function rdb_menu_item_classes( $classes, $item, $args, $depth ) {
  * Add a pingback url auto-discovery header for single posts, pages, or attachments.
  */
 function rdb_pingback_header() {
-	if ( is_singular() && pings_open() ) {
-		printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
-	}
+    if ( is_singular() && pings_open() ) {
+        printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
+    }
 }
 
 /**
@@ -232,6 +232,7 @@ function rdb_prevent_post_type_image_resize( $sizes ) {
 /**
  * Prevent image resize based on post type.
  *
+ * @since 1.0.0
  * @access private
  *
  * @see rdb_prevent_post_type_image_resize()
@@ -385,10 +386,10 @@ function rdb_schema_front_page( $data = null ) {
             '@context'      => 'http://schema.org/',
             '@type'         => 'WebSite',
             'name'          => 'RugbyDB.com',
-            'about'         => 'The authoritative database for national team rugby union in the United States.',
+            'about'         => 'Tracking the USA Rugby Eagles since 2019.',
             'genre'         => 'https://www.wikidata.org/wiki/Q349',
             'creator'       => 'Davey Jacobson',
-            'copyrightYear' => 2021,
+            'copyrightYear' => 2019,
             'image'         => get_theme_file_uri( 'dist/img/rugbydb@2x.png' ),
             'url'           => site_url(),
         );
@@ -399,10 +400,10 @@ function rdb_schema_front_page( $data = null ) {
 
         $data['@type']         = 'WebSite';
         $data['name']          = 'RugbyDB.com';
-        $data['about']         = 'The authoritative database for national team rugby union in the United States.';
+        $data['about']         = 'Tracking the USA Rugby Eagles since 2019.';
         $data['genre']         = 'https://www.wikidata.org/wiki/Q349';
         $data['creator']       = 'Davey Jacobson';
-        $data['copyrightYear'] = 2021;
+        $data['copyrightYear'] = 2019;
         $data['image']         = get_theme_file_uri( 'dist/img/rugbydb@2x.png' );
 
         return $data;
@@ -423,38 +424,47 @@ function rdb_schema_sports_event( $data = null ) {
 
     // Has the event already happened?
     $is_played = get_post_meta( $post->ID, 'wpcm_played', true );
+
     // Was the event at a neutral venue?
     $is_neutral = get_post_meta( $post->ID, 'wpcm_neutral', true );
+
     // The `wpcm_competition` & `wpcm_season` values collectively make-up the 'name'.
     $competition = get_the_terms( $post->ID, 'wpcm_comp' );
     $comp_name   = $competition[0]->name;
     if ( $competition[0]->parent > 0 ) {
         $parent    = get_term_by( 'term_id', $competition[0]->parent, 'wpcm_comp' );
-        $comp_name = sprintf( '%s - %s', $parent->name, $comp_name );
+        $comp_name = sprintf( '%1$s - %2$s', $parent->name, $comp_name );
     }
 
     $season = get_the_terms( $post->ID, 'wpcm_season' );
-    $name   = sprintf( '%s %s', $season[0]->name, $comp_name );
+    $name   = sprintf( '%1$s %2$s', $season[0]->name, $comp_name );
+
     // Competition status.
     $comp_status = get_post_meta( $post->ID, 'wpcm_comp_status', true );
+
     // The US team that competed.
     $team = get_the_terms( $post->ID, 'wpcm_team' );
+
     // The `wpcm_venue` serves, collectively, as location and handles the timezone.
     $venue      = get_the_terms( $post->ID, 'wpcm_venue' );
     $venue_name = $venue[0]->name;
     $venue_meta = get_term_meta( $venue[0]->term_id );
     $venue_cap  = $venue_meta['wpcm_capacity'][0];
     $venue_tz   = $venue_meta['usar_timezone'][0];
+
     // Match attendance.
     $attendance = get_post_meta( $post->ID, 'wpcm_attendance', true );
+
     // Match date.
     $start_date = new DateTime( $post->post_date, wp_timezone() );
     $start_date->setTimezone( new DateTimeZone( $venue_tz ) );
+
     // Venue address data.
     $address = array(
         '@type'          => 'PostalAddress',
         'addressCountry' => $venue_meta['addressCountry'][0],
     );
+
     // Check for venue's state/provice/etc.
     if ( ! empty( $venue_meta['addressRegion'][0] ) ) {
         $address['addressRegion'] = $venue_meta['addressRegion'][0];
@@ -485,18 +495,18 @@ function rdb_schema_sports_event( $data = null ) {
     $description = preg_split( '/\sv\s/', $post->post_title );
     $team_one    = preg_replace( '/(Women(\'s)?|(7s))/', '', $description[0] );
     $team_two    = preg_replace( '/(Women(\'s)?|(7s))/', '', $description[1] );
-    $description = sprintf( '%s v %s', trim( $team_one ), trim( $team_two ) );
+    $description = sprintf( '%1$s v %2$s', trim( $team_one ), trim( $team_two ) );
 
     // Check for 7s matches and if USA men's sevens were listed as home when visiting.
     if ( 'United States' === $home->post_title ) {
-        $home_team = sprintf( '%s %s', $home->post_title, $team[0]->name );
+        $home_team = sprintf( '%1$s %2$s', $home->post_title, $team[0]->name );
     } else {
         $home_team = $home->post_title;
     }
 
     // Check for 7s matches and if USA men's sevens were listed as away when home.
     if ( 'United States' === $away->post_title ) {
-        $away_team = sprintf( '%s %s', $away->post_title, $team[0]->name );
+        $away_team = sprintf( '%1$s %2$s', $away->post_title, $team[0]->name );
     } else {
         $away_team = $away->post_title;
     }
@@ -506,14 +516,17 @@ function rdb_schema_sports_event( $data = null ) {
         '@type' => 'SportsTeam',
         'name'  => $home_team,
     );
+
     // Away team competitor.
     $away_team_property = array(
         '@type' => 'SportsTeam',
         'name'  => $away_team,
     );
+
     // Neutral venue?
     if ( $is_neutral ) {
         $competitor = array( $home_team_property, $away_team_property );
+
     } else {
         if ( 'US' === $address['addressCountry'] ) {
             if ( 'United States' === $home->post_title ) {
@@ -523,6 +536,7 @@ function rdb_schema_sports_event( $data = null ) {
                 $_home_team = $away_team_property;
                 $_away_team = $home_team_property;
             }
+
         } else {
             if ( 'United States' === $away->post_title ) {
                 $_home_team = $home_team_property;
@@ -553,7 +567,7 @@ function rdb_schema_sports_event( $data = null ) {
             $data['subEvent'] = array(
                 '@type' => 'SportsEvent',
                 '@id'   => '#' . sanitize_title( $comp_status ),
-                'name'  => sprintf( '%s - %s', $name, $comp_status ),
+                'name'  => sprintf( '%1$s - %2$s', $name, $comp_status ),
             );
         }
 
@@ -561,7 +575,7 @@ function rdb_schema_sports_event( $data = null ) {
         if ( $is_neutral ) {
             $data['competitor'] = $competitor;
         } else {
-            $data['homeTeam'] = $_hway_team;
+            $data['homeTeam'] = $_home_team;
             $data['awayTeam'] = $_away_team;
         }
 
@@ -588,6 +602,7 @@ function rdb_schema_sports_event( $data = null ) {
         }
 
         echo wp_kses_post( '<script type="ld+json">' . wp_json_encode( $data ) . '</script>' );
+
     } else {
         /**
          * SchemaOrg model if hooked into {@see 'wpclubmanager_schema_sports_event'}.
@@ -602,7 +617,7 @@ function rdb_schema_sports_event( $data = null ) {
             $data['subEvent'] = array(
                 '@type' => 'SportsEvent',
                 '@id'   => '#' . sanitize_title( $comp_status ),
-                'name'  => sprintf( '%s - %s', $name, $comp_status ),
+                'name'  => sprintf( '%1$s - %2$s', $name, $comp_status ),
             );
         }
 
@@ -663,7 +678,11 @@ add_filter( 'the_content', 'rdb_auto_hyperlink' );
 // Taxonomy Images.
 add_filter( 'taxonomy_images/use_term_meta', '__return_true' );
 
+
 /** Actions *******************************************************************/
+
+// Purge AJAX transient for specified objects.
+add_action( 'init', 'rdb_purge_hooks' );
 
 // SchemaOrg integration.
 add_action( 'before_wpcm_init', 'rdb_schema_ld_json' );
@@ -673,9 +692,6 @@ add_action( 'wp_head', 'rdb_pingback_header' );
 
 // Favicons.
 add_action( 'rdb_head_open', 'rdb_favicons' );
-
-// Purge AJAX transient for specified objects.
-add_action( 'init', 'rdb_purge_hooks' );
 
 // Custom endpoint AJAX.
 add_action( 'wp_footer', 'rdb_ajax' );

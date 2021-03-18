@@ -39,12 +39,21 @@ class RDB_WPCM_Settings {
         add_filter( 'wpclubmanager_stats_cards', array( $this, 'rugby_cards_only' ) );
 
         /**
-         * WPCM Thumbnail image adjustments.
+         * WPCM thumbnail image adjustments.
          *
-         * @uses {@see 'wpcm_image_thumbnail_adjust'}
+         * @uses {@see 'wpcm_thumbnail_image_adjust'}
          */
         foreach ( array( 'player_thumbnail', 'staff_thumbnail' ) as $image_size ) {
-            add_filter( "wpclubmanager_get_image_size_{$image_size}", array( $this, 'wpcm_image_thumbnail_adjust' ) );
+            add_filter( "wpclubmanager_get_image_size_{$image_size}", array( $this, 'wpcm_thumbnail_image_adjust' ) );
+        }
+
+        /**
+         * WPCM single image adjustments.
+         *
+         * @uses {@see 'wpcm_single_image_adjust'}
+         */
+        foreach ( array( 'player_single', 'staff_single' ) as $image_size ) {
+            add_filter( "wpclubmanager_get_image_size_{$image_size}", array( $this, 'wpcm_single_image_adjust' ) );
         }
 
         /**
@@ -119,14 +128,30 @@ class RDB_WPCM_Settings {
         global $hook_suffix;
 
         if ( 'club-manager_page_wpcm-settings' === $hook_suffix ) {
-            foreach ( $countries as $slug => $name ) {
-                if ( 'us' !== $slug ) {
-                    unset( $countries[ $slug ] );
-                }
-            }
+            $usa = $countries['us'];
+
+            $countries = array();
+            $countries['us'] = $usa;
         }
 
         return $countries;
+    }
+
+    /**
+     * WP Club Manager thumbnail size adjustments.
+     *
+     * @since USA_Rugby 2.5.0
+     *
+     * @see "wpclubmanager_get_image_size_{$image_size}"
+     *
+     * @param array $size Default image arguments.
+     */
+    public function wpcm_thumbnail_image_adjust( $size ) {
+        $size['width']  = 639;
+        $size['height'] = 639;
+        $size['crop']   = array( 'center', 'top' );
+
+        return $size;
     }
 
     /**
@@ -138,9 +163,9 @@ class RDB_WPCM_Settings {
      *
      * @param array $size Default image arguments.
      */
-    public function wpcm_image_thumbnail_adjust( $size ) {
-        $size['width']  = 639;
-        $size['height'] = 639;
+    public function wpcm_single_image_adjust( $size ) {
+        $size['width']  = 1199;
+        $size['height'] = 1199;
         $size['crop']   = array( 'center', 'top' );
 
         return $size;
@@ -151,7 +176,7 @@ class RDB_WPCM_Settings {
      *
      * @see get_terms()
      *
-     * @param array                $terms      The current terms to edit.
+     * @param WP_Term[]            $terms      The current terms to edit.
      * @param array                $taxonomies List of taxonomies.
      * @param array                $args       WP_Term arguments.
      * @param WP_Term_Query|object $term_query WP_Term_Query object.
@@ -177,7 +202,7 @@ class RDB_WPCM_Settings {
                             $part = 'Women\'s';
                         }
 
-                        if ( ! in_array( $part, array( 'of' ) ) ) {
+                        if ( ! in_array( $part, array( 'of' ), true ) ) {
                             $part = ucwords( $part );
                         }
 
@@ -192,7 +217,7 @@ class RDB_WPCM_Settings {
                             $part = 'of';
                         }
 
-                        if ( ! in_array( $part, array( 'of' ) ) ) {
+                        if ( ! in_array( $part, array( 'of' ), true ) ) {
                             $part = ucwords( $part );
                         }
 

@@ -6,10 +6,6 @@
     flex-direction: column;
     min-height: 100vh;
 
-    &.ua-mobile {
-        margin-top: $size__navbar-height;
-    }
-
     #page {
         flex: 1 0 auto;
 
@@ -75,26 +71,55 @@
                 height: 28px;
             }
 
-            [src*='argentina-xv'],
+            [src*='argentina-xv'] {
+                width: 36px;
+            }
+
             [src*='victoria-rugby'],
             [src*='south-australia'] {
                 height: 18px;
             }
 
             &_wrapper {
-                .wpcm-row:last-child {
-                    .paging_full_numbers {
-                        margin: auto;
+                .wpcm-row {
+                    &:first-child {
+                        #all-matches_filter {
+                            width: 100%;
+                            margin-bottom: 0.5em;
+                        }
+
+                        @include breakpoint(medium) {
+                            #all-matches_filter {
+                                width: 75%;
+                            }
+                        }
+
+                        @include breakpoint(large) {
+                            #all-matches_filter {
+                                width: 45%;
+                                padding-left: 0.55%;
+                            }
+
+                            #all-matches_paginate {
+                                width: 56%;
+                            }
+                        }
                     }
 
-                    .wpcm-column {
-                        width: 100%;
+                    &:last-child {
+                        .paging_full_numbers {
+                            margin: auto;
+                        }
+
+                        .wpcm-column {
+                            width: 100%;
+                        }
                     }
                 }
-            }
 
-            &_filter {
-                padding-left: 0.55%;
+                .dtr-title {
+                    min-width: 42px;
+                }
             }
         }
     }

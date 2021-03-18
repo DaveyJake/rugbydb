@@ -53,6 +53,14 @@ $cpts: player match venue;
         @include breakpoint(1280px) {
             margin-left: 2px;
         }
+
+        sub {
+            color: $color__white;
+
+            @include breakpoint(medium down) {
+                margin-left: -1rem;
+            }
+        }
     }
 
     &-main {

@@ -101,7 +101,9 @@ class DTHelper {
      * @return {string}      HTML output.
      */
     static venueLink( venue ) {
-        return `<a id="venue-${ venue.id }-link" href="${ venue.link }" title="${ venue.name }" rel="bookmark"><span class="flag-icon flag-icon-squared flag-icon-squared-${ venue.country }" title="${ COUNTRIES[ venue.country.toUpperCase() ] }"></span> ${ venue.name }</a>`;
+        const link = new URL( venue.link );
+
+        return `<a id="venue-${ venue.id }-link" href="${ link.pathname }" title="${ venue.name }" rel="bookmark"><span class="flag-icon flag-icon-squared flag-icon-squared-${ venue.country }" title="${ COUNTRIES[ venue.country.toUpperCase() ] }"></span> ${ venue.name }</a>`;
     }
 
     /**

@@ -12,7 +12,6 @@
 defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Timezone_Picker {
-
     /**
      * Class instance.
      *
@@ -188,7 +187,6 @@ class RDB_WPCM_Timezone_Picker {
 
         return $name;
     }
-
 }
 
 if ( ! function_exists( 'TimeZonePicker' ) ) {

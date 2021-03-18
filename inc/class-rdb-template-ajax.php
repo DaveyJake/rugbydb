@@ -135,13 +135,13 @@ class RDB_Template_AJAX {
             }
 
             if ( ! ( empty( $this->per_page ) && empty( $this->page ) ) ) {
-                $url = add_query_arg(
-                    array(
-                        'per_page' => $this->per_page,
-                        'page'     => $this->page,
-                    ),
-                    rest_url( $endpoint )
+                $args = array(
+                    'per_page' => $this->per_page,
+                    'page'     => $this->page,
                 );
+                $args = array_map( 'rawurlencode', $args );
+
+                $url = add_query_arg( $args, rest_url( $endpoint ) );
             } else {
                 $url = rest_url( $endpoint );
             }
@@ -169,9 +169,9 @@ class RDB_Template_AJAX {
     private function parse_response( $url ) {
         $transient = md5( $url );
         // phpcs:disable
-        //if ( ! is_front_page() ) {
-            delete_transient( $transient );
-        //}
+        // if ( ! is_front_page() ) {
+        //     delete_transient( $transient );
+        // }
         // phpcs:enable
 
         $data = get_transient( $transient );

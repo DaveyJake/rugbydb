@@ -381,9 +381,11 @@ class FrontPage extends DTHelper {
             buttons: false,
             dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column pagination"p>>',
             language: {
+                infoEmpty: 'Try reloading the page',
                 loadingRecords: DT_LOADING,
                 search: '',
-                searchPlaceholder: 'Search Matches (Hint: Try "friendly", "ireland", or even "rwc")'
+                searchPlaceholder: 'Search Matches (Hint: Try "friendly", "ireland", or even "rwc")',
+                zeroRecords: 'Try reloading the page',
             },
             order: [
                 [ 6, 'desc' ]

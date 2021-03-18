@@ -14,11 +14,22 @@ defined( 'ABSPATH' ) || exit;
 class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
 
     /**
+     * Default club ID.
+     *
+     * @since 1.0.0
+     *
+     * @var string|int
+     */
+    public $default_club;
+
+    /**
      * Primary constructor.
      *
      * @return RDB_WPCM_Admin_Post_Types
      */
     public function __construct() {
+        $this->default_club = get_default_club();
+
         // Unset actions.
         add_action( 'init', array( $this, 'unset_wpcm_actions' ) );
 
@@ -110,7 +121,7 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 }
 
                 $title     = $side1 . ' ' . $separator . ' ' . $side2;
-                $post_name = sanitize_title_with_dashes( $postarr['ID'] . '-' . $title );
+                $post_name = sanitize_title( $postarr['ID'] . '-' . $title );
 
                 $data['post_title'] = $title;
                 $data['post_name']  = $post_name;
@@ -204,9 +215,8 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
             case 'name' :
                 $edit_link    = get_edit_post_link( $post->ID );
                 $title        = _draft_or_post_title();
-                $default_club = get_default_club();
 
-                echo '<strong>' . ( $post->ID == $default_club ? '<span class="list-table-club-default">' . __( 'Default', 'wp-club-manager' ) . '</span>' : '' ) . '<a class="row-title" href="' . esc_url( $edit_link ) . '">' . ( $post->post_parent > 0 ? '&mdash;' : '' ) . ' ' . esc_html( $title ) . '</a>';
+                echo '<strong>' . ( $post->ID == $this->default_club ? '<span class="list-table-club-default">' . __( 'Default', 'wp-club-manager' ) . '</span>' : '' ) . '<a class="row-title" href="' . esc_url( $edit_link ) . '">' . ( $post->post_parent > 0 ? '&mdash;' : '' ) . ' ' . esc_html( $title ) . '</a>';
 
                 _post_states( $post );
 
@@ -258,7 +268,6 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
      * @return array
      */
     public function match_columns( $existing_columns ) {
-
         if ( empty( $existing_columns ) && ! is_array( $existing_columns ) ) {
             $existing_columns = array();
         }
@@ -282,7 +291,6 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
         $columns['score']   = __( 'Score', 'wp-club-manager' );
 
         return array_merge( $columns, $existing_columns );
-
     }
 
     /**
@@ -335,7 +343,7 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 $home = get_post_meta( $post->ID, 'wpcm_home_club', true );
                 $away = get_post_meta( $post->ID, 'wpcm_away_club', true );
 
-                $opp_id = ( '5' !== $home ? $home : $away );
+                $opp_id = ( $this->default_club !== $home ? $home : $away );
 
                 $played = get_post_meta( $post->ID, 'wpcm_played', true );
                 $score  = wpcm_get_match_result( $post->ID );
@@ -432,7 +440,7 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                     $neutral = '<span class="green">' . __( "@ {$venue['name']}", 'rugby-database' ) . '</span>';
                 } else {
                     $home_club = get_post_meta( $post->ID, 'wpcm_home_club', true );
-                    if ( 5 === absint( $home_club ) ) {
+                    if ( absint( $this->default_club ) === absint( $home_club ) ) {
                         $neutral = '<span class="blue">' . __( "{$venue['name']}", 'rugby-database' ) . '</span>';
                     } else {
                         $neutral = '<span class="red">' . __( "@ {$venue['name']}", 'rugby-database' ) . '</span>';
@@ -806,8 +814,6 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
 
         if ( 'wpcm_match' === $post_type )
         {
-            $club = get_default_club();
-
             $opponents = array();
             $opps      = get_posts(
                 array(
@@ -817,7 +823,7 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
             );
 
             foreach ( $opps as $opp ) {
-                if ( $club !== $opp->ID ) {
+                if ( $this->default_club !== $opp->ID ) {
                     $opponents[ $opp->ID ] = $opp->post_title;
                 }
             }
@@ -885,8 +891,6 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
     public function quick_edit_save( $post ) {
         $post_id = $post->ID;
 
-        $club = (string) get_default_club();
-
         if ( 'wpcm_player' === $post->post_type ) {
             if ( isset( $_REQUEST['_wpcm_firstname'] ) ) {
                 update_post_meta( $post_id, '_wpcm_firstname', wpcm_clean( $_REQUEST['_wpcm_firstname'] ) );
@@ -917,7 +921,7 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
 
             $home = get_post_meta( $post_id, 'wpcm_home_club', true );
             $away = get_post_meta( $post_id, 'wpcm_away_club', true );
-            $key  = ( $club !== $home ? 'wpcm_home_club' : 'wpcm_away_club' );
+            $key  = ( $this->default_club !== $home ? 'wpcm_home_club' : 'wpcm_away_club' );
             if ( isset( $_REQUEST['wpcm_opponent'] ) ) {
                 update_post_meta( $post_id, $key, wpcm_clean( $_REQUEST['wpcm_opponent'] ) );
             }

@@ -10,7 +10,6 @@
 defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Shortcodes {
-
     /**
      * Primary constructor.
      *

@@ -13,29 +13,38 @@ defined( 'ABSPATH' ) || exit;
 class RDB_WPCM_Positions {
 
     /**
+     * Taxonomy slug.
+     *
+     * @since 1.0.0
+     *
+     * @var string
+     */
+    public $taxonomy = 'wpcm_position';
+
+    /**
      * Primary constructor.
      *
      * @return RDB_WPCM_Positions
      */
     public function __construct() {
-        add_action( 'init', array( $this, 'unset_wpcm_positions' ) );
-        add_action( 'before_wpcm_init', array( $this, 'reset_wpcm_positions' ) );
+        add_action( 'init', array( $this, "unset_{$this->taxonomy}s" ) );
+        add_action( 'before_wpcm_init', array( $this, "reset_{$this->taxonomy}s" ) );
     }
 
     /**
      * Reset WPCM positions.
      */
     public function reset_wpcm_positions() {
-        add_action( 'manage_wpcm_position_custom_column', array( $this, 'position_custom_columns' ), 5, 3 );
-        add_filter( 'manage_edit-wpcm_position_columns', array( $this, 'position_edit_columns' ) );
+        add_action( "manage_{$this->taxonomy}_custom_column", array( $this, 'position_custom_columns' ), 5, 3 );
+        add_filter( "manage_edit-{$this->taxonomy}_columns", array( $this, 'position_edit_columns' ) );
     }
 
     /**
      * Unset & reset WPCM positions.
      */
     public function unset_wpcm_positions() {
-        rdb_remove_class_method( 'manage_wpcm_position_custom_column', 'WPCM_Admin_Taxonomies', 'position_custom_columns', 5 );
-        rdb_remove_class_method( 'manage_edit-wpcm_position_columns', 'WPCM_Admin_Taxonomies', 'position_edit_columns', 10 );
+        rdb_remove_class_method( "manage_{$this->taxonomy}_custom_column", 'WPCM_Admin_Taxonomies', 'position_custom_columns', 5 );
+        rdb_remove_class_method( "manage_edit-{$this->taxonomy}_columns", 'WPCM_Admin_Taxonomies', 'position_edit_columns' );
     }
 
     /**
@@ -62,7 +71,7 @@ class RDB_WPCM_Positions {
      *
      * @global WP_Post|object $post The current post.
      *
-     * @see RDB_WPCM_positions::rdb_get_wpcm_player_count_by_position()
+     * @see RDB_WPCM_positions::player_count_by_position()
      *
      * @param mixed  $value  The value for the column.
      * @param string $column The column name.
@@ -84,13 +93,13 @@ class RDB_WPCM_Positions {
                         'hide_empty'       => false,
                     )
                 );
-                $count = $this->rdb_get_wpcm_player_count_by_position( $t_id );
+                $count = $this->player_count_by_position( $t_id );
                 $args  = array(
                     'post_type'     => 'wpcm_player',
                     'wpcm_position' => $positions[ $t_id ],
                 );
                 $url = add_query_arg( $args, admin_url( 'edit.php' ) );
-                echo '<a href="' . esc_url( $url ) . '">' . ( !empty( $count ) ? $count : '0' ) . '</a>';
+                echo '<a href="' . esc_url( $url ) . '">' . esc_html( absint( $count ) ) . '</a>';
                 break;
             case 'ID':
                 echo $t_id;
@@ -111,7 +120,7 @@ class RDB_WPCM_Positions {
      *
      * @return int The post count for the term.
      */
-    private function rdb_get_wpcm_player_count_by_position( $t_id ) {
+    private function player_count_by_position( $t_id ) {
         $args = array(
             'post_type'      => 'wpcm_player',
             'post_status'    => array( 'publish' ),

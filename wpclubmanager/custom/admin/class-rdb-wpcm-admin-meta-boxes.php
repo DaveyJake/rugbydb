@@ -57,7 +57,11 @@ class RDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
         $this->match_meta_boxes( $post );
         $this->player_meta_boxes( $post );
         $this->staff_meta_boxes( $post );
-        $this->league_tables( $post );
+
+        if ( is_league_mode() ) {
+            $this->league_tables( $post );
+        }
+
         $this->rosters( $post );
         $this->sponsors( $post );
     }

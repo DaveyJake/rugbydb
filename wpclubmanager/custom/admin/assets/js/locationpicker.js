@@ -5,7 +5,6 @@ jQuery( document ).ready( function( $ ) {
             longitude: Number( $( '.wpcm-longitude' ).val() ),
             place_id: String( $( '.place-id' ).val() )
         },
-        radius: 0,
         inputBinding: {
             latitudeInput: $( '.wpcm-latitude' ),
             longitudeInput: $( '.wpcm-longitude' ),
@@ -17,6 +16,7 @@ jQuery( document ).ready( function( $ ) {
             schemaPostalCode: $( '.postalCode' ),
             schemaAddressCountry: $( '.addressCountry' )
         },
+        radius: 0,
         addressFormat: null,
         enableAutocomplete: true
     });

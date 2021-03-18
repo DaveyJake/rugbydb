@@ -52,6 +52,13 @@ define( 'ONE_WEEK', WEEK_IN_SECONDS );
 require get_template_directory() . '/inc/class-rdb-device-detect.php';
 
 /**
+ * Make sure core plugin is loaded.
+ */
+if ( ! function_exists( 'is_plugin_active' ) ) {
+    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
+/**
  * WP Club Manager custom functions.
  */
 if ( is_plugin_active( 'wp-club-manager/wpclubmanager.php' )

@@ -638,9 +638,10 @@ function rdb_google_venue_timezone( $venue, $match_id ) {
                 'location'  => "{$lat},{$lng}",
                 'timestamp' => $timestamp,
             );
-
+            $args = array_map( 'rawurlencode', $args );
             $args = wp_parse_args( $args, $defaults );
-            $url  = add_query_arg( $args, 'https://maps.googleapis.com/maps/api/timezone/json' );
+
+            $url = add_query_arg( $args, 'https://maps.googleapis.com/maps/api/timezone/json' );
 
             $request = wp_remote_get( $url );
             if ( is_wp_error( $request ) ) {
@@ -875,9 +876,9 @@ function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name
     // phpcs:enable
     $names = array( 'competition', 'position', 'season' );
 
-    $xv    = array( 'mens-eagles', 'womens-eagles' );
-    $sv    = array( 'mens-sevens', 'womens-sevens' );
-    $us    = array( 'team-usa-men', 'team-usa-women' );
+    $xv = array( 'mens-eagles', 'womens-eagles' );
+    $sv = array( 'mens-sevens', 'womens-sevens' );
+    $us = array( 'team-usa-men', 'team-usa-women' );
 
     $xv_positions  = array( 'prop', 'hooker', 'lock', 'flanker', 'number-8', 'scrum-half', 'fly-half', 'wing', 'center', 'full-back' );
     $sv_positions = array( 'prop', 'hooker', 'scrum-half', 'fly-half', 'wing', 'full-back', 'back', 'forward' );
@@ -1132,8 +1133,6 @@ function rdb_wpcm_match_timeline() {
  * @since 1.0.0
  */
 function rdb_reset_wpcm_match_hooks() {
-    global $post;
-
     remove_action( 'wpclubmanager_single_match_info', 'wpclubmanager_template_single_match_home_club_badge', 5 );
     remove_action( 'wpclubmanager_single_match_info', 'wpclubmanager_template_single_match_away_club_badge', 10 );
     remove_action( 'wpclubmanager_single_match_info', 'wpclubmanager_template_single_match_comp', 20 );

@@ -328,19 +328,19 @@ class RDB_Styles_Scripts {
          * @var array
          */
         $register_scripts = array(
-            'dt-pdfmake' => array(
+            'dt-pdfmake'       => array(
                 'src'    => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.js',
                 'dep'    => array( 'jquery' ),
                 'ver'    => self::DT_PLUGINS,
                 'footer' => true,
             ),
-            'dt-vfs-fonts' => array(
+            'dt-vfs-fonts'     => array(
                 'src'    => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js',
                 'dep'    => array( 'dt-pdfmake' ),
                 'ver'    => self::DT_PLUGINS,
                 'footer' => true,
             ),
-            'datatables' => array(
+            'datatables'       => array(
                 'src'    => "https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.22/af-2.3.5/b-1.6.4/b-colvis-1.6.4/b-html5-1.6.4/b-print-1.6.4/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.3/r-2.2.6/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.0/sp-1.2.0/sl-1.3.1/datatables{$this->dev}.js",
                 'dep'    => array( 'dt-vfs-fonts' ),
                 'ver'    => self::DT_VERSION,
@@ -353,7 +353,7 @@ class RDB_Styles_Scripts {
                 'footer' => true,
             ),
             'moment-timezone'  => $moment_scripts['moment-timezone'],
-            'underscore' => array(
+            'underscore'       => array(
                 'src'    => includes_url( "js/dist/vendor/lodash{$this->dev}.js" ),
                 'dep'    => false,
                 'ver'    => '4.17.15',
