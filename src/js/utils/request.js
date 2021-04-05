@@ -28,8 +28,8 @@ class Request {
      *
      * @since 1.0.0
      *
-     * @param {string} route   Slug of requested post type.
-     * @param {object} args {
+     * @param {string} route Slug of requested post type.
+     * @param {object} args  {
      *     The optional argument properties.
      *
      *     @type {string} nonce      Generated nonce key.

@@ -311,7 +311,7 @@ const FIFTEEN_MINUTES = new Date( ( new Date().getTime() + 15 ) * 60 * 1000 );
  *
  * @since 1.0.0
  *
- * @type {string}
+ * @type {mixed}
  */
 const DT_LOADING = '<img src="' + adminUrl( 'images/wpspin_light-2x.gif' ) + '" width="16" height="16" alt="Loading data..." />';
 

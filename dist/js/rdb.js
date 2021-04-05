@@ -25555,7 +25555,7 @@ var FIFTEEN_MINUTES = new Date((new Date().getTime() + 15) * 60 * 1000);
  *
  * @since 1.0.0
  *
- * @type {string}
+ * @type {mixed}
  */
 
 var DT_LOADING = '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" alt="Loading data..." />';
@@ -26536,8 +26536,8 @@ var Request = /*#__PURE__*/function () {
    *
    * @since 1.0.0
    *
-   * @param {string} route   Slug of requested post type.
-   * @param {object} args {
+   * @param {string} route Slug of requested post type.
+   * @param {object} args  {
    *     The optional argument properties.
    *
    *     @type {string} nonce      Generated nonce key.
