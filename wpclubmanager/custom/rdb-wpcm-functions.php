@@ -715,7 +715,7 @@ function rdb_wpcm_head_to_heads( $post_id ) {
                     'value' => $club
                 ),
             ),
-        )
+        ),
     );
 
     $club_matches = get_posts( $args );
@@ -791,7 +791,6 @@ function rdb_dequeue_wpcm_style( $scripts ) {
 
     return $scripts;
 }
-
 add_filter( 'wpclubmanager_enqueue_styles', 'rdb_dequeue_wpcm_style' );
 add_filter( 'wpcm_pa_enqueue_styles', 'rdb_dequeue_wpcm_style' );
 
@@ -1048,7 +1047,6 @@ function rdb_player_dropdown_filters() {
         add_filter( "rdb_player_{$name}_dropdown", 'rdb_player_dropdown_filter', 10, 5 );
     }
 }
-
 add_action( 'init', 'rdb_player_dropdown_filters' );
 
 /**
@@ -1108,6 +1106,22 @@ function rdb_wpcm_player_title() {
 }
 
 /**
+ * Stats table callback container.
+ *
+ * @since 1.0.0
+ *
+ * @see 'rdb_head_open'
+ */
+function rdb_wpcm_stats_table() {
+    if ( ! is_singular( 'wpcm_player' ) ) {
+        return;
+    }
+
+    echo '<script> window.statsTableUI = []; </script>';
+}
+add_action( 'rdb_head_close', 'rdb_wpcm_stats_table' );
+
+/**
  * Output the local match date via {@see 'wpclubmanager_single_match_venue'}.
  *
  * @since 1.0.0
@@ -1155,7 +1169,6 @@ function rdb_reset_wpcm_match_hooks() {
     add_action( 'wpclubmanager_single_match_meta', 'wpclubmanager_template_single_match_date', 15 );
     add_action( 'wpclubmanager_single_match_venue', 'wpclubmanager_template_single_match_date_local', 15 );
 }
-
 add_action( 'wpclubmanager_before_single_match', 'rdb_reset_wpcm_match_hooks', 1 );
 
 /**
@@ -1171,7 +1184,6 @@ function rdb_reset_wpcm_player_hooks() {
     add_action( 'wpclubmanager_single_player_title', 'rdb_wpcm_player_title', 5 );
     add_action( 'wpclubmanager_after_single_player', 'player_history_table', 4 );
 }
-
 add_action( 'wpclubmanager_before_single_player', 'rdb_reset_wpcm_player_hooks', 1 );
 
 /**
@@ -1188,7 +1200,6 @@ function rdb_wpcm_club_match_list( $data ) {
         echo '};';
     echo '</script>';
 }
-
 add_action( 'rdb_after_match_list', 'rdb_wpcm_club_match_list', 10 );
 
 /**
@@ -1213,7 +1224,6 @@ function rdb_wpcm_match_timeline_data() {
 
     wp_die();
 }
-
 add_action( 'wp_ajax_get_match', 'rdb_wpcm_match_timeline_data', 10 );
 add_action( 'wp_ajax_nopriv_get_match', 'rdb_wpcm_match_timeline_data', 10 );
 

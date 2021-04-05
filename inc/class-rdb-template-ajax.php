@@ -9,8 +9,6 @@
  * @since 1.0.0
  */
 
-// phpcs:disable WordPress.Security
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -98,21 +96,50 @@ class RDB_Template_AJAX {
      */
     public function __construct() {
         if ( isset( $_REQUEST['action'] ) ) {
-            $this->action = $this->sanitize( $_REQUEST['action'] );
+            $this->action = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) );
             $this->route  = preg_match( '/_/', $this->action ) ? preg_split( '/_/', $this->action )[1] : 'posts';
         }
 
-        $this->nonce      = isset( $_REQUEST['nonce'] ) ? $this->sanitize( $_REQUEST['nonce'] ) : '';
-        $this->collection = isset( $_REQUEST['collection'] ) ? $this->sanitize( $_REQUEST['collection'] ) : true;
-        $this->post_id    = isset( $_REQUEST['post_id'] ) ? $this->sanitize( $_REQUEST['post_id'] ) : 0;
-        $this->post_name  = isset( $_REQUEST['post_name'] ) ? $this->sanitize( $_REQUEST['post_name'] ) : '';
-        $this->venue      = isset( $_REQUEST['venue'] ) ? $this->sanitize( $_REQUEST['venue'] ) : '';
-        $this->team       = isset( $_REQUEST['team'] ) ? $this->sanitize( $_REQUEST['team'] ) : '';
-        $this->per_page   = isset( $_REQUEST['per_page'] ) ? $this->sanitize( $_REQUEST['per_page'] ) : '';
-        $this->page       = isset( $_REQUEST['page'] ) ? $this->sanitize( $_REQUEST['page'] ) : '';
+        if ( isset( $_REQUEST['nonce'] ) ) {
+            $this->nonce = sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) );
+        }
 
-        add_action( "wp_ajax_get_{$this->route}", array( $this, 'request' ) );
-        add_action( "wp_ajax_nopriv_get_{$this->route}", array( $this, 'request' ) );
+        if ( isset( $_REQUEST['collection'] ) ) {
+            $this->collection = sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) );
+        } else {
+            $this->collection = true;
+        }
+
+        if ( isset( $_REQUEST['post_id'] ) ) {
+            $this->post_id = sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) );
+        } else  {
+            $this->post_id = 0;
+        }
+
+        if ( isset( $_REQUEST['post_name'] ) ) {
+            $this->post_name = sanitize_text_field( wp_unslash( $_REQUEST['post_name'] ) );
+        }
+
+        if ( isset( $_REQUEST['venue'] ) ) {
+            $this->venue = sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) );
+        }
+
+        if ( isset( $_REQUEST['team'] ) ) {
+            $this->team = sanitize_text_field( wp_unslash( $_REQUEST['team'] ) );
+        }
+
+        if ( isset( $_REQUEST['per_page'] ) ) {
+            $this->per_page = sanitize_text_field( wp_unslash( $_REQUEST['per_page'] ) );
+        }
+
+        if ( isset( $_REQUEST['page'] ) ) {
+            $this->page = sanitize_text_field( wp_unslash( $_REQUEST['page'] ) );
+        }
+
+        if ( wp_verify_nonce( $this->nonce, $this->action ) ) {
+            add_action( "wp_ajax_get_{$this->route}", array( $this, 'request' ) );
+            add_action( "wp_ajax_nopriv_get_{$this->route}", array( $this, 'request' ) );
+        }
     }
 
     /**
@@ -121,7 +148,7 @@ class RDB_Template_AJAX {
      * @since 1.0.0
      */
     public function request() {
-        if ( defined( 'DOING_AJAX' ) && DOING_AJAX && wp_verify_nonce( $this->nonce, $this->action ) ) {
+        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             $endpoint = "rdb/v1/{$this->route}/";
 
             if ( ! empty( $this->venue ) ) {

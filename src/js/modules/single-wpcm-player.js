@@ -1,4 +1,4 @@
-import { rdb, util, $, BREAKPOINTS } from '../utils';
+import { rdb, util, _, $, BREAKPOINTS } from '../utils';
 import { wpcmPA } from '../vendor/wpcm-player-appearances';
 
 /**
@@ -19,42 +19,10 @@ const singleWpcmPlayer = function() {
     $( '.fade-in' ).css({ opacity: 1, transition: 'opacity 0.75s ease-in' });
     $( '.wpcm-profile__image' ).fadeIn( 'slow' );
 
-    /**
-     * DataTables config.
-     *
-     * @todo Add colDefs and set column properties.
-     *
-     * @type {Object}
-     */
-    const stats = {
-        destroy: true,
-        deferRender: true,
-        autoWidth: true,
-        info: false,
-        order: [],
-        paging: false,
-        responsive: {
-            breakpoints: BREAKPOINTS,
-            details: {
-                type: 'column',
-                target: 0
-            }
-        },
-        searching: false,
-        columns: [
-            { orderable: false },
-            { orderable: false },
-            { orderable: false },
-            { orderable: false },
-            { orderable: false },
-            { orderable: false },
-            { orderable: false },
-            { orderable: false }
-        ]
-    };
-
-    $( '.tabs-panel table' ).each( function() {
-        $( this ).DataTable( stats ); // eslint-disable-line
+    // Stats table interaction.
+    const tableUI = window.statsTableUI;
+    _.each( tableUI, function( cb ) {
+        cb( $ );
     });
 
     /**

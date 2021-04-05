@@ -4,10 +4,10 @@
  *
  * @author  ClubPress
  * @package WPClubManager/Templates
- * @version 1.5.0
+ * @version 2.5.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 
@@ -31,6 +31,8 @@ if ( is_array( $teams ) && count( $teams ) > 1 ) {
 		$rand = rand( 1, 99999 );
 		$name = $team->name;
 
+        $stats_tabs_attr_ID = 'stats-tabs-' . absint( $rand );
+
 		if ( $team->parent ) {
 			$parent_team = get_term( $team->parent, 'wpcm_team' );
 			$name        .= ' (' . $parent_team->name . ')';
@@ -39,53 +41,59 @@ if ( is_array( $teams ) && count( $teams ) > 1 ) {
 		echo '<div class="wpcm-profile-stats-block">';
 			echo "<h4>{$name}</h4>";
 
-			echo '<ul class="stats-tabs-' . $rand . ' stats-tabs-multi">';
+			echo '<ul id="' . esc_attr( $stats_tabs_attr_ID ) . '" class="' . esc_attr( $stats_tabs_attr_ID ) . ' stats-tabs-multi">';
 				echo '<li class="tabs-multi">';
                     echo '<a href="#wpcm_team-0_season-0-' . $rand . '">';
                         printf( __( 'All %s', 'wp-club-manager' ), __( 'Seasons', 'wp-club-manager' ) );
                     echo '</a>';
                 echo '</li>';
 
-				if ( is_array( $seasons ) )
-                {
-                    foreach( $seasons as $season )
-                    {
+				if ( is_array( $seasons ) ) {
+                    foreach( $seasons as $season ) {
 					   echo '<li><a href="#wpcm_team-' . $team->term_id . '_season-' . $season->term_id . '">' . $season->name . '</a></li>';
                     }
                 }
             echo '</ul>';
 
 			echo '<div id="wpcm_team-0_season-0-' . $rand . '" class="tabs-panel-' . $rand . ' tabs-panel-multi stats-table-season-' . $rand . '">';
-                wpclubmanager_get_template( 'single-player/stats-table.php', array(
-                    'stats'  => $stats,
-                    'team'   => $team->term_id,
-                    'season' => 0,
-                ) );
+                wpclubmanager_get_template(
+                    'single-player/stats-table.php',
+                    array(
+                        'stats'  => $stats,
+                        'team'   => $team->term_id,
+                        'season' => 0,
+                    )
+                );
 			echo '</div>';
 
 			if ( is_array( $seasons ) ) {
                 foreach( $seasons as $season ) {
     				echo '<div id="wpcm_team-' . $team->term_id . '_season-' . $season->term_id . '" class="tabs-panel-' . $rand . ' tabs-panel-multi stats-table-season-' . $rand . '" style="display: none;">';
-                        wpclubmanager_get_template( 'single-player/stats-table.php', array(
-                            'stats'        => $stats,
-                            'team'         => $team->term_id,
-                            'season'       => $season->term_id,
-                        ) );
+                        wpclubmanager_get_template(
+                            'single-player/stats-table.php',
+                            array(
+                                'stats'  => $stats,
+                                'team'   => $team->term_id,
+                                'season' => $season->term_id,
+                            )
+                        );
 				    echo '</div>';
                 }
             }
 		echo '</div>';
 
 		echo '<script type="text/javascript"> ' .
-			'( function( $ ) { ' .
-				"$( '.stats-tabs-{$rand} a' ).click( function() { " .
+			"var stats{$rand} = function( $ ) { " .
+				"$( '.stats-tabs-{$rand}' ).on( 'click', 'a', function() { " .
 					"var t = $( this ).attr( 'href' ); " .
 					"$( this ).parent().addClass( 'tabs-multi {$rand}' ).siblings( 'li' ).removeClass( 'tabs-multi {$rand}' ); " .
 					"$( this ).parent().parent().parent().find( '.tabs-panel-{$rand}' ).hide(); " .
 					'$( t ).show(); ' .
 					'return false; ' .
 				'}); ' .
-			'})( jQuery ); ' .
+			'}; ' .
+
+            "statsTableUI.push( stats{$rand} ); " .
 		'</script> ';
 	}
 } else {
@@ -106,20 +114,26 @@ if ( is_array( $teams ) && count( $teams ) > 1 ) {
 	if ( is_array( $seasons ) ) {
         foreach( $seasons as $season ) {
     		echo '<div id="wpcm_team-0_season-' . $season->term_id . '" class="tabs-panel" style="display: none;">';
-                wpclubmanager_get_template( 'single-player/stats-table.php', array(
-                    'stats'  => $stats,
-                    'team'   => 0,
-                    'season' => $season->term_id
-                ) );
+                wpclubmanager_get_template(
+                    'single-player/stats-table.php',
+                    array(
+                        'stats'  => $stats,
+                        'team'   => 0,
+                        'season' => $season->term_id
+                    )
+                );
             echo '</div>';
         }
     }
 
 	echo '<div id="wpcm_team-0_season-0" class="tabs-panel">';
-        wpclubmanager_get_template( 'single-player/stats-table.php', array(
-            'stats'  => $stats,
-            'team'   => 0,
-            'season' => 0,
-        ) );
+        wpclubmanager_get_template(
+            'single-player/stats-table.php',
+            array(
+                'stats'  => $stats,
+                'team'   => 0,
+                'season' => 0,
+            )
+        );
 	echo '</div>';
 }

@@ -23800,50 +23800,12 @@ var singleWpcmPlayer = function singleWpcmPlayer() {
     opacity: 1,
     transition: 'opacity 0.75s ease-in'
   });
-  (0, _utils.$)('.wpcm-profile__image').fadeIn('slow');
-  /**
-   * DataTables config.
-   *
-   * @todo Add colDefs and set column properties.
-   *
-   * @type {Object}
-   */
+  (0, _utils.$)('.wpcm-profile__image').fadeIn('slow'); // Stats table interaction.
 
-  var stats = {
-    destroy: true,
-    deferRender: true,
-    autoWidth: true,
-    info: false,
-    order: [],
-    paging: false,
-    responsive: {
-      breakpoints: _utils.BREAKPOINTS,
-      details: {
-        type: 'column',
-        target: 0
-      }
-    },
-    searching: false,
-    columns: [{
-      orderable: false
-    }, {
-      orderable: false
-    }, {
-      orderable: false
-    }, {
-      orderable: false
-    }, {
-      orderable: false
-    }, {
-      orderable: false
-    }, {
-      orderable: false
-    }, {
-      orderable: false
-    }]
-  };
-  (0, _utils.$)('.tabs-panel table').each(function () {
-    (0, _utils.$)(this).DataTable(stats); // eslint-disable-line
+  var tableUI = window.statsTableUI;
+
+  _utils._.each(tableUI, function (cb) {
+    cb(_utils.$);
   });
   /**
    * DataTables config.
@@ -23852,6 +23814,7 @@ var singleWpcmPlayer = function singleWpcmPlayer() {
    *
    * @type {Object}
    */
+
 
   var options = {
     destroy: true,

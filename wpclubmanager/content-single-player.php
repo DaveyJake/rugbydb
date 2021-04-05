@@ -44,17 +44,6 @@ do_action( 'wpclubmanager_before_single_player' );
 
     echo '</header>';
 
-    echo '<div class="wpcm-profile-stats wpcm-row">';
-
-        /**
-         * wpclubmanager_single_player_stats hook
-         *
-         * @hooked wpclubmanager_template_single_player_stats - 5
-         */
-        do_action( 'wpclubmanager_single_player_stats' );
-
-    echo '</div>';
-
     echo '<div class="wpcm-entry-content wpcm-profile-bio wpcm-row">';
 
         /**
@@ -63,6 +52,17 @@ do_action( 'wpclubmanager_before_single_player' );
          * @hooked wpclubmanager_template_single_player_bio - 5
          */
         do_action( 'wpclubmanager_single_player_bio' );
+
+    echo '</div>';
+
+    echo '<div class="wpcm-profile-stats wpcm-row">';
+
+        /**
+         * wpclubmanager_single_player_stats hook
+         *
+         * @hooked wpclubmanager_template_single_player_stats - 5
+         */
+        do_action( 'wpclubmanager_single_player_stats' );
 
     echo '</div>';
 

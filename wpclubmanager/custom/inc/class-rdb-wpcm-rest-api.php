@@ -1399,6 +1399,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             'properties' => '',
         );
 
+        // Schema template: match.
         $match = array(
             'ID' => array(
                 'description'  => esc_html__( 'Unique identifier for the object.', $this->domain ),
@@ -1551,6 +1552,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             ),
         );
 
+        // Schema template: player.
         $player = array(
             'ID' => array(
                 'description'  => esc_html__( 'Unique identifier for the object.', $this->domain ),
