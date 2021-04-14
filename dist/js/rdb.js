@@ -18595,16 +18595,13 @@ var options = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../package.json */ "./node_modules/mmenu-js/package.json");
-var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../package.json */ "./node_modules/mmenu-js/package.json", 1);
-/* harmony import */ var _options__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_options */ "./node_modules/mmenu-js/dist/core/oncanvas/_options.js");
-/* harmony import */ var _configs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_configs */ "./node_modules/mmenu-js/dist/core/oncanvas/_configs.js");
-/* harmony import */ var _translations_translate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./translations/translate */ "./node_modules/mmenu-js/dist/core/oncanvas/translations/translate.js");
-/* harmony import */ var _modules_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../_modules/dom */ "./node_modules/mmenu-js/dist/_modules/dom.js");
-/* harmony import */ var _modules_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../_modules/i18n */ "./node_modules/mmenu-js/dist/_modules/i18n.js");
-/* harmony import */ var _modules_matchmedia__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../_modules/matchmedia */ "./node_modules/mmenu-js/dist/_modules/matchmedia.js");
-/* harmony import */ var _modules_helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../_modules/helpers */ "./node_modules/mmenu-js/dist/_modules/helpers.js");
-
+/* harmony import */ var _options__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_options */ "./node_modules/mmenu-js/dist/core/oncanvas/_options.js");
+/* harmony import */ var _configs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_configs */ "./node_modules/mmenu-js/dist/core/oncanvas/_configs.js");
+/* harmony import */ var _translations_translate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./translations/translate */ "./node_modules/mmenu-js/dist/core/oncanvas/translations/translate.js");
+/* harmony import */ var _modules_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../_modules/dom */ "./node_modules/mmenu-js/dist/_modules/dom.js");
+/* harmony import */ var _modules_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../_modules/i18n */ "./node_modules/mmenu-js/dist/_modules/i18n.js");
+/* harmony import */ var _modules_matchmedia__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../_modules/matchmedia */ "./node_modules/mmenu-js/dist/_modules/matchmedia.js");
+/* harmony import */ var _modules_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../_modules/helpers */ "./node_modules/mmenu-js/dist/_modules/helpers.js");
 
 
 
@@ -18613,7 +18610,7 @@ var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 
 
 //  Add the translations.
-Object(_translations_translate__WEBPACK_IMPORTED_MODULE_3__["default"])();
+Object(_translations_translate__WEBPACK_IMPORTED_MODULE_2__["default"])();
 /**
  * Class for a mobile menu.
  */
@@ -18626,8 +18623,8 @@ var Mmenu = /** @class */ (function () {
      */
     function Mmenu(menu, options, configs) {
         //	Extend options and configuration from defaults.
-        this.opts = Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["extend"])(options, Mmenu.options);
-        this.conf = Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["extend"])(configs, Mmenu.configs);
+        this.opts = Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["extend"])(options, Mmenu.options);
+        this.conf = Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["extend"])(configs, Mmenu.configs);
         //	Methods to expose in the API.
         this._api = [
             'bind',
@@ -18658,7 +18655,7 @@ var Mmenu = /** @class */ (function () {
         this._initPanels();
         this._initOpened();
         this._initAnchors();
-        _modules_matchmedia__WEBPACK_IMPORTED_MODULE_6__["watch"]();
+        _modules_matchmedia__WEBPACK_IMPORTED_MODULE_5__["watch"]();
         return this;
     }
     /**
@@ -18687,14 +18684,14 @@ var Mmenu = /** @class */ (function () {
         //	Open a "vertical" panel.
         if (panel.parentElement.matches('.mm-listitem_vertical')) {
             //	Open current and all vertical parent panels.
-            _modules_dom__WEBPACK_IMPORTED_MODULE_4__["parents"](panel, '.mm-listitem_vertical').forEach(function (listitem) {
+            _modules_dom__WEBPACK_IMPORTED_MODULE_3__["parents"](panel, '.mm-listitem_vertical').forEach(function (listitem) {
                 listitem.classList.add('mm-listitem_opened');
-                _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](listitem, '.mm-panel').forEach(function (panel) {
+                _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](listitem, '.mm-panel').forEach(function (panel) {
                     panel.classList.remove('mm-hidden');
                 });
             });
             //	Open first non-vertical parent panel.
-            var parents = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["parents"](panel, '.mm-panel').filter(function (panel) { return !panel.parentElement.matches('.mm-listitem_vertical'); });
+            var parents = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["parents"](panel, '.mm-panel').filter(function (panel) { return !panel.parentElement.matches('.mm-listitem_vertical'); });
             this.trigger('openPanel:start', [panel]);
             if (parents.length) {
                 this.openPanel(parents[0]);
@@ -18706,7 +18703,7 @@ var Mmenu = /** @class */ (function () {
             if (panel.matches('.mm-panel_opened')) {
                 return;
             }
-            var panels = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](this.node.pnls, '.mm-panel'), current_1 = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](this.node.pnls, '.mm-panel_opened')[0];
+            var panels = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](this.node.pnls, '.mm-panel'), current_1 = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](this.node.pnls, '.mm-panel_opened')[0];
             //	Close all child panels.
             panels
                 .filter(function (parent) { return parent !== panel; })
@@ -18770,7 +18767,7 @@ var Mmenu = /** @class */ (function () {
                 //	Without the timeout the animation will not work because the element had display: none;
                 setTimeout(function () {
                     //	Callback
-                    Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["transitionend"])(panel, function () {
+                    Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["transitionend"])(panel, function () {
                         openPanelFinish_1();
                     }, _this.conf.transitionDuration);
                     openPanelStart_1();
@@ -18816,8 +18813,8 @@ var Mmenu = /** @class */ (function () {
             listitem.classList.remove('mm-listitem_opened');
         });
         //	Close all "horizontal" panels.
-        var panels = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](this.node.pnls, '.mm-panel'), opened = panel ? panel : panels[0];
-        _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](this.node.pnls, '.mm-panel').forEach(function (panel) {
+        var panels = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](this.node.pnls, '.mm-panel'), opened = panel ? panel : panels[0];
+        _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](this.node.pnls, '.mm-panel').forEach(function (panel) {
             if (panel !== opened) {
                 panel.classList.remove('mm-panel_opened');
                 panel.classList.remove('mm-panel_opened-parent');
@@ -18851,7 +18848,7 @@ var Mmenu = /** @class */ (function () {
         //	Invoke "before" hook.
         this.trigger('setSelected:before', [listitem]);
         //	First, remove the selected class from all listitems.
-        _modules_dom__WEBPACK_IMPORTED_MODULE_4__["find"](this.node.menu, '.mm-listitem_selected').forEach(function (li) {
+        _modules_dom__WEBPACK_IMPORTED_MODULE_3__["find"](this.node.menu, '.mm-listitem_selected').forEach(function (li) {
             li.classList.remove('mm-listitem_selected');
         });
         //	Next, add the selected class to the provided listitem.
@@ -18943,7 +18940,7 @@ var Mmenu = /** @class */ (function () {
         //	Invoke "before" hook.
         this.trigger('initExtensions:before');
         //	Convert array to object with array.
-        if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["type"])(this.opts.extensions) == 'array') {
+        if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["type"])(this.opts.extensions) == 'array') {
             this.opts.extensions = {
                 all: this.opts.extensions,
             };
@@ -18952,7 +18949,7 @@ var Mmenu = /** @class */ (function () {
         Object.keys(this.opts.extensions).forEach(function (query) {
             var classnames = _this.opts.extensions[query].map(function (extension) { return 'mm-menu_' + extension; });
             if (classnames.length) {
-                _modules_matchmedia__WEBPACK_IMPORTED_MODULE_6__["add"](query, function () {
+                _modules_matchmedia__WEBPACK_IMPORTED_MODULE_5__["add"](query, function () {
                     //  IE11:
                     classnames.forEach(function (classname) {
                         _this.node.menu.classList.add(classname);
@@ -18983,10 +18980,10 @@ var Mmenu = /** @class */ (function () {
         this.node.wrpr = this.node.wrpr || this.node.menu.parentElement;
         this.node.wrpr.classList.add('mm-wrapper');
         //	Add an ID to the menu if it does not yet have one.
-        this.node.menu.id = this.node.menu.id || Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["uniqueId"])();
+        this.node.menu.id = this.node.menu.id || Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["uniqueId"])();
         //	Wrap the panels in a node.
-        var panels = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["create"]('div.mm-panels');
-        _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](this.node.menu).forEach(function (panel) {
+        var panels = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["create"]('div.mm-panels');
+        _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](this.node.menu).forEach(function (panel) {
             if (_this.conf.panelNodetype.indexOf(panel.nodeName.toLowerCase()) >
                 -1) {
                 panels.append(panel);
@@ -19012,7 +19009,7 @@ var Mmenu = /** @class */ (function () {
                 var href = anchor.getAttribute('href');
                 if (href && href.length > 1 && href.slice(0, 1) == '#') {
                     try {
-                        var panel = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["find"](_this.node.menu, href)[0];
+                        var panel = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["find"](_this.node.menu, href)[0];
                         if (panel && panel.matches('.mm-panel')) {
                             if (anchor.parentElement.matches('.mm-listitem_vertical')) {
                                 _this.togglePanel(panel);
@@ -19028,7 +19025,7 @@ var Mmenu = /** @class */ (function () {
             }
         });
         /** The panels to initiate */
-        var panels = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](this.node.pnls);
+        var panels = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](this.node.pnls);
         panels.forEach(function (panel) {
             _this.initPanel(panel);
         });
@@ -19052,11 +19049,11 @@ var Mmenu = /** @class */ (function () {
                 /** The sub panels. */
                 var children_1 = [];
                 //	Find panel > panel
-                children_1.push.apply(children_1, _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](panel, '.' + this.conf.classNames.panel));
+                children_1.push.apply(children_1, _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](panel, '.' + this.conf.classNames.panel));
                 //	Find panel listitem > panel
-                _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](panel, '.mm-listview').forEach(function (listview) {
-                    _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](listview, '.mm-listitem').forEach(function (listitem) {
-                        children_1.push.apply(children_1, _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](listitem, panelNodetype));
+                _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](panel, '.mm-listview').forEach(function (listview) {
+                    _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](listview, '.mm-listitem').forEach(function (listitem) {
+                        children_1.push.apply(children_1, _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](listitem, panelNodetype));
                     });
                 });
                 //  Initiate subpanel(s).
@@ -19076,9 +19073,9 @@ var Mmenu = /** @class */ (function () {
         //	Invoke "before" hook.
         this.trigger('initPanel:before', [panel]);
         //	Refactor panel classnames
-        _modules_dom__WEBPACK_IMPORTED_MODULE_4__["reClass"](panel, this.conf.classNames.panel, 'mm-panel');
-        _modules_dom__WEBPACK_IMPORTED_MODULE_4__["reClass"](panel, this.conf.classNames.nopanel, 'mm-nopanel');
-        _modules_dom__WEBPACK_IMPORTED_MODULE_4__["reClass"](panel, this.conf.classNames.inset, 'mm-listview_inset');
+        _modules_dom__WEBPACK_IMPORTED_MODULE_3__["reClass"](panel, this.conf.classNames.panel, 'mm-panel');
+        _modules_dom__WEBPACK_IMPORTED_MODULE_3__["reClass"](panel, this.conf.classNames.nopanel, 'mm-nopanel');
+        _modules_dom__WEBPACK_IMPORTED_MODULE_3__["reClass"](panel, this.conf.classNames.inset, 'mm-listview_inset');
         if (panel.matches('.mm-listview_inset')) {
             panel.classList.add('mm-nopanel');
         }
@@ -19087,7 +19084,7 @@ var Mmenu = /** @class */ (function () {
             return null;
         }
         /** The original ID on the node. */
-        var id = panel.id || Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["uniqueId"])();
+        var id = panel.id || Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["uniqueId"])();
         //  Vertical panel.
         var vertical = panel.matches('.' + this.conf.classNames.vertical) ||
             !this.opts.slidingSubmenus;
@@ -19096,7 +19093,7 @@ var Mmenu = /** @class */ (function () {
         if (panel.matches('ul, ol')) {
             panel.removeAttribute('id');
             /** The panel. */
-            var wrapper = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["create"]('div');
+            var wrapper = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["create"]('div');
             //	Wrap the listview in the panel.
             panel.before(wrapper);
             wrapper.append(panel);
@@ -19123,12 +19120,12 @@ var Mmenu = /** @class */ (function () {
             panel['mmParent'] = parent;
             //	Add open link to parent listitem
             if (parent && parent.matches('.mm-listitem')) {
-                if (!_modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](parent, '.mm-btn').length) {
+                if (!_modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](parent, '.mm-btn').length) {
                     /** The text node. */
-                    var item = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](parent, '.mm-listitem__text')[0];
+                    var item = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](parent, '.mm-listitem__text')[0];
                     if (item) {
                         /** The open link. */
-                        var button = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["create"]('a.mm-btn.mm-btn_next.mm-listitem__btn');
+                        var button = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["create"]('a.mm-btn.mm-btn_next.mm-listitem__btn');
                         button.setAttribute('href', '#' + panel.id);
                         //  If the item has no link,
                         //      Replace the item with the open link.
@@ -19140,14 +19137,14 @@ var Mmenu = /** @class */ (function () {
                         }
                         //  Otherwise, insert the button after the text.
                         else {
-                            parent.insertBefore(button, _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](parent, '.mm-panel')[0]);
+                            parent.insertBefore(button, _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](parent, '.mm-panel')[0]);
                         }
                     }
                 }
             }
         }
         this._initNavbar(panel);
-        _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](panel, 'ul, ol').forEach(function (listview) {
+        _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](panel, 'ul, ol').forEach(function (listview) {
             _this.initListview(listview);
         });
         //	Invoke "after" hook.
@@ -19162,7 +19159,7 @@ var Mmenu = /** @class */ (function () {
         //	Invoke "before" hook.
         this.trigger('initNavbar:before', [panel]);
         //	Only one navbar per panel.
-        if (_modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](panel, '.mm-navbar').length) {
+        if (_modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](panel, '.mm-navbar').length) {
             return;
         }
         /** The parent listitem. */
@@ -19171,7 +19168,7 @@ var Mmenu = /** @class */ (function () {
         var parentPanel = null;
         //  The parent panel was specified in the data-mm-parent attribute.
         if (panel.getAttribute('data-mm-parent')) {
-            parentPanel = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["find"](this.node.pnls, panel.getAttribute('data-mm-parent'))[0];
+            parentPanel = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["find"](this.node.pnls, panel.getAttribute('data-mm-parent'))[0];
         }
         // if (panel.dataset.mmParent) { // IE10 has no dataset
         // parentPanel = DOM.find(this.node.pnls, panel.dataset.mmParent)[0];
@@ -19188,7 +19185,7 @@ var Mmenu = /** @class */ (function () {
             return;
         }
         /** The navbar element. */
-        var navbar = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["create"]('div.mm-navbar');
+        var navbar = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["create"]('div.mm-navbar');
         //  Hide navbar if specified in options.
         if (!this.opts.navbar.add) {
             navbar.classList.add('mm-hidden');
@@ -19200,7 +19197,7 @@ var Mmenu = /** @class */ (function () {
         //  Add the back button.
         if (parentPanel) {
             /** The back button. */
-            var prev = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["create"]('a.mm-btn.mm-btn_prev.mm-navbar__btn');
+            var prev = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["create"]('a.mm-btn.mm-btn_prev.mm-navbar__btn');
             prev.setAttribute('href', '#' + parentPanel.id);
             navbar.append(prev);
         }
@@ -19208,15 +19205,15 @@ var Mmenu = /** @class */ (function () {
         var opener = null;
         //  The anchor is in a listitem.
         if (parentListitem) {
-            opener = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](parentListitem, '.mm-listitem__text')[0];
+            opener = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](parentListitem, '.mm-listitem__text')[0];
         }
         //  The anchor is in a panel.
         else if (parentPanel) {
-            opener = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["find"](parentPanel, 'a[href="#' + panel.id + '"]')[0];
+            opener = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["find"](parentPanel, 'a[href="#' + panel.id + '"]')[0];
         }
         //  Add the title.
-        var title = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["create"]('a.mm-navbar__title');
-        var titleText = _modules_dom__WEBPACK_IMPORTED_MODULE_4__["create"]('span');
+        var title = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["create"]('a.mm-navbar__title');
+        var titleText = _modules_dom__WEBPACK_IMPORTED_MODULE_3__["create"]('span');
         title.append(titleText);
         titleText.innerHTML =
             // panel.dataset.mmTitle || // IE10 has no dataset :(
@@ -19249,13 +19246,13 @@ var Mmenu = /** @class */ (function () {
         var _this = this;
         //	Invoke "before" hook.
         this.trigger('initListview:before', [listview]);
-        _modules_dom__WEBPACK_IMPORTED_MODULE_4__["reClass"](listview, this.conf.classNames.nolistview, 'mm-nolistview');
+        _modules_dom__WEBPACK_IMPORTED_MODULE_3__["reClass"](listview, this.conf.classNames.nolistview, 'mm-nolistview');
         if (!listview.matches('.mm-nolistview')) {
             listview.classList.add('mm-listview');
-            _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](listview).forEach(function (listitem) {
+            _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](listview).forEach(function (listitem) {
                 listitem.classList.add('mm-listitem');
-                _modules_dom__WEBPACK_IMPORTED_MODULE_4__["reClass"](listitem, _this.conf.classNames.selected, 'mm-listitem_selected');
-                _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](listitem, 'a, span').forEach(function (item) {
+                _modules_dom__WEBPACK_IMPORTED_MODULE_3__["reClass"](listitem, _this.conf.classNames.selected, 'mm-listitem_selected');
+                _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](listitem, 'a, span').forEach(function (item) {
                     if (!item.matches('.mm-btn')) {
                         item.classList.add('mm-listitem__text');
                     }
@@ -19287,7 +19284,7 @@ var Mmenu = /** @class */ (function () {
         /**	The current opened panel. */
         var current = lastitem
             ? lastitem.closest('.mm-panel')
-            : _modules_dom__WEBPACK_IMPORTED_MODULE_4__["children"](this.node.pnls, '.mm-panel')[0];
+            : _modules_dom__WEBPACK_IMPORTED_MODULE_3__["children"](this.node.pnls, '.mm-panel')[0];
         //	Open the current opened panel.
         this.openPanel(current, false);
         //	Invoke "after" hook.
@@ -19326,23 +19323,23 @@ var Mmenu = /** @class */ (function () {
                         evnt.preventDefault();
                         return;
                     }
-                    if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["type"])(click) == 'object') {
-                        onClick = Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["extend"])(click, onClick);
+                    if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["type"])(click) == 'object') {
+                        onClick = Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["extend"])(click, onClick);
                     }
                 }
             }
             //	Default behavior for anchors in lists.
             if (args.inMenu && args.inListview && !args.toExternal) {
                 //	Set selected item, Default: true
-                if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["valueOrFn"])(target, _this.opts.onClick.setSelected, onClick.setSelected)) {
+                if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["valueOrFn"])(target, _this.opts.onClick.setSelected, onClick.setSelected)) {
                     _this.setSelected(target.parentElement);
                 }
                 //	Prevent default / don't follow link. Default: false.
-                if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["valueOrFn"])(target, _this.opts.onClick.preventDefault, onClick.preventDefault)) {
+                if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["valueOrFn"])(target, _this.opts.onClick.preventDefault, onClick.preventDefault)) {
                     evnt.preventDefault();
                 }
                 //	Close menu. Default: false
-                if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_7__["valueOrFn"])(target, _this.opts.onClick.close, onClick.close)) {
+                if (Object(_modules_helpers__WEBPACK_IMPORTED_MODULE_6__["valueOrFn"])(target, _this.opts.onClick.close, onClick.close)) {
                     if (_this.opts.offCanvas &&
                         typeof _this.close == 'function') {
                         _this.close();
@@ -19359,14 +19356,12 @@ var Mmenu = /** @class */ (function () {
      * @return {string}			The translated text.
      */
     Mmenu.prototype.i18n = function (text) {
-        return _modules_i18n__WEBPACK_IMPORTED_MODULE_5__["get"](text, this.conf.language);
+        return _modules_i18n__WEBPACK_IMPORTED_MODULE_4__["get"](text, this.conf.language);
     };
-    /**	Plugin version. */
-    Mmenu.version = _package_json__WEBPACK_IMPORTED_MODULE_0__["version"];
     /**	Default options for menus. */
-    Mmenu.options = _options__WEBPACK_IMPORTED_MODULE_1__["default"];
+    Mmenu.options = _options__WEBPACK_IMPORTED_MODULE_0__["default"];
     /**	Default configuration for menus. */
-    Mmenu.configs = _configs__WEBPACK_IMPORTED_MODULE_2__["default"];
+    Mmenu.configs = _configs__WEBPACK_IMPORTED_MODULE_1__["default"];
     /**	Available add-ons for the plugin. */
     Mmenu.addons = {};
     /** Available wrappers for the plugin. */
@@ -20014,17 +20009,6 @@ __webpack_require__.r(__webpack_exports__);
     }
 });
 
-
-/***/ }),
-
-/***/ "./node_modules/mmenu-js/package.json":
-/*!********************************************!*\
-  !*** ./node_modules/mmenu-js/package.json ***!
-  \********************************************/
-/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, bugs, description, devDependencies, homepage, keywords, license, main, module, name, repository, scripts, version, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("{\"_args\":[[\"mmenu-js@8.5.20\",\"/Users/us00278/Sites/stats/html/wp-content/themes/rugbydb\"]],\"_from\":\"mmenu-js@8.5.20\",\"_id\":\"mmenu-js@8.5.20\",\"_inBundle\":false,\"_integrity\":\"sha512-bnjsPYhfGrZnfWPW37lgqbWDcBilRxKjjQwFvRa8Ho3cS5R7Lz0NfBxmajFDsNZjPgLAL2ObNGvhVIF04+4ZYQ==\",\"_location\":\"/mmenu-js\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"mmenu-js@8.5.20\",\"name\":\"mmenu-js\",\"escapedName\":\"mmenu-js\",\"rawSpec\":\"8.5.20\",\"saveSpec\":null,\"fetchSpec\":\"8.5.20\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/mmenu-js/-/mmenu-js-8.5.20.tgz\",\"_spec\":\"8.5.20\",\"_where\":\"/Users/us00278/Sites/stats/html/wp-content/themes/rugbydb\",\"author\":{\"name\":\"Fred Heusschen\",\"email\":\"info@frebsite.nl\"},\"bugs\":{\"url\":\"https://github.com/FrDH/mmenu-js/issues\"},\"description\":\"The best javascript plugin for app look-alike on- and off-canvas menus with sliding submenus for your website and webapp.\",\"devDependencies\":{\"gulp\":\"^4.0.2\",\"gulp-autoprefixer\":\"^6.1.0\",\"gulp-clean-css\":\"^4.3.0\",\"gulp-concat\":\"^2.6.1\",\"gulp-sass\":\"^4.1.0\",\"gulp-typescript\":\"^5.0.1\",\"typescript\":\"^3.9.7\",\"webpack-stream\":\"^5.2.1\"},\"homepage\":\"https://github.com/FrDH/mmenu-js#readme\",\"keywords\":[\"app\",\"list\",\"listview\",\"megamenu\",\"menu\",\"mmenu\",\"mobile\",\"navigation\",\"off-canvas\",\"on-canvas\",\"curtain\",\"panels\",\"submenu\"],\"license\":\"CC-BY-NC-4.0\",\"main\":\"dist/mmenu.js\",\"module\":\"src/mmenu.js\",\"name\":\"mmenu-js\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/FrDH/mmenu-js.git\"},\"scripts\":{\"build\":\"gulp default\"},\"version\":\"8.5.20\"}");
 
 /***/ }),
 
@@ -22712,6 +22696,8 @@ module.exports = g;
 "use strict";
 
 
+__webpack_require__(/*! ../ui/mmenu */ "./src/js/ui/mmenu.js");
+
 var _vendor = __webpack_require__(/*! ../vendor */ "./src/js/vendor/index.js");
 
 var _ui = __webpack_require__(/*! ../ui */ "./src/js/ui/index.js");
@@ -22786,7 +22772,7 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(_Reflect$construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 /**
  * The front page module.
@@ -23894,7 +23880,7 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(_Reflect$construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -24359,7 +24345,7 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(_Reflect$construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -24956,7 +24942,7 @@ var _utils = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
  */
 
 /* eslint-disable array-bracket-spacing, no-multi-spaces */
-var mmenu = function () {
+(function () {
   // Options.
   var mmenuOpts = {
     autoHeight: false,
@@ -25019,18 +25005,10 @@ var mmenu = function () {
 
   document.addEventListener('DOMContentLoaded', function () {
     /* eslint-disable no-new */
-
-    /* const menu   = new Mmenu( "#menu", mmenuOpts, mmenuConf ),
-          api    = menu.API,
-          header = document.querySelector( '#masthead' );*/
-    new _mmenu2.Mmenu("#menu", mmenuOpts, mmenuConf);
     new _mmenu2.Mhead('#masthead');
+    new _mmenu2.Mmenu("#menu", mmenuOpts, mmenuConf);
   });
-}();
-
-module.exports = {
-  mmenu: mmenu
-};
+})();
 
 /***/ }),
 
@@ -25044,8 +25022,6 @@ module.exports = {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs3/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs3/helpers/interopRequireDefault.js");
-
 var _getIterator = __webpack_require__(/*! @babel/runtime-corejs3/core-js/get-iterator */ "./node_modules/@babel/runtime-corejs3/core-js/get-iterator.js");
 
 var _Array$isArray = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/array/is-array */ "./node_modules/@babel/runtime-corejs3/core-js-stable/array/is-array.js");
@@ -25054,13 +25030,13 @@ var _getIteratorMethod = __webpack_require__(/*! @babel/runtime-corejs3/core-js/
 
 var _Symbol = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/symbol */ "./node_modules/@babel/runtime-corejs3/core-js-stable/symbol.js");
 
-var _from = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/array/from */ "./node_modules/@babel/runtime-corejs3/core-js-stable/array/from.js"));
+var _Array$from = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/array/from */ "./node_modules/@babel/runtime-corejs3/core-js-stable/array/from.js");
 
-var _slice = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/slice */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/slice.js"));
+var _sliceInstanceProperty = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/instance/slice */ "./node_modules/@babel/runtime-corejs3/core-js-stable/instance/slice.js");
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof _Symbol === "undefined" || _getIteratorMethod(o) == null) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = _getIterator(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray(o, minLen) { var _context; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = (0, _slice["default"])(_context = Object.prototype.toString.call(o)).call(_context, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return (0, _from["default"])(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { var _context; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -25486,7 +25462,7 @@ var COUNTRIES = {
 /**
  * DataTables breakpoints.
  *
- * @type {array}
+ * @type {Object[]}
  */
 
 var BREAKPOINTS = [{
@@ -25555,7 +25531,7 @@ var FIFTEEN_MINUTES = new Date((new Date().getTime() + 15) * 60 * 1000);
  *
  * @since 1.0.0
  *
- * @type {mixed}
+ * @type {HTMLElement}
  */
 
 var DT_LOADING = '<img src="' + adminUrl('images/wpspin_light-2x.gif') + '" width="16" height="16" alt="Loading data..." />';
@@ -25710,7 +25686,7 @@ var DTHelper = /*#__PURE__*/function () {
 
   (0, _createClass2["default"])(DTHelper, null, [{
     key: "competition",
-
+    value:
     /**
      * Get competition name from API.
      *
@@ -25721,7 +25697,7 @@ var DTHelper = /*#__PURE__*/function () {
      *
      * @return {string}    Competition name.
      */
-    value: function competition(match) {
+    function competition(match) {
       if (_globals._.isUndefined(match.competition)) {
         location.reload();
       }
@@ -26728,7 +26704,7 @@ var Request = /*#__PURE__*/function () {
 
   }, {
     key: "_timelineTmpl",
-
+    value:
     /**
      * Parse JS templates.
      *
@@ -26738,7 +26714,7 @@ var Request = /*#__PURE__*/function () {
      *
      * @param {JSON} data AJAX API response data.
      */
-    value: function _timelineTmpl(data) {
+    function _timelineTmpl(data) {
       if (_globals._.isString(data)) {
         return;
       }

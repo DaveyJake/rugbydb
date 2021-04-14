@@ -181,13 +181,15 @@ if ( ! function_exists( 'rdb_nav_menu' ) ) :
     /**
      * Outputs the nav menu HTML.
      *
+     * @since 1.0.0
+     *
      * @param array|string $args Default menu arguments.
      */
     function rdb_nav_menu( $args = '' ) {
         $defaults = array(
             'container_id'   => 'menu',
             'container'      => 'nav',
-            'theme_location' => 'side-menu',
+            'theme_location' => 'toggle',
         );
 
         $args = wp_parse_args( $args, $defaults );

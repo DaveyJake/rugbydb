@@ -112,7 +112,7 @@ class RDB_Template_AJAX {
 
         if ( isset( $_REQUEST['post_id'] ) ) {
             $this->post_id = sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) );
-        } else  {
+        } else {
             $this->post_id = 0;
         }
 

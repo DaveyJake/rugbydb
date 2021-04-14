@@ -1,3 +1,15 @@
+$font__path: '/wp-content/themes/rugbydb/dist/fonts';
+@font-face {
+    font-family: RugbyFont;
+    font-style: normal;
+    src: /* stylelint-disable-line */
+    url('#{$font__path}/rugby-icomoon.eot?tdx82d') format('embedded-opentype'),
+    url('#{$font__path}/rugby-icomoon.eot?tdx82d#iefix') format('embedded-opentype'),
+    url('#{$font__path}/rugby-icomoon.ttf?tdx82d') format('truetype'),
+    url('#{$font__path}/rugby-icomoon.woff?tdx82d') format('woff'),
+    url('#{$font__path}/rugby-icomoon.svg?tdx82d#icomoon') format('svg');
+}
+
 // Slug box.
 .post-php #post_name {
     width: 100%;
@@ -7,5 +19,14 @@
     #taxonomy_image_plugin,
     #address {
         width: 100px;
+    }
+}
+
+.dashicons-shield::before {
+    content: '\e601';
+    margin-top: 2px;
+    font: {
+        family: RugbyFont; /* stylelint-disable-line */
+        size: 1em;
     }
 }

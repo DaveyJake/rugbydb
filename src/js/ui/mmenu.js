@@ -8,7 +8,7 @@ import { rdb } from '../utils';
  * @since 1.0.0
  */
 /* eslint-disable array-bracket-spacing, no-multi-spaces */
-const mmenu = ( function() {
+( function() {
     // Options.
     const mmenuOpts = {
         autoHeight: false,
@@ -74,12 +74,7 @@ const mmenu = ( function() {
 
     document.addEventListener( 'DOMContentLoaded', () => {
         /* eslint-disable no-new */
-        /* const menu   = new Mmenu( "#menu", mmenuOpts, mmenuConf ),
-              api    = menu.API,
-              header = document.querySelector( '#masthead' );*/
-        new Mmenu( "#menu", mmenuOpts, mmenuConf )
         new Mhead( '#masthead' );
+        new Mmenu( "#menu", mmenuOpts, mmenuConf );
     });
 })();
-
-module.exports = { mmenu };

@@ -48,8 +48,8 @@ if ( ! function_exists( 'rdb_setup' ) ) :
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
 			array(
-				'main-menu' => esc_html__( 'Primary', 'rugby-database' ),
-				'side-menu' => esc_html__( 'Toggle', 'rugby-database' ),
+				'main'   => esc_html__( 'Main', 'rugby-database' ),
+				'toggle' => esc_html__( 'Toggle', 'rugby-database' ),
 			)
 		);
 

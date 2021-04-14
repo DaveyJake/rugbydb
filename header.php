@@ -44,7 +44,7 @@ defined( 'ABSPATH' ) || exit;
                         array(
                             'container_id'   => 'primary-menu',
                             'menu'           => 'main-menu',
-                            'theme_location' => 'main-menu',
+                            'theme_location' => 'main',
                         )
                     );
 
