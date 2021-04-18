@@ -23008,7 +23008,7 @@ var FrontPage = /*#__PURE__*/function (_DTHelper) {
                 console.log('An error has been reported by DataTables: ', message);
               }).DataTable(); // eslint-disable-line
 
-              return window.location.reload();
+              window.location.reload();
             }
 
             var oldData = sessionStorage.allMatches;

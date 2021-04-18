@@ -221,7 +221,7 @@ class FrontPage extends DTHelper {
                             console.log( 'An error has been reported by DataTables: ', message );
                         }).DataTable(); // eslint-disable-line
 
-                        return window.location.reload();
+                        window.location.reload();
                     }
 
                     let oldData = sessionStorage.allMatches;
