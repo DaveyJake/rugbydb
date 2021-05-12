@@ -26,14 +26,20 @@ article {
         }
 
         &-title {
-            padding-left: 0.5em;
+            padding-left: 0.5rem;
         }
 
         &-content {
-            padding: 0 0.5em;
+            padding: 0 0.5rem;
 
             @include breakpoint(medium) {
-                padding: 0 0.9375em;
+                padding: 0 0.9375rem 0.9375rem;
+            }
+
+            .page-about & {
+                ul {
+                    margin-bottom: 0;
+                }
             }
         }
     }

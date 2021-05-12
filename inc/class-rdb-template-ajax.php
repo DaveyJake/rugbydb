@@ -63,15 +63,6 @@ class RDB_Template_AJAX {
     public $post_id;
 
     /**
-     * Request nonce.
-     *
-     * @since 1.0.0
-     *
-     * @var string
-     */
-    public $nonce;
-
-    /**
      * Targeted team taxonomy.
      *
      * @since 1.0.0
@@ -98,10 +89,6 @@ class RDB_Template_AJAX {
         if ( isset( $_REQUEST['action'] ) ) {
             $this->action = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) );
             $this->route  = preg_match( '/_/', $this->action ) ? preg_split( '/_/', $this->action )[1] : 'posts';
-        }
-
-        if ( isset( $_REQUEST['nonce'] ) ) {
-            $this->nonce = sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) );
         }
 
         if ( isset( $_REQUEST['collection'] ) ) {
@@ -136,7 +123,7 @@ class RDB_Template_AJAX {
             $this->page = sanitize_text_field( wp_unslash( $_REQUEST['page'] ) );
         }
 
-        if ( wp_verify_nonce( $this->nonce, $this->action ) ) {
+        if ( isset( $_REQUEST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), $this->action ) ) {
             add_action( "wp_ajax_get_{$this->route}", array( $this, 'request' ) );
             add_action( "wp_ajax_nopriv_get_{$this->route}", array( $this, 'request' ) );
         }

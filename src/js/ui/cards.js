@@ -1,4 +1,4 @@
-import { _, $, rdb, util, Request } from '../utils';
+import { _, rdb, Request } from '../utils';
 
 /**
  * Generate cards from API.
