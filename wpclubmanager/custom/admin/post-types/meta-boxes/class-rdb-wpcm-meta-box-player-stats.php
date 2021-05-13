@@ -44,9 +44,12 @@ class RDB_WPCM_Meta_Box_Player_Stats {
                     </select>
                 </label>
             </span>
+
             <?php if ( is_array( $teams ) && count( $teams ) > 1 ) : ?>
+
                 <p><?php esc_html_e( 'Choose a team and season to edit the manual stats.', 'wp-club-manager' ); ?></p>
-                <?php foreach( $teams as $team ) :
+                <?php
+                foreach( $teams as $team ) :
                     $rand = rand(1,99999);
                     $name = $team->name;
 
@@ -60,69 +63,80 @@ class RDB_WPCM_Meta_Box_Player_Stats {
                         <h4><?php echo esc_html( $name ); ?></h4>
 
                         <ul class="stats-tabs-<?php echo $rand; ?> stats-tabs-multi">
+
                             <li class="tabs-multi"><a href="#wpcm_team-0_season-0-<?php echo $rand; ?>"><?php printf( __( 'All %s', 'wp-club-manager' ), __( 'Seasons', 'wp-club-manager' ) ); ?></a></li>
+
                             <?php if ( is_array( $seasons ) ): foreach( $seasons as $season ): ?>
+
                                 <li><a href="#wpcm_team-<?php echo $team->term_id; ?>_season-<?php echo $season->term_id; ?>"><?php echo esc_html( $season->name ); ?></a></li>
+
                             <?php endforeach; endif; ?>
+
                         </ul>
 
                         <div id="wpcm_team-0_season-0-<?php echo $rand; ?>" class="tabs-panel-<?php echo $rand; ?> tabs-panel-multi">
+
                             <?php self::wpcm_player_stats_table( $stats, $team->term_id, 0 ); ?>
+
                         </div>
 
-                        <?php if ( is_array( $seasons ) ) : foreach( $seasons as $season ) : ?>
+                        <?php
+                        if ( is_array( $seasons ) ) :
 
-                            <div id="wpcm_team-<?php echo $team->term_id; ?>_season-<?php echo $season->term_id; ?>" class="tabs-panel-<?php echo $rand; ?> tabs-panel-multi stats-table-season-<?php echo $rand; ?>" style="display: none;">
+                            foreach( $seasons as $season ) :
+                                ?>
+                                <div id="wpcm_team-<?php echo $team->term_id; ?>_season-<?php echo $season->term_id; ?>" class="tabs-panel-<?php echo $rand; ?> tabs-panel-multi stats-table-season-<?php echo $rand; ?>" style="display: none;">
 
-                                <?php self::wpcm_player_stats_table( $stats, $team->term_id, $season->term_id ); ?>
+                                    <?php self::wpcm_player_stats_table( $stats, $team->term_id, $season->term_id ); ?>
 
-                                <script type="text/javascript">
-                                    ( function( $ ) {
-                                        $( '#wpclubmanager-player-stats input' ).change( function() {
-                                            index = $( this ).attr( 'data-index' );
-                                            value = 0;
+                                    <script type="text/javascript">
+                                        ( function( $ ) {
+                                            $( '#wpclubmanager-player-stats input' ).change( function() {
+                                                index = $( this ).attr( 'data-index' );
+                                                value = 0;
 
-                                            $( this ).closest( 'table' ).find( 'tbody tr' ).each( function() {
-                                                value += parseInt( $( this ).find( 'input[data-index="' + index + '"]' ).val() );
+                                                $( this ).closest( 'table' ).find( 'tbody tr' ).each( function() {
+                                                    value += parseInt( $( this ).find( 'input[data-index="' + index + '"]' ).val() );
+                                                });
+
+                                                $( this ).closest( 'table' ).find( 'tfoot tr input[data-index="' + index + '"]' ).val( value );
+                                                <?php foreach ( $stats_labels as $key => $val ) : ?>
+                                                    var sum = 0;
+
+                                                    $( '.stats-table-season-<?php echo $rand; ?> .player-stats-manual-<?php echo $key; ?>' ).each( function() {
+                                                        sum += Number( $( this ).val() );
+                                                    });
+
+                                                    $( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-manual-<?php echo $key; ?>' ).val( sum );
+
+                                                    var sum = 0;
+
+                                                    $( '.stats-table-season-<?php echo $rand; ?> .player-stats-auto-<?php echo $key; ?>' ).each( function() {
+                                                        sum += Number($( this ).val() );
+                                                    });
+
+                                                    $( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-auto-<?php echo $key; ?>' ).val( sum );
+
+                                                    var a = +$( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-auto-<?php echo $key; ?>' ).val();
+                                                    var b = +$( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-manual-<?php echo $key; ?>' ).val();
+                                                    var total = a+b;
+
+                                                    $( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-total-<?php echo $key; ?>' ).val( total );
+                                                <?php endforeach; ?>
                                             });
+                                        })( jQuery );
+                                    </script>
 
-                                            $( this ).closest( 'table' ).find( 'tfoot tr input[data-index="' + index + '"]' ).val( value );
-                                            <?php foreach ( $stats_labels as $key => $val ) : ?>
-                                                var sum = 0;
-
-                                                $( '.stats-table-season-<?php echo $rand; ?> .player-stats-manual-<?php echo $key; ?>' ).each( function() {
-                                                    sum += Number( $( this ).val() );
-                                                } );
-
-                                                $( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-manual-<?php echo $key; ?>' ).val( sum );
-
-                                                var sum = 0;
-
-                                                $( '.stats-table-season-<?php echo $rand; ?> .player-stats-auto-<?php echo $key; ?>' ).each( function() {
-                                                    sum += Number($( this ).val() );
-                                                } );
-
-                                                $( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-auto-<?php echo $key; ?>' ).val( sum );
-
-                                                var a = +$( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-auto-<?php echo $key; ?>' ).val();
-                                                var b = +$( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-manual-<?php echo $key; ?>' ).val();
-                                                var total = a+b;
-
-                                                $( '#wpcm_team-0_season-0-<?php echo $rand; ?> .player-stats-total-<?php echo $key; ?>' ).val( total );
-                                            <?php endforeach; ?>
-                                        } );
-                                    } )( jQuery );
-                                </script>
-
-                            </div>
-
-                        <?php endforeach; endif; ?>
-
+                                </div>
+                                <?php
+                            endforeach;
+                        endif;
+                        ?>
                     </div>
 
                     <script type="text/javascript">
                         ( function( $ ) {
-                            $( '.stats-tabs-<?php echo $rand; ?> a' ).click( function() {
+                            $( '.stats-tabs-<?php echo $rand; ?> a' ).on( 'click', function() {
                                 var t = $( this ).attr( 'href' );
 
                                 $( this ).parent().addClass( 'tabs-multi <?php echo $rand; ?>' ).siblings( 'li' ).removeClass( 'tabs-multi <?php echo $rand; ?>' );
@@ -132,19 +146,27 @@ class RDB_WPCM_Meta_Box_Player_Stats {
                                 $( t ).show();
 
                                 return false;
-                            } );
-                        } )( jQuery );
+                            });
+                        })( jQuery );
                     </script>
-                <?php endforeach; ?>
+                    <?php
+                endforeach;
+                ?>
 
             <?php else : ?>
 
                 <div class="wpcm-player-stat-season">
-                    <?php if ( is_array( $seasons ) ) : foreach( $seasons as $season ) : ?>
-                        <div class="wpcm_team-0_season-<?php echo $season->term_id; ?> stats-table-season">
-                            <?php self::wpcm_player_stats_table( $stats, 0, $season->term_id ); ?>
-                        </div>
-                    <?php endforeach; endif; ?>
+                    <?php
+                    if ( is_array( $seasons ) ) :
+                        foreach( $seasons as $season ) :
+                            ?>
+                            <div class="wpcm_team-0_season-<?php echo $season->term_id; ?> stats-table-season">
+                                <?php self::wpcm_player_stats_table( $stats, 0, $season->term_id ); ?>
+                            </div>
+                            <?php
+                        endforeach;
+                    endif;
+                    ?>
                 </div>
 
                 <div class="wpcm-player-stat-total" style="display:none;">
@@ -161,7 +183,7 @@ class RDB_WPCM_Meta_Box_Player_Stats {
 
                             $( this ).closest( 'table' ).find( 'tbody tr' ).each( function() {
                                 value += parseInt($( this ).find( 'input[data-index="' + index + '"]' ).val() );
-                            } );
+                            });
 
                             $( this ).closest( 'table' ).find( 'tfoot tr input[data-index="' + index + '"]' ).val(value);
                             <?php foreach ( $stats_labels as $key => $val ) : ?>
@@ -169,7 +191,7 @@ class RDB_WPCM_Meta_Box_Player_Stats {
 
                                 $( '.stats-table-season .player-stats-manual-<?php echo $key; ?>' ).each( function() {
                                     sum += Number( $( this ).val() );
-                                } );
+                                });
 
                                 $( '#wpcm_team-0_season-0 .player-stats-manual-<?php echo $key; ?>' ).val( sum );
 
@@ -177,7 +199,7 @@ class RDB_WPCM_Meta_Box_Player_Stats {
 
                                 $( '.stats-table-season .player-stats-auto-<?php echo $key; ?>' ).each( function() {
                                     sum += Number($( this ).val() );
-                                } );
+                                });
 
                                 $( '#wpcm_team-0_season-0 .player-stats-auto-<?php echo $key; ?>' ).val( sum );
 
@@ -186,8 +208,8 @@ class RDB_WPCM_Meta_Box_Player_Stats {
                                 var total = a+b;
                                 $( '#wpcm_team-0_season-0 .player-stats-total-<?php echo $key; ?>' ).val( total );
                             <?php endforeach; ?>
-                        } );
-                    } )( jQuery );
+                        });
+                    })( jQuery );
                 </script>
 
             <?php endif; ?>
@@ -208,8 +230,8 @@ class RDB_WPCM_Meta_Box_Player_Stats {
      */
     public static function wpcm_player_stats_table( $stats = array(), $team = 0, $season = 0 ) {
         if ( array_key_exists( $team, $stats ) ) :
-            if ( array_key_exists( $season, $stats[$team] ) ) :
-                $stats = $stats[$team][$season];
+            if ( array_key_exists( $season, $stats[ $team ] ) ) :
+                $stats = $stats[ $team ][ $season ];
             endif;
         endif;
 
@@ -267,7 +289,7 @@ class RDB_WPCM_Meta_Box_Player_Stats {
             array_walk_recursive( $stats, 'wpcm_array_values_to_int' );
         }
 
-        update_post_meta( $post_id, 'wpcm_stats', serialize( $stats ) );
+        update_post_meta( $post_id, 'wpcm_stats', maybe_serialize( $stats ) );
 
         do_action( 'delete_plugin_transients' );
     }

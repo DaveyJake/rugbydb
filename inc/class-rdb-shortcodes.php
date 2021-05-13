@@ -38,6 +38,7 @@ class RDB_Shortcodes {
         add_shortcode( 'flag', array( $this, 'flag' ) );
         add_shortcode( 'qlink', array( $this, 'qlink' ) );
         add_shortcode( 'tabs_menu', array( $this, 'tabs_menu' ) );
+        add_shortcode( 'youtube', array( $this, 'youtube' ) );
     }
 
     /**
@@ -365,7 +366,7 @@ class RDB_Shortcodes {
             array(
                 'state'   => '',
                 'country' => '',
-                'class'   => 'icon',
+                'class'   => '',
             ),
             $atts,
             'flag'
@@ -381,24 +382,19 @@ class RDB_Shortcodes {
         }
 
         $class   = sanitize_text_field( $atts['class'] );
+        $class   = ! empty( $class ) ? $class . ' ' : '';
         $state   = strtolower( sanitize_text_field( $atts['state'] ) );
         $country = strtolower( sanitize_text_field( $country ) );
 
         if ( ! empty( $state ) ) {
-            $class .= ' ' . $state;
+            $class .= $state;
         } else {
-            $class .= ' flag-icon-background flag-icon-' . $country;
+            $class .= 'flag-icon flag-icon-' . $country;
         }
 
         $post_type = get_post_type();
 
-        if ( 'wpcm_match' === $post_type ) {
-            $tag = 'span';
-        } else {
-            $tag = 'div';
-        }
-
-        $content = '<' . $tag . ' class="' . esc_attr( $class ) . '"></' . $tag . '>';
+        $content = '<span class="' . esc_attr( $class ) . '"></span>';
 
         return wp_kses_post( $content );
     }
@@ -491,5 +487,118 @@ class RDB_Shortcodes {
         $content .= '</ul>';
 
         return $content;
+    }
+
+    /**
+     * Embedded YouTube iFrame.
+     *
+     * @since 1.0.0
+     *
+     * @param array|null $atts    Shortcode attributes.
+     * @param mixed|null $content Shortcode output.
+     *
+     * @return mixed Final HTML.
+     */
+    public function youtube( $atts = null, $content = null ) {
+
+        $atts = shortcode_atts(
+            array(
+                'end'   => '',
+                'src'   => '',
+                'start' => '',
+                'url'   => '',
+            ),
+            $atts
+        );
+
+        /**
+         * Schema data model.
+         *
+         * @todo Add schema to enforce content.
+         *
+         * @var array
+         */
+        $schema = array(
+            'id'   => 'youtube',
+            'name' => __( 'YouTube', 'rugby-database' ),
+            'atts' => array(
+                'end' => array(
+                    'type'    => 'number',
+                    'min'     => -1,
+                    'max'     => 10000,
+                    'step'    => 1,
+                    'default' => -1,
+                    'name'    => __( 'Video End', 'rugby-database' ),
+                    'desc'    => __( 'The number of seconds to stop the video at.', 'rugby-database' ),
+                ),
+                'src' => array(
+                    'type'    => 'string',
+                    'default' => '',
+                    'name'    => __( 'Video source.', 'rugby-database' ),
+                    'desc'    => __( 'Same as the <code>url</code>.', 'rugby-database' ),
+                ),
+                'start' => array(
+                    'type'    => 'number',
+                    'min'     => -1,
+                    'max'     => 10000,
+                    'step'    => 1,
+                    'default' => -1,
+                    'name'    => __( 'Video Start', 'rugby-database' ),
+                    'desc'    => __( 'Number of seconds to skip when starting the video.', 'rugby-database' ),
+                ),
+                'url' => array(
+                    'type'    => 'string',
+                    'default' => '',
+                    'name'    => __( 'YouTube Video URL', 'rugby-database' ),
+                    'desc'    => __( 'The web address as shown in your web browser.', 'rugby-database' ),
+                ),
+            ),
+        );
+
+        $end      = sanitize_text_field( $atts['end'] );
+        $src      = sanitize_text_field( $atts['src'] );
+        $start    = sanitize_text_field( $atts['start'] );
+        $url      = sanitize_text_field( $atts['url'] );
+        $link     = empty( $url ) ? esc_url( $src ) : esc_url( $url );
+        $video_id = $this->youtube_id( $link );
+
+        $param = array();
+
+        if ( ! empty( $start ) ) {
+            $param['start'] = $start;
+
+            if ( ! empty( $end ) ) {
+                $param['end'] = $end;
+            }
+        } elseif ( ! empty( $end ) ) {
+            $param['end'] = $end;
+        } elseif ( ! empty( $param ) ) {
+            $param['rel'] = '0';
+        } else {
+            $param['rel'] = '0';
+        }
+
+        $url = add_query_arg( $param, sprintf( 'https://www.youtube.com/embed/%s/', $video_id ) );
+
+        $tag = 'iframe';
+
+        $html = '<div class="flex-video widescreen"><' . $tag . ' src="%s" width="%d" height="%d" frameborder="%d" allowfullscreen></' . $tag . '></div>';
+
+        return wp_sprintf( $html, $url, 640, 360, 0 );
+    }
+
+    /**
+     * Get YouTube video ID from URL
+     *
+     * @since 1.0.0
+     *
+     * @param string $video_url Video URL.
+     *
+     * @return string YouTube video ID.
+     */
+    private function youtube_id( $video_url ) {
+        if ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11,})%i', $video_url, $match ) ) {
+            return $match[1];
+        }
     }
 }

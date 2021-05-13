@@ -8,5 +8,7 @@
  */
 
 echo '<div class="wpcm-row tabs-container">';
+
     echo do_shortcode( '[tabs_menu labels="About,Players,Matches"]' );
+
 echo '</div>';

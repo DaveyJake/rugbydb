@@ -33,6 +33,7 @@ $image-width: calc(100% - #{$meta-width});
 
         &__image {
             background: {
+                size: cover;
                 repeat: no-repeat;
                 position: center 0;
             }
@@ -159,6 +160,13 @@ $image-width: calc(100% - #{$meta-width});
     height: rem-calc(21px);
 }
 
+span.flag-icon {
+    margin-left: 7px;
+}
+
 .icon {
     height: 22px;
 }
+
+// Flex video.
+@include foundation-responsive-embed;

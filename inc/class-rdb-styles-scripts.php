@@ -400,7 +400,6 @@ class RDB_Styles_Scripts {
      * @see RDB_Styles_Scripts::enqueue()
      */
     private function register_styles() {
-
         /**
          * Styles to register.
          *

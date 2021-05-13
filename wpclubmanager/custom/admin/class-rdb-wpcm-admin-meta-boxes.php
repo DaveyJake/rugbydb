@@ -42,6 +42,8 @@ class RDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
         add_filter( 'attachment_fields_to_save', array( $this, 'match_meta_boxes_save_image_photographer' ), 10, 2 );
 
         // Custom player details.
+        remove_action( 'wpclubmanager_process_wpcm_roster_meta', 'WPCM_Meta_Box_Roster_Players::save', 10, 2 );
+        add_action( 'wpclubmanager_process_wpcm_roster_meta', 'RDB_WPCM_Meta_Box_Roster_Players::save', 10, 2 );
         add_action( 'wpclubmanager_process_wpcm_player_meta', 'RDB_WPCM_Meta_Box_Player_Details::save', 10, 2 );
     }
 
@@ -316,7 +318,7 @@ class RDB_WPCM_Admin_Meta_Boxes extends WPCM_Admin_Meta_Boxes {
     private function rosters( $post ) {
         if ( 'publish' === $post->post_status )
         {
-            add_meta_box( 'wpclubmanager-roster-players', __( 'Manage Players Roster', 'wp-club-manager' ), 'WPCM_Meta_Box_Roster_Players::output', 'wpcm_roster', 'normal', 'high' );
+            add_meta_box( 'wpclubmanager-roster-players', __( 'Manage Players Roster', 'wp-club-manager' ), 'RDB_WPCM_Meta_Box_Roster_Players::output', 'wpcm_roster', 'normal', 'high' );
             add_meta_box( 'wpclubmanager-roster-staff', __( 'Manage Staff Roster', 'wp-club-manager' ), 'WPCM_Meta_Box_Roster_Staff::output', 'wpcm_roster', 'normal', 'high' );
             add_meta_box( 'wpclubmanager-roster-details', __( 'Roster Setup', 'wp-club-manager' ), 'WPCM_Meta_Box_Roster_Details::output', 'wpcm_roster', 'side' );
         }

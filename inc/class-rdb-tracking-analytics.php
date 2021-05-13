@@ -11,8 +11,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * Begin class.
  *

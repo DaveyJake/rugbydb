@@ -6,34 +6,39 @@
  * @package WPClubManager/Templates
  * @version 1.5.0
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$post_id = get_the_ID();
-$teams   = get_the_terms( $post_id, 'wpcm_team' );
-$badge   = get_post_meta( $post_id, 'wpcm_number', true );
+defined( 'ABSPATH' ) || exit;
 
-$first    = get_post_meta( $post_id, '_wpcm_firstname', true );
-$nickname = get_post_meta( $post_id, '_usar_nickname', true );
-$last     = get_post_meta( $post_id, '_wpcm_lastname', true );
+global $post;
 
-foreach ( $teams as $team ) {
-    $slug = $team->slug;
-}
+$teams = get_the_terms( $post->ID, 'wpcm_team' );
+$team  = $teams[0]->slug;
+$badge = get_post_meta( $post->ID, 'wpcm_number', true );
 
-if ( 'mens-eagles' === $slug ) {
-    if ( $badge >= 62 ) {
-        $post_title = sprintf( '%1$s %2$s', $nickname, $last );
+$first    = get_post_meta( $post->ID, '_wpcm_firstname', true );
+$nickname = get_post_meta( $post->ID, '_usar_nickname', true );
+$last     = get_post_meta( $post->ID, '_wpcm_lastname', true );
+
+if ( 'mens-eagles' === $team ) :
+
+    if ( absint( $badge ) >= 62 ) :
 
         echo '<h1 class="entry-title">';
-        echo esc_html( $post_title );
+        echo esc_html( sprintf( '%1$s %2$s', $nickname, $last ) );
         echo '</h1>';
-    } else {
+
+    else :
+
         $post_title = sprintf( '%1$s "%2$s" %3$s', $first, $nickname, $last );
 
         echo '<h1 class="entry-title">';
         echo esc_html( $post_title );
         echo '</h1>';
-    }
-} else {
+
+    endif;
+
+else :
+
     the_title( '<h1 class="entry-title">', '</h1>' );
-}
+
+endif;

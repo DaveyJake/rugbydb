@@ -38,6 +38,7 @@ class RDB_WPCM_Admin {
         require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-result.php';
         require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-player-details.php';
         require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-player-stats.php';
+        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-roster-players.php';
         require_once 'admin/class-rdb-wpcm-admin-meta-boxes.php';
 
         require_once 'admin/class-rdb-wpcm-comps.php';

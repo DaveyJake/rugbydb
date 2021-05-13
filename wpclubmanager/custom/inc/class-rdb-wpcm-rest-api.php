@@ -1597,8 +1597,9 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 'type'        => 'object',
                 'properties'  => array(
                     'wp' => array(
-                        'type'       => 'object',
-                        'properties' => array(
+                        'description' => esc_html__( 'The WordPress ID of the individual match objects.', $this->domain ),
+                        'type'        => 'object',
+                        'properties'  => array(
                             'xv' => array(
                                 'type' => 'string',
                             ),
@@ -1608,8 +1609,9 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                         ),
                     ),
                     'wr' => array(
-                        'type'       => 'object',
-                        'properties' => array(
+                        'description' => esc_html__( 'The World Rugby ID of the individual match objects.', $this->domain ),
+                        'type'        => 'object',
+                        'properties'  => array(
                             'xv' => array(
                                 'type' => 'string',
                             ),
