@@ -13,26 +13,24 @@ function rdb_tmpl_opponent() {
     <#
         var blacklist = [5, 144]; // United States & unions with 0 played against.
 
-        _.each( data, function( opponent ) {
-            if ( ! _.includes( blacklist, opponent.id ) ) {
-                #>
-                <div id="opponent-{{ opponent.id }}" class="card{{{ opponent.parent > 0 ? ' team' : ' union' }}} {{{ opponent.permalink.match( /women/ ) ? 'women' : 'men' }}}" data-order="{{ opponent.name }}" data-group="{{ opponent.parent }}">
-                    <div class="card__container" shadow>
-                        <div class="card__spacer">
-                            <a class="help_tip" href="{{ opponent.permalink }}" title="{{ opponent.name }}">
-                                <span class="card__image" style="background-image: url({{ opponent.logo }});"></span>
-                            </a>
-                        </div>
-                        <div class="card__container__title">
-                            <a class="help_tip" href="{{ opponent.permalink }}" title="{{ opponent.name }}">
-                                <span class="card__title">{{{ _.unescape( opponent.name ) }}}</span>
-                            </a>
-                        </div>
+        if ( ! _.includes( blacklist, data.id ) ) {
+            #>
+            <div id="opponent-{{ data.id }}" class="card{{{ data.parent > 0 ? ' team' : ' union' }}} {{{ data.permalink.match( /women/ ) ? 'women' : 'men' }}}" data-order="{{ data.name }}" data-group="{{ data.parent }}">
+                <div class="card__container" shadow>
+                    <div class="card__spacer">
+                        <a class="help_tip" href="{{ data.permalink }}" title="{{ data.name }}">
+                            <span class="card__image" style="background-image: url({{ data.logo }});"></span>
+                        </a>
+                    </div>
+                    <div class="card__container__title">
+                        <a class="help_tip" href="{{ data.permalink }}" title="{{ data.name }}">
+                            <span class="card__title">{{{ _.unescape( data.name ) }}}</span>
+                        </a>
                     </div>
                 </div>
-                <#
-            }
-        });
+            </div>
+            <#
+        }
     #>
     </script>
     <?php

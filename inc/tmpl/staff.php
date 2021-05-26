@@ -10,32 +10,20 @@ function rdb_tmpl_staff() {
     }
     ?>
     <script id="tmpl-staff" type="text/html">
-    <#
-        if ( 400 === data.data.status ) {
-            return;
-        }
-
-        data = ( data.success && data.data ) ? data.data : data;
-
-        _.each( data, function( staff ) {
-            #>
-            <div id="staff-{{ staff.ID }}" class="card staff {{{ _.join( _.union( staff.jobs, staff.teams ), ' ' ) }}}" data-name="{{ staff.name }}" data-order="{{{ ( staff.order < 10 ) ? '0' + staff.order : staff.order }}}" data-season="{{{ _.join( staff.seasons, ',' ) }}}">
-                <div class="card__container" shadow>
-                    <div class="card__container__image">
-                        <a class="help_tip" href="{{ staff.permalink }}" title="{{ staff.name }}">
-                            <span class="card__image" style="background-image: url({{ staff.image }});"></span>
+        <div id="data-{{ data.ID }}" class="card staff {{{ _.join( _.union( data.jobs, data.teams ), ' ' ) }}}" data-name="{{ data.name }}" data-order="{{{ ( data.order < 10 ) ? '0' + data.order : data.order }}}" data-season="{{{ _.join( data.seasons, ',' ) }}}">
+            <div class="card__container" shadow>
+                <div class="card__container__image">
+                    <a class="help_tip" href="{{ data.permalink }}" title="{{ data.name }}">
+                        <span class="card__image" style="background-image: url({{ data.image }});"></span>
+                    </a>
+                    <span class="card__container__title">
+                        <a class="help_tip" href="{{ data.permalink }}" title="{{ data.name }}">
+                            <span class="card__title">{{ data.name }}</span>
                         </a>
-                        <span class="card__container__title">
-                            <a class="help_tip" href="{{ staff.permalink }}" title="{{ staff.name }}">
-                                <span class="card__title">{{ staff.name }}</span>
-                            </a>
-                        </span>
-                    </div>
+                    </span>
                 </div>
             </div>
-            <#
-        });
-    #>
+        </div>
     </script>
     <?php
 }

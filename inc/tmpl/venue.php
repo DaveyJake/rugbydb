@@ -10,32 +10,20 @@ function rdb_tmpl_venue() {
     }
     ?>
     <script id="tmpl-venue" type="text/html">
-    <#
-        if ( 400 === data.data.status ) {
-            return;
-        }
-
-        data = ( data.success && data.data ) ? data.data : data;
-
-        _.each( data, function( venue ) {
-            #>
-            <div id="venue-{{ venue.id }}" class="card venue" data-name="{{ venue.name }}" data-country="{{{ ukCountry( venue.meta.addressLocality, venue.meta.addressCountry ) }}}">
-                <div class="card__container" shadow>
-                    <div class="card__container__image">
-                        <a class="help_tip" href="{{ venue.link }}" title="{{ venue.name }}">
-                            <span class="card__image" style="background-image: url({{ venue.image }});"></span>
+        <div id="venue-{{ data.id }}" class="card venue" data-name="{{ data.name }}" data-country="{{{ ukCountry( data.meta.addressLocality, data.meta.addressCountry ) }}}">
+            <div class="card__container" shadow>
+                <div class="card__container__image">
+                    <a class="help_tip" href="{{ data.link }}" title="{{ data.name }}">
+                        <span class="card__image" style="background-image: url({{ data.image }});"></span>
+                    </a>
+                    <span class="card__container__title">
+                        <a class="help_tip" href="{{ data.link }}" title="{{ data.name }}">
+                            <span class="card__title">{{{ _.unescape( data.name ) }}}</span>
                         </a>
-                        <span class="card__container__title">
-                            <a class="help_tip" href="{{ venue.link }}" title="{{ venue.name }}">
-                                <span class="card__title">{{{ _.unescape( venue.name ) }}}</span>
-                            </a>
-                        </span>
-                    </div>
+                    </span>
                 </div>
             </div>
-            <#
-        });
-    #>
+        </div>
     </script>
     <?php
 }

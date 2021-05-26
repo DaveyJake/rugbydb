@@ -22,15 +22,15 @@ function rdb_tmpl_player() {
 
         if ( data.matches.total.overall > 0 ) {
             #>
-            <div id="data-{{ data.ID }}" class="card data {{ classes }}" data-name="{{ name }}">
+            <div id="player-{{ data.ID }}" class="card player {{ classes }}" data-name="{{ name }}">
                 <div class="card__container" shadow>
                     <div class="card__container__background"><span style="background-image: url({{ img }});"></span></div>
                     <div class="card__container__image">
-                        <a class="help_tip" href="/data/{{ data.slug }}" title="{{ name }}">
+                        <a class="help_tip" href="/player/{{ data.slug }}" title="{{ name }}">
                             <span class="card__image" style="background-image: url({{ img }});"></span>
                         </a>
                         <span class="card__container__title">
-                            <a class="help_tip" href="/data/{{ data.slug }}" title="{{ name }}">
+                            <a class="help_tip" href="/player/{{ data.slug }}" title="{{ name }}">
                                 <span class="card__title">{{ name }}</span>
                             </a>
                         </span>

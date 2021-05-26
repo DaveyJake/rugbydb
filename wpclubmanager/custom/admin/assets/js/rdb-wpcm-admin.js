@@ -180,7 +180,7 @@ jQuery( function( $ ) {
 
         $specialYear.on( 'click', function() {
             setCheckedValue( $( this ) );
-        } );
+        });
     }
     // Venues.
     else if ( 'edit-wpcm_venue' === pagenow )
