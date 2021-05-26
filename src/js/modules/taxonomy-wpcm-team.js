@@ -385,10 +385,14 @@ class TaxWpcmTeam extends DTHelper {
         $container.on( 'load.infiniteScroll', ( e, body ) => {
             const tmpl     = $container.data( 'tmpl' ),
                   template = wp.template( tmpl ),
-                  result   = template( body.data ),
-                  cards    = $( result );
+                  cards    = [];
 
-            $container.append( cards ).isotope( 'appended', cards ).isotope();
+            _.each( body.data, function( player) {
+                const result = $( template( player ) );
+
+                $container.append( result ).isotope( 'appended', result ).isotope();
+            });
+
             $container.append( $loader );
             $loader.addClass( 'absolute-bottom' );
         });
