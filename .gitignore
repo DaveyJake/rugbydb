@@ -3,9 +3,12 @@ config.yml
 node_modules
 packaged
 vendor
+vibrant
+jquery.adaptive-backgrounds
 WR
 .DS_Store
 *.bak
 *.sublime-*
 *.zip
 .niu
+*.coffee

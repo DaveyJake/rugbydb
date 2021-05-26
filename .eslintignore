@@ -1,4 +1,4 @@
-**/vendor/**
+**/_vendor/**
 .DS_Store
 *.min.js
 **/_*.js

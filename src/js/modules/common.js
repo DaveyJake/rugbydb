@@ -1,5 +1,5 @@
 import '../ui/mmenu';
-import { Modernizr } from '../vendor';
+import { Modernizr } from '../_vendor';
 import { logoLettering, navigation } from '../ui';
 import { util, $ } from '../utils';
 

@@ -1,4 +1,4 @@
-import { Foundation } from '../vendor';
+import { Foundation } from '../_vendor';
 import { Request, rdb, _, $ } from '../utils';
 
 /**

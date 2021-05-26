@@ -4,6 +4,7 @@ import 'isotope-packery';
 import InfiniteScroll from 'infinite-scroll';
 import { _, $, rdb, wp } from './globals';
 import { util } from './helpers';
+
 InfiniteScroll.imagesLoaded = window.imagesLoaded;
 jQueryBridget( 'isotope', Isotope, $ );
 jQueryBridget( 'infiniteScroll', InfiniteScroll, $ );
@@ -132,7 +133,7 @@ class Request {
                 const isoTmpls = ['mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens', 'team-usa-men', 'team-usa-women', 'staff', 'venues', 'opponents']; // eslint-disable-line
 
                 if ( _.includes( isoTmpls, rdb.post_name ) || _.includes( isoTmpls, rdb.term_slug ) ) {
-                    return self._isoTmpls( response.data );
+                    return self._isoTmpls( response );
                 } else if ( 'match' === self.route && self.postId > 0 ) {
                     return self._timelineTmpl( response.data );
                 }
@@ -181,10 +182,17 @@ class Request {
 
             const tmpl     = $selector.data( 'tmpl' ),
                   template = wp.template( tmpl ),
-                  result   = template( response ),
-                  cards    = $( result );
+                  cards    = [];
 
-            $selector.append( cards ).isotope( 'appended', cards ).isotope();
+            _.each( response.data, function( player ) {
+                const card = template( player );
+
+                cards.push( card );
+            });
+
+            const $cards = $( cards );
+
+            $selector.append( $cards ).isotope( 'appended', $cards ).isotope();
         });
 
         const obj = [

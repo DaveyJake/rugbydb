@@ -1,6 +1,6 @@
-import '../vendor/mmenu/mmenu.polyfills';
-import { Foundation } from '../vendor';
-import { Mmenu, Mhead } from '../vendor/mmenu/mmenu';
+import '../_vendor/mmenu/mmenu.polyfills';
+import { Foundation } from '../_vendor';
+import { Mmenu, Mhead } from '../_vendor/mmenu/mmenu';
 import { rdb } from '../utils';
 /**
  * jQuery.mmenu.

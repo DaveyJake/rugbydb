@@ -1,5 +1,5 @@
 import { $ } from '../utils/globals';
-import '../vendor/lettering';
+import '../_vendor/lettering';
 /**
  * Lettering.js config.
  *

@@ -1,4 +1,4 @@
-import { Foundation } from '../vendor';
+import { Foundation } from '../_vendor';
 import { _, $, rdb, util, wp, BREAKPOINTS, DT_LOADING, DTHelper } from '../utils';
 
 /**

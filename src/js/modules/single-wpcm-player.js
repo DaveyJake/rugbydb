@@ -1,5 +1,5 @@
 import { rdb, util, _, $, BREAKPOINTS } from '../utils';
-import { wpcmPA } from '../vendor/wpcm-player-appearances';
+import { wpcmPA } from '../_vendor/wpcm-player-appearances';
 
 /**
  * Single player page.
