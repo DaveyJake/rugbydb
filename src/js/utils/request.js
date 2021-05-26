@@ -161,10 +161,6 @@ class Request {
      * @param {JSON}   response AJAX API response data.
      */
     _isoTmpls( response ) {
-        if ( $( this.grid ).children( '.card' ).length ) {
-            return;
-        }
-
         const $selector = $( this.grid ).imagesLoaded( function() {
             $selector.isotope({
                 itemSelector: '.card',
@@ -181,18 +177,13 @@ class Request {
             });
 
             const tmpl     = $selector.data( 'tmpl' ),
-                  template = wp.template( tmpl ),
-                  cards    = [];
+                  template = wp.template( tmpl );
 
             _.each( response.data, function( player ) {
-                const card = template( player );
+                const card = $( template( player ) );
 
-                cards.push( card );
+                $selector.append( card ).isotope( 'appended', card ).isotope();
             });
-
-            const $cards = $( cards );
-
-            $selector.append( $cards ).isotope( 'appended', $cards ).isotope();
         });
 
         const obj = [
