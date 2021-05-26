@@ -1,10 +1,11 @@
 dist
 config.yml
+jquery.adaptive-backgrounds
 node_modules
 packaged
+**/page-items/**
 vendor
 vibrant
-jquery.adaptive-backgrounds
 WR
 .DS_Store
 *.bak
