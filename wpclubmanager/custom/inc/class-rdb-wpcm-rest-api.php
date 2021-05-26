@@ -298,9 +298,11 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
          */
         foreach ( $this->routes as $item => $items ) {
             $items_method = array( $this, "get_{$items}" );
+
             if ( 'club' === $item ) {
                 $item = 'union';
             }
+
             $item_method = array( $this, "get_{$item}" );
 
             // Primary collections routes.
