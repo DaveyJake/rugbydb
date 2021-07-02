@@ -44,36 +44,60 @@ class RDB_WPCM_Meta_Box_Club_Details extends WPCM_Meta_Box_Club_Details {
     }
 
     /**
-     * Save meta box data
+     * Save meta box data.
+     *
+     * @param int     $post_id Current post ID.
+     * @param WP_Post $post    Current post object.
      */
     public static function save( $post_id, $post ) {
-
         if ( isset( $_POST['_wpcm_club_abbr'] ) ) {
             update_post_meta( $post_id, '_wpcm_club_abbr', $_POST['_wpcm_club_abbr'] );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_club_abbr' );
         }
+
         if ( isset( $_POST['_wpcm_club_nickname'] ) ) {
             update_post_meta( $post_id, '_wpcm_club_nickname', $_POST['_wpcm_club_nickname'] );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_club_nickname' );
         }
+
         if ( isset( $_POST['_wpcm_club_formed'] ) ) {
             update_post_meta( $post_id, '_wpcm_club_formed', $_POST['_wpcm_club_formed'] );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_club_formed' );
         }
+
         if ( isset( $_POST['_wpcm_club_primary_color'] ) ) {
             update_post_meta( $post_id, '_wpcm_club_primary_color', $_POST['_wpcm_club_primary_color'] );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_club_primary_color' );
         }
+
         if ( isset( $_POST['_wpcm_club_secondary_color'] ) ) {
             update_post_meta( $post_id, '_wpcm_club_secondary_color', $_POST['_wpcm_club_secondary_color'] );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_club_secondary_color' );
         }
+
         if ( isset( $_POST['wr_id'] ) ) {
             update_post_meta( $post_id, 'wr_id', $_POST['wr_id'] );
+        } else {
+            delete_post_meta( $post_id, 'wr_id' );
         }
+
         if ( isset( $_POST['_wpcm_club_website'] ) ) {
             update_post_meta( $post_id, '_wpcm_club_website', $_POST['_wpcm_club_website'] );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_club_website' );
         }
+
         if ( isset( $_POST['_wpcm_club_honours'] ) ) {
             update_post_meta( $post_id, '_wpcm_club_honours', $_POST['_wpcm_club_honours'] );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_club_honours' );
         }
 
         do_action( 'delete_plugin_transients' );
-
     }
 }

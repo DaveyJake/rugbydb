@@ -2706,7 +2706,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 'comps'   => $comp_ids,
                 'seasons' => $season_ids,
             ),
-            'wr_id'     => absint( get_post_meta( $player->ID, 'wr_id', true ) ),
+            'wr_id' => absint( get_post_meta( $player->ID, 'wr_id', true ) ),
         );
 
         $response = new WP_REST_Response( $data );

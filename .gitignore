@@ -1,9 +1,8 @@
-dist
 config.yml
+dist
 jquery.adaptive-backgrounds
 node_modules
 packaged
-**/page-items/**
 vendor
 vibrant
 WR
@@ -13,3 +12,6 @@ WR
 *.zip
 .niu
 *.coffee
+*.gif
+*.jpg
+*.png

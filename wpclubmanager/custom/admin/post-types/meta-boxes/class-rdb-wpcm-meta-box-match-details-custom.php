@@ -50,21 +50,29 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
         $local_datetime = self::local_match_datetime();
         if ( ! empty( $local_datetime ) ) {
             update_post_meta( $post_id, '_usar_match_datetime_local', $local_datetime );
+        } else {
+            delete_post_meta( $post_id, '_usar_match_datetime_local' );
         }
 
         // Save the match's ESPN Scrum ID.
         if ( isset( $_POST['usar_scrum_id'] ) ) {
             update_post_meta( $post_id, 'usar_scrum_id', $_POST['usar_scrum_id'] );
+        } else {
+            delete_post_meta( $post_id, 'usar_scrum_id' );
         }
 
         // Save the match's World Rugby ID.
         if ( isset( $_POST['wr_id'] ) ) {
             update_post_meta( $post_id, 'wr_id', $_POST['wr_id'] );
+        } else {
+            delete_post_meta( $post_id, 'wr_id' );
         }
 
         // Referee country.
         if ( isset( $_POST['wpcm_referee_country'] ) ) {
             update_post_meta( $post_id, 'wpcm_referee_country', $_POST['wpcm_referee_country'] );
+        } else {
+            delete_post_meta( $post_id, 'wpcm_referee_country' );
         }
     }
 

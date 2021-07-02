@@ -60,10 +60,14 @@ class RDB_WPCM_Meta_Box_Match_Report_Enhancements {
     public static function save( $post_id, $post ) {
         if ( isset( $_POST['usar_match_report_title'] ) ) {
             update_post_meta( $post_id, 'usar_match_report_title', $_POST['usar_match_report_title'] );
+        } else {
+            delete_post_meta( $post_id, 'usar_match_report_title' );
         }
 
         if ( isset( $_POST['usar_match_report_author'] ) ) {
             update_post_meta( $post_id, 'usar_match_report_author', $_POST['usar_match_report_author'] );
+        } else {
+            delete_post_meta( $post_id, 'usar_match_report_author' );
         }
     }
 }

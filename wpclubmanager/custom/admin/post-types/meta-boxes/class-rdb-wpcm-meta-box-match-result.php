@@ -151,17 +151,19 @@ class RDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
         if ( ! empty( $_POST['wpcm_played'] ) ) {
             update_post_meta( $post_id, 'wpcm_played', $_POST['wpcm_played'] );
         } else {
-            update_post_meta( $post_id, 'wpcm_played', '' );
+            delete_post_meta( $post_id, 'wpcm_played' );
         }
 
         if ( ! empty( $_POST['_wpcm_postponed'] ) ) {
             update_post_meta( $post_id, '_wpcm_postponed', $_POST['_wpcm_postponed'] );
         } else {
-            update_post_meta( $post_id, '_wpcm_postponed', '' );
+            delete_post_meta( $post_id, '_wpcm_postponed' );
         }
 
         if ( isset( $_POST['_wpcm_walkover'] ) ) {
             update_post_meta( $post_id, '_wpcm_walkover', $_POST['_wpcm_walkover'] );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_walkover' );
         }
 
         if ( isset( $_POST['wpcm_goals'] ) ) {
@@ -170,6 +172,10 @@ class RDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
             update_post_meta( $post_id, 'wpcm_goals', serialize( $goals ) );
             update_post_meta( $post_id, 'wpcm_home_goals', $goals['total']['home'] );
             update_post_meta( $post_id, 'wpcm_away_goals', $goals['total']['away'] );
+        } else {
+            delete_post_meta( $post_id, 'wpcm_goals' );
+            delete_post_meta( $post_id, 'wpcm_home_goals' );
+            delete_post_meta( $post_id, 'wpcm_away_goals' );
         }
 
         if ( 'rugby' === $sport && isset( $_POST['wpcm_bonus'] ) ) {

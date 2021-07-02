@@ -140,6 +140,8 @@ class RDB_WPCM_Meta_Box_Roster_Players {
             }
 
             update_post_meta( $post_id, '_wpcm_roster_players', maybe_serialize( $players ) );
+        } else {
+            delete_post_meta( $post_id, '_wpcm_roster_players' );
         }
 
         do_action( 'delete_plugin_transients' );
