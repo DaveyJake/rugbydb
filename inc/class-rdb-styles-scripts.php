@@ -587,14 +587,21 @@ class RDB_Styles_Scripts {
             return $file;
         }
 
-        $rev_css = json_decode( file_get_contents( get_template_directory() . '/dist/css/rev-manifest.json' ), true );
-        $rev_js  = json_decode( file_get_contents( get_template_directory() . '/dist/js/rev-manifest.json' ), true );
+        $css_rev = get_template_directory() . '/dist/css/rev-manifest.json';
+        $js_rev  = get_template_directory() . '/dist/js/rev-manifest.json';
 
-        if ( preg_match( '/\.js$/', $file ) ) {
-            return $rev_js[ $file ];
+        if ( file_exists( $css_rev ) && file_exists( $js_rev ) ) {
+            $rev_css = json_decode( file_get_contents( $css_rev ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+            $rev_js  = json_decode( file_get_contents( $js_rev ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+            if ( preg_match( '/\.js$/', $file ) ) {
+                return $rev_js[ $file ];
+            }
+
+            return $rev_css[ $file ];
         }
 
-        return $rev_css[ $file ];
+        return $file;
     }
 
     /**

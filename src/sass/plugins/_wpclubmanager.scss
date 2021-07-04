@@ -196,7 +196,7 @@
                 &.win, &.draw, &.loss, &.postponed {
                     background: green;
                     border-radius: 10px;
-                    color: #fff;
+                    color: $color__white;
                     display: block;
                     float: right;
                     height: 16px;
@@ -260,38 +260,42 @@
                         display: block;
                     }
 
-                    .home-clubs {
-                        display: block;
-                        float: left;
-                        font-size: 1.15em;
-                        line-height: 36px;
-                        margin: 0;
-                        padding: 0 2%;
-                        width: 96%;
+                    .home{
+                        &-clubs {
+                            display: block;
+                            float: left;
+                            font-size: 1.15em;
+                            line-height: 36px;
+                            margin: 0;
+                            padding: 0 2%;
+                            width: 96%;
+                        }
+
+                        &-logo {
+                            float: left;
+                            height: 30px;
+                            margin-right: 1em;
+                            width: 30px;
+                        }
                     }
 
-                    .home-logo {
-                        float: left;
-                        height: 30px;
-                        margin-right: 1em;
-                        width: 30px;
-                    }
+                    .away {
+                        &-clubs {
+                            display: block;
+                            float: left;
+                            font-size: 1.15em;
+                            line-height: 36px;
+                            margin: 0;
+                            padding: 0 2%;
+                            width: 96%;
+                        }
 
-                    .away-clubs {
-                        display: block;
-                        float: left;
-                        font-size: 1.15em;
-                        line-height: 36px;
-                        margin: 0;
-                        padding: 0 2%;
-                        width: 96%;
-                    }
-
-                    .away-logo {
-                        float: left;
-                        height: 30px;
-                        margin-right: 1em;
-                        width: 30px;
+                        &-logo {
+                            float: left;
+                            height: 30px;
+                            margin-right: 1em;
+                            width: 30px;
+                        }
                     }
 
                     .score {
@@ -480,7 +484,8 @@
                     &.notes {
                         width: auto;
 
-                        .yellowcard, .redcard, .greencard, .blackcard {
+                        .yellowcard,
+                        .redcard {
                             display: inline-block;
                             width: 12px;
                             height: 18px;
@@ -490,20 +495,12 @@
                             text-indent: -100px;
                         }
 
-                        .greencard {
-                            background-position: -24px 0px;
-                        }
-
                         .yellowcard {
                             background-position: 0px 0px;
                         }
 
                         .redcard {
                             background-position: -12px 0px;
-                        }
-
-                        .blackcard {
-                            background-position: -36px 0px;
                         }
                     }
                 }

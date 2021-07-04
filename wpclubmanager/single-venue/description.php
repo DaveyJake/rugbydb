@@ -16,6 +16,6 @@ if ( $rdb_term->name !== $rdb_term->description ) :
 
     echo '<div class="wpcm-entry-content wpcm-row wpcm-venue-description">';
         echo '<h3>' . __( 'Overview', 'wp-club-manager' ) . '</h3>';
-        echo wpautop( $rdb_term_content );
+        echo wpautop( do_shortcode( $rdb_term_content ) );
     echo '</div>';
 endif;

@@ -209,6 +209,7 @@ class RDB_Shortcodes {
      *     @type string $slug        Alias of `$source_slug`.
      *     @type string $source_url  Non-famililar source URL.
      *     @type string $url         Alias of `$url`.
+     *     @type string $id          Analytics custom ID.
      * }
      * @param mixed $content Shortcode output.
      *
@@ -251,7 +252,7 @@ class RDB_Shortcodes {
 
         $id = ! empty( $atts['id'] ) ? $atts['id'] : sanitize_title( $title . '-' . $name );
 
-        if ( preg_match( '/wiki(pedia)?/', $name ) ) {
+        if ( preg_match( '/[Ww]iki(pedia)?/', $name ) ) {
             $slug = preg_replace( '/(\s|-)/', '_', $slug );
             $url  = trailingslashit( 'https://en.wikipedia.org/wiki' ) . $slug;
         } else {

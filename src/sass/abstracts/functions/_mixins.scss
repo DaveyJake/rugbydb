@@ -7,6 +7,26 @@
     @return unquote($str);
 }
 
+// Borders.
+//
+// @param string $direction Accepts 'all', 'vertical', 'horizontal'.
+// @param list   $args      Border style short-hand.
+@mixin border($direction: all, $style: '1px solid #000') {
+    @if $direction == vertical {
+        border: {
+            top: unquote($style);
+            bottom: unquote($style);
+        }
+    } @else if $direction == horizontal {
+        border: {
+            left: unquote($style);
+            right: unquote($style);
+        }
+    } @else {
+        border: unquote($style);
+    }
+}
+
 // CSS calculator written for SCSS.
 //
 // @param string $property   CSS property.

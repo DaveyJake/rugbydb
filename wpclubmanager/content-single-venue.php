@@ -37,22 +37,18 @@ do_action( 'wpclubmanager_before_single_venue' );
          * Before widget content.
          *
          * @hooked rdb_single_venue_image - 5
-         * @hooked rdb_single_venue_meta - 10
+         * @hooked rdb_single_venue_map - 10
          */
         do_action( 'rdb_before_single_venue_widget' );
 
-        echo '<hr />';
-
-        /**
-         * Widget content hooks.
-         *
-         * @hooked rdb_single_venue_map - 5
-         */
-        do_action( 'rdb_single_venue_widget' );
-
     echo '</div>';
 
-    echo '<hr />';
+    /**
+     * Widget content hooks.
+     *
+     * @hooked rdb_single_venue_meta - 5
+     *
+    do_action( 'rdb_single_venue_widget' );*/
 
     /**
      * Entry content hooks.

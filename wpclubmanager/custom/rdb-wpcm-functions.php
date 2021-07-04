@@ -256,16 +256,19 @@ function rdb_wpcm_get_head_coach( $post_id ) {
     );
 
     $rosters = get_posts( $args );
-    $roster  = $rosters[0];
 
-    $staff_id = maybe_unserialize( get_post_meta( $roster->ID, '_wpcm_roster_staff', true ) );
+    if ( isset( $rosters[0] ) ) {
+        $roster = $rosters[0];
 
-    if ( ! empty( $staff_id[0] ) ) {
-        $coach = get_post_field( 'post_title', $staff_id[0] );
+        $staff_id = maybe_unserialize( get_post_meta( $roster->ID, '_wpcm_roster_staff', true ) );
 
-        wp_reset_postdata();
+        if ( ! empty( $staff_id[0] ) ) {
+            $coach = get_post_field( 'post_title', $staff_id[0] );
 
-        return $coach;
+            wp_reset_postdata();
+
+            return $coach;
+        }
     }
 
     return '';

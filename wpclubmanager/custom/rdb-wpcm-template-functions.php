@@ -184,7 +184,7 @@ add_action( 'rdb_before_single_venue_widget', 'rdb_single_venue_image', 5 );
 function rdb_single_venue_meta() {
     wpclubmanager_get_template( 'single-venue/meta.php' );
 }
-add_action( 'rdb_before_single_venue_widget', 'rdb_single_venue_meta' );
+add_action( 'rdb_single_venue_widget', 'rdb_single_venue_meta' );
 
 /**
  * Load venue map.
@@ -194,7 +194,7 @@ add_action( 'rdb_before_single_venue_widget', 'rdb_single_venue_meta' );
 function rdb_single_venue_map() {
     wpclubmanager_get_template( 'single-venue/map.php' );
 }
-add_action( 'rdb_single_venue_widget', 'rdb_single_venue_map', 5 );
+add_action( 'rdb_before_single_venue_widget', 'rdb_single_venue_map' );
 
 /**
  * Load venue match list.
@@ -214,7 +214,7 @@ add_action( 'rdb_single_venue_footer', 'rdb_single_venue_match_list' );
 function rdb_single_venue_description() {
     wpclubmanager_get_template( 'single-venue/description.php' );
 }
-add_action( 'rdb_single_venue_content', 'rdb_single_venue_description' );
+add_action( 'rdb_single_venue_content', 'rdb_single_venue_description', 5 );
 
 /**
  * Content wrappers.

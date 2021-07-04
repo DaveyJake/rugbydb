@@ -43,8 +43,21 @@
 
     &-venue {
         &-capacity {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.75);
+            text-shadow: 0 1px 0 $color__white;
+
+            strong {
+                padding: 0.5em;
+            }
+
             p {
-                margin-bottom: 0;
+                margin: 0;
+                padding-right: 0.5em;
             }
         }
 
@@ -61,8 +74,10 @@
 
         &-map {
             .wpcm-column {
-                flex-direction: column;
+                margin-bottom: 1.25em;
 
+                flex-direction: column;
+                @include border(vertical, '1px solid #fff');
                 @include breakpoint(1134px) {
                     flex-direction: row;
                 }
@@ -81,9 +96,27 @@
         }
 
         &-image {
+            position: relative;
+            overflow: hidden;
+            @include full-width;
+            background: {
+                size: cover;
+                repeat: no-repeat;
+                position: center center;
+            }
+            @include breakpoint(1134px) {
+                height: rem-calc(320);
+                width: 60%;
+            }
+
             img {
-                @include breakpoint(1133px down) {
-                    @include full-width;
+                @include full-width;
+                @include breakpoint(1134px) {
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translateY(-50%);
+                    width: 120%;
                 }
             }
         }
