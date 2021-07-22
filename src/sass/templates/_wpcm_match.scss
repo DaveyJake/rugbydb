@@ -12,6 +12,7 @@ $offset: (before: -8.5rem, after: 0.5rem );
 $offset--small: (before: -6.5rem, after: 1.5rem);
 $offset--medium: (before: -4.5rem, after: 1.5rem);
 $offset--large: (before: -3.5rem, after: 1.5rem);
+$wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
 
 .wpcm {
     &-match {
@@ -32,13 +33,6 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 color: $color__blue;
                 text-shadow: 0 1px 0 $color__text-inset;
             }
-        }
-
-        &-venue,
-        &-attendance,
-        &-referee,
-        &-team {
-            text-align: inherit;
         }
 
         &-club-badge {
@@ -111,6 +105,30 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
 
         &-details {
             padding: 0;
+
+            table td.notes {
+                display: flex;
+                justify-content: center;
+
+                .yellowcard,
+                .redcard {
+                    display: inline-block;
+                    width: 1.5rem;
+                    height: 2.26rem;
+                    background: url('#{$wpcm-path}/assets/images/notes@2x.png') no-repeat;
+                    overflow: hidden;
+                    margin-left: rem-calc(8px);
+                    text-indent: rem-calc(-100px);
+                }
+
+                .yellowcard {
+                    background-position: 0 0;
+                }
+
+                .redcard {
+                    background-position: -1.5rem 0;
+                }
+            }
         }
 
         &-fixture {
@@ -539,6 +557,8 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
         }
 
         &-referee {
+            display: flex;
+            align-items: center;
             padding-top: $padding;
 
             @include breakpoint(medium) {
@@ -547,7 +567,6 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
 
             #ref-icon {
                 position: relative;
-                top: 2px;
                 left: -3px;
                 width: 14px;
             }
@@ -655,6 +674,13 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
             }
         }
 
+        &-venue {
+            a {
+                display: flex;
+                align-items: center;
+            }
+        }
+
         &-video {
             margin-top: -1.5em;
             background: $color__black;
@@ -662,7 +688,6 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
 
         &-meta {
             display: flex;
-            padding-top: 0;
             border: {
                 top: $border;
                 bottom: $border;
@@ -728,7 +753,21 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
                 }
             }
 
+            &-left {
+                @include flex-column {
+                    justify-content: space-between;
+                    align-content: center;
+                    align-items: flex-start;
+                }
+            }
+
             &-right {
+                @include flex-column {
+                    justify-content: space-between;
+                    align-content: center;
+                    align-items: flex-end;
+                }
+
                 .wpcm-match-team:first-child {
                     padding-top: 0;
                 }
@@ -834,6 +873,10 @@ $offset--large: (before: -3.5rem, after: 1.5rem);
 
                         @include breakpoint(medium down) {
                             display: none;
+                        }
+
+                        &__text {
+                            align-self: center;
                         }
                     }
 

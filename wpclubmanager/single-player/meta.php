@@ -7,7 +7,11 @@
  * @version 2.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
+
+if ( ! class_exists( 'WR_Utilities' ) ) :
+    get_template_part( 'WR/wr', 'utilities' );
+endif;
 
 global $post;
 
@@ -47,23 +51,25 @@ echo '<div class="wpcm-profile__meta">';
             echo '</tr>';
         }
 
-        if ( 'yes' === get_option( 'wpcm_player_profile_show_dob' ) )
+        // Date of birth.
+        $wpcm_dob = get_post_meta( $post->ID, 'wpcm_dob', true );
+        if ( 'yes' === get_option( 'wpcm_player_profile_show_dob' ) && false !== $wpcm_dob )
         {
             echo '<tr>';
                 echo '<th>';
                     esc_html_e( 'Birthday', 'wp-club-manager' );
                 echo '</th>';
-                echo '<td>' . date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( $post->ID, 'wpcm_dob', true ) ) ) . '</td>';
+                echo '<td>' . date_i18n( get_option( 'date_format' ), strtotime( $wpcm_dob ) ) . '</td>';
             echo '</tr>';
         }
 
-        if ( 'yes' === get_option( 'wpcm_player_profile_show_age' ) )
+        if ( 'yes' === get_option( 'wpcm_player_profile_show_age' ) && false !== $wpcm_dob )
         {
             echo '<tr>';
                 echo '<th>';
                     esc_html_e( 'Age', 'wp-club-manager' );
                 echo '</th>';
-                echo '<td>' . get_age( get_post_meta( $post->ID, 'wpcm_dob', true ) ) . '</td>';
+                echo '<td>' . get_age( $wpcm_dob ) . '</td>';
             echo '</tr>';
         }
 
@@ -76,7 +82,7 @@ echo '<div class="wpcm-profile__meta">';
                     echo '<th>';
                         esc_html_e( 'Height', 'wp-club-manager' );
                     echo '</th>';
-                    echo '<td>' . $height . '</td>';
+                    echo '<td>' . esc_html( WR_Utilities::cm2ft( $height ) ) . '</td>';
                 echo '</tr>';
             }
         }
@@ -90,7 +96,7 @@ echo '<div class="wpcm-profile__meta">';
                     echo '<th>';
                         esc_html_e( 'Weight', 'wp-club-manager' );
                     echo '</th>';
-                    echo '<td>' . $weight . '</td>';
+                    echo '<td>' . esc_html( WR_Utilities::kg2lb( $weight ) ) . '</td>';
                 echo '</tr>';
             }
         }
@@ -168,7 +174,7 @@ echo '<div class="wpcm-profile__meta">';
                     echo '<th>';
                         esc_html_e( 'Previous Clubs', 'wp-club-manager' );
                     echo '</th>';
-                    echo '<td>' . ( $prev_clubs ? do_shortcode( $prev_clubs ) : __('None', 'wp-club-manager') ) . '</td>';
+                    echo '<td>' . ( $prev_clubs ? do_shortcode( $prev_clubs ) : __( 'None', 'wp-club-manager' ) ) . '</td>';
                 echo '</tr>';
             }
         }

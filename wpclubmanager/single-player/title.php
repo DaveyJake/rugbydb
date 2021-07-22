@@ -23,8 +23,10 @@ if ( 'mens-eagles' === $team ) :
 
     if ( absint( $badge ) >= 62 ) :
 
+        $first = ! empty( $first ) ? $first : $nickname;
+
         echo '<h1 class="entry-title">';
-        echo esc_html( sprintf( '%1$s %2$s', $nickname, $last ) );
+        echo esc_html( sprintf( '%1$s %2$s', $first, $last ) );
         echo '</h1>';
 
     else :

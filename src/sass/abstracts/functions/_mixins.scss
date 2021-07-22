@@ -195,9 +195,10 @@
 }
 
 // Flexbox.
-@mixin flex($justify-content: center, $align-items: center) {
+@mixin flex($justify-content: center, $align-content: center, $align-items: flex-start) {
     display: flex;
     justify-content: $justify-content;
+    align-content: $align-content;
     align-items: $align-items;
     @content;
 }
@@ -209,7 +210,7 @@
 
 // Flex center.
 @mixin flex-center {
-    @include flex;
+    @include flex(center, center, center);
 }
 
 // Flex column.

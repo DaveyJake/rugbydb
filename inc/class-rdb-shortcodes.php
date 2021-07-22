@@ -18,6 +18,28 @@ defined( 'ABSPATH' ) || exit;
  */
 class RDB_Shortcodes {
     /**
+     * MLR Club Names Map
+     *
+     * @since 1.0.5
+     *
+     * @var array
+     */
+    public $mlr_logos = array(
+        'rugbyatl'         => 'atlanta',
+        'gilgronis'        => 'austin',
+        'oldglorydc'       => 'dc',
+        'houstonsabercats' => 'houston',
+        'giltinis'         => 'los-angeles',
+        'freejacks'        => 'new-england',
+        'nolagoldrugby'    => 'new-orleans',
+        'rugbyunitedny'    => 'new-york-ru',
+        'sdlegion'         => 'san-diego',
+        'seattleseawolves' => 'seattle',
+        'torontoarrows'    => 'toronto',
+        'warriorsrugby'    => 'utah',
+    );
+
+    /**
      * Primary constructor.
      */
     public function __construct() {
@@ -111,7 +133,7 @@ class RDB_Shortcodes {
         $class .= '-image';
 
         $float        = ! empty( $float ) ? " align{$float}" : '';
-        $top_class    = ! empty( $caption ) ? 'has-caption ' . $class : $class;
+        $top_class    = ( ! empty( $caption ) ? 'has-caption ' : '' ) . sanitize_html_class( $class );
         $photo_credit = trim( get_post_meta( $attachment_id, 'usar_photo_credit', true ) );
         $photo_credit = ! empty( $photo_credit ) ? preg_replace( '/\s/', '&nbsp;', $photo_credit ) : '';
 
@@ -121,14 +143,14 @@ class RDB_Shortcodes {
 
                 $content .= '<img src="' . esc_url( $src ) . '" class="wp-post-image" alt="' . esc_html( $alt ) . '" />';
 
-                $content .= "<span class='{$class}__description'>";
+                $content .= '<span class="' . sanitize_html_class( $class ) . '__description">';
 
                 if ( ! empty( $caption ) ) {
-                    $content .= esc_html( $caption );
+                    $content .= '<span class="' . sanitize_html_class( $class ) . '__description__text">' . esc_html( $caption ) . '</span>';
                 }
 
                 if ( ! empty( $photo_credit ) ) {
-                    $content .= '<span class="' . esc_attr( $class ) . '__photographer ' . esc_attr( $class ) . '__photographer--inner"><i class="fas fa-camera-retro">&nbsp;' . esc_html( $photo_credit ) . '</i></span>';
+                    $content .= '<span class="' . sanitize_html_class( $class ) . '__photographer ' . sanitize_html_class( $class ) . '__photographer--inner"><i class="fas fa-camera-retro">&nbsp;' . esc_html( $photo_credit ) . '</i></span>';
                 }
 
                 $content .= '</span>';
@@ -136,7 +158,7 @@ class RDB_Shortcodes {
             $content .= '</div>';
 
             if ( ! empty( $photo_credit ) ) {
-                $content .= '<div class="' . esc_attr( $class ) . '__photographer ' . esc_attr( $class ) . '__photographer--outer"><i class="fas fa-camera-retro">&nbsp;' . esc_html( $photo_credit ) . '</i></div>';
+                $content .= '<div class="' . sanitize_html_class( $class ) . '__photographer ' . sanitize_html_class( $class ) . '__photographer--outer"><i class="fas fa-camera-retro">&nbsp;' . esc_html( $photo_credit ) . '</i></div>';
             }
 
         $content .= '</figure>';
@@ -282,7 +304,16 @@ class RDB_Shortcodes {
      *
      * @since 1.0.0
      *
-     * @param array|null $atts    Shortcode attributes.
+     * @param array|null $atts    {
+     *     Optional arguments.
+     *
+     *     @type string $class    Class name for icon.
+     *     @type int    $cms      CMS ID number.
+     *     @type string $name     Club name.
+     *     @type bool   $previous Is this a player's previous club?
+     *     @type string $url      Alias for `website` attribute.
+     *     @type string $website  Current club website.
+     * }
      * @param mixed|null $content Shortcode output.
      *
      * @return mixed Final HTML.
@@ -290,21 +321,41 @@ class RDB_Shortcodes {
     public function current_club( $atts = null, $content = null ) {
         $atts = shortcode_atts(
             array(
-                'cms'     => '',
-                'name'    => '',
-                'website' => '',
-                'class'   => 'icon',
+                'class'       => 'icon',
+                'cms'         => '',
+                'competition' => '',
+                'name'        => '',
+                'previous'    => true,
+                'url'         => '',
+                'website'     => '',
             ),
             $atts,
             'current_club'
         );
 
-        $class = sanitize_text_field( $atts['class'] );
-        $name  = sanitize_text_field( $atts['name'] );
-        $site  = sanitize_text_field( $atts['website'] );
-        $url   = sanitize_text_field( "https://usarugbystats.com/assets/img/clublogos/{$atts['cms']}.png" );
+        $class       = sanitize_text_field( $atts['class'] );
+        $name        = sanitize_text_field( $atts['name'] );
+        $site        = sanitize_text_field( $atts['website'] );
+        $site        = ! empty( $site ) ? $site : sanitize_text_field( $atts['url'] );
+        $competition = sanitize_text_field( $atts['competition'] );
 
-        $content  = '<a id="previous-club-post-' . get_the_ID() . '-to-' . sanitize_title( $name ) . '" class="previous-club-url" href="' . esc_url( $site ) . '" target="_blank" rel="external noopener noreferrer">';
+        if ( ! empty( $atts['cms'] ) ) {
+            $url = sanitize_text_field( "https://usarugbystats.com/assets/img/clublogos/{$atts['cms']}.png" );
+        } else {
+            $url = get_template_directory_uri();
+
+            foreach ( $this->mlr_logos as $domain => $file ) {
+                if ( preg_match( '/' . $domain . '/', $site ) && ! empty( $competition ) ) {
+                    $file_path = 'dist/img/competitions/' . $competition . '/' . $file . '.svg';
+
+                    if ( file_exists( get_template_directory() . '/' . $file_path ) ) {
+                        $url .= '/' . $file_path;
+                    }
+                }
+            }
+        }
+
+        $content  = '<a id="' . ( $atts['previous'] ? 'previous' : 'current' ) . '-club-post-' . get_the_ID() . '-to-' . sanitize_title( $name ) . '" class="' . ( $atts['previous'] ? 'previous' : 'current' ) . '-club-url" href="' . esc_url( $site ) . '" target="_blank" rel="external noopener noreferrer">';
         $content .= '<img class="' . esc_attr( $class ) . '" src="' . esc_url( $url ) . '" alt="' . esc_attr( $name ) . '" />';
         $content .= '&nbsp;<span>' . esc_html( $name ) . '</span>';
         $content .= '</a>';

@@ -834,13 +834,15 @@ function rdb_match_timeline( $wr_id ) {
 
     $timeline = rdb_has_timeline( $wr_id );
 
-    $data = json_decode( file_get_contents( $timeline ) );
+    if ( $timeline ) {
+        $data = json_decode( file_get_contents( $timeline ) );
 
-    if ( empty( $data->timeline ) ) {
-        return false;
+        if ( empty( $data->timeline ) ) {
+            return false;
+        }
+
+        return $data;
     }
-
-    return $data;
 }
 
 /**
