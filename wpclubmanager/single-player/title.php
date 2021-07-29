@@ -21,7 +21,7 @@ $last     = get_post_meta( $post->ID, '_wpcm_lastname', true );
 
 if ( 'mens-eagles' === $team ) :
 
-    if ( absint( $badge ) >= 62 ) :
+    if ( absint( $badge ) >= 62 || empty( $badge ) ) :
 
         $first = ! empty( $first ) ? $first : $nickname;
 

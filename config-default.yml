@@ -44,7 +44,7 @@ PATHS:
   # Paths to the main image directory.
   images:
     - "src/img/**"
-    - "!src/img/{competitions,players,programs,timeline,unions,venues}/**"
+    - "!src/img/{competitions,players,programs,timeline,venues}/**"
   # Paths to the main JavaScript directory.
   js:
     - "src/js/**/*"

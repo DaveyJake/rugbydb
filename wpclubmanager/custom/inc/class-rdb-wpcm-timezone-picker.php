@@ -189,10 +189,10 @@ class RDB_WPCM_Timezone_Picker {
     }
 }
 
-if ( ! function_exists( 'TimeZonePicker' ) ) {
-    function TimeZonePicker() {
+if ( ! function_exists( 'TimezonePicker' ) ) {
+    function TimezonePicker() {
         return RDB_WPCM_Timezone_Picker::instance();
     }
 }
 
-$GLOBALS['timezone_picker'] = TimeZonePicker();
+$GLOBALS['timezone_picker'] = TimezonePicker();

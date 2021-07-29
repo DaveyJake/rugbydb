@@ -165,7 +165,7 @@ class RDB_WPCM_Venues {
             <input class="place-id" name="term_meta[place_id]" id="term_meta[place_id]" type="text" value="<?php echo esc_attr( $place_id ); ?>" size="8" />
         </div>
         <div class="form-field">
-            <label for="<?php esc_attr_e( $field['id'], 'wp-club-manager' ); ?>"><?php esc_html_e( 'Timezone', 'rugby-database' ); ?></label>
+            <label for="<?php echo esc_attr( $field['id'] ); ?>"><?php esc_html_e( 'Timezone', 'rugby-database' ); ?></label>
             <?php echo ( $t_id > 0 ) ? $timezone_picker::dropdown( $field, $t_id ) : $timezone_picker::dropdown( $field ); ?>
         </div>
         <div class="form-field">
@@ -383,7 +383,7 @@ class RDB_WPCM_Venues {
             'post_type'      => 'wpcm_match',
             'post_status'    => array( 'publish', 'future' ),
             'posts_per_page' => -1,
-            'tax_query'  => array(
+            'tax_query'      => array(
                 array(
                     'taxonomy'         => 'wpcm_venue',
                     'field'            => 'term_id',

@@ -94,11 +94,11 @@ class RDB_WPCM_Shortcodes {
             // phpcs:disable
             $rdb_class    = ! empty( $class ) ? ' class="' . esc_attr( $class ) . '" ' : '';
             $rdb_map_args = array(
-                'q'         => urlencode( $q ),
-                'center'    => wp_sprintf( '%d,%d', $latitude, $longitude ),
-                'output'    => 'embed',
-                'zoom'      => $zoom,
-                'maptype'   => $maptype,
+                'q'       => urlencode( $q ),
+                'center'  => wp_sprintf( '%d,%d', $latitude, $longitude ),
+                'output'  => 'embed',
+                'zoom'    => $zoom,
+                'maptype' => $maptype,
             );
             $rdb_url = add_query_arg( $rdb_map_args, '//maps.google.com/maps' );
 

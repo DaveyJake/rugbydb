@@ -243,26 +243,23 @@ gulp.task( 'webpack:watch', webpack.watch );
 function images() {
     return gulp.src( PATHS.images )
         .pipe(
-            $.if(
-                PRODUCTION,
-                $.imagemin([
-                    $.imagemin.jpegtran({
-                        progressive: true
-                    }),
-                    $.imagemin.optipng({
-                        optimizationLevel: 5
-                    }),
-                    $.imagemin.gifsicle({
-                        interlaced: true
-                    }),
-                    $.imagemin.svgo({
-                        plugins: [
-                            { cleanupAttrs: true },
-                            { removeComments: true }
-                        ]
-                    })
-                ])
-            )
+            $.imagemin([
+                $.imagemin.jpegtran({
+                    progressive: true
+                }),
+                $.imagemin.optipng({
+                    optimizationLevel: 5
+                }),
+                $.imagemin.gifsicle({
+                    interlaced: true
+                }),
+                $.imagemin.svgo({
+                    plugins: [
+                        { cleanupAttrs: true },
+                        { removeComments: true }
+                    ]
+                })
+            ])
         )
         .pipe( gulp.dest( PATHS.dist + '/img' ) );
 }
