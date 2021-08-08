@@ -1,0 +1,214 @@
+{
+	"match": {
+		"matchId": 11941,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"id": 1002,
+			"name": "The Honourable Artillery Company Ground",
+			"city": "London",
+			"country": "England"
+		},
+		"time": {
+			"millis": 1289311200000,
+			"gmtOffset": 0,
+			"label": "Tue 9 Nov 2010, 14:00 GMT"
+		},
+		"friendly": true,
+		"attendance": 2000,
+		"teams": [
+			{
+				"id": 74,
+				"altId": null,
+				"name": "Saracens",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			20,
+			6
+		],
+		"kc": [6,6],
+		"status": "C",
+		"clock": null,
+		"outcome": "A",
+		"events": [
+			{
+				"id": 1123,
+				"altId": null,
+				"label": "2010 USA Tour of Europe",
+				"sport": "mru",
+				"start": {
+					"millis": 1288569600000,
+					"gmtOffset": 0,
+					"label": "2010-11-01"
+				},
+				"end": {
+					"millis": 1291161599000,
+					"gmtOffset": 0,
+					"label": "2010-11-30"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "2010 End of Year Tours",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 12484,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 36982,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 28746,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 29323,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 41859,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 35373,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 32930,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 41907,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 33171,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 32912,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 32424,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 30804,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 42071,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 16006,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 37073,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 33329,
+				"number": "16",
+				"position": "LP",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 27143,
+				"number": "17",
+				"position": "RL",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 35570,
+				"number": "18",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			}
+		],
+		"captainId": 0,
+		"scoring": {
+			"Pen": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 32912
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 32912
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

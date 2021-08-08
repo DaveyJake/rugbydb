@@ -1,0 +1,273 @@
+{
+	"match": {
+		"matchId": 11947,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"id": 146,
+			"name": "Netherdale Stadium",
+			"city": "Galashiels",
+			"country": "Scotland"
+		},
+		"time": {
+			"millis": 1290195000000,
+			"gmtOffset": 0,
+			"label": "Fri 19 Nov 2010, 19:30 GMT"
+		},
+		"attendance": 200,
+		"teams": [
+			{
+				"id": 1133,
+				"altId": null,
+				"name": "Scotland A",
+				"abbreviation": "SCA",
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			25,
+			0
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "A",
+		"events": [
+			{
+				"id": 1123,
+				"altId": null,
+				"label": "2010 USA Tour of Europe",
+				"sport": "mru",
+				"start": {
+					"millis": 1288569600000,
+					"gmtOffset": 0,
+					"label": "2010-11-01"
+				},
+				"end": {
+					"millis": 1291161599000,
+					"gmtOffset": 0,
+					"label": "2010-11-30"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "2010 End of Year Tours",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 33329,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 36982,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 28746,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 41859,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 35371,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 37071,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 32930,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 35373,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 33171,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 35570,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 32424,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 35391,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 16006,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 30804,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 37073,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 37954,
+				"number": "16",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 32421,
+				"number": "17",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 29323,
+				"number": "18",
+				"position": "LL",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 27143,
+				"number": "19",
+				"position": "BF",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 36987,
+				"number": "20",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 32912,
+				"number": "21",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 32913,
+				"number": "22",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 33171,
+		"scoring": {},
+		"disciplinary": {
+			"YC": [
+				{
+					"phase": "L",
+					"time": {
+						"secs": 0,
+						"label": "16'"
+					},
+					"type": "Yellow",
+					"typeLabel": "Yellow Card",
+					"playerId": 33329
+				},
+				{
+					"phase": "L",
+					"time": {
+						"secs": 0,
+						"label": "56'"
+					},
+					"type": "Yellow",
+					"typeLabel": "Yellow Card",
+					"playerId": 32930
+				},
+				{
+					"phase": "L",
+					"time": {
+						"secs": 0,
+						"label": "62'"
+					},
+					"type": "Yellow",
+					"typeLabel": "Yellow Card",
+					"playerId": 16006
+				}
+			]
+		}
+	},
+	"timeline": false,
+	"officials": [
+		{
+			"official": {
+				"id": 38721,
+				"name": {
+					"first": {
+						"official": "Mathieu"
+					},
+					"last": {
+						"official": "Raynal"
+					},
+					"display": "Mathieu Raynal"
+				},
+				"pob": "France",
+				"country": "France"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

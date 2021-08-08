@@ -1,0 +1,80 @@
+{
+	"match": {
+		"matchId": 13776,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": null,
+		"time": {
+			"millis": -1554249600000,
+			"gmtOffset": 1,
+			"label": "Fri 1 Oct 1920, 15:00 GMT+01"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 3486,
+				"altId": null,
+				"name": "South West of France",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			0,
+			26
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 1200,
+				"altId": null,
+				"label": "1920 USA Tour of France",
+				"sport": "mru",
+				"start": {
+					"millis": -1556841600000,
+					"gmtOffset": 1,
+					"label": "1920-09-01"
+				},
+				"end": {
+					"millis": -1551571201000,
+					"gmtOffset": 1,
+					"label": "1920-10-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1920 USA Tour of France",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": null,
+	"timeline": "",
+	"officials": [],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

@@ -1,0 +1,391 @@
+{
+	"match": {
+		"matchId": 22406,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"id": 1240,
+			"name": "PPL Park",
+			"city": "Philadelphia",
+			"country": "United States"
+		},
+		"time": {
+			"millis": 1440961200000,
+			"gmtOffset": -4,
+			"label": "Sun 30 Aug 2015, 15:00 GMT-04:00"
+		},
+		"video": "https://youtu.be/yIEqwYFIYeY",
+		"attendance": 9328,
+		"teams": [
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			},
+			{
+				"id": 81,
+				"altId": null,
+				"name": "Harlequins",
+				"abbreviation": null,
+				"annotations": null
+			}
+		],
+		"scores": [
+			19,
+			24
+		],
+		"kc": [11,14],
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 1542,
+				"altId": null,
+				"label": "2015 Men's Internationals",
+				"sport": "mru",
+				"start": {
+					"millis": 1420070400000,
+					"gmtOffset": -5,
+					"label": "2015-01-01"
+				},
+				"end": {
+					"millis": 1451606399000,
+					"gmtOffset": -5,
+					"label": "2015-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "2015 Men's Internationals",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 28746,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 37954,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 49434,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 35569,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 39462,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 55459,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 47101,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 41859,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 33171,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 55462,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 35583,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 33170,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 48916,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 33169,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 44123,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 35571,
+				"number": "16",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 49572,
+				"number": "17",
+				"position": "TP",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 55460,
+				"number": "18",
+				"position": "LP",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 33329,
+				"number": "19",
+				"position": "TP",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 56281,
+				"number": "20",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 27143,
+				"number": "21",
+				"position": "LL",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 54388,
+				"number": "22",
+				"position": "BF",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 29397,
+				"number": "23",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 55461,
+				"number": "24",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 44196,
+				"number": "25",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 32424,
+				"number": "26",
+				"position": "RW",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 41862,
+				"number": "28",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			}
+		],
+		"captainId": 0,
+		"scoring": {
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 55462
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 55462
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 44196
+				}
+			],
+			"Try": [
+				{
+					"type": "T5",
+					"typeLabel": "Try",
+					"points": 5,
+					"playerId": 33170
+				},
+				{
+					"type": "T5",
+					"typeLabel": "Try",
+					"points": 5,
+					"playerId": 32424
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [
+		{
+			"official": {
+				"id": 49411,
+				"altId": null,
+				"name": {
+					"initials": "K",
+					"first": {
+						"known": null,
+						"official": "Kurt"
+					},
+					"last": {
+						"known": null,
+						"official": "Weaver"
+					},
+					"display": "Kurt Weaver"
+				},
+				"nickname": null,
+				"maiden": null,
+				"pob": null,
+				"dob": null,
+				"dod": null,
+				"age": null,
+				"country": "United States",
+				"height": 0,
+				"weight": 0,
+				"gender": "M",
+				"hallOfFameInducted": null,
+				"firstMatch": null,
+				"lastMatch": null,
+				"hasBeenImpactPlayer": false,
+				"hasBeenPlayerOfFinal": false
+			},
+			"position": "Referee"
+		},
+		{
+			"official": {
+				"id": 49423,
+				"altId": null,
+				"name": {
+					"initials": "D",
+					"first": {
+						"known": null,
+						"official": "Derek"
+					},
+					"last": {
+						"known": null,
+						"official": "Summers"
+					},
+					"display": "Derek Summers"
+				},
+				"nickname": null,
+				"maiden": null,
+				"pob": null,
+				"dob": null,
+				"dod": null,
+				"age": null,
+				"country": null,
+				"height": 0,
+				"weight": 0,
+				"gender": "M",
+				"hallOfFameInducted": null,
+				"firstMatch": null,
+				"lastMatch": null,
+				"hasBeenImpactPlayer": false,
+				"hasBeenPlayerOfFinal": false
+			},
+			"position": "Assistant Referee 1"
+		},
+		{
+			"official": {
+				"id": 47705,
+				"altId": null,
+				"name": {
+					"initials": "E",
+					"first": {
+						"known": null,
+						"official": "Ed"
+					},
+					"last": {
+						"known": null,
+						"official": "Gardner"
+					},
+					"display": "Ed Gardner"
+				},
+				"nickname": null,
+				"maiden": null,
+				"pob": null,
+				"dob": null,
+				"dod": null,
+				"age": null,
+				"country": null,
+				"height": 0,
+				"weight": 0,
+				"gender": null,
+				"hallOfFameInducted": null,
+				"firstMatch": null,
+				"lastMatch": null,
+				"hasBeenImpactPlayer": false,
+				"hasBeenPlayerOfFinal": false
+			},
+			"position": "Assistant Referee 2"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}
