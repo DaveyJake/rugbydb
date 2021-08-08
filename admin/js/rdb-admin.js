@@ -1,125 +1,87 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ "./src/js/rdb-admin.js":
-/*!*****************************!*\
-  !*** ./src/js/rdb-admin.js ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 /**
  * Main customizer file.
  *
  * @author Davey Jacobson <daveyjake21@gmail.com>
  */
-(function ($) {
-  if ($('#the-list')) {
-    console.log('We good!');
-  }
-})(jQuery);
 
-/***/ }),
+/**
+ * Clicking on an IP will open a new to a Geo IP Lookup website.
+ *
+ * @since 1.0.1
+ *
+ * @see wpmuDefenderGeoIPLookup
+ *
+ * @return {string} Re-linked URL to GEO IP website.
+ */
+function geoIPLookup() {
+    $doc.ajaxComplete( function() {
+        const geoip  = 'http://geoiplookup.net/ip/',
+              whatis = 'https://whatismyipaddress.com/ip/';
 
-/***/ 1:
-/*!***********************************!*\
-  !*** multi ./src/js/rdb-admin.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+        $( '#iplockout-table .sui-accordion-item > td' ).on( 'click', function() {
+            const target = $( this ).parent().next().find( '.sui-box-body > .sui-row:nth-child(2) > .sui-col > p:last-child > a' ),
+                  ipAddr = target.text();
 
-module.exports = __webpack_require__(/*! /Users/us00278/Sites/stats/html/wp-content/themes/rugbydb/src/js/rdb-admin.js */"./src/js/rdb-admin.js");
+            console.log( ipAddr );
 
+            return target.attr({
+                href: whatis + ipAddr,
+                target: '_blank'
+            });
+        });
+    });
+}
 
-/***/ })
+/**
+ * Slight modification for WPMUDev Defender plugin.
+ *
+ * @since 1.0.1
+ *
+ * @see geoIPLookup
+ *
+ * @fires geoIPLookup
+ *
+ * @param {string} pagenow WordPress global variable defined in the DOM.
+ */
+function wpmuDefenderGeoIPLookup( pagenow ) {
+    if ( 'defender-pro_page_wdf-ip-lockout' === pagenow ) {
+        let order   = false,
+            orderby = false;
 
-/******/ });
-//# sourceMappingURL=rdb-admin.js.map
+        geoIPLookup();
+
+        $body.on( 'click', '.lockout-nav', function( e ) {
+
+            e.preventDefault();
+
+            let query = WDIP.buildFilterQuery();
+
+            if ( order !== false && orderby !== false ) {
+                query += '&order=' + order + '&orderby=' + orderby;
+            }
+
+            query += '&paged=' + $( this ).data( 'paged' );
+
+            WDIP.ajaxPull( query, geoIPLookup );
+
+        });
+    }
+}
+
+/**
+ * Initialize Admin Dashboard Modifications
+ *
+ * @since 1.0.1
+ *
+ * @param {jQuery} $ Main jQuery instance.
+ */
+( function( $ ) {
+    const $doc  = $( document ),
+          $body = $( document.body );
+
+    // Included globals.
+    const pageNow = window.pagenow;
+
+    // Defender
+    wpmuDefenderGeoIPLookup( pageNow );
+})( jQuery );
