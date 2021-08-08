@@ -6,6 +6,11 @@ packaged
 vendor
 vibrant
 WR
+!WR/match/mens-eagles/*
+!WR/match/mens-sevens/*
+!WR/match/womens-eagles/*
+!WR/match/womens-sevens/*
+!WR/match/wr-utilities.php
 .DS_Store
 *.bak
 *.sublime-*
