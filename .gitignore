@@ -1,3 +1,9 @@
+WR
+!*/WR/match/mens-eagles/*
+!*/WR/match/mens-sevens/*
+!*/WR/match/womens-eagles/*
+!*/WR/match/womens-sevens/*
+!*/WR/match/wr-utilities.php
 composer.json
 dist/img/page-items/*
 gulpfile.babel.js
@@ -17,9 +23,3 @@ vendor
 *.sublime-*
 *.yml
 *.zip
-WR
-!WR/match/mens-eagles/*
-!WR/match/mens-sevens/*
-!WR/match/womens-eagles/*
-!WR/match/womens-sevens/*
-!WR/match/wr-utilities.php
