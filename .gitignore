@@ -3,8 +3,8 @@ dist/img/page-items/*
 gulpfile.babel.js
 node_modules
 package.json
-src/*
-vendor/*
+src
+vendor
 .DS_Store
 .babelrc
 .editorconfig
