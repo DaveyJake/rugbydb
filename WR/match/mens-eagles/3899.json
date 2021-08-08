@@ -1,0 +1,814 @@
+{
+	"match": {
+		"matchId": 3899,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"id": 439,
+			"name": "Rockne Stadium",
+			"city": "Chicago, IL",
+			"country": "United States"
+		},
+		"time": {
+			"millis": 203385600000,
+			"gmtOffset": -5,
+			"label": "Sat 12 Jun 1976, 14:00 GMT-05"
+		},
+		"attendance": 8000,
+		"teams": [
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			},
+			{
+				"id": 42,
+				"altId": null,
+				"name": "France",
+				"abbreviation": "FRA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			14,
+			33
+		],
+		"kc": [10,15],
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 392,
+				"altId": null,
+				"label": "1976 France Tour of USA",
+				"sport": "mru",
+				"start": {
+					"millis": 189302400000,
+					"gmtOffset": -6,
+					"label": "1976-01-01"
+				},
+				"end": {
+					"millis": 220924799000,
+					"gmtOffset": -6,
+					"label": "1976-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1976 France Tour of USA",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": {
+					"id": 12714,
+					"altId": null,
+					"name": {
+						"initials": "D",
+						"first": {
+							"known": null,
+							"official": "Dennis"
+						},
+						"last": {
+							"known": null,
+							"official": "Murphy"
+						},
+						"display": "Dennis Murphy"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": {
+					"id": 12713,
+					"altId": null,
+					"name": {
+						"initials": "M",
+						"first": {
+							"known": null,
+							"official": "Morris"
+						},
+						"last": {
+							"known": null,
+							"official": "O'Donnell"
+						},
+						"display": "Morris O'Donnell"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": {
+					"id": 11011,
+					"altId": null,
+					"name": {
+						"initials": "M",
+						"first": {
+							"known": "Mick",
+							"official": "Mickey"
+						},
+						"last": {
+							"known": null,
+							"official": "Ording"
+						},
+						"display": "Mick Ording"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 183,
+					"weight": 105,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 191894400000,
+						"gmtOffset": 0,
+						"label": "31 January 1976"
+					},
+					"lastMatch": {
+						"millis": 297734400000,
+						"gmtOffset": 0,
+						"label": "09 June 1979"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": {
+					"id": 11010,
+					"altId": null,
+					"name": {
+						"initials": "G",
+						"first": {
+							"known": null,
+							"official": "Gary"
+						},
+						"last": {
+							"known": null,
+							"official": "Brackett"
+						},
+						"display": "Gary Brackett"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 193,
+					"weight": 111,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 191894400000,
+						"gmtOffset": 0,
+						"label": "31 January 1976"
+					},
+					"lastMatch": {
+						"millis": 245775600000,
+						"gmtOffset": 0,
+						"label": "15 October 1977"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": {
+					"id": 11009,
+					"altId": null,
+					"name": {
+						"initials": "C",
+						"first": {
+							"known": null,
+							"official": "Craig"
+						},
+						"last": {
+							"known": null,
+							"official": "Sweeney"
+						},
+						"display": "Craig Sweeney"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 196,
+					"weight": 109,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 191894400000,
+						"gmtOffset": 0,
+						"label": "31 January 1976"
+					},
+					"lastMatch": {
+						"millis": 245775600000,
+						"gmtOffset": 0,
+						"label": "15 October 1977"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": {
+					"id": 12712,
+					"altId": null,
+					"name": {
+						"initials": "B",
+						"first": {
+							"known": null,
+							"official": "Barry"
+						},
+						"last": {
+							"known": null,
+							"official": "Waite"
+						},
+						"display": "Barry Waite"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": {
+					"id": 11006,
+					"altId": null,
+					"name": {
+						"initials": "T",
+						"first": {
+							"known": null,
+							"official": "Tom"
+						},
+						"last": {
+							"known": null,
+							"official": "Selfridge"
+						},
+						"display": "Tom Selfridge"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 191894400000,
+						"gmtOffset": 0,
+						"label": "31 January 1976"
+					},
+					"lastMatch": {
+						"millis": 329270400000,
+						"gmtOffset": 0,
+						"label": "08 June 1980"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": {
+					"id": 12711,
+					"altId": null,
+					"name": {
+						"initials": "W",
+						"first": {
+							"known": null,
+							"official": "Bill"
+						},
+						"last": {
+							"known": null,
+							"official": "Fraumann"
+						},
+						"display": "Bill Fraumann"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 245775600000,
+						"gmtOffset": 0,
+						"label": "15 October 1977"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": {
+					"id": 12710,
+					"altId": null,
+					"name": {
+						"initials": "T",
+						"first": {
+							"known": null,
+							"official": "Terry"
+						},
+						"last": {
+							"known": null,
+							"official": "Scott"
+						},
+						"display": "Terry Scott"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 183,
+					"weight": 73,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 245775600000,
+						"gmtOffset": 0,
+						"label": "15 October 1977"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": {
+					"id": 11428,
+					"altId": null,
+					"name": {
+						"initials": "S",
+						"first": {
+							"known": null,
+							"official": "Steve"
+						},
+						"last": {
+							"known": null,
+							"official": "Gray"
+						},
+						"display": "Steve Gray"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 173,
+					"weight": 70,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 370224000000,
+						"gmtOffset": 0,
+						"label": "25 September 1981"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": {
+					"id": 12709,
+					"altId": null,
+					"name": {
+						"initials": "W",
+						"first": {
+							"known": null,
+							"official": "Woody"
+						},
+						"last": {
+							"known": null,
+							"official": "Stone"
+						},
+						"display": "Woody Stone"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": {
+					"id": 12708,
+					"altId": null,
+					"name": {
+						"initials": "D",
+						"first": {
+							"known": null,
+							"official": "Danny"
+						},
+						"last": {
+							"known": null,
+							"official": "Wack"
+						},
+						"display": "Danny Wack"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 329270400000,
+						"gmtOffset": 0,
+						"label": "08 June 1980"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "12",
+				"position": "CE",
+				"positionLabel": "Centre"
+			},
+			{
+				"player": {
+					"id": 11001,
+					"altId": null,
+					"name": {
+						"initials": "D",
+						"first": {
+							"known": null,
+							"official": "Dave"
+						},
+						"last": {
+							"known": null,
+							"official": "Stephenson"
+						},
+						"display": "Dave Stephenson"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 191894400000,
+						"gmtOffset": 0,
+						"label": "31 January 1976"
+					},
+					"lastMatch": {
+						"millis": 233020800000,
+						"gmtOffset": 0,
+						"label": "21 May 1977"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "13",
+				"position": "CE",
+				"positionLabel": "Centre"
+			},
+			{
+				"player": {
+					"id": 12707,
+					"altId": null,
+					"name": {
+						"initials": "D",
+						"first": {
+							"known": null,
+							"official": "Don"
+						},
+						"last": {
+							"known": null,
+							"official": "Guest"
+						},
+						"display": "Don Guest"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 233020800000,
+						"gmtOffset": 0,
+						"label": "21 May 1977"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": {
+					"id": 11004,
+					"altId": null,
+					"name": {
+						"initials": "R",
+						"first": {
+							"known": null,
+							"official": "Rob"
+						},
+						"last": {
+							"known": null,
+							"official": "Bordley"
+						},
+						"display": "Rob Bordley"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 170,
+					"weight": 67,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 191894400000,
+						"gmtOffset": 0,
+						"label": "31 January 1976"
+					},
+					"lastMatch": {
+						"millis": 265161600000,
+						"gmtOffset": 0,
+						"label": "28 May 1978"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 11004,
+		"scoring": {
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 12710
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 12710
+				}
+			],
+			"Try": [
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 12711
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 12711
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": "",
+	"officials": [
+		{
+			"official": {
+				"id": 12715,
+				"altId": null,
+				"name": {
+					"initials": "GJ",
+					"first": {
+						"known": "Jan",
+						"official": "Graham Jan"
+					},
+					"last": {
+						"known": null,
+						"official": "Curnow"
+					},
+					"display": "Jan Curnow"
+				},
+				"nickname": null,
+				"maiden": null,
+				"pob": null,
+				"dob": null,
+				"dod": null,
+				"age": null,
+				"country": "Canada",
+				"height": 0,
+				"weight": 0,
+				"gender": null,
+				"hallOfFameInducted": null,
+				"firstMatch": null,
+				"lastMatch": null,
+				"hasBeenImpactPlayer": false,
+				"hasBeenPlayerOfFinal": false
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

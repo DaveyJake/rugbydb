@@ -1,0 +1,779 @@
+{
+	"match": {
+		"matchId": 3905,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"id": 339,
+			"name": "North Country Community College",
+			"city": "Saranac Lake, New York",
+			"country": "United States"
+		},
+		"time": {
+			"millis": 329270400000,
+			"gmtOffset": -4,
+			"label": "Sun 8 Jun 1980, 15:00 GMT-04"
+		},
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			},
+			{
+				"id": 50,
+				"altId": null,
+				"name": "Canada",
+				"abbreviation": "CAN",
+				"annotations": null
+			}
+		],
+		"scores": [
+			0,
+			16
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [],
+		"sport": "Mens Rugby Union",
+		"competition": "Men's Internationals",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": {
+					"id": 11433,
+					"altId": null,
+					"name": {
+						"initials": "G",
+						"first": {
+							"known": null,
+							"official": "Gary"
+						},
+						"last": {
+							"known": null,
+							"official": "Wilson"
+						},
+						"display": "Gary Wilson"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 265161600000,
+						"gmtOffset": 0,
+						"label": "28 May 1978"
+					},
+					"lastMatch": {
+						"millis": 370224000000,
+						"gmtOffset": 0,
+						"label": "25 September 1981"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": {
+					"id": 10952,
+					"altId": null,
+					"name": {
+						"initials": "J",
+						"first": {
+							"known": null,
+							"official": "Jay"
+						},
+						"last": {
+							"known": null,
+							"official": "Hanson"
+						},
+						"display": "Jay Hanson"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 178,
+					"weight": 88,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 233020800000,
+						"gmtOffset": 0,
+						"label": "21 May 1977"
+					},
+					"lastMatch": {
+						"millis": 426610800000,
+						"gmtOffset": 0,
+						"label": "09 July 1983"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": {
+					"id": 13090,
+					"altId": null,
+					"name": {
+						"initials": "D",
+						"first": {
+							"known": null,
+							"official": "Dave"
+						},
+						"last": {
+							"known": null,
+							"official": "Briley"
+						},
+						"display": "Dave Briley"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 188,
+					"weight": 98,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 297734400000,
+						"gmtOffset": 0,
+						"label": "09 June 1979"
+					},
+					"lastMatch": {
+						"millis": 339811200000,
+						"gmtOffset": 0,
+						"label": "08 October 1980"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": {
+					"id": 13074,
+					"altId": null,
+					"name": {
+						"initials": "B",
+						"first": {
+							"known": null,
+							"official": "Brian"
+						},
+						"last": {
+							"known": null,
+							"official": "Swords"
+						},
+						"display": "Brian Swords"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 326764800000,
+						"gmtOffset": 0,
+						"label": "10 May 1980"
+					},
+					"lastMatch": {
+						"millis": 339811200000,
+						"gmtOffset": 0,
+						"label": "08 October 1980"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": {
+					"id": 13085,
+					"altId": null,
+					"name": {
+						"initials": "JE",
+						"first": {
+							"known": null,
+							"official": "Jack"
+						},
+						"last": {
+							"known": null,
+							"official": "Clark"
+						},
+						"display": "Jack Clark"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": "Hunington Beach, United States",
+					"dob": {
+						"millis": -445305600000,
+						"gmtOffset": 0,
+						"label": "22 November 1955"
+					},
+					"dod": null,
+					"age": {
+						"years": 64,
+						"months": 2,
+						"days": 5
+					},
+					"country": null,
+					"height": 196,
+					"weight": 109,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 297734400000,
+						"gmtOffset": 0,
+						"label": "09 June 1979"
+					},
+					"lastMatch": {
+						"millis": 329270400000,
+						"gmtOffset": 0,
+						"label": "08 June 1980"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": {
+					"id": 11008,
+					"altId": null,
+					"name": {
+						"initials": "S",
+						"first": {
+							"known": null,
+							"official": "Skip"
+						},
+						"last": {
+							"known": null,
+							"official": "Niebauer"
+						},
+						"display": "Skip Niebauer"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 185,
+					"weight": 86,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 191894400000,
+						"gmtOffset": 0,
+						"label": "31 January 1976"
+					},
+					"lastMatch": {
+						"millis": 393292800000,
+						"gmtOffset": 0,
+						"label": "19 June 1982"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": {
+					"id": 11434,
+					"altId": null,
+					"name": {
+						"initials": "J",
+						"first": {
+							"known": null,
+							"official": "John"
+						},
+						"last": {
+							"known": null,
+							"official": "Fowler"
+						},
+						"display": "John Fowler"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 326764800000,
+						"gmtOffset": 0,
+						"label": "10 May 1980"
+					},
+					"lastMatch": {
+						"millis": 393292800000,
+						"gmtOffset": 0,
+						"label": "19 June 1982"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": {
+					"id": 11006,
+					"altId": null,
+					"name": {
+						"initials": "T",
+						"first": {
+							"known": null,
+							"official": "Tom"
+						},
+						"last": {
+							"known": null,
+							"official": "Selfridge"
+						},
+						"display": "Tom Selfridge"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 191894400000,
+						"gmtOffset": 0,
+						"label": "31 January 1976"
+					},
+					"lastMatch": {
+						"millis": 329270400000,
+						"gmtOffset": 0,
+						"label": "08 June 1980"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": {
+					"id": 11431,
+					"altId": null,
+					"name": {
+						"initials": "R",
+						"first": {
+							"known": "Dick",
+							"official": "Richard"
+						},
+						"last": {
+							"known": null,
+							"official": "Cooke"
+						},
+						"display": "Dick Cooke"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 175,
+					"weight": 77,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 297734400000,
+						"gmtOffset": 0,
+						"label": "09 June 1979"
+					},
+					"lastMatch": {
+						"millis": 426610800000,
+						"gmtOffset": 0,
+						"label": "09 July 1983"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": {
+					"id": 11430,
+					"altId": null,
+					"name": {
+						"initials": "T",
+						"first": {
+							"known": "Tom",
+							"official": "Tommy"
+						},
+						"last": {
+							"known": null,
+							"official": "Smith"
+						},
+						"display": "Tom Smith"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 178,
+					"weight": 84,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 297734400000,
+						"gmtOffset": 0,
+						"label": "09 June 1979"
+					},
+					"lastMatch": {
+						"millis": 393292800000,
+						"gmtOffset": 0,
+						"label": "19 June 1982"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": {
+					"id": 11429,
+					"altId": null,
+					"name": {
+						"initials": "L",
+						"first": {
+							"known": null,
+							"official": "Lin"
+						},
+						"last": {
+							"known": null,
+							"official": "Walton"
+						},
+						"display": "Lin Walton"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 329270400000,
+						"gmtOffset": 0,
+						"label": "08 June 1980"
+					},
+					"lastMatch": {
+						"millis": 370224000000,
+						"gmtOffset": 0,
+						"label": "25 September 1981"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": {
+					"id": 12708,
+					"altId": null,
+					"name": {
+						"initials": "D",
+						"first": {
+							"known": null,
+							"official": "Danny"
+						},
+						"last": {
+							"known": null,
+							"official": "Wack"
+						},
+						"display": "Danny Wack"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 203385600000,
+						"gmtOffset": 0,
+						"label": "12 June 1976"
+					},
+					"lastMatch": {
+						"millis": 329270400000,
+						"gmtOffset": 0,
+						"label": "08 June 1980"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "12",
+				"position": "CE",
+				"positionLabel": "Centre"
+			},
+			{
+				"player": {
+					"id": 12505,
+					"altId": null,
+					"name": {
+						"initials": "M",
+						"first": {
+							"known": null,
+							"official": "Mike"
+						},
+						"last": {
+							"known": null,
+							"official": "Halliday"
+						},
+						"display": "Mike Halliday"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 245775600000,
+						"gmtOffset": 0,
+						"label": "15 October 1977"
+					},
+					"lastMatch": {
+						"millis": 393292800000,
+						"gmtOffset": 0,
+						"label": "19 June 1982"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "13",
+				"position": "CE",
+				"positionLabel": "Centre"
+			},
+			{
+				"player": {
+					"id": 12504,
+					"altId": null,
+					"name": {
+						"initials": "C",
+						"first": {
+							"known": null,
+							"official": "Chimere"
+						},
+						"last": {
+							"known": null,
+							"official": "Okezie"
+						},
+						"display": "Chimere Okezie"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 178,
+					"weight": 81,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 297734400000,
+						"gmtOffset": 0,
+						"label": "09 June 1979"
+					},
+					"lastMatch": {
+						"millis": 393292800000,
+						"gmtOffset": 0,
+						"label": "19 June 1982"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": {
+					"id": 13147,
+					"altId": null,
+					"name": {
+						"initials": "D",
+						"first": {
+							"known": null,
+							"official": "Doug"
+						},
+						"last": {
+							"known": null,
+							"official": "Parks"
+						},
+						"display": "Doug Parks"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": 329270400000,
+						"gmtOffset": 0,
+						"label": "08 June 1980"
+					},
+					"lastMatch": {
+						"millis": 329270400000,
+						"gmtOffset": 0,
+						"label": "08 June 1980"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 10952,
+		"scoring": {},
+		"disciplinary": {}
+	},
+	"timeline": [],
+	"officials": [
+		{
+			"official": {
+				"id": 12284,
+				"altId": null,
+				"name": {
+					"initials": "C",
+					"first": {
+						"known": null,
+						"official": "Corris"
+					},
+					"last": {
+						"known": null,
+						"official": "Thomas"
+					},
+					"display": "Corris Thomas"
+				},
+				"nickname": null,
+				"maiden": null,
+				"pob": "Cardiff, Wales",
+				"dob": {
+					"millis": -909878400000,
+					"gmtOffset": 0,
+					"label": "03 March 1941"
+				},
+				"dod": null,
+				"age": {
+					"years": 78,
+					"months": 10,
+					"days": 24
+				},
+				"country": null,
+				"height": 0,
+				"weight": 0,
+				"gender": null,
+				"hallOfFameInducted": null,
+				"firstMatch": null,
+				"lastMatch": null,
+				"hasBeenImpactPlayer": false,
+				"hasBeenPlayerOfFinal": false
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}
