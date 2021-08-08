@@ -1,3 +1,4 @@
+/* global WDIP */
 /**
  * Main customizer file.
  *
@@ -10,20 +11,19 @@
  * @since 1.0.1
  *
  * @see wpmuDefenderGeoIPLookup
- *
- * @return {string} Re-linked URL to GEO IP website.
  */
 function geoIPLookup() {
-    $doc.ajaxComplete( function() {
-        const geoip  = 'http://geoiplookup.net/ip/',
-              whatis = 'https://whatismyipaddress.com/ip/';
+    $( document ).ajaxComplete( function() {
+        // const geoip = 'http://geoiplookup.net/ip/';
+        const whatis = 'https://whatismyipaddress.com/ip/';
 
-        $( '#iplockout-table .sui-accordion-item > td' ).on( 'click', function() {
+        $( '#iplockout-table .sui-accordion-item' ).on( 'click', 'td', function() {
             const target = $( this ).parent().next().find( '.sui-box-body > .sui-row:nth-child(2) > .sui-col > p:last-child > a' ),
                   ipAddr = target.text();
 
             console.log( ipAddr );
 
+            // @return {string} Re-linked URL to GEO IP website.
             return target.attr({
                 href: whatis + ipAddr,
                 target: '_blank'
@@ -45,13 +45,12 @@ function geoIPLookup() {
  */
 function wpmuDefenderGeoIPLookup( pagenow ) {
     if ( 'defender-pro_page_wdf-ip-lockout' === pagenow ) {
-        let order   = false,
-            orderby = false;
+        const order   = false,
+              orderby = false;
 
         geoIPLookup();
 
-        $body.on( 'click', '.lockout-nav', function( e ) {
-
+        $( document.body ).on( 'click', '.lockout-nav', function( e ) {
             e.preventDefault();
 
             let query = WDIP.buildFilterQuery();
@@ -63,7 +62,6 @@ function wpmuDefenderGeoIPLookup( pagenow ) {
             query += '&paged=' + $( this ).data( 'paged' );
 
             WDIP.ajaxPull( query, geoIPLookup );
-
         });
     }
 }
@@ -75,10 +73,7 @@ function wpmuDefenderGeoIPLookup( pagenow ) {
  *
  * @param {jQuery} $ Main jQuery instance.
  */
-( function( $ ) {
-    const $doc  = $( document ),
-          $body = $( document.body );
-
+( function( $ ) { // eslint-line-disable
     // Included globals.
     const pageNow = window.pagenow;
 
