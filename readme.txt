@@ -10,8 +10,6 @@ Stable tag: 1.0.5
 License: GNU General Public License v2 or later
 License URI: LICENSE
 
-A starter theme called RDB.
-
 == Description ==
 
 The official theme for RugbyDB.com.
@@ -30,15 +28,8 @@ RDB is dependent on WPClubManager and is (in essence) a custom theme made for WP
 
 == Changelog ==
 
-= 1.0.0 - July 16 2020 =
-* Initial release
-
-= 1.0.1 - July 21 2020 =
-* Perfect setup with 0 linter & compiler errors.
-* Optimized all `content-{$post_type}.php` file output; new `theme-functions.php` file.
-
-= 1.0.5 - July 4 2021 =
-* Updated git repo to remove files that can compiled from the CLI.
+= 1.0.0 - Aug 8 2021 =
+* Initial commit
 
 == Credits ==
 
