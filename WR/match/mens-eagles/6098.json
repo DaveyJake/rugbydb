@@ -1,0 +1,272 @@
+{
+	"match": {
+		"matchId": 6098,
+		"altId": null,
+		"description": "Match 4",
+		"eventPhase": "Match 4",
+		"venue": {
+			"id": 211,
+			"name": "The Gnoll",
+			"city": "Neath",
+			"country": "Wales"
+		},
+		"time": {
+			"millis": 562636800000,
+			"gmtOffset": 0,
+			"label": "Sat 31 Oct 1987, 14:30 GMT"
+		},
+		"report": "http://www.rugbyrelics.com/neath/rfc/tourists.htm#1987",
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 79,
+				"altId": null,
+				"name": "Neath",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			6,
+			15
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 100,
+				"altId": null,
+				"label": "1987 USA Tour of Wales",
+				"sport": "mru",
+				"start": {
+					"millis": 536457600000,
+					"gmtOffset": 0,
+					"label": "1987-01-01"
+				},
+				"end": {
+					"millis": 567993599000,
+					"gmtOffset": 0,
+					"label": "1987-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1987 USA Tour of Wales",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 12503,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7372,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 7503,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7566,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 7646,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": "51-DS",
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7265,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7625,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 7536,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 8375,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 7351,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7294,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7637,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7353,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7469,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 11430,
+				"number": "16",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": "51-GT",
+				"number": "17",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 7542,
+				"number": "18",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 7360,
+				"number": "19",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 13095,
+				"number": "20",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 13132,
+				"number": "21",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			}
+		],
+		"captainId": 7503,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 7637
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 7637
+				}
+			],
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 7637
+				}
+			],
+			"Try": [
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 7637
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 7351
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [
+		{
+			"official": {
+				"id": 11948,
+				"name": {
+					"first": {
+						"official": "Patrick"
+					},
+					"last": {
+						"official": "Robin"
+					},
+					"display": "Patrick Robin"
+				},
+				"country": "France"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

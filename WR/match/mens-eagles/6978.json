@@ -1,0 +1,209 @@
+{
+	"match": {
+		"matchId": 6978,
+		"altId": null,
+		"description": "Match 3",
+		"eventPhase": "Match 3",
+		"venue": {
+			"name": "Olympic Park Stadium",
+			"city": "Melbourne, VIC",
+			"country": "Australia"
+		},
+		"time": {
+			"millis": 425347200000,
+			"gmtOffset": 10,
+			"label": "Sat 25 Jun 1983, 15:00 GMT+10"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 399,
+				"altId": null,
+				"name": "Victoria",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			8,
+			13
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 604,
+				"altId": null,
+				"label": "1983 USA Tour of Australia",
+				"sport": "mru",
+				"start": {
+					"millis": 410227200000,
+					"gmtOffset": 0,
+					"label": "1983-01-01"
+				},
+				"end": {
+					"millis": 441763199000,
+					"gmtOffset": 0,
+					"label": "1983-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1983 USA Tour of Australia",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 8389,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 8391,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 8388,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 13089,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 13095,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 8384,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 8385,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 8387,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 10950,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 10949,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 8376,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7542,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 10948,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 8284,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": "51-BA",
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 8387,
+		"scoring": {
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 8284
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 8284
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 10949
+				}
+			],
+			"Try": [
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 13089
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

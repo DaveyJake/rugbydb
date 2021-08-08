@@ -1,0 +1,240 @@
+{
+	"match": {
+		"matchId": 6667,
+		"altId": null,
+		"description": "Match 1",
+		"eventPhase": "Match 1",
+		"venue": {
+			"id": 30,
+			"name": "Kingsholm",
+			"city": "Gloucester",
+			"country": "England"
+		},
+		"time": {
+			"millis": 244252800000,
+			"gmtOffset": 1,
+			"label": "Wed 28 Sep 1977, 19:00 GMT+01"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 529,
+				"altId": null,
+				"name": "Civil Service",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			6,
+			15
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 74,
+				"altId": null,
+				"label": "1977 USA Tour of England",
+				"sport": "mru",
+				"start": {
+					"millis": 220924800000,
+					"gmtOffset": 0,
+					"label": "1977-01-01"
+				},
+				"end": {
+					"millis": 252460799000,
+					"gmtOffset": 0,
+					"label": "1977-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1977 USA Tour of England",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 13146,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 13130,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 13769,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 13119,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 11009,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 13129,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": "51-BH",
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 12711,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 13121,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 11428,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 13127,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 11002,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 12505,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 13092,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7407,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 12710,
+				"number": "16",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 11004,
+				"number": "17",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 11011,
+				"number": "18",
+				"position": "TP",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 13068,
+				"number": "19",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 11010,
+				"number": "20",
+				"position": "RL",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": "51-MC",
+				"number": "21",
+				"position": "RW",
+				"positionLabel": "Wing"
+			}
+		],
+		"captainId": 11009,
+		"scoring": {
+			"Con": [],
+			"Pen": [],
+			"Try": []
+		},
+		"disciplinary": {}
+	},
+	"timeline": "",
+	"officials": [
+		{
+			"official": {
+				"id": 12111,
+				"name": {
+					"first": {
+						"known": "Roger",
+						"official": "Roger Charles"
+					},
+					"last": {
+						"official": "Quittenton"
+					},
+					"display": "Roger Quittenton"
+				},
+				"pob": "England",
+				"country": "England"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

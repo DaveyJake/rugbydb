@@ -1,0 +1,272 @@
+{
+	"match": {
+		"matchId": 6671,
+		"altId": null,
+		"description": "Match 5",
+		"eventPhase": "Match 5",
+		"venue": {
+			"name": "Cambridge University Football Ground",
+			"city": "Cambridge",
+			"country": "England"
+		},
+		"time": {
+			"millis": 245462400000,
+			"gmtOffset": 1,
+			"label": "Wed 12 Oct 1977, 14:00 GMT+01"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 13,
+				"altId": null,
+				"name": "Cambridge University",
+				"abbreviation": "CBU",
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			18,
+			20
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 74,
+				"altId": null,
+				"label": "1977 USA Tour of England",
+				"sport": "mru",
+				"start": {
+					"millis": 220924800000,
+					"gmtOffset": 0,
+					"label": "1977-01-01"
+				},
+				"end": {
+					"millis": 252460799000,
+					"gmtOffset": 0,
+					"label": "1977-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1977 USA Tour of England",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 13769,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 13130,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 13146,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 11010,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 11009,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 13068,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 13094,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 12711,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 12710,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 11428,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 7407,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 12505,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 11002,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 13092,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 11004,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 13129,
+				"number": "16",
+				"position": "BF",
+				"positionLabel": "Flanker"
+			}
+		],
+		"captainId": 11009,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 7407
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 7407
+				}
+			],
+			"Try": [
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 13092
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 13092
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 7407
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 7407
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": [
+		{
+			"phase": "L2",
+			"time": {
+				"label": "40'"
+			},
+			"type": "Sub On",
+			"typeLabel": "Replacement On",
+			"group": "Sub On",
+			"playerId": 13129,
+			"teamIndex": 1,
+			"link": 0
+		},
+		{
+			"phase": "L2",
+			"time": {
+				"label": "40'"
+			},
+			"type": "Sub Off",
+			"typeLabel": "Replacement Off",
+			"group": "Sub Off",
+			"playerId": 13068,
+			"teamIndex": 1,
+			"link": 0
+		}
+	],
+	"officials": [
+		{
+			"official": {
+				"id": "51-MT",
+				"name": {
+					"initial": "MH",
+					"first": {
+						"known": "Mike",
+						"official": "Michael Herbert"
+					},
+					"last": {
+						"official": "Titcomb"
+					},
+					"display": "Mike Titcomb"
+				},
+				"pob": "England",
+				"country": "England"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

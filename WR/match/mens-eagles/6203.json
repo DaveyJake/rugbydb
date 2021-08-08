@@ -1,0 +1,84 @@
+{
+	"match": {
+		"matchId": 6203,
+		"altId": null,
+		"description": "Match 1",
+		"eventPhase": "Match 1",
+		"venue": {
+			"name": "Heiwadai Stadium",
+			"city": "Fukuoka",
+			"country": "Japan"
+		},
+		"time": {
+			"millis": 481420800000,
+			"gmtOffset": 9,
+			"label": "Thu 4 Apr 1985, 15:00 GMT+09"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 1233,
+				"altId": null,
+				"name": "Kyushu",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			10,
+			20
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 473,
+				"altId": null,
+				"label": "1985 USA Tour of Japan",
+				"sport": "mru",
+				"start": {
+					"millis": 473385600000,
+					"gmtOffset": 0,
+					"label": "1985-01-01"
+				},
+				"end": {
+					"millis": 504921599000,
+					"gmtOffset": 0,
+					"label": "1985-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1985 USA Tour of Japan",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": null,
+	"timeline": false,
+	"officials": [],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

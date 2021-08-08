@@ -1,0 +1,84 @@
+{
+	"match": {
+		"matchId": 5774,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"id": 2,
+			"name": "Cardiff Arms Park",
+			"city": "Cardiff",
+			"country": "Wales"
+		},
+		"time": {
+			"millis": 852076800000,
+			"gmtOffset": 0,
+			"label": "Wed 1 Jan 1997, 00:00 GMT"
+		},
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 1819,
+				"altId": null,
+				"name": "Emerging Wales",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			0,
+			0
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "D",
+		"events": [
+			{
+				"id": 673,
+				"altId": null,
+				"label": "1997 USA Tour of Wales",
+				"sport": "mru",
+				"start": {
+					"millis": 852076800000,
+					"gmtOffset": 0,
+					"label": "1997-01-01"
+				},
+				"end": {
+					"millis": 883612799000,
+					"gmtOffset": 0,
+					"label": "1997-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1997 USA Tour of Wales",
+		"weather": {
+			"matchWeather": "Frozen",
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": null,
+	"timeline": false,
+	"officials": [],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

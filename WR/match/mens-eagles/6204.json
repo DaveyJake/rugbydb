@@ -1,0 +1,84 @@
+{
+	"match": {
+		"matchId": 6204,
+		"altId": null,
+		"description": "Match 2",
+		"eventPhase": "Match 2",
+		"venue": {
+			"name": "Yamaguchi Ishin Park Stadium",
+			"city": "Yamaguchi",
+			"country": "Japan"
+		},
+		"time": {
+			"millis": 481680000000,
+			"gmtOffset": 9,
+			"label": "Sun 7 Apr 1985, 15:00 GMT+09"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 1935,
+				"altId": null,
+				"name": "Japan Universities",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			11,
+			29
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 473,
+				"altId": null,
+				"label": "1985 USA Tour of Japan",
+				"sport": "mru",
+				"start": {
+					"millis": 473385600000,
+					"gmtOffset": 0,
+					"label": "1985-01-01"
+				},
+				"end": {
+					"millis": 504921599000,
+					"gmtOffset": 0,
+					"label": "1985-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1985 USA Tour of Japan",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": null,
+	"timeline": false,
+	"officials": [],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

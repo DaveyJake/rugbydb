@@ -1,0 +1,250 @@
+{
+	"match": {
+		"matchId": 6096,
+		"altId": null,
+		"description": "Match 3",
+		"eventPhase": "Match 3",
+		"venue": {
+			"id": 987,
+			"name": "Memorial Ground, Ely",
+			"city": "Cardiff",
+			"country": "Wales"
+		},
+		"time": {
+			"millis": 562377600000,
+			"gmtOffset": 0,
+			"label": "Wed 28 Oct 1987, 14:30 GMT"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 1900,
+				"altId": null,
+				"name": "Glamorgan Wanderers",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			25,
+			6
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "A",
+		"events": [
+			{
+				"id": 100,
+				"altId": null,
+				"label": "1987 USA Tour of Wales",
+				"sport": "mru",
+				"start": {
+					"millis": 536457600000,
+					"gmtOffset": 0,
+					"label": "1987-01-01"
+				},
+				"end": {
+					"millis": 567993599000,
+					"gmtOffset": 0,
+					"label": "1987-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1987 USA Tour of Wales",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 7360,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 13132,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 10815,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 8297,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 7646,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 7265,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7512,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7625,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 11430,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 7637,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 7351,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7542,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 13073,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7353,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": "51-GT",
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 7372,
+				"number": "16",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 12503,
+				"number": "17",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 13095,
+				"number": "18",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 7536,
+				"number": "19",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 8375,
+				"number": "20",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			},
+			{
+				"player": 7469,
+				"number": "21",
+				"position": "Rep",
+				"positionLabel": "Replacement"
+			}
+		],
+		"captainId": 7625,
+		"scoring": {
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 7637
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 7637
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [
+		{
+			"official": {
+				"id": "51-GTR",
+				"name": {
+					"first": {
+						"known": "Gus",
+						"official": "AP"
+					},
+					"last": {
+						"official": "Thomson"
+					},
+					"display": "Gus Thomson"
+				},
+				"country": "Scotland"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

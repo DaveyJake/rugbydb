@@ -1,0 +1,241 @@
+{
+	"match": {
+		"matchId": 5994,
+		"altId": null,
+		"description": "Match 2",
+		"eventPhase": "Match 2",
+		"venue": {
+			"name": "Lawson Park",
+			"city": "Grenfell, NSW",
+			"country": "Australia"
+		},
+		"time": {
+			"millis": 646790400000,
+			"gmtOffset": 10,
+			"label": "Sun 1 Jul 1990, 14:30 GMT+10"
+		},
+		"friendly": true,
+		"attendance": 2068,
+		"teams": [
+			{
+				"id": 397,
+				"altId": null,
+				"name": "New South Wales Country",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			6,
+			19
+		],
+		"kc": [6,16],
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 484,
+				"altId": null,
+				"label": "1990 USA Tour of Australia",
+				"sport": "mru",
+				"start": {
+					"millis": 631152000000,
+					"gmtOffset": 0,
+					"label": "1990-01-01"
+				},
+				"end": {
+					"millis": 662687999000,
+					"gmtOffset": 0,
+					"label": "1990-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1990 USA Tour of Australia",
+		"weather": {
+			"matchWeather": "Rain",
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": "Wet"
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 7416,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7372,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 10815,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7566,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 10814,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 8295,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 8298,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7625,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 8290,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 8288,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 10813,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7637,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7353,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7351,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 8284,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 7625,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"time": {
+						"label": "11'"
+					},
+					"points": 2,
+					"playerId": 8288
+				}
+			],
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"time": {
+						"label": "20'"
+					},
+					"points": 3,
+					"playerId": 8288
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"time": {
+						"label": "33'"
+					},
+					"points": 3,
+					"playerId": 8288
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"time": {
+						"label": "80'"
+					},
+					"points": 3,
+					"playerId": 8288
+				}
+			],
+			"Try": [
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"time": {
+						"label": "5'"
+					},
+					"points": 4,
+					"playerId": 7353
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"time": {
+						"label": "10'"
+					},
+					"points": 4,
+					"playerId": 7625
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

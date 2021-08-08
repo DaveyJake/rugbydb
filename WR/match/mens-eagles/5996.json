@@ -1,0 +1,266 @@
+{
+	"match": {
+		"matchId": 5996,
+		"altId": null,
+		"description": "Match 5",
+		"eventPhase": "Match 5",
+		"venue": {
+			"name": "Olympic Park Stadium",
+			"city": "Melbourne, VIC",
+			"country": "Australia"
+		},
+		"time": {
+			"millis": 647654400000,
+			"gmtOffset": 10,
+			"label": "Wed 11 Jul 1990, 14:30 GMT+10"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 399,
+				"altId": null,
+				"name": "Victoria",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			13,
+			37
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 484,
+				"altId": null,
+				"label": "1990 USA Tour of Australia",
+				"sport": "mru",
+				"start": {
+					"millis": 631152000000,
+					"gmtOffset": 0,
+					"label": "1990-01-01"
+				},
+				"end": {
+					"millis": 662687999000,
+					"gmtOffset": 0,
+					"label": "1990-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1990 USA Tour of Australia",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": "51-SG",
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7372,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 10815,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 10814,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 8295,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 8297,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7635,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7625,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 13108,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 8288,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 10813,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 8287,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7637,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7351,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 8286,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 7625,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 8288
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 8288
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 8288
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 8288
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 8288
+				}
+			],
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 8288
+				}
+			],
+			"Try": [
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 8288
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 8286
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 8286
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 8297
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [
+		{
+			"official": {
+				"id": "51-MPR",
+				"name": {
+					"first": {
+						"known": "Mark",
+						"official": "Mark"
+					},
+					"last": {
+						"official": "Powell"
+					},
+					"display": "Mark Powell"
+				},
+				"pob": "Queensland, Australia",
+				"country": "Australia"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

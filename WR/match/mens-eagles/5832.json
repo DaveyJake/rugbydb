@@ -1,0 +1,279 @@
+{
+	"match": {
+		"matchId": 5832,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"name": "Galway Sportsground",
+			"city": "Galway",
+			"country": "Ireland"
+		},
+		"time": {
+			"millis": 783648000000,
+			"gmtOffset": 0,
+			"label": "Tue 1 Nov 1994, 14:30 GMT"
+		},
+		"friendly": true,
+		"attendance": 400,
+		"teams": [
+			{
+				"id": 1800,
+				"altId": null,
+				"name": "Irish Development XV",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			13,
+			20
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 335,
+				"altId": null,
+				"label": "1994 USA Tour of Ireland",
+				"sport": "mru",
+				"start": {
+					"millis": 757382400000,
+					"gmtOffset": 0,
+					"label": "1994-01-01"
+				},
+				"end": {
+					"millis": 788918399000,
+					"gmtOffset": 0,
+					"label": "1994-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1994 USA Tour of Ireland",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 13091,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7244,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 10815,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 8295,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 12649,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 7429,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7577,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7425,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 7233,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 7637,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 7574,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7538,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 13138,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7227,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7544,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 7416,
+				"number": "16",
+				"position": "LP",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7223,
+				"number": "17",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 7635,
+				"number": "18",
+				"position": "OF",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 8496,
+				"number": "19",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 8489,
+				"number": "20",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 8492,
+				"number": "21",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 7233,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 7637
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 7637
+				}
+			],
+			"DG": [
+				{
+					"type": "D3",
+					"typeLabel": "Drop Goal",
+					"points": 3,
+					"playerId": 7637
+				}
+			],
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 7637
+				}
+			],
+			"Try": [
+				{
+					"type": "T5",
+					"typeLabel": "Try",
+					"points": 5,
+					"playerId": null
+				},
+				{
+					"type": "T5",
+					"typeLabel": "Try",
+					"points": 5,
+					"playerId": null
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [
+		{
+			"official": {
+				"id": 11913,
+				"name": {
+					"first": {
+						"official": "Brian"
+					},
+					"last": {
+						"official": "Campsall"
+					},
+					"display": "Brian Campsall"
+				},
+				"pob": "England",
+				"country": "England"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

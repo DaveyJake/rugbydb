@@ -1,0 +1,198 @@
+{
+	"match": {
+		"matchId": 5833,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"name": "The Mardyke Sports Grounds",
+			"city": "Cork",
+			"country": "Ireland"
+		},
+		"time": {
+			"millis": 784339200000,
+			"gmtOffset": 0,
+			"label": "Wed 9 Nov 1994, 14:30 GMT"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 1255,
+				"altId": null,
+				"name": "Ireland Universities",
+				"abbreviation": "IST",
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			11,
+			9
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "A",
+		"events": [
+			{
+				"id": 335,
+				"altId": null,
+				"label": "1994 USA Tour of Ireland",
+				"sport": "mru",
+				"start": {
+					"millis": 757382400000,
+					"gmtOffset": 0,
+					"label": "1994-01-01"
+				},
+				"end": {
+					"millis": 788918399000,
+					"gmtOffset": 0,
+					"label": "1994-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1994 USA Tour of Ireland",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 13091,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7223,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 7408,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": "51-PC",
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 8295,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 7635,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": "51-CK",
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7632,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 8496,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": "51-JM",
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 12657,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7538,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 13138,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7227,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 8492,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 8496,
+		"scoring": {},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [
+		{
+			"official": {
+				"id": "51-BWR",
+				"name": {
+					"first": {
+						"official": "Brian"
+					},
+					"last": {
+						"official": "Wallace"
+					},
+					"display": "Brian Wallace"
+				},
+				"pob": "Wales",
+				"country": "Wales"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

@@ -1,0 +1,261 @@
+{
+	"match": {
+		"matchId": 6670,
+		"altId": null,
+		"description": "Match 4",
+		"eventPhase": "Match 4",
+		"venue": {
+			"name": "North Road Stadium",
+			"city": "Gosforth",
+			"country": "England"
+		},
+		"time": {
+			"millis": 245116800000,
+			"gmtOffset": 1,
+			"label": "Sat 8 Oct 1977, 15:00 GMT+01"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 104,
+				"altId": null,
+				"name": "Gosforth",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			18,
+			12
+		],
+		"kc": null,
+		"status": "C",
+		"clock": null,
+		"outcome": "A",
+		"events": [
+			{
+				"id": 74,
+				"altId": null,
+				"label": "1977 USA Tour of England",
+				"sport": "mru",
+				"start": {
+					"millis": 220924800000,
+					"gmtOffset": 0,
+					"label": "1977-01-01"
+				},
+				"end": {
+					"millis": 252460799000,
+					"gmtOffset": 0,
+					"label": "1977-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1977 USA Tour of England",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 13146,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 10952,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 11011,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 11010,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 11009,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 13068,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 13094,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 12711,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 13121,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 11004,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 13127,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 12708,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 12505,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": "51-MC",
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7407,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 13130,
+				"number": "16",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			}
+		],
+		"captainId": 11009,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 11004
+				}
+			],
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 11004
+				},
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 11004
+				}
+			],
+			"Try": [
+				{
+					"type": "T5",
+					"typeLabel": "Try",
+					"points": 5,
+					"playerId": 13094
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": [
+		{
+			"phase": "L2",
+			"time": {
+				"label": "50'"
+			},
+			"type": "Sub On",
+			"typeLabel": "Replacement On",
+			"group": "Sub On",
+			"playerId": 13130,
+			"teamIndex": 1,
+			"link": 0
+		},
+		{
+			"phase": "L2",
+			"time": {
+				"label": "50'"
+			},
+			"type": "Sub Off",
+			"typeLabel": "Replacement Off",
+			"group": "Sub Off",
+			"playerId": 10952,
+			"teamIndex": 1,
+			"link": 0
+		}
+	],
+	"officials": [
+		{
+			"official": {
+				"id": 12167,
+				"name": {
+					"first": {
+						"known": "Bob",
+						"official": "Robert P"
+					},
+					"last": {
+						"official": "Burrell"
+					},
+					"display": "Bob Burrell"
+				},
+				"pob": "Scotland",
+				"country": "Scotland"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

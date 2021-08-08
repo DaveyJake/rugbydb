@@ -1,0 +1,253 @@
+{
+	"match": {
+		"matchId": 6983,
+		"altId": null,
+		"description": "Match 6",
+		"eventPhase": "Match 6",
+		"venue": {
+			"name": "Victoria Park",
+			"city": "Dubbo, NSW",
+			"country": "Australia"
+		},
+		"time": {
+			"millis": 426297600000,
+			"gmtOffset": 10,
+			"label": "Wed 6 Jul 1983, 15:00 GMT+10"
+		},
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 397,
+				"altId": null,
+				"name": "New South Wales Country",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			3,
+			26
+		],
+		"kc": [3,17],
+		"status": "C",
+		"clock": null,
+		"outcome": "B",
+		"events": [
+			{
+				"id": 604,
+				"altId": null,
+				"label": "1983 USA Tour of Australia",
+				"sport": "mru",
+				"start": {
+					"millis": 410227200000,
+					"gmtOffset": 0,
+					"label": "1983-01-01"
+				},
+				"end": {
+					"millis": 441763199000,
+					"gmtOffset": 0,
+					"label": "1983-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1983 USA Tour of Australia",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 12503,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 8391,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 7503,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 13089,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 13095,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 10953,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 8382,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 10951,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 13075,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 11431,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 8376,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 7542,
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 8377,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": "51-BA",
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 8284,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 13075,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 8284
+				},
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 8284
+				}
+			],
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"points": 3,
+					"playerId": 8284
+				}
+			],
+			"Try": [
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 8284
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 8284
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": "51-BA"
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 13095
+				},
+				{
+					"type": "T4",
+					"typeLabel": "Try",
+					"points": 4,
+					"playerId": 8391
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [
+		{
+			"official": {
+				"id": 12386,
+				"name": {
+					"first": {
+						"official": "Col"
+					},
+					"last": {
+						"official": "Waldron"
+					},
+					"display": "Col Waldron"
+				},
+				"pob": "Queensland, Australia",
+				"country": "Australia"
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

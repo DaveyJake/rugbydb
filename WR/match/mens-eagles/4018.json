@@ -1,0 +1,830 @@
+{
+	"match": {
+		"matchId": 4018,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"id": 34,
+			"name": "Stade Colombes",
+			"city": "Paris",
+			"country": "France"
+		},
+		"time": {
+			"millis": -1553414400,
+			"gmtOffset": 1,
+			"label": "Sun 10 Oct 1920, 17:00 GMT+01"
+		},
+		"attendance": 25000,
+		"teams": [
+			{
+				"id": 42,
+				"altId": null,
+				"name": "France",
+				"abbreviation": "FRA",
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			14,
+			5
+		],
+		"kc": [6,5],
+		"status": "C",
+		"clock": null,
+		"outcome": "A",
+		"events": [
+			{
+				"id": 1200,
+				"altId": null,
+				"label": "1920 USA Tour of France",
+				"sport": "mru",
+				"start": {
+					"millis": -1556841600000,
+					"gmtOffset": 0,
+					"label": "1920-09-01"
+				},
+				"end": {
+					"millis": -1551571201000,
+					"gmtOffset": 0,
+					"label": "1920-10-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "1920 USA Tour of France",
+		"weather": {
+			"matchWeather": "Good",
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": {
+					"id": 12818,
+					"altId": null,
+					"name": {
+						"initials": "C",
+						"first": {
+							"known": "Charles 'Red'",
+							"official": "Charles"
+						},
+						"last": {
+							"known": null,
+							"official": "Meehan"
+						},
+						"display": "Charles 'Red' Meehan"
+					},
+					"nickname": "Red",
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": {
+					"id": 12819,
+					"altId": null,
+					"name": {
+						"initials": "JT",
+						"first": {
+							"known": null,
+							"official": "John"
+						},
+						"last": {
+							"known": null,
+							"official": "O'Neil"
+						},
+						"display": "John O'Neil"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1439769600000,
+						"gmtOffset": 0,
+						"label": "18 May 1924"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": {
+					"id": 12817,
+					"altId": null,
+					"name": {
+						"initials": "J",
+						"first": {
+							"known": null,
+							"official": "John"
+						},
+						"last": {
+							"known": null,
+							"official": "Muldoon"
+						},
+						"display": "John Muldoon"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": {
+					"id": 12816,
+					"altId": null,
+					"name": {
+						"initials": "C",
+						"first": {
+							"known": "Colby",
+							"official": "Colby"
+						},
+						"last": {
+							"known": null,
+							"official": "Slater"
+						},
+						"display": "Colby 'Babe' Slater"
+					},
+					"nickname": "Babe",
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1439769600000,
+						"gmtOffset": 0,
+						"label": "18 May 1924"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": {
+					"id": 12815,
+					"altId": null,
+					"name": {
+						"initials": "C",
+						"first": {
+							"known": null,
+							"official": "Charles"
+						},
+						"last": {
+							"known": "Tilden Jr",
+							"official": "Tilden Junior"
+						},
+						"display": "Charles Tilden Jr"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": {
+					"id": 12814,
+					"altId": null,
+					"name": {
+						"initials": "H",
+						"first": {
+							"known": null,
+							"official": "Heaton"
+						},
+						"last": {
+							"known": null,
+							"official": "Wrenn"
+						},
+						"display": "Heaton Wrenn"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": {
+					"id": 12812,
+					"altId": null,
+					"name": {
+						"initials": "JW",
+						"first": {
+							"known": null,
+							"official": "James"
+						},
+						"last": {
+							"known": null,
+							"official": "Winston"
+						},
+						"display": "James Winston"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": {
+					"id": 12813,
+					"altId": null,
+					"name": {
+						"initials": "D",
+						"first": {
+							"known": "Dave",
+							"official": "Davis"
+						},
+						"last": {
+							"known": null,
+							"official": "Wallace"
+						},
+						"display": "Dave Wallace"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": {
+					"id": 12808,
+					"altId": null,
+					"name": {
+						"initials": "RJ",
+						"first": {
+							"known": "Rudy",
+							"official": "Rudolph John"
+						},
+						"last": {
+							"known": null,
+							"official": "Scholz"
+						},
+						"display": "Rudy Scholz"
+					},
+					"nickname": "Rudy",
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1439769600000,
+						"gmtOffset": 0,
+						"label": "18 May 1924"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": {
+					"id": 12810,
+					"altId": null,
+					"name": {
+						"initials": "H",
+						"first": {
+							"known": null,
+							"official": "Harold"
+						},
+						"last": {
+							"known": null,
+							"official": "von Schmidt"
+						},
+						"display": "Harold von Schmidt"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": {
+					"id": 12806,
+					"altId": null,
+					"name": {
+						"initials": "EL",
+						"first": {
+							"known": "Gene",
+							"official": "Eugene Luther"
+						},
+						"last": {
+							"known": null,
+							"official": "Vidal"
+						},
+						"display": "Gene Vidal"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": "Madison, South Dakota, United States",
+					"dob": {
+						"millis": -2357942400000,
+						"gmtOffset": 0,
+						"label": "13 April 1895"
+					},
+					"dod": {
+						"millis": -27216000000,
+						"gmtOffset": 0,
+						"label": "20 February 1969"
+					},
+					"age": {
+						"years": 73,
+						"months": 10,
+						"days": 7
+					},
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": {
+					"id": 6679,
+					"altId": null,
+					"name": {
+						"initials": "DB",
+						"first": {
+							"known": "Danny",
+							"official": "Daniel Brendan"
+						},
+						"last": {
+							"known": null,
+							"official": "Carroll"
+						},
+						"display": "Danny Carroll"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": "Melbourne, Victoria, Australia",
+					"dob": {
+						"millis": -2615146740,
+						"gmtOffset": 9.65,
+						"label": "17 February 1887"
+					},
+					"dod": {
+						"millis": -423082800,
+						"gmtOffset": -5,
+						"label": "05 August 1956"
+					},
+					"age": {
+						"years": 69,
+						"months": 5,
+						"days": 19
+					},
+					"country": "Australia",
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": {
+						"millis": 1451606400000,
+						"gmtOffset": 0,
+						"label": "01 January 2016"
+					},
+					"firstMatch": {
+						"millis": -1926720000000,
+						"gmtOffset": 0,
+						"label": "12 December 1908"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "12",
+				"position": "CE",
+				"positionLabel": "Center"
+			},
+			{
+				"player": {
+					"id": 46828,
+					"altId": null,
+					"name": {
+						"initials": "JP",
+						"first": {
+							"known": "Jim",
+							"official": "James"
+						},
+						"last": {
+							"known": null,
+							"official": "Fitzpatrick"
+						},
+						"display": "James Fitzpatrick"
+					},
+					"nickname": "Jim",
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "13",
+				"position": "CE",
+				"positionLabel": "Center"
+			},
+			{
+				"player": {
+					"id": 12829,
+					"altId": null,
+					"name": {
+						"initials": "CW",
+						"first": {
+							"known": "Charlie",
+							"official": "Charles Webster"
+						},
+						"last": {
+							"known": "Doe Jr",
+							"official": "Doe Junior"
+						},
+						"display": "Charles Doe"
+					},
+					"nickname": "Charlie",
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1556496000000,
+						"gmtOffset": 0,
+						"label": "05 September 1920"
+					},
+					"lastMatch": {
+						"millis": -1439769600000,
+						"gmtOffset": 0,
+						"label": "18 May 1924"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": {
+					"id": 12805,
+					"altId": null,
+					"name": {
+						"initials": "G",
+						"first": {
+							"known": null,
+							"official": "George"
+						},
+						"last": {
+							"known": null,
+							"official": "Davis"
+						},
+						"display": "George Davis"
+					},
+					"nickname": null,
+					"maiden": null,
+					"pob": null,
+					"dob": null,
+					"dod": null,
+					"age": null,
+					"country": null,
+					"height": 0,
+					"weight": 0,
+					"gender": "M",
+					"hallOfFameInducted": null,
+					"firstMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"lastMatch": {
+						"millis": -1553472000000,
+						"gmtOffset": 0,
+						"label": "10 October 1920"
+					},
+					"hasBeenImpactPlayer": false,
+					"hasBeenPlayerOfFinal": false
+				},
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			}
+		],
+		"captainId": 12815,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"points": 2,
+					"playerId": 12805
+				}
+			],
+			"Try": [
+				{
+					"type": "T3",
+					"typeLabel": "Try",
+					"points": 3,
+					"playerId": 12810
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": "",
+	"officials": [
+		{
+			"official": {
+				"id": 12804,
+				"altId": null,
+				"name": {
+					"initials": "M",
+					"first": {
+						"known": null,
+						"official": null
+					},
+					"last": {
+						"known": null,
+						"official": "Jeffreys"
+					},
+					"display": "M Jeffreys"
+				},
+				"nickname": null,
+				"maiden": null,
+				"pob": "England",
+				"dob": null,
+				"dod": null,
+				"age": null,
+				"country": "England",
+				"height": 0,
+				"weight": 0,
+				"gender": null,
+				"hallOfFameInducted": null,
+				"firstMatch": null,
+				"lastMatch": null,
+				"hasBeenImpactPlayer": false,
+				"hasBeenPlayerOfFinal": false
+			},
+			"position": "Referee"
+		}
+	],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}

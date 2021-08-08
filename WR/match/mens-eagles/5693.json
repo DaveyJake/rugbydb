@@ -1,0 +1,276 @@
+{
+	"match": {
+		"matchId": 5693,
+		"altId": null,
+		"description": null,
+		"eventPhase": null,
+		"venue": {
+			"id": 211,
+			"name": "The Gnoll",
+			"city": "Neath",
+			"country": "Wales"
+		},
+		"time": {
+			"millis": 974160000000,
+			"gmtOffset": 0,
+			"label": "Tue 14 Nov 2000, 15:00 GMT"
+		},
+		"report": "local:web.usarugby.org/cgi-bin/viadesto/press/?releaseId=9",
+		"friendly": true,
+		"attendance": 0,
+		"teams": [
+			{
+				"id": 1790,
+				"altId": null,
+				"name": "Wales Development XV",
+				"abbreviation": null,
+				"annotations": null
+			},
+			{
+				"id": 51,
+				"altId": null,
+				"name": "United States",
+				"abbreviation": "USA",
+				"annotations": null
+			}
+		],
+		"scores": [
+			46,
+			20
+		],
+		"kc": [34,10],
+		"status": "C",
+		"clock": null,
+		"outcome": "A",
+		"events": [
+			{
+				"id": 286,
+				"altId": null,
+				"label": "2000 USA Tour of Scotland & Wales",
+				"sport": "mru",
+				"start": {
+					"millis": 946684800000,
+					"gmtOffset": 0,
+					"label": "2000-01-01"
+				},
+				"end": {
+					"millis": 978307199000,
+					"gmtOffset": 0,
+					"label": "2000-12-31"
+				},
+				"rankingsWeight": 1,
+				"abbr": null,
+				"winningTeam": null,
+				"impactPlayers": null,
+				"teamPerformances": null
+			}
+		],
+		"sport": "Mens Rugby Union",
+		"competition": "2000 USA Tour of Scotland & Wales",
+		"weather": {
+			"matchWeather": null,
+			"matchMinTemperature": null,
+			"matchMaxTemperature": null,
+			"matchWindConditions": null,
+			"matchPitchConditions": null
+		}
+	},
+	"team": {
+		"players": [
+			{
+				"player": 13149,
+				"number": "1",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7760,
+				"number": "2",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 7752,
+				"number": "3",
+				"position": "PR",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 12638,
+				"number": "4",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 7762,
+				"number": "5",
+				"position": "SR",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 13087,
+				"number": "6",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 7763,
+				"number": "7",
+				"position": "FL",
+				"positionLabel": "Flanker"
+			},
+			{
+				"player": 12636,
+				"number": "8",
+				"position": "N8",
+				"positionLabel": "Number 8"
+			},
+			{
+				"player": 7764,
+				"number": "9",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 7765,
+				"number": "10",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 7743,
+				"number": "11",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": "51-MD",
+				"number": "12",
+				"position": "IC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 7766,
+				"number": "13",
+				"position": "OC",
+				"positionLabel": "Center"
+			},
+			{
+				"player": 13093,
+				"number": "14",
+				"position": "WI",
+				"positionLabel": "Wing"
+			},
+			{
+				"player": 8116,
+				"number": "15",
+				"position": "FB",
+				"positionLabel": "Full Back"
+			},
+			{
+				"player": 7750,
+				"number": "16",
+				"position": "HK",
+				"positionLabel": "Hooker"
+			},
+			{
+				"player": 7749,
+				"number": "17",
+				"position": "LP",
+				"positionLabel": "Prop"
+			},
+			{
+				"player": 7345,
+				"number": "18",
+				"position": "RL",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 7754,
+				"number": "19",
+				"position": "LL",
+				"positionLabel": "Lock"
+			},
+			{
+				"player": 7748,
+				"number": "20",
+				"position": "SH",
+				"positionLabel": "Scrum Half"
+			},
+			{
+				"player": 7747,
+				"number": "21",
+				"position": "FH",
+				"positionLabel": "Fly Half"
+			},
+			{
+				"player": 7745,
+				"number": "22",
+				"position": "OC",
+				"positionLabel": "Center"
+			}
+		],
+		"captainId": 8116,
+		"scoring": {
+			"Con": [
+				{
+					"type": "C2",
+					"typeLabel": "Conversion",
+					"time": {
+						"label": "6'"
+					},
+					"points": 2,
+					"playerId": 7765
+				}
+			],
+			"Pen": [
+				{
+					"type": "P3",
+					"typeLabel": "Penalty",
+					"time": {
+						"label": "20'"
+					},
+					"points": 3,
+					"playerId": 7765
+				}
+			],
+			"Try": [
+				{
+					"type": "T5",
+					"typeLabel": "Try",
+					"time": {
+						"label": "5'"
+					},
+					"points": 5,
+					"playerId": 7743
+				},
+				{
+					"type": "T5",
+					"typeLabel": "Try",
+					"time": {
+						"label": "63'"
+					},
+					"points": 5,
+					"playerId": 7760
+				},
+				{
+					"type": "T5",
+					"typeLabel": "Try",
+					"time": {
+						"label": "79'"
+					},
+					"points": 5,
+					"playerId": 13087
+				}
+			]
+		},
+		"disciplinary": {}
+	},
+	"timeline": false,
+	"officials": [],
+	"motm": {
+		"nominees": null,
+		"motm": null
+	},
+	"mascots": null
+}
