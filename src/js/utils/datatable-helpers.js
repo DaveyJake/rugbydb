@@ -67,7 +67,21 @@ class DTHelper {
               teams    = fixture.split( /\sv\s/ ),
               scores   = result.split( /\s-\s/ );
 
-        return `<div class="fixture-result flex"><div class="inline-cell"><a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-result-link" href="${ links.match }" title="${ fixture }" rel="bookmark"><img class="icon" src="${ homeLogo }" alt="${ teams[0] }" height="22" /></div><div class="inline-cell"><span class="result">${ scores[0] } - ${ scores[1] }</span></div><div class="inline-cell"><img class="icon" src="${ awayLogo }" alt="${ teams[1] }" height="22" /></a></div></div>`;
+        return [
+            '<div class="fixture-result">',
+            `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-result-link" class="flex" href="${ links.match }" title="${ fixture }" rel="bookmark">`,
+            '<div class="inline-cell">',
+            `<img class="icon" src="${ homeLogo }" alt="${ teams[0] }" height="22" />`,
+            '</div>',
+            '<div class="inline-cell">',
+            `<span class="result">${ scores[0] } - ${ scores[1] }</span>`,
+            '</div>',
+            '<dispatchEvent(event: Event) class="inline-cell">',
+            `<img class="icon" src="${ awayLogo }" alt="${ teams[1] }" height="22" />`,
+            '</div>',
+            '</a>',
+            '</div>'
+        ].join( '' );
     }
 
     /**
@@ -103,7 +117,9 @@ class DTHelper {
     static venueLink( venue ) {
         const link = new URL( venue.link );
 
-        return `<a id="venue-${ venue.id }-link" href="${ link.pathname }" title="${ venue.name }" rel="bookmark"><span class="flag-icon flag-icon-squared flag-icon-squared-${ venue.country }" title="${ COUNTRIES[ venue.country.toUpperCase() ] }"></span> ${ venue.name }</a>`;
+        return `<a id="venue-${ venue.id }-link" href="${ link.pathname }" title="${ venue.name }" rel="bookmark">` +
+            `<span class="flag-icon flag-icon-squared flag-icon-${ 'ie' !== venue.country ? 'squared-' + venue.country : venue.country }" title="${ COUNTRIES[ venue.country.toUpperCase() ] }"></span>` +
+        ` ${ venue.name }</a>`;
     }
 
     /**

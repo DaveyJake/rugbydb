@@ -90,11 +90,21 @@ class RDB_Front_Page_Filters {
                     break;
             }
 
-            echo '<label id="' . esc_attr( $team->slug ) . '"><input type="checkbox" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" /> <span class="show-for-large">' . esc_html( $team->name ) . '</span><span class="hide-for-large">' . esc_html( $abbr ) . '</span></label>';
+            echo '<label id="' . esc_attr( $team->slug ) . '">' .
+                '<input type="checkbox" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" />' .
+                ' <span class="show-for-large">' . esc_html( $team->name ) . '</span>' .
+                '<span class="hide-for-large">' . esc_html( $abbr ) . '</span>' .
+            '</label>';
         endforeach;
 
         foreach ( $matches as $k => $v ) :
-            echo '<label class="match-type hide"><input type="radio" name="wpcm_friendly" value="' . esc_attr( $k ) . '" checked /> <span>' . esc_html( $v ) . '</span></label>';
+            $checked = false;
+
+            if ( 'All' === $v ) {
+                $checked = true;
+            }
+
+            printf( '<label class="match-type hide"><input type="radio" name="wpcm_friendly" value="%1$s"%2$s /> <span>%3$s</span></label>', esc_attr( $k ), $checked ? ' checked' : '', esc_html( $v ) );
         endforeach;
         echo '</div>';
     }

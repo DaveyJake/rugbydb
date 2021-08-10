@@ -410,10 +410,12 @@ class FrontPage extends DTHelper {
                 $teamFilters.on( 'change', 'input[name="wpcm_team"]', function( e ) {
                     $( `#${ e.currentTarget.value }` ).toggleClass( 'active' );
 
+                    const $matchType = $teamFilters.find( '.match-type' );
+
                     if ( 'mens-eagles' === e.currentTarget.value || 'womens-eagles' === e.currentTarget.value ) {
-                        $teamFilters.find( '.match-type' ).removeClass( 'hide' ).addClass( 'active' );
+                        $matchType.removeClass( 'hide' ).addClass( 'active' );
                     } else {
-                        $teamFilters.find( '.match-type' ).removeClass( 'active' ).addClass( 'hide' );
+                        $matchType.removeClass( 'active' ).addClass( 'hide' );
                     }
 
                     const checkedBoxes = _.compact( $teamFilters.find( '.active' ).map( function() {
@@ -513,8 +515,7 @@ class FrontPage extends DTHelper {
      * @access private
      * @static
      *
-     * @param {array}  checkedBoxes Checked box ID values.
-     * @param {string} currentValue Current selected value.
+     * @param {array} checkedBoxes Checked box ID values.
      */
     static _radioFilters( checkedBoxes ) {
         const me    = 'mens-eagles',

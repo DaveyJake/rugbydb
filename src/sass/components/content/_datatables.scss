@@ -49,6 +49,26 @@
             input {
                 margin: 0 !important;
                 width: calc(100% - 12px);
+                transition: background 0.25s linear;
+
+                &:hover {
+                    background: rgba($color__white, 50%);
+                    transition: background 0.25s linear;
+                }
+
+                &:active,
+                &:focus {
+                    background: $color__white;
+                }
+
+                &:focus,
+                &:focus-visible {
+                    outline: none !important;
+                }
+
+                &:-moz-focus-inner {
+                    border: 0;
+                }
             }
         }
 

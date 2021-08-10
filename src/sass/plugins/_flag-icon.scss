@@ -57,7 +57,7 @@ $wales:(brecon cardiff colwyn-bay crosskeys ebbw-vale neath newport pontypool po
 
         @each $town in $ireland {
             &-#{unquote($town)} {
-                background-image: url(#{$square}ie.svg);
+                background-image: url(#{$flag}ie.svg);
             }
         }
 

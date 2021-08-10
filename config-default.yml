@@ -40,11 +40,12 @@ PATHS:
     - "node_modules/yadcf/jquery.dataTables.yadcf.*"
     - "vendor/mobiledetect/mobiledetectlib/Mobile_Detect.php"
     - "vendor/sinergi/browser-detector/src/*"
+    - "src/img/{chosen,flags,programs,unions}/**"
     - "!src/{img,js,sass}/**"
   # Paths to the main image directory.
   images:
     - "src/img/**"
-    - "!src/img/{competitions,players,programs,timeline,venues}/**"
+    - "!src/img/{competitions,flags,players,programs,timeline,unions,venues,misc,page-items}/**"
   # Paths to the main JavaScript directory.
   js:
     - "src/js/**/*"
