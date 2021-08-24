@@ -35,30 +35,36 @@ echo '<div class="wpcm-profile__meta">';
                     echo '<th>';
                         esc_html_e( 'Caps', 'wp-club-manager' );
                     echo '</th>';
-                    echo '<td>' . $matches . '</td>';
+                    echo '<td>' . esc_html( $matches ) . '</td>';
                 echo '</tr>';
             endif;
 
             // Date of birth.
             $wpcm_dob = get_post_meta( $post->ID, 'wpcm_dob', true );
             if ( ! empty( $wpcm_dob ) ) :
-                if ( 'yes' === get_option( 'wpcm_player_profile_show_dob' ) ) :
+                // Birthday
+                rdb_player_meta_row( 'wpcm_player_profile_show_dob', 'Birthday', 'date_i18n', array( get_option( 'date_format' ), strtotime( $wpcm_dob ) ) );
+
+                /*if ( 'yes' === get_option( 'wpcm_player_profile_show_dob' ) ) :
                     echo '<tr>';
                         echo '<th>';
                             esc_html_e( 'Birthday', 'wp-club-manager' );
                         echo '</th>';
-                        echo '<td>' . date_i18n( get_option( 'date_format' ), strtotime( $wpcm_dob ) ) . '</td>';
+                        echo '<td>' . date_i18n( , strtotime( $wpcm_dob ) ) . '</td>';
                     echo '</tr>';
-                endif;
+                endif;*/
 
-                if ( 'yes' === get_option( 'wpcm_player_profile_show_age' ) && false !== $wpcm_dob ) :
+                // Age
+                rdb_player_meta_row( 'wpcm_player_profile_show_age', 'Age', 'get_age', array( $wpcm_dob ) );
+
+                /*if ( 'yes' === get_option( 'wpcm_player_profile_show_age' ) && false !== $wpcm_dob ) :
                     echo '<tr>';
                         echo '<th>';
                             esc_html_e( 'Age', 'wp-club-manager' );
                         echo '</th>';
                         echo '<td>' . get_age( $wpcm_dob ) . '</td>';
                     echo '</tr>';
-                endif;
+                endif;*/
             endif;
 
             if ( 'yes' === get_option( 'wpcm_player_profile_show_height' ) ) :
@@ -87,34 +93,46 @@ echo '<div class="wpcm-profile__meta">';
                 endif;
             endif;
 
-            if ( 'yes' === get_option( 'wpcm_player_profile_show_season' ) ) :
+            // Season
+            rdb_player_meta_row( 'wpcm_player_profile_show_season', 'Season', 'wpcm_get_player_seasons', array( $post->ID ) );
+
+            /*if ( 'yes' === get_option( 'wpcm_player_profile_show_season' ) ) :
                 echo '<tr>';
                     echo '<th>';
                         esc_html_e( 'Season', 'wp-club-manager' );
                     echo '</th>';
                     echo '<td>' . wpcm_get_player_seasons( $post->ID ) . '</td>';
                 echo '</tr>';
-            endif;
+            endif;*/
 
-            if ( 'yes' === get_option( 'wpcm_player_profile_show_team' ) ) :
+            // Team
+            rdb_player_meta_row( 'wpcm_player_profile_show_team', 'Team', 'wpcm_get_player_teams', array( $post->ID ) );
+
+            /*if ( 'yes' === get_option( 'wpcm_player_profile_show_team' ) ) :
                 echo '<tr>';
                     echo '<th>';
                         esc_html_e( 'Team', 'wp-club-manager' );
                     echo '</th>';
                     echo '<td>' . wpcm_get_player_teams( $post->ID ) . '</td>';
                 echo '</tr>';
-            endif;
+            endif;*/
 
-            if ( 'yes' === get_option( 'wpcm_player_profile_show_position' ) ) :
+            // Positions
+            rdb_player_meta_row( 'wpcm_player_profile_show_position', 'Position', 'wpcm_get_player_positions', array( $post->ID ) );
+
+            /*if ( 'yes' === get_option( 'wpcm_player_profile_show_position' ) ) :
                 echo '<tr>';
                     echo '<th>';
                         esc_html_e( 'Position', 'wp-club-manager' );
                     echo '</th>';
                     echo '<td>' . wpcm_get_player_positions( $post->ID ) . '</td>';
                 echo '</tr>';
-            endif;
+            endif;*/
 
-            if ( 'yes' === get_option( 'wpcm_player_profile_show_hometown' ) ) :
+            // Hometown
+            rdb_player_meta_row( 'wpcm_player_profile_show_hometown', 'Hometown', 'get_post_meta', array( $post->ID, 'wpcm_hometown', true ) );
+
+            /*if ( 'yes' === get_option( 'wpcm_player_profile_show_hometown' ) ) :
                 echo '<tr>';
                     echo '<th>';
                         esc_html_e( 'Hometown', 'wp-club-manager' );
@@ -123,9 +141,12 @@ echo '<div class="wpcm-profile__meta">';
                         echo get_post_meta( $post->ID, 'wpcm_hometown', true );
                     echo '</td>';
                 echo '</tr>';
-            endif;
+            endif;*/
 
-            if ( 'yes' === get_option( 'wpcm_player_profile_show_nationality' ) ) :
+            // Born
+            rdb_player_meta_row( 'wpcm_player_profile_show_nationality', 'Born', 'get_post_meta', array( $post->ID, 'wpcm_natl', true ) );
+
+            /*if ( 'yes' === get_option( 'wpcm_player_profile_show_nationality' ) ) :
                 echo '<tr>';
                     echo '<th>';
                         esc_html_e( 'Born', 'wp-club-manager' );
@@ -134,7 +155,7 @@ echo '<div class="wpcm-profile__meta">';
                         echo '<div class="flag-icon flag-icon-' . get_post_meta( $post->ID, 'wpcm_natl', true ) . '"></div>';
                     echo '</td>';
                 echo '</tr>';
-            endif;
+            endif;*/
 
             if ( ! empty( get_post_meta( $post->ID, '_wpcm_player_club', true ) ) ) :
                 echo '<tr id="current-club">';

@@ -37,6 +37,14 @@ $image-width: calc(100% - #{$meta-width});
                 repeat: no-repeat;
                 position: center 0;
             }
+
+            &.dan-lyle {
+                background: {
+                    size: 200%;
+                    position-y: 19%;
+                }
+            }
+
             @include breakpoint(medium) {
                 width: $image-width;
             }

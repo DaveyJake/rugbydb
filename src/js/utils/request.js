@@ -45,7 +45,7 @@ class Request {
      *
      * @return {Request} JSON response from API.
      */
-    constructor( route = '', args ) {
+    constructor( route = '', args = '' ) {
         this.defaults = {
             nonce: '',
             collection: true,

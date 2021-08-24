@@ -56,7 +56,7 @@ echo '<table class="union-details stack">';
 	if ( ! empty( $details['venue']['description'] ) && $details['venue']['description'] !== $details['venue']['name'] ) :
 		echo '<tr class="description">';
 			echo '<th>' . __( 'Ground Info', 'wp-club-manager' ) . '</th>';
-			echo '<td>' . esc_html( $details['venue']['description'] ) . '</td>';
+			echo '<td>' . apply_filters( 'the_content', $details['venue']['description'] ) . '</td>';
 		echo '</tr>';
 	endif;
 

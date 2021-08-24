@@ -2258,8 +2258,10 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 'slug' => isset( $team[0] ) ? $team[0]->slug : ( is_object( $team ) ? $team->slug : error_log( "Team missing from match {$match->ID} in API" ) ),
             ),
             'logo' => array(
-                'home' => '',
-                'away' => '',
+                'home'        => '',
+                'home_retina' => '',
+                'away'        => '',
+                'away_retina' => '',
             ),
             'links'       => '',
             'competition' => '',
@@ -2274,45 +2276,74 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         $home  = $parts[0];
         $away  = $parts[1];
 
-        if ( 'Russia' === $home || 'Russia Women' === $home ) {
+        if ( preg_match( '/Russia/', $home ) ) {
             $home = 'Russia Bears';
         }
 
-        if ( 'Russia' === $away || 'Russia Women' === $away ) {
+        if ( preg_match( '/Russia/', $away ) ) {
             $away = 'Russia Bears';
         }
 
-        $home_svg = 'dist/img/unions/' . sanitize_title( $home ) . '.svg';
-        $away_svg = 'dist/img/unions/' . sanitize_title( $away ) . '.svg';
+        $home_svg    = 'dist/img/unions/' . sanitize_title( $home ) . '.svg';
+        $home_png    = 'dist/img/unions/' . sanitize_title( $home ) . '.png';
+        $home_2x_png = 'dist/img/unions/' . sanitize_title( $home ) . '@2x.png';
+        $away_svg    = 'dist/img/unions/' . sanitize_title( $away ) . '.svg';
+        $away_png    = 'dist/img/unions/' . sanitize_title( $away ) . '.png';
+        $away_2x_png = 'dist/img/unions/' . sanitize_title( $away ) . '@2x.png';
 
+        // SVG images if they exist.
         if ( file_exists( get_theme_file_path( $home_svg ) ) ) {
-            $data['logo']['home'] = get_theme_file_uri( $home_svg );
-        } else {
-            $home_club            = $meta['wpcm_home_club'][0];
+            $data['logo']['home_retina'] = get_theme_file_uri( $home_svg );
+        } elseif ( file_exists( get_theme_file_path( $home_2x_png ) ) ) {
+            $data['logo']['home_retina'] = get_theme_file_uri( $home_2x_png );
+        }
+
+        if ( file_exists( get_theme_file_path( $away_svg ) ) ) {
+            $data['logo']['away_retina'] = get_theme_file_uri( $away_svg );
+        } elseif ( file_exists( get_theme_file_path( $away_2x_png ) ) ) {
+            $data['logo']['away_retina'] = get_theme_file_uri( $away_2x_png );
+        }
+
+        // PNG images on non-retina.
+        $home_club = $meta['wpcm_home_club'][0];
+        $away_club = $meta['wpcm_away_club'][0];
+
+        $data['logo']['home'] = wp_get_attachment_image_url( get_post_thumbnail_id( $home_club ), 'small', true );
+        if ( empty( $data['logo']['home'] ) ) {
             $data['logo']['home'] = get_the_post_thumbnail_url( $home_club );
 
             if ( empty( $data['logo']['home'] ) ) {
-                $post_home = get_post( $home_club );
+                if ( file_exists( get_theme_file_path( $home_png ) ) ) {
+                    $data['logo']['home'] = get_theme_file_uri( $home_png );
+                } else {
+                    $home_union = get_post( $home_club );
 
-                if ( ! empty( $post_home->post_parent ) ) {
-                    $data['logo']['home'] = get_the_post_thumbnail_url( $post_home->post_parent );
+                    $data['logo']['home'] = get_the_post_thumbnail_url( $home_union->post_parent );
                 }
             }
         }
 
-        if ( file_exists( get_theme_file_path( $away_svg ) ) ) {
-            $data['logo']['away'] = get_theme_file_uri( $away_svg );
-        } else {
-            $away_club            = $meta['wpcm_away_club'][0];
+        $data['logo']['away'] = wp_get_attachment_image_url( get_post_thumbnail_id( $away_club ), 'small', true );
+        if ( empty( $data['logo']['away'] ) ) {
             $data['logo']['away'] = get_the_post_thumbnail_url( $away_club );
 
             if ( empty( $data['logo']['away'] ) ) {
-                $post_away = get_post( $away_club );
+                if ( file_exists( get_theme_file_path( $away_png ) ) ) {
+                    $data['logo']['away'] = get_theme_file_uri( $away_png );
+                } else {
+                    $away_union = get_post( $away_club );
 
-                if ( ! empty( $post_away->post_parent ) ) {
-                    $data['logo']['away'] = get_the_post_thumbnail_url( $post_away->post_parent );
+                    $data['logo']['away'] = get_the_post_thumbnail_url( $away_union->post_parent );
                 }
             }
+        }
+
+        if ( empty( $data['logo']['home_retina'] ) ) {
+            $data['logo']['home_retina'] = $data['logo']['home'];
+        }
+
+        if ( empty( $data['logo']['away_retina'] ) ) {
+            $data['logo']['away_retina'] = $data['logo']['away'];
         }
 
         $data['links'] = array(
@@ -2323,8 +2354,10 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
 
         // Temporary. Remove `wp_parse_url` on production.
         if ( 'local' === wp_get_environment_type() ) {
-            $data['logo']['home'] = wp_parse_url( $data['logo']['home'], PHP_URL_PATH );
-            $data['logo']['away'] = wp_parse_url( $data['logo']['away'], PHP_URL_PATH );
+            $data['logo']['home']        = wp_parse_url( $data['logo']['home'], PHP_URL_PATH );
+            $data['logo']['away']        = wp_parse_url( $data['logo']['away'], PHP_URL_PATH );
+            $data['logo']['home_retina'] = wp_parse_url( $data['logo']['home_retina'], PHP_URL_PATH );
+            $data['logo']['away_retina'] = wp_parse_url( $data['logo']['away_retina'], PHP_URL_PATH );
 
             $data['links']['match']      = wp_parse_url( $data['links']['match'], PHP_URL_PATH );
             $data['links']['home_union'] = wp_parse_url( $data['links']['home_union'], PHP_URL_PATH );

@@ -147,7 +147,7 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
                 $badge = $_POST['wpcm_number'];
             }
 
-            if ( ! empty( $_POST['_usar_nickname'] ) && $badge >= 62 ) {
+            if ( ! empty( $_POST['_usar_nickname'] ) && absint( $badge ) >= 62 ) {
                 $firstname = $_POST['_usar_nickname'];
             } else {
                 $firstname = $_POST['_wpcm_firstname'];

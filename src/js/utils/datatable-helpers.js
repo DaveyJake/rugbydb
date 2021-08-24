@@ -62,7 +62,9 @@ class DTHelper {
               fixture  = match.fixture,
               result   = match.result,
               homeLogo = match.logo.home,
+              homeRet  = match.logo.home_retina,
               awayLogo = match.logo.away,
+              awayRet  = match.logo.away_retina,
               links    = match.links,
               teams    = fixture.split( /\sv\s/ ),
               scores   = result.split( /\s-\s/ );
@@ -71,17 +73,17 @@ class DTHelper {
             '<div class="fixture-result">',
             `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-result-link" class="flex" href="${ links.match }" title="${ fixture }" rel="bookmark">`,
             '<div class="inline-cell">',
-            `<img class="icon" src="${ homeLogo }" alt="${ teams[0] }" height="22" />`,
+            `<img class="icon" data-interchange="[${ homeRet }, retina],[${ homeLogo }, default]" alt="${ teams[0] }" height="22" />`,
             '</div>',
             '<div class="inline-cell">',
             `<span class="result">${ scores[0] } - ${ scores[1] }</span>`,
             '</div>',
             '<dispatchEvent(event: Event) class="inline-cell">',
-            `<img class="icon" src="${ awayLogo }" alt="${ teams[1] }" height="22" />`,
+            `<img class="icon" data-interchange="[${ awayRet }, retina],[${ awayLogo }, default]" alt="${ teams[1] }" height="22" />`,
             '</div>',
             '</a>',
             '</div>'
-        ].join( '' );
+        ].join( ' ' );
     }
 
     /**

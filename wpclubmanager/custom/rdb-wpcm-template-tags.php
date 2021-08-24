@@ -219,17 +219,19 @@ function rdb_player_images( $post = null, $size = 'player_single' ) {
  *
  * @since 1.0.1
  *
- * @param string  $option   Option name from options table.
- * @param string  $heading  Heading content.
- * @param string  $callback Post meta key.
- * @param array   $args     Optional arguments.
+ * @param string $option   Option name from options table.
+ * @param string $heading  Heading content.
+ * @param string $callback Post meta key.
+ * @param array  $args     Optional arguments.
  */
 function rdb_player_meta_row( $option = '', $heading = '', $callback = null, $args = array() ) {
     if ( get_option( $option ) === 'yes' && is_callable( $callback ) ) {
         $meta_value = call_user_func_array( $callback, $args );
 
+        $html = '';
+
         if ( ! empty( $meta_value ) ) {
-            $html = '<tr>';
+            $html .= '<tr>';
 
                 $html .= '<th>';
 
