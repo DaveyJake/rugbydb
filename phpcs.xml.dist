@@ -158,7 +158,7 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="rdb,_rdb,the_,wpclubmanager" />
+			<property name="prefixes" type="array" value="rdb,_rdb,get,the_,wpclubmanager" />
 		</properties>
 	</rule>
 

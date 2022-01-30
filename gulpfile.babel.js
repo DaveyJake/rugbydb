@@ -27,12 +27,18 @@ const PRODUCTION = !!( yargs.argv.production );
 // Check for --development flag unminified with sourcemaps
 const DEV = !!( yargs.argv.dev );
 
-/**
- * Load settings from the config[-default].yml file.
- */
+// Load settings from the config[-default].yml file.
 const { PROJECT, STATUS, BROWSERSYNC, COMPATIBILITY, REVISIONING, PATHS } = loadConfig();
 
-// Check if file exists synchronously
+/**
+ * Check if file exists synchronously
+ *
+ * @since 1.0.0
+ *
+ * @param {string} filepath File path.
+ *
+ * @return {bool} True if found. False if not.
+ */
 function checkFileExists( filepath ) {
     let flag = true;
 
@@ -45,7 +51,13 @@ function checkFileExists( filepath ) {
     return flag;
 }
 
-// Load default or custom YML config file
+/**
+ * Load the YAML config.
+ *
+ * @since 1.0.0
+ *
+ * @return {yaml} YAML configuration options.
+ */
 function loadConfig() {
     log( 'Loading config file...' );
 
@@ -107,8 +119,7 @@ function copy() {
 function cssDestination( path ) {
     if ( path.basename.match( /style/ ) ) {
         path.dirname = '.';
-    }
-    else {
+    } else {
         if ( path.basename.match( /(-admin)/ ) ) {
             path.dirname = PATHS.admin;
         } else {
@@ -123,6 +134,8 @@ function cssDestination( path ) {
 
 /**
  * Dynamic JavaScript destinations.
+ *
+ * @since 1.0.0
  *
  * @param {object} path The path value from $.rename().
  */
@@ -139,7 +152,9 @@ function jsDestination( path ) {
 }
 
 /**
- * Compile Sass into CSS -- minified in production.å
+ * Compile Sass into CSS -- minified in production.
+ *
+ * @since 1.0.0
  */
 function sass() {
     return gulp.src( PATHS.templates )
@@ -155,16 +170,19 @@ function sass() {
         .pipe( browser.reload({ stream: true }) );
 }
 
-/**
- * Lint Sass, JavaScript and PHP.
- */
+// Lint Sass, JavaScript and PHP.
 gulp.task( 'lint:scss', async () => run( 'npm run lint:scss' )() );
 gulp.task( 'lint:js', async () => run( 'npm run lint:js' )() );
 gulp.task( 'lint:php', async () => run( 'composer run-script lint:php' )() );
 gulp.task( 'lint:wpcs', async () => run( 'composer run-script lint:wpcs' )() );
 
-// Combine JavaScript into one file
-// In production, the file is minified
+/**
+ * Combine JavaScript into one file (minified in production).
+ *
+ * @since 1.0.0
+ *
+ * @type Object
+ */
 const webpack = {
     config: {
         mode: STATUS,
@@ -238,28 +256,44 @@ const webpack = {
 gulp.task( 'webpack:build', webpack.build );
 gulp.task( 'webpack:watch', webpack.watch );
 
-// Copy images to the "dist" folder
-// In production, the images are compressed
+/**
+ * Copy images to the "dist" folder. Images are compressed in production.
+ *
+ * @since 1.0.0
+ */
 function images() {
     return gulp.src( PATHS.images )
         .pipe(
-            $.imagemin([
-                $.imagemin.jpegtran({
-                    progressive: true
-                }),
-                $.imagemin.optipng({
-                    optimizationLevel: 5
-                }),
-                $.imagemin.gifsicle({
-                    interlaced: true
-                }),
-                $.imagemin.svgo({
-                    plugins: [
-                        { cleanupAttrs: true },
-                        { removeComments: true }
-                    ]
-                })
-            ])
+            $.if(
+                PRODUCTION,
+                // Production.
+                $.imagemin([
+                    $.imagemin.jpegtran({
+                        progressive: true
+                    }),
+                    $.imagemin.optipng({
+                        optimizationLevel: 5
+                    }),
+                    $.imagemin.gifsicle({
+                        interlaced: true
+                    }),
+                    $.imagemin.svgo({
+                        plugins: [
+                            { cleanupAttrs: true },
+                            { removeComments: true }
+                        ]
+                    })
+                ]),
+                // Development.
+                $.imagemin([
+                    $.imagemin.svgo({
+                        plugins: [
+                            { cleanupAttrs: true },
+                            { removeComments: true }
+                        ]
+                    })
+                ])
+            )
         )
         .pipe( gulp.dest( PATHS.dist + '/img' ) );
 }

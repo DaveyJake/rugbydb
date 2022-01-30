@@ -9,7 +9,7 @@
  * @since 1.0.0
  */
 
-// phpcs:disable Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace, Squiz.Commenting.LongConditionClosingComment.Missing, Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose
+// phpcs:disable Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace, Squiz.Commenting.LongConditionClosingComment.Missing, Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound, WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,7 +26,7 @@ class RDB_Styles_Scripts {
      *
      * @var string
      */
-    const DT_VERSION = '1.10.22'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
+    const DT_VERSION = '1.10.22';
 
     /**
      * DataTables plug-in version.
@@ -35,7 +35,7 @@ class RDB_Styles_Scripts {
      *
      * @var string
      */
-    const DT_PLUGINS = '0.1.36'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
+    const DT_PLUGINS = '0.1.36';
 
     /**
      * Script dependencies array.
@@ -90,6 +90,7 @@ class RDB_Styles_Scripts {
     public function admin() {
         // Primary theme stylesheet.
         wp_enqueue_style( 'rdb-admin-style', get_template_directory_uri() . '/' . $this->revision( 'admin/css/rdb-admin.css' ), false, rdb_file_version( 'admin/css/rdb-admin.css' ) );
+
         // Primary theme JavaScript.
         wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . '/' . $this->revision( 'admin/js/rdb-admin.js' ), array( 'jquery' ), rdb_file_version( 'admin/js/rdb-admin.js' ), true );
     }
@@ -211,7 +212,7 @@ class RDB_Styles_Scripts {
         }
         // Single match stylesheet.
         elseif ( 'wpcm_match' === $post_type ) {
-            if ( ! wp_script_is( 'dashicons' ) ) {
+            if ( ! wp_style_is( 'dashicons' ) ) {
                 wp_enqueue_style( 'dashicons' );
             }
 
@@ -329,45 +330,51 @@ class RDB_Styles_Scripts {
          */
         $register_scripts = array(
             'dt-pdfmake'       => array(
-                'src'    => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.js',
-                'dep'    => array( 'jquery' ),
-                'ver'    => self::DT_PLUGINS,
-                'footer' => true,
+                'src' => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/' . self::DT_PLUGINS . '/pdfmake.js',
+                'dep' => array( 'jquery' ),
+                'ver' => self::DT_PLUGINS,
+                'ftr' => true,
             ),
             'dt-vfs-fonts'     => array(
-                'src'    => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js',
-                'dep'    => array( 'dt-pdfmake' ),
-                'ver'    => self::DT_PLUGINS,
-                'footer' => true,
+                'src' => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/' . self::DT_PLUGINS . '/vfs_fonts.js',
+                'dep' => array( 'dt-pdfmake' ),
+                'ver' => self::DT_PLUGINS,
+                'ftr' => true,
             ),
             'datatables'       => array(
-                'src'    => "https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.22/af-2.3.5/b-1.6.4/b-colvis-1.6.4/b-html5-1.6.4/b-print-1.6.4/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.3/r-2.2.6/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.0/sp-1.2.0/sl-1.3.1/datatables{$this->dev}.js",
-                'dep'    => array( 'dt-vfs-fonts' ),
-                'ver'    => self::DT_VERSION,
-                'footer' => true,
+                'src' => 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-' . self::DT_VERSION . "/af-2.3.5/b-1.6.4/b-colvis-1.6.4/b-html5-1.6.4/b-print-1.6.4/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.3/r-2.2.6/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.0/sp-1.2.0/sl-1.3.1/datatables{$this->dev}.js",
+                'dep' => array( 'dt-vfs-fonts' ),
+                'ver' => self::DT_VERSION,
+                'ftr' => true,
             ),
             'datatables-yadcf' => array(
-                'src'    => get_template_directory_uri() . '/dist/js/jquery.dataTables.yadcf.js',
-                'dep'    => array( 'dt' ),
-                'ver'    => '0.9.3',
-                'footer' => true,
+                'src' => get_template_directory_uri() . '/dist/js/jquery.dataTables.yadcf.js',
+                'dep' => array( 'dt' ),
+                'ver' => '0.9.3',
+                'ftr' => true,
+            ),
+            'dt'               => array(
+                'src' => null,
+                'dep' => array( 'dt-pdfmake', 'dt-vfs-fonts', 'datatables' ),
+                'ver' => self::DT_VERSION,
+                'ftr' => true,
             ),
             'moment-timezone'  => $moment_scripts['moment-timezone'],
             'underscore'       => array(
-                'src'    => includes_url( "js/dist/vendor/lodash{$this->dev}.js" ),
-                'dep'    => false,
-                'ver'    => '4.17.15',
-                'footer' => true,
+                'src' => includes_url( "js/dist/vendor/lodash{$this->dev}.js" ),
+                'dep' => false,
+                'ver' => '4.17.15',
+                'ftr' => true,
             ),
         );
 
         // WP Club Manager JS assets.
         if ( function_exists( 'WPCM' ) ) {
             $register_scripts['chosen'] = array(
-                'src'    => WPCM()->plugin_url() . "/assets/js/jquery-chosen/chosen.jquery{$this->dev}.js",
-                'dep'    => array( 'jquery' ),
-                'ver'    => '1.8.2',
-                'footer' => true,
+                'src' => WPCM()->plugin_url() . "/assets/js/jquery-chosen/chosen.jquery{$this->dev}.js",
+                'dep' => array( 'jquery' ),
+                'ver' => '1.8.2',
+                'ftr' => true,
             );
         }
 
@@ -380,15 +387,12 @@ class RDB_Styles_Scripts {
 
         // Register scripts.
         foreach ( $register_scripts as $handle => $prop ) {
-            wp_register_script( $handle, $prop['src'], $prop['dep'], $prop['ver'], $prop['footer'] );
+            wp_register_script( $handle, $prop['src'], $prop['dep'], $prop['ver'], $prop['ftr'] );
 
             if ( 'moment-locale' === $handle ) {
-                wp_add_inline_script( $handle, $prop['script'] );
+                wp_add_inline_script( $handle, $prop['scr'] );
             }
         }
-
-        // Load all Datatables files in one handle.
-        wp_register_script( 'dt', null, array( 'dt-pdfmake', 'dt-vfs-fonts', 'datatables' ), self::DT_VERSION, true );
     }
 
     /**
@@ -407,7 +411,7 @@ class RDB_Styles_Scripts {
          */
         $register_styles = array(
             'datatables' => array(
-                'src' => "https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.22/af-2.3.5/b-1.6.4/b-colvis-1.6.4/b-html5-1.6.4/b-print-1.6.4/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.3/r-2.2.6/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.0/sp-1.2.0/sl-1.3.1/datatables{$this->dev}.css",
+                'src' => 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-' . self::DT_VERSION . "/af-2.3.5/b-1.6.4/b-colvis-1.6.4/b-html5-1.6.4/b-print-1.6.4/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.3/r-2.2.6/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.0/sp-1.2.0/sl-1.3.1/datatables{$this->dev}.css",
                 'dep' => false,
                 'ver' => self::DT_VERSION,
             ),
@@ -520,10 +524,10 @@ class RDB_Styles_Scripts {
         wp_deregister_script( 'wpcm-pa-script' );
 
         // Use Lodash in place of Underscore.
-        wp_deregister_script( 'underscore' ); // phpcs:ignore WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found
+        wp_deregister_script( 'underscore' );
 
         // Dergister jQuery to move it to footer.
-        wp_deregister_script( 'jquery' ); // phpcs:ignore WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found
+        wp_deregister_script( 'jquery' );
     }
 
     /**
@@ -638,13 +642,17 @@ class RDB_Styles_Scripts {
         $moment = 'moment.js';
         $key    = md5( $moment );
         $ver    = get_transient( $key );
+
         // Get WordPress' stock Moment.js version.
         if ( false === $ver ) {
             // WordPress' stock Moment.js file.
             $wp_moment = file_get_contents( ABSPATH . "wp-includes/js/dist/vendor/{$moment}" );
+
             preg_match_all( '|\/\/\!\sversion\s\:\s([0-9\.]+)|', $wp_moment, $wp_moment_ver );
+
             // Cache WP stock Moment.js version.
             set_transient( $key, $wp_moment_ver[1], ONE_MONTH );
+
             // WordPress' stock Moment.js version.
             $ver = $wp_moment_ver[1];
         }
@@ -672,16 +680,17 @@ class RDB_Styles_Scripts {
         // Register `moment.js` locale.
         if ( ! empty( $intl ) ) {
             $register_scripts['moment-locale'] = array(
-                'src'    => $intl,
-                'dep'    => array( 'moment' ),
-                'ver'    => $ver,
-                'footer' => true,
-                'script' => 'moment.locale( "' . $intl . '" )',
+                'src' => $intl,
+                'dep' => array( 'moment' ),
+                'ver' => $ver,
+                'ftr' => true,
+                'scr' => 'moment.locale( "' . $intl . '" )',
             );
         }
 
         // Filename for `moment-timezone.js`.
         $file = 'moment-timezone';
+
         // CDNJS results for `moment-timezone.js`.
         $data = rdb_remote_get(
             add_query_arg(
@@ -692,18 +701,21 @@ class RDB_Styles_Scripts {
                 $prefix . $file
             )
         );
+
         // Register latest version of `moment-timezone.js`.
         if ( is_object( $data ) ) {
             $timezone = $file_prefix . $file . '/' . $data->version . '/' . $file . "-with-data{$this->dev}.js";
 
             $register_scripts['moment-timezone'] = array(
-                'src'    => $timezone,
-                'dep'    => array( 'moment' ),
-                'ver'    => $data->version,
-                'footer' => true,
+                'src' => $timezone,
+                'dep' => array( 'moment' ),
+                'ver' => $data->version,
+                'ftr' => true,
             );
         }
 
         return $register_scripts;
     }
 }
+
+new RDB_Styles_Scripts();

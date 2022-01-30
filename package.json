@@ -61,8 +61,6 @@
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^5.0.3",
     "gulp-load-plugins": "^1.1.0",
-    "gulp-phpcbf": "^0.1.2",
-    "gulp-phpcs": "^2.1.0",
     "gulp-phplint": "^0.9.0",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^2.0.0",
@@ -90,9 +88,7 @@
     "lint:scss": "wp-scripts lint-style 'src/sass/**/*.scss'",
     "lint:js": "wp-scripts lint-js 'src/js/**/*.js'",
     "build": "gulp build --production",
-    "package": "gulp package --production",
-    "phpcs": "gulp phpcs",
-    "phpcbf": "gulp phpcbf"
+    "package": "gulp package --production"
   },
   "resolutions": {
     "uglify-es": "npm:terser"

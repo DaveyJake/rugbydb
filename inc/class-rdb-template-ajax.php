@@ -153,6 +153,7 @@ class RDB_Template_AJAX {
                     'per_page' => $this->per_page,
                     'page'     => $this->page,
                 );
+
                 $args = array_map( 'rawurlencode', $args );
 
                 $url = add_query_arg( $args, rest_url( $endpoint ) );
@@ -206,7 +207,7 @@ class RDB_Template_AJAX {
                 if ( is_wp_error( $data ) ) {
                     return $data->get_error_message();
                 } else {
-                    set_transient( $transient, $data, WEEK_IN_SECONDS );
+                    set_transient( $transient, $data, 3 * MONTH_IN_SECONDS );
                 }
             }
         }//end if
@@ -223,9 +224,9 @@ class RDB_Template_AJAX {
      */
     private function send_json( $data ) {
         if ( $this->check( $data ) || preg_match( '/<option/', wp_json_encode( $data ) ) ) {
-            wp_send_json_success( $data, 200 );
+            wp_send_json_success( $data );
         } else {
-            wp_send_json_error( $data, 400 );
+            wp_send_json_error( $data );
         }
     }
 

@@ -654,3 +654,5 @@ class RDB_Shortcodes {
         }
     }
 }
+
+new RDB_Shortcodes();

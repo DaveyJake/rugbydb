@@ -23,7 +23,7 @@ define( 'DATE_TIME', 'Y-m-d H:i:s' );
  *
  * @var constant
  */
-define( 'DATE_STATS', 'Y-m-d H:i:sP' );
+define( 'DATE_STATS', DATE_TIME . 'P' );
 
 /**
  * Ensure that the UTC timezone is THE UTC timezone.
@@ -49,7 +49,7 @@ define( 'ONE_WEEK', WEEK_IN_SECONDS );
 /**
  * Third-Party: Device Detection
  */
-require get_template_directory() . '/inc/class-rdb-device-detect.php';
+require_once get_template_directory() . '/inc/class-rdb-device-detect.php';
 
 /**
  * Make sure core plugin is loaded.
@@ -64,7 +64,7 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
 if ( is_plugin_active( 'wp-club-manager/wpclubmanager.php' )
     && file_exists( get_template_directory() . '/wpclubmanager/custom/config.php' )
 ) {
-    require get_template_directory() . '/wpclubmanager/custom/config.php';
+    require_once get_template_directory() . '/wpclubmanager/custom/config.php';
 }
 
 /**
@@ -126,17 +126,3 @@ require get_template_directory() . '/inc/class-rdb-front-page-filters.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/rdb-customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/rdb-jetpack.php';
-}
-
-/**
- * Globally instantiated classes.
- */
-$GLOBALS['rdb_device_detect']  = new RDB_Device_Detect();
-$GLOBALS['rdb_shortcodes']     = new RDB_Shortcodes();
-$GLOBALS['rdb_styles_scripts'] = new RDB_Styles_Scripts();

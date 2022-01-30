@@ -32,14 +32,23 @@ class RDB_Front_Page_Filters {
      */
     public function init() {
         echo '<div class="match-filters clearfix">';
+
             echo '<section class="season-opponent flex">';
+
                 echo '<div id="season"></div>';
+
                 echo '<div id="opponent"></div>';
+
             echo '</section>';
+
             echo '<section class="competition-venue flex">';
+
                 echo '<div id="competition"></div>';
+
                 echo '<div id="venue"></div>';
+
             echo '</section>';
+
         echo '</div>';
 
         $this->team_filter();
@@ -91,9 +100,13 @@ class RDB_Front_Page_Filters {
             }
 
             echo '<label id="' . esc_attr( $team->slug ) . '">' .
+
                 '<input type="checkbox" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" />' .
+
                 ' <span class="show-for-large">' . esc_html( $team->name ) . '</span>' .
+
                 '<span class="hide-for-large">' . esc_html( $abbr ) . '</span>' .
+
             '</label>';
         endforeach;
 
@@ -106,6 +119,7 @@ class RDB_Front_Page_Filters {
 
             printf( '<label class="match-type hide"><input type="radio" name="wpcm_friendly" value="%1$s"%2$s /> <span>%3$s</span></label>', esc_attr( $k ), $checked ? ' checked' : '', esc_html( $v ) );
         endforeach;
+
         echo '</div>';
     }
 

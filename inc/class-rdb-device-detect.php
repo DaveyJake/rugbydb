@@ -9,9 +9,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-// Autoload Sinergi detection.
-require_once get_template_directory() . '/inc/rdb-libs-autoload.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
-
 // Load `Mobile_Detect` class.
 require_once get_template_directory() . '/inc/libs/Mobile_Detect.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
@@ -58,8 +55,13 @@ class RDB_Device_Detect {
 
     /**
      * Primary constructor.
+     *
+     * @since 1.0.0
+     * @since 1.0.1 Added RDB_Device_Detect::autoload_sinergi()
      */
     public function __construct() {
+        $this->autoload_sinergi();
+
         $this->mobile_detect = new Mobile_Detect();
         $this->browser       = new Sinergi\BrowserDetector\Browser();
         $this->os            = new Sinergi\BrowserDetector\Os();
@@ -180,4 +182,52 @@ class RDB_Device_Detect {
     public function is_tablet() {
         return $this->mobile_detect->isTablet();
     }
+
+    /**
+     * A rdb-specific implementation.
+     * https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-examples.md
+     *
+     * After registering this autoload function with SPL, the following line
+     * would cause the function to attempt to load the \Foo\Bar\Baz\Qux class
+     * from /path/to/rdb/src/Baz/Qux.php:
+     *
+     *      new \Foo\Bar\Baz\Qux;
+     *
+     * @since 1.0.1
+     */
+    private function autoload_sinergi() {
+        // phpcs:disable
+        return spl_autoload_register( function( $class ) {
+            // USA_Rugby_Database-specific namespace prefix.
+            $prefix = 'Sinergi\\BrowserDetector\\';
+
+            // Base directory for the namespace prefix.
+            $base_dir = __DIR__ . '/libs/';
+
+            // Does the class use the namespace prefix?
+            $len = strlen( $prefix );
+
+            // No, move to the next registered autoloader.
+            if ( strncmp( $prefix, $class, $len ) !== 0 ) {
+                return;
+            }
+
+            // Get the relative class name.
+            $relative_class = substr( $class, $len );
+
+            /*
+             * Replace the namespace prefix with the base directory, replace namespace
+             * separators with directory separators in the relative class name, append
+             * with .php
+             */
+            $file = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
+
+            // If the file exists, require it.
+            if ( file_exists( $file ) ) {
+                require $file;
+            }
+        });
+    }
 }
+
+$GLOBALS['rdb_device_detect']  = new RDB_Device_Detect();
