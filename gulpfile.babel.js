@@ -163,10 +163,10 @@ function sass() {
         .pipe( $.postcss([ autoprefixer({ overrideBrowserslist: COMPATIBILITY }), cssnano() ]) )
         .pipe( $.if( PRODUCTION, $.cleanCss({ compatibility: 'edge' }) ) )
         .pipe( $.if( !PRODUCTION, $.sourcemaps.write( '.' ) ) )
-        .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
-        .pipe( $.rename( function( path ) { cssDestination( path ) })).pipe( gulp.dest( './' ) )
+        // .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
+        .pipe( $.rename( cssDestination ) ).pipe( gulp.dest( './' ) )
         .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() ) )
-        .pipe( $.rename( function( path ) { cssDestination( path ) })).pipe( gulp.dest( './' ) )
+        .pipe( $.rename( cssDestination ) ).pipe( gulp.dest( './' ) )
         .pipe( browser.reload({ stream: true }) );
 }
 
@@ -222,15 +222,11 @@ const webpack = {
             .pipe( named() )
             .pipe( webpackStream( webpack.config, webpack2 ) )
             .pipe( $.if( PRODUCTION, $.uglify().on( 'error', e => { console.log( e ); }) ) )
-            .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
-            .pipe( $.rename( function( path ) {
-                jsDestination( path )
-            }))
+            // .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() ) )
+            .pipe( $.rename( jsDestination ) )
             .pipe( gulp.dest( './' ) )
             .pipe( $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() ) )
-            .pipe( $.rename( function( path ) {
-                jsDestination( path )
-            }))
+            .pipe( $.rename( jsDestination ) )
             .pipe( gulp.dest( './' ) );
     },
     watch() {
@@ -246,9 +242,7 @@ const webpack = {
                     log( '[webpack:error]', err.toString({ colors: true }) )
                 })
             )
-            .pipe( $.rename( function( path ) {
-                jsDestination( path )
-            }))
+            .pipe( $.rename( jsDestination ) )
             .pipe( gulp.dest( './' ) );
     }
 };

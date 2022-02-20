@@ -35,9 +35,9 @@
     },
     "scripts": {
         "lint:wpcs": "/usr/local/opt/php@7.4/bin/php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
-        "phpcbf": "/usr/local/opt/php@7.4/bin/php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
         "lint:php": "/usr/local/opt/php@7.4/bin/php ./vendor/bin/parallel-lint --exclude .git --exclude vendor .",
-        "make-pot": "wp i18n make-pot . languages/_s.pot"
+        "make-pot": "wp i18n make-pot . languages/_s.pot",
+        "phpcbf": "/usr/local/opt/php@7.4/bin/php ./vendor/squizlabs/php_codesniffer/bin/phpcbf"
     },
     "support": {
         "issues": "https://github.com/Automattic/_s/issues",
