@@ -16,6 +16,8 @@ $unit: rem-calc(10px);
 }
 
 #grid {
+    @include relative;
+    min-height: rem-calc(250px);
     padding: 0;
 
     @include breakpoint(xxlarge) {
@@ -220,6 +222,7 @@ $unit: rem-calc(10px);
             }
         }
 
+        // stylelint-disable
         [title='Dennis Storer'] {
             .card__image {
                 background-position-y: rem-calc(-17px);

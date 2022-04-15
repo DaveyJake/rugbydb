@@ -1,4 +1,4 @@
-import { cards } from '../ui';
+import { cards } from 'UI';
 /**
  * Staff page.
  *

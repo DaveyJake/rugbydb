@@ -69,17 +69,20 @@
 
             if ( radius > 0 ) {
                 radius *= 1;
-                options = $.extend( {
+
+                options = $.extend({
                     strokeColor: '#0000FF',
                     strokeOpacity: .35,
                     strokeWeight: 2,
                     fillColor: '#0000FF',
                     fillOpacity: .2
                 }, options );
+
                 options.map = gmapContext.map;
                 options.radius = radius;
                 options.center = center;
                 gmapContext.circle = new google.maps.Circle( options );
+
                 return gmapContext.circle;
             }
 
@@ -89,14 +92,13 @@
             gMapContext.location = location;
             gMapContext.marker.setPosition( location );
             gMapContext.map.panTo( location );
+
             this.drawCircle( gMapContext, location, gMapContext.radius, {});
 
             if ( gMapContext.settings.enableReverseGeocode ) {
                 this.updateLocationName( gMapContext, callback );
-            } else {
-                if ( callback ) {
-                    callback.call( this, gMapContext );
-                }
+            } else if ( callback ) {
+                callback.call( this, gMapContext );
             }
         },
         locationFromLatLng: function( lnlg ) {
@@ -107,11 +109,13 @@
         },
         addressByFormat: function( addresses, format ) {
             var result = null;
+
             for ( var i = addresses.length - 1; i >= 0; i-- ) {
                 if ( addresses[ i ].types.indexOf( format ) >= 0 ) {
                     result = addresses[ i ];
                 }
             }
+
             return result || addresses[ 0 ];
         },
         updateLocationName: function( gmapContext, callback ) {
@@ -141,8 +145,10 @@
             console.log( address_components );
 
             var result = {};
+
             for ( var i = address_components.length - 1; i >= 0; i-- ) {
                 var component = address_components[ i ];
+
                 if ( component.types.indexOf( 'postal_code' ) >= 0 ) {
                     result.postalCode = component.short_name;
                 } else if ( component.types.indexOf( 'street_number' ) >= 0 ) {
@@ -207,12 +213,15 @@
             inputBinding.locationPlaceIdInput.val( gmapContext.place_id ).change();
         }
 
+        // Begin SchemaOrg properties.
         if ( inputBinding.schemaStreetAddress ) {
             inputBinding.schemaStreetAddress.val( gmapContext.addressComponents.addressLine1 ).change();
         }
+
         if ( inputBinding.schemaAddressLocality ) {
             inputBinding.schemaAddressLocality.val( gmapContext.addressComponents.city ).change();
         }
+
         if ( inputBinding.schemaAddressRegion ) {
             if ( 'GB' === gmapContext.addressComponents.country ) {
                 inputBinding.schemaAddressRegion.val( gmapContext.addressComponents.county ).change();
@@ -220,107 +229,135 @@
                 inputBinding.schemaAddressRegion.val( gmapContext.addressComponents.stateOrProvince ).change();
             }
         }
+
         if ( inputBinding.schemaPostalCode ) {
             inputBinding.schemaPostalCode.val( gmapContext.addressComponents.postalCode ).change();
         }
+
         if ( inputBinding.schemaAddressCountry ) {
             inputBinding.schemaAddressCountry.val( gmapContext.addressComponents.country ).change();
         }
+        // End SchemaOrg properties.
     }
 
     function setupInputListenersInput( inputBinding, gmapContext ) {
-        if ( inputBinding ) {
+        if ( ! inputBinding ) {
+            return;
+        }
 
-            if ( inputBinding.radiusInput ) {
-                inputBinding.radiusInput.on( 'change', function( e ) {
-                    var radiusInputValue = $( this ).val();
-                    if ( !e.originalEvent || isNaN( radiusInputValue ) ) {
-                        return;
-                    }
-                    gmapContext.radius = radiusInputValue;
-                    GmUtility.setPosition( gmapContext, gmapContext.location, function( context ) {
-                        context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
-                    });
-                });
-            }
+        if ( inputBinding.radiusInput ) {
+            inputBinding.radiusInput.on( 'change', function( e ) {
+                var radiusInputValue = $( this ).val();
 
-            if ( inputBinding.locationNameInput && gmapContext.settings.enableAutocomplete ) {
-                var blur = false;
-                gmapContext.autocomplete = new google.maps.places.Autocomplete( inputBinding.locationNameInput.get( 0 ), gmapContext.settings.autocompleteOptions );
-                google.maps.event.addListener( gmapContext.autocomplete, 'place_changed', function() {
-                    blur = false;
-                    var place = gmapContext.autocomplete.getPlace();
-                    if ( !place.geometry ) {
-                        gmapContext.settings.onlocationnotfound( place.name );
-                        return;
-                    }
-                    GmUtility.setPosition( gmapContext, place.geometry.location, function( context ) {
-                        updateInputValues( inputBinding, context );
-                        context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
-                    });
-                });
-
-                if ( gmapContext.settings.enableAutocompleteBlur ) {
-                    inputBinding.locationNameInput.on( 'change', function( e ) {
-                        if ( !e.originalEvent ) {
-                            return;
-                        }
-                        blur = true;
-                    });
-                    inputBinding.locationNameInput.on( 'blur', function( e ) {
-                        if ( !e.originalEvent ) {
-                            return;
-                        }
-                        setTimeout( function() {
-                            var address = $( inputBinding.locationNameInput ).val();
-                            if ( address.length > 5 && blur ) {
-                                blur = false;
-                                gmapContext.geodecoder.geocode( {
-                                    address: address
-                                }, function( results, status ) {
-                                    if ( status == google.maps.GeocoderStatus.OK && results && results.length ) {
-                                        GmUtility.setPosition( gmapContext, results[ 0 ].geometry.location, function( context ) {
-                                            updateInputValues( inputBinding, context );
-                                            context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
-                                        });
-                                    }
-                                });
-                            }
-                        }, 1e3 );
-                    });
+                if ( !e.originalEvent || isNaN( radiusInputValue ) ) {
+                    return;
                 }
-            }
 
-            if ( inputBinding.latitudeInput ) {
-                inputBinding.latitudeInput.on( 'change', function( e ) {
-                    var latitudeInputValue = $( this ).val();
-                    if ( !e.originalEvent || isNaN( latitudeInputValue ) ) {
+                gmapContext.radius = radiusInputValue;
+
+                GmUtility.setPosition( gmapContext, gmapContext.location, function( context ) {
+                    context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
+                });
+            });
+        }
+
+        if ( inputBinding.locationNameInput && gmapContext.settings.enableAutocomplete ) {
+            var blur = false;
+
+            gmapContext.autocomplete = new google.maps.places.Autocomplete( inputBinding.locationNameInput.get( 0 ), gmapContext.settings.autocompleteOptions );
+
+            google.maps.event.addListener( gmapContext.autocomplete, 'place_changed', function() {
+                blur = false;
+
+                var place = gmapContext.autocomplete.getPlace();
+
+                if ( !place.geometry ) {
+                    gmapContext.settings.onlocationnotfound( place.name );
+                    return;
+                }
+
+                GmUtility.setPosition( gmapContext, place.geometry.location, function( context ) {
+                    updateInputValues( inputBinding, context );
+                    context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
+                });
+            });
+
+            if ( gmapContext.settings.enableAutocompleteBlur ) {
+                inputBinding.locationNameInput.on( 'change', function( e ) {
+                    if ( !e.originalEvent ) {
                         return;
                     }
-                    GmUtility.setPosition( gmapContext, new google.maps.LatLng( latitudeInputValue, gmapContext.location.lng() ), function( context ) {
-                        context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
-                        updateInputValues( gmapContext.settings.inputBinding, gmapContext );
-                    });
-                });
-            }
 
-            if ( inputBinding.longitudeInput ) {
-                inputBinding.longitudeInput.on( 'change', function( e ) {
-                    var longitudeInputValue = $( this ).val();
-                    if ( !e.originalEvent || isNaN( longitudeInputValue ) ) {
+                    blur = true;
+                });
+
+                inputBinding.locationNameInput.on( 'blur', function( e ) {
+                    if ( !e.originalEvent ) {
                         return;
                     }
-                    GmUtility.setPosition( gmapContext, new google.maps.LatLng( gmapContext.location.lat(), longitudeInputValue ), function( context ) {
-                        context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
-                        updateInputValues( gmapContext.settings.inputBinding, gmapContext );
-                    });
+
+                    setTimeout( function() {
+                        var address = $( inputBinding.locationNameInput ).val();
+
+                        if ( address.length > 5 && blur ) {
+                            blur = false;
+
+                            gmapContext.geodecoder.geocode(
+                                {
+                                    address: address
+                                },
+                                function( results, status ) {
+                                    if ( status == google.maps.GeocoderStatus.OK && results && results.length ) {
+                                        GmUtility.setPosition(
+                                            gmapContext, results[ 0 ].geometry.location,
+                                            function( context ) {
+                                                updateInputValues( inputBinding, context );
+                                                context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
+                                            }
+                                        );
+                                    }
+                                }
+                            );
+                        }
+                    }, 1e3 );
                 });
             }
+        }
+
+        if ( inputBinding.latitudeInput ) {
+            inputBinding.latitudeInput.on( 'change', function( e ) {
+                var latitudeInputValue = $( this ).val();
+
+                if ( !e.originalEvent || isNaN( latitudeInputValue ) ) {
+                    return;
+                }
+
+                GmUtility.setPosition( gmapContext, new google.maps.LatLng( latitudeInputValue, gmapContext.location.lng() ), function( context ) {
+                    context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
+                    updateInputValues( gmapContext.settings.inputBinding, gmapContext );
+                });
+            });
+        }
+
+        if ( inputBinding.longitudeInput ) {
+            inputBinding.longitudeInput.on( 'change', function( e ) {
+                var longitudeInputValue = $( this ).val();
+
+                if ( !e.originalEvent || isNaN( longitudeInputValue ) ) {
+                    return;
+                }
+
+                GmUtility.setPosition( gmapContext, new google.maps.LatLng( gmapContext.location.lat(), longitudeInputValue ), function( context ) {
+                    context.settings.onchanged.apply( gmapContext.domContainer, [ GmUtility.locationFromLatLng( context.location ), context.radius, false ] );
+                    updateInputValues( gmapContext.settings.inputBinding, gmapContext );
+                });
+            });
         }
     }
 
     function autosize( gmapContext ) {
         google.maps.event.trigger( gmapContext.map, 'resize' );
+
         setTimeout( function() {
             gmapContext.map.setCenter( gmapContext.marker.position );
         }, 300 );
@@ -336,6 +373,7 @@
             radiusOld = gmapContext.settings.radius;
 
         if ( latNew == latOld && lngNew == lngOld && radiusNew == radiusOld ) return;
+
         gmapContext.settings.location.latitude = latNew;
         gmapContext.settings.location.longitude = lngNew;
         gmapContext.radius = radiusNew;
@@ -409,11 +447,14 @@
 
         return this.each( function() {
             var $target = $( this );
+
             if ( isPluginApplied( this ) ) {
                 updateMap( getContextForElement( this ), $( this ), options );
                 return;
             }
+
             var settings = $.extend( {}, $.fn.locationpicker.defaults, options );
+
             var gmapContext = new GMapContext( this, $.extend( {}, {
                 zoom: settings.zoom,
                 center: new google.maps.LatLng( settings.location.latitude, settings.location.longitude ),
@@ -451,6 +492,7 @@
                         updateInputValues( gmapContext.settings.inputBinding, gmapContext );
                     }
                 });
+
                 gmapContext.map.addListener( 'idle', function() {
                     if ( !gmapContext.marker.dragging ) {
                         displayMarkerWithSelectedArea();

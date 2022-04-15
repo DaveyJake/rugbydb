@@ -1,4 +1,5 @@
 config.yml
+dev
 dist
 jquery.adaptive-backgrounds
 node_modules

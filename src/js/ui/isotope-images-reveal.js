@@ -1,9 +1,10 @@
-import { _ } from '../utils/globals';
 /**
  * jQuery plugin extension.
  *
  * @since 1.0.0
  */
+
+import { _ } from 'Utils';
 
 /**
  * Programmatically reveal images as they become available.

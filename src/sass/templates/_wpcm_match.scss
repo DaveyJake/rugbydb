@@ -1,56 +1,26 @@
-$block: 145px;
-$badge: 150px;
-$badge-overflow-height: 13rem;
-$badge-overflow-height--desktop: rem-calc(240px);
-$border: 1px solid #ddd;
-$border-space: 2px;
-$direction: left center right;
-$icons: (venue: right, referee: left);
-$padding: 0.5em;
-$position: (home: before, away: after);
-$offset: (before: -8.5rem, after: 0.5rem );
-$offset--small: (before: -6.5rem, after: 1.5rem);
-$offset--medium: (before: -4.5rem, after: 1.5rem);
-$offset--large: (before: -3.5rem, after: 1.5rem);
-$wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
-
 .wpcm {
     &-match {
+        &-details table td.notes,
+        &-info,
+        &-meta,
+        &-meta-mobile,
+        &-referee,
+        &-venue a {
+            display: flex;
+        }
+
         &-away,
         &-home {
             &-club {
-                margin: -3.2rem auto 0;
-                @include breakpoint(medium) {
-                    margin: -3.5625rem auto 0;
-                }
-                padding: 0;
-                width: $block;
-                line-height: 1;
-                font: {
-                    size: 1em;
-                    weight: 500;
-                }
-                color: $color__blue;
-                text-shadow: 0 1px 0 $color__text-inset;
+                @include wpcm-match-club-block-style;
             }
         }
 
         &-club-badge {
-            display: none;
-            align-self: center;
-            position: relative;
-            width: rem-calc($badge);
-            height: rem-calc($badge);
-            background: {
-                size: contain;
-                position: center;
-                repeat: no-repeat;
-            }
-            z-index: 1;
+            @include wpcm-match-club-badge-style;
 
             &.home-logo {
-                left: 0;
-                transform: translateX(20%);
+                @include wpcm-match-logo-position;
 
                 &[data-interchange*='black-ferns'] {
                     width: $badge-overflow-height;
@@ -58,8 +28,7 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
             }
 
             &.away-logo {
-                right: 0;
-                transform: translateX(-20%);
+                @include wpcm-match-logo-position('away');
 
                 &[data-interchange*='black-ferns'] {
                     width: $badge-overflow-height;
@@ -72,63 +41,15 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
         }
 
         &-comp {
-            padding-top: $padding;
-
-            @include breakpoint(medium) {
-                padding-top: 0;
-            }
-
-            div:last-child {
-                padding-top: $padding;
-            }
+            @include wpcm-match-competition;
         }
 
         &-date {
-            text-transform: inherit;
-
-            &-local {
-                padding-left: $padding;
-                white-space: nowrap;
-            }
-
-            &-website {
-                padding-right: $padding;
-                white-space: nowrap;
-            }
-
-            .at-symbol {
-                position: relative;
-                top: -2px;
-                font-size: 80%;
-            }
+            @include wpcm-match-date;
         }
 
         &-details {
-            padding: 0;
-
-            table td.notes {
-                display: flex;
-                justify-content: center;
-
-                .yellowcard,
-                .redcard {
-                    display: inline-block;
-                    width: 1.5rem;
-                    height: 2.26rem;
-                    background: url('#{$wpcm-path}/assets/images/notes@2x.png') no-repeat;
-                    overflow: hidden;
-                    margin-left: rem-calc(8px);
-                    text-indent: rem-calc(-100px);
-                }
-
-                .yellowcard {
-                    background-position: 0 0;
-                }
-
-                .redcard {
-                    background-position: -1.5rem 0;
-                }
-            }
+            @include wpcm-match-details;
         }
 
         &-fixture {
@@ -139,58 +60,11 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
         }
 
         &-head-coach {
-            .dashicons-before {
-                padding-top: 0.4em;
-
-                &::before {
-                    margin-top: 2px;
-                    margin-right: 2px;
-                }
-            }
+            @include wpcm-match-head-coach;
         }
 
         &-info {
-            display: flex;
-            justify-content: space-between;
-            padding: 0;
-            height: $badge-overflow-height;
-            overflow: hidden;
-            position: relative;
-            @include breakpoint(medium) {
-                height: $badge-overflow-height--desktop;
-            }
-
-            &::before,
-            &::after {
-                content: ' ';
-                background: {
-                    size: 125%;
-                    repeat: no-repeat;
-                }
-                position: absolute;
-                @include half-width;
-                height: inherit;
-                opacity: 0.25;
-                z-index: 0;
-
-                @include breakpoint(medium) {
-                    background-size: 120%;
-                }
-
-                @include breakpoint(large) {
-                    background-size: 100%;
-                }
-            }
-
-            &::before {
-                left: 0;
-                background-image: var(--home-badge);
-            }
-
-            &::after {
-                right: 0;
-                background-image: var(--away-badge);
-            }
+            @include wpcm-match-info;
 
             &[data-away='asm-clermont-auvergne'] {
                 &::after {
@@ -429,9 +303,11 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
                 &[data-#{$side}*='canada'] {
                     &::#{$pos} {
                         background-position: map-get($offset--small, $pos);
+
                         @include breakpoint(medium) {
                             background-position: map-get($offset--medium, $pos);
                         }
+
                         @include breakpoint(large) {
                             background-position: map-get($offset--large, $pos);
                         }
@@ -457,6 +333,7 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
                         @include breakpoint(small only) {
                             background-size: 246%;
                         }
+
                         @include breakpoint(mobile) {
                             background-size: 160%;
                         }
@@ -510,6 +387,7 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
                         @include breakpoint(small only) {
                             background-size: 215%;
                         }
+
                         @include breakpoint(wordpress) {
                             background-size: 130%;
                         }
@@ -539,9 +417,11 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
                         @include breakpoint(small only) {
                             background-size: 300%;
                         }
+
                         @include breakpoint(mobile) {
                             background-size: 200%;
                         }
+
                         @include breakpoint(wordpress) {
                             background-size: 125%;
                         }
@@ -557,19 +437,7 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
         }
 
         &-referee {
-            display: flex;
-            align-items: center;
-            padding-top: $padding;
-
-            @include breakpoint(medium) {
-                padding-top: 0;
-            }
-
-            #ref-icon {
-                position: relative;
-                left: -3px;
-                width: 14px;
-            }
+            @include wpcm-match-referee;
         }
 
         &-report {
@@ -581,78 +449,11 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
         }
 
         &-score {
-            @include flex-center;
-            @include typekit-industry;
-            @include absolute-center;
-            width: 300px;
-            z-index: 1;
-
-            &__home,
-            &__away {
-                @include score-block;
-                margin: rem-calc(45px) 5px 5px;
-            }
-
-            &__fulltime,
-            &__halftime {
-                position: relative;
-                text-shadow: 1px 1px 5px $color__text-shadow;
-
-                span {
-                    @include absolute-center;
-                }
-            }
-
-            &__fulltime {
-                height: 80px;
-
-                &:last-child {
-                    font-size: 5.5rem;
-                }
-            }
-
-            &__halftime {
-                height: 40px;
-                font: {
-                    size: $padding;
-                    weight: 500;
-                }
-            }
-
-            &.no-halftime-score {
-                .wpcm-match-score {
-                    &__fulltime,
-                    &__halftime {
-                        span {
-                            position: absolute;
-                            top: 81%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                        }
-                    }
-                }
-            }
+            @include wpcm-match-score;
         }
 
         &-stats {
-            @include breakpoint(wordpress) {
-                @include full-width;
-            }
-
-            .name {
-                text-align: left;
-            }
-
-            &-subs-rows {
-                padding-top: 0;
-            }
-
-            .t,
-            .p,
-            .c,
-            .dg {
-                text-align: center;
-            }
+            @include wpcm-match-stats;
         }
 
         &-team {
@@ -676,7 +477,6 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
 
         &-venue {
             a {
-                display: flex;
                 align-items: center;
             }
         }
@@ -687,7 +487,6 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
         }
 
         &-meta {
-            display: flex;
             border: {
                 top: $border;
                 bottom: $border;
@@ -716,57 +515,23 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
             }
 
             &-mobile {
-                display: flex;
-                flex-direction: column;
-                margin: auto;
-                text-align: center;
-
-                > :not(.wpcm-match-comp) {
-                    padding-top: $padding;
-                }
-
-                .wpcm-match {
-                    &-comp {
-                        order: 1;
-                    }
-
-                    &-venue,
-                    &-attendance {
-                        order: 2;
-                    }
-
-                    &-referee {
-                        order: 3;
-                    }
-
-                    &-team {
-                        order: 4;
-                    }
-
-                    &-date-local {
-                        order: 5;
-                    }
-
-                    &-date-website {
-                        order: 6;
-                    }
-                }
+                @include wpcm-match-meta-mobile;
             }
 
-            &-left {
-                @include flex-column {
-                    justify-content: space-between;
-                    align-content: center;
-                    align-items: flex-start;
-                }
-            }
-
+            &-left,
             &-right {
                 @include flex-column {
                     justify-content: space-between;
                     align-content: center;
-                    align-items: flex-end;
                 }
+            }
+
+            &-left {
+                align-items: flex-start;
+            }
+
+            &-right {
+                align-items: flex-end;
 
                 .wpcm-match-team:first-child {
                     padding-top: 0;
@@ -776,182 +541,11 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
     }
 
     &-entry {
-        &-title,
-        &-excerpt,
-        &-meta,
-        &-content {
-            @include breakpoint(mobile down) {
-                font-size: 80%;
-            }
-        }
-
-        &-meta {
-            @include flex-evenly;
-            overflow: hidden;
-
-            @include breakpoint(medium down) {
-                margin-bottom: 0.75em;
-            }
-        }
-
-        &-excerpt,
-        &-content {
-            font-family: $font__post-content;
-        }
-
-        &-title,
-        &-excerpt {
-            text-align: center;
-        }
-
-        &-title {
-            margin: 0;
-            font: {
-                family: $font__post-title;
-                size: 1.75em;
-                weight: 900;
-            }
-            line-height: 1.3;
-
-            @include breakpoint(medium) {
-                font-size: $size__post-title;
-            }
-        }
-
-        &-excerpt {
-            margin: 0.25em 0 $padding;
-            font: {
-                size: 1em;
-                weight: 800;
-            }
-            @include breakpoint(medium) {
-                font-size: $size__post-excerpt;
-            }
-        }
-
-        &-content {
-            font-weight: 500;
-
-            p {
-                @include breakpoint(medium) {
-                    text-align: justify;
-                }
-            }
-
-            .featured,
-            .supplementary {
-                &-image {
-                    position: relative;
-                    line-height: 0.7;
-
-                    &__description,
-                    &__photographer {
-                        line-height: 1.3;
-                        @include breakpoint(mobile down) {
-                            @include text(center);
-                        }
-                    }
-
-                    &__description {
-                        @include flex-between;
-                        padding: 5px;
-                        padding-left: 9px;
-                        background: transparent-white(0.8);
-                        @include absolute-bottom {
-                            left: 0;
-                        }
-                        @include full-width;
-                        font: {
-                            size: 0.9em;
-                            weight: 800;
-                        }
-                        text-shadow: 0 1px 0 transparent-white(0.72);
-
-                        @include breakpoint(563px) {
-                            font-size: 1em;
-                        }
-
-                        @include breakpoint(medium down) {
-                            display: none;
-                        }
-
-                        &__text {
-                            align-self: center;
-                        }
-                    }
-
-                    &__photographer {
-                        @include text(right);
-                        @include breakpoint(medium down) {
-                            &--inner {
-                                display: none;
-                            }
-                        }
-                        @include breakpoint(wordpress) {
-                            &--outer {
-                                display: none;
-                            }
-                        }
-                    }
-
-                    &.has-caption {
-                        .featured,
-                        .supplementary {
-                            &-image {
-                                &__photographer {
-                                    &--inner {
-                                        margin-left: ($border-space * 2);
-                                        padding: ($border-space * 4) 0;
-                                        padding-right: ($border-space * 2);
-                                        border-left: 1px solid #555;
-
-                                        &::before {
-                                            content: '';
-                                            position: relative;
-                                            top: $border-space;
-                                            border-left: 1px solid transparent-white(0.72);
-                                            padding: ($border-space * 4) ($border-space * 2) ($border-space * 2);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        @include wpcm-entry;
     }
 
     &-lineup {
-        &-table {
-            border-bottom: 0;
-            margin-bottom: 0;
-
-            th.shirt-number {
-                white-space: nowrap;
-                min-width: rem-calc(88px);
-                width: rem-calc(88px);
-                max-width: rem-calc(88px);
-                text-align: center !important;
-            }
-
-            .name {
-                @include text(left);
-            }
-
-            .stats {
-                width: rem-calc(50px);
-                @include text(center);
-            }
-
-            &.dataTable {
-                tbody {
-                    tr {
-                        background-color: $color__background-screen;
-                    }
-                }
-            }
-        }
+        @include wpcm-lineup;
     }
 
     &_match {

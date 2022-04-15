@@ -84,7 +84,7 @@ function rdb_body_classes( $classes ) {
     if ( is_page() && ! is_front_page() ) {
         $title = get_the_title();
 
-        $classes[] = 'page-' . sanitize_title( $title );
+        $classes[] = sprintf( 'page-%s', sanitize_title( $title ) );
     }
 
     return $classes;
@@ -108,7 +108,7 @@ function rdb_menu_item_classes( $classes, $item, $args, $depth ) {
 
         $classes = array_merge( $classes, $item_classes );
 
-        $classes[] = "menu-item-{$item->post_name}";
+        $classes[] = sprintf( 'menu-item-%s', $item->post_name );
     }
 
     return $classes;
@@ -201,13 +201,14 @@ function rdb_players_page_filters( $post_id ) {
  * @return array Sizes safe to use.
  */
 function rdb_prevent_post_type_image_resize( $sizes ) {
-    // phpcs:disable WordPress.Security
+    $sizes = (array) $sizes;
+
     if ( isset( $_GET['post_id'] ) ) {
-        $post_id = wp_unslash( $_GET['post_id'] );
+        $post_id = sanitize_text_field( wp_unslash( $_GET['post_id'] ) );
     }
 
     if ( isset( $_GET['ids'] ) ) {
-        $post_ids = wp_unslash( $_GET['ids'] );
+        $post_ids = sanitize_text_field( wp_unslash( $_GET['ids'] ) );
     }
 
     if ( ! empty( $post_id ) ) {
@@ -217,6 +218,8 @@ function rdb_prevent_post_type_image_resize( $sizes ) {
     }
 
     if ( ! empty( $post_ids ) ) {
+        $post_ids = explode( ',', $post_ids );
+
         foreach ( $post_ids as $image_id ) {
             $image  = get_post( $image_id );
             $parent = $image->post_parent;
@@ -243,14 +246,17 @@ function rdb_prevent_post_type_image_resize( $sizes ) {
  * @return array Sizes safe to use.
  */
 function _rdb_prevent_post_type_image_resize( $post_type, $sizes ) {
+    $fb_regular = sprintf( 'facebook_%s', $post_type );
+    $fb_retina  = sprintf( 'facebook_retina_%s', $post_type );
+
     // Post types.
     $default_types   = array( 'post', 'page' );
     $players_coaches = array( 'wpcm_player', 'wpcm_staff' );
     // Image sizes.
     $defaults     = get_intermediate_image_sizes();
-    $social_sizes = array( 'thumbnail', "facebook_{$post_type}", "facebook_retina_{$post_type}" );
+    $social_sizes = array( 'thumbnail', $fb_regular, $fb_retina );
     $club_sizes   = array( 'club_thumbnail', 'club_single', 'facebook_wpcm_club', 'facebook_retina_wpcm_club' );
-    $player_sizes = array( 'player_single', 'staff_single', 'player_thumbnail', 'staff_thumbnail', "facebook_{$post_type}", "facebook_retina_{$post_type}" );
+    $player_sizes = array( 'player_single', 'staff_single', 'player_thumbnail', 'staff_thumbnail', $fb_regular, $fb_retina );
 
     foreach ( $sizes as $i => $size ) {
         if ( in_array( $post_type, $players_coaches, true ) && ! in_array( $size, $player_sizes, true ) ) {
@@ -280,6 +286,7 @@ function rdb_purge_hooks() {
     add_action( 'saved_wpcm_venue', 'rdb_purge_term_transient', 10, 3 );
 
     $ajax_post_types = array( 'wpcm_club', 'wpcm_match', 'wpcm_player', 'wpcm_staff' );
+
     foreach ( $ajax_post_types as $post_type ) {
         add_action( "save_post_{$post_type}", 'rdb_purge_post_transient', 10, 3 );
     }
@@ -313,14 +320,14 @@ function rdb_purge_post_transient( $post_ID, $post, $update ) {
     }
 
     $post_type = $types[ $post->post_type ];
-    $endpoint  = "wp/v2/{$post_type}";
+    $endpoint  = sprintf( 'wp/v2/%s', $post_type );
 
     if ( $update ) {
-        $endpoint .= "/{$post_ID}";
+        $endpoint .= sprintf( '/%d', $post_ID );
     }
 
     $url       = rest_url( $endpoint );
-    $transient = md5( $url );
+    $transient = sanitize_title( $endpoint );
 
     delete_transient( $transient );
 }
@@ -343,8 +350,10 @@ function rdb_purge_term_transient( $term_id, $tt_id, $update ) {
         return;
     }
 
-    $url       = rest_url( 'wp/v2/venues' );
-    $transient = md5( $url );
+    $endpoint = 'wp/v2/venues';
+
+    $url       = rest_url( $endpoint );
+    $transient = sanitize_title( $endpoint );
 
     delete_transient( $transient );
 }
@@ -389,7 +398,7 @@ function rdb_schema_front_page( $data = null ) {
             'about'         => 'Tracking the USA Rugby Eagles since 2019.',
             'genre'         => 'https://www.wikidata.org/wiki/Q349',
             'creator'       => 'Davey Jacobson',
-            'copyrightYear' => 2019,
+            'copyrightYear' => date( 'Y' ),
             'image'         => get_theme_file_uri( 'dist/img/rugbydb@2x.png' ),
             'url'           => site_url(),
         );
@@ -403,7 +412,7 @@ function rdb_schema_front_page( $data = null ) {
         $data['about']         = 'Tracking the USA Rugby Eagles since 2019.';
         $data['genre']         = 'https://www.wikidata.org/wiki/Q349';
         $data['creator']       = 'Davey Jacobson';
-        $data['copyrightYear'] = 2019;
+        $data['copyrightYear'] = date( 'Y' );
         $data['image']         = get_theme_file_uri( 'dist/img/rugbydb@2x.png' );
 
         return $data;

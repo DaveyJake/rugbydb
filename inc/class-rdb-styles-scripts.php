@@ -89,10 +89,10 @@ class RDB_Styles_Scripts {
      */
     public function admin() {
         // Primary theme stylesheet.
-        wp_enqueue_style( 'rdb-admin-style', get_template_directory_uri() . '/' . $this->revision( 'admin/css/rdb-admin.css' ), false, rdb_file_version( 'admin/css/rdb-admin.css' ) );
+        wp_enqueue_style( 'rdb-admin-style', get_template_directory_uri() . '/admin/css/rdb-admin.css', false, rdb_file_version( 'admin/css/rdb-admin.css' ) );
 
         // Primary theme JavaScript.
-        wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . '/' . $this->revision( 'admin/js/rdb-admin.js' ), array( 'jquery' ), rdb_file_version( 'admin/js/rdb-admin.js' ), true );
+        wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . '/admin/js/rdb-admin.js', array( 'jquery' ), rdb_file_version( 'admin/js/rdb-admin.js' ), true );
     }
 
     /**
@@ -103,10 +103,10 @@ class RDB_Styles_Scripts {
      * @see RDB_Styles_Scripts::register_styles()
      * @see RDB_Styles_Scripts::register_scripts()
      *
-     * @global RDB_Device_Detect $rdb_device_detect Device detection library.
+     * @global RDB_Device_Detect $rdb_device Device detection library.
      */
     public function enqueue() {
-        global $rdb_device_detect, $template;
+        global $rdb_device, $template;
 
         // Disable unecessary assets.
         $this->disable_unecessary_assets();
@@ -131,139 +131,23 @@ class RDB_Styles_Scripts {
 
         // Load custom styles & scripts for specified pages & posts.
         if ( is_front_page() ) {
-            // DataTables.
-            wp_enqueue_style( 'datatables' );
-            wp_enqueue_style( 'datatables-yadcf' );
-            wp_enqueue_style( 'rdb-front-page' );
-
-            // Chosen on desktops.
-            if ( ! wp_is_mobile() ) {
-                wp_enqueue_style( 'chosen' );
-                wp_enqueue_script( 'chosen' );
-            }
-
-            // Moment.js library.
-            wp_enqueue_script( 'moment' );
-            $this->deps[] = 'moment';
-
-            // Moment locale.
-            if ( wp_script_is( 'moment-locale', 'registered' ) ) {
-                wp_enqueue_script( 'moment-locale' );
-                $this->deps[] = 'moment-locale';
-            }
-
-            // Moment timezone.
-            wp_enqueue_script( 'moment-timezone' );
-            $this->deps[] = 'moment-timezone';
-
-            // DataTables library.
-            wp_enqueue_script( 'dt' );
-            $this->deps[] = 'dt';
-
-            // Yet Another DataTables Custom Filter plug-in.
-            wp_enqueue_script( 'datatables-yadcf' );
-            $this->deps[] = 'datatables-yadcf';
-        }
-        // Archives.
-        elseif ( is_archive() ) {
-            // Team and venue.
-            if ( false !== get_query_var( 'wpcm_venue', false ) || false !== get_query_var( 'wpcm_team', false ) ) {
-                if ( ! wp_is_mobile() ) {
-                    wp_enqueue_style( 'chosen' );
-                    wp_enqueue_script( 'chosen' );
-                }
-
-                $team = get_query_var( 'wpcm_team', false );
-                if ( false !== $team ) {
-                    wp_enqueue_style( 'rdb-team' );
-                    wp_enqueue_script( 'imagesloaded' );
-                    wp_enqueue_script( 'wp-util' );
-
-                    $this->deps[] = 'imagesloaded';
-                    $this->deps[] = 'wp-util';
-                } else {
-                    wp_enqueue_style( 'rdb-venue' );
-                }
-
-                wp_enqueue_style( 'datatables' );
-
-                wp_enqueue_script( 'moment' );
-                $this->deps[] = 'moment';
-
-                if ( wp_script_is( 'moment-locale', 'registered' ) ) {
-                    wp_enqueue_script( 'moment-locale' );
-                    $this->deps[] = 'moment-locale';
-                }
-
-                wp_enqueue_script( 'moment-timezone' );
-                $this->deps[] = 'moment-timezone';
-
-                wp_enqueue_script( 'dt' );
-                $this->deps[] = 'dt';
-            }
-        }
-        // Single club stylesheet.
-        elseif ( 'wpcm_club' === $post_type ) {
-            wp_enqueue_style( 'rdb-union' );
-            wp_enqueue_style( 'datatables' );
-            wp_enqueue_script( 'dt' );
-
-            $this->deps[] = 'dt';
-        }
-        // Single match stylesheet.
-        elseif ( 'wpcm_match' === $post_type ) {
-            if ( ! wp_style_is( 'dashicons' ) ) {
-                wp_enqueue_style( 'dashicons' );
-            }
-
-            wp_enqueue_style( 'rdb-match' );
-            wp_enqueue_style( 'datatables' );
-            wp_enqueue_script( 'dt' );
-            wp_enqueue_script( 'wp-util' );
-
-            $this->deps[] = 'wp-util';
-            $this->deps[] = 'dt';
-        }
-        // Single player stylesheet.
-        elseif ( 'wpcm_player' === $post_type ) {
-            wp_enqueue_style( 'rdb-player' );
-            wp_enqueue_style( 'datatables' );
-            wp_enqueue_script( 'dt' );
-        }
-        // Single staff stylesheet.
-        elseif ( 'wpcm_staff' === $post_type ) {
+            $this->front_page( $this->deps );
+        } elseif ( is_archive() ) {
+            $this->archive( $this->deps );
+        } elseif ( 'wpcm_club' === $post_type ) {
+            $this->wpcm_club( $this->deps );
+        } elseif ( 'wpcm_match' === $post_type ) {
+            $this->wpcm_match( $this->deps );
+        } elseif ( 'wpcm_player' === $post_type ) {
+            $this->wpcm_player( $this->deps );
+        } elseif ( 'wpcm_staff' === $post_type ) {
             wp_enqueue_style( 'rdb-single-staff' );
-        }
-        // Page.
-        elseif ( 'page' === $post_type ) {
-            // Pages with cards.
-            $cards = array( 'staff', 'teams', 'venues', 'opponents' );
-
-            if ( is_page( $cards ) ) {
-                // Stylesheet for a cards page.
-                foreach ( $cards as $page ) {
-                    if ( ( 'venues' === $page || 'opponents' === $page ) && false === wp_is_mobile() ) {
-                        wp_enqueue_style( 'chosen' );
-                        wp_enqueue_script( 'chosen' );
-                    }
-
-                    if ( is_page( $page ) ) {
-                        wp_enqueue_style( "rdb-{$page}" );
-                    }
-                }
-
-                wp_enqueue_script( 'imagesloaded' );
-                wp_enqueue_script( 'wp-util' );
-
-                $this->deps[] = 'imagesloaded';
-                $this->deps[] = 'wp-util';
-            } else {
-                wp_enqueue_style( 'rdb-page' );
-            }
+        } elseif ( 'page' === $post_type ) {
+            $this->page( $this->deps );
         }
 
         // Primary theme JavaScript.
-        wp_register_script( 'rdb-script', get_template_directory_uri() . '/' . $this->revision( 'dist/js/rdb.js' ), $this->deps, rdb_file_version( 'dist/js/rdb.js' ), true );
+        wp_register_script( 'rdb-script', get_template_directory_uri() . '/dist/js/rdb.js', $this->deps, rdb_file_version( 'dist/js/rdb.js' ), true );
 
         // Check if viewing term template page.
         $team_query_var  = get_query_var( 'wpcm_team', false );
@@ -282,8 +166,8 @@ class RDB_Styles_Scripts {
             'is_dev'           => boolval( wp_get_environment_type() === 'local' ),
             'is_front_page'    => boolval( is_front_page() ),
             'is_page'          => boolval( is_page() && ! is_front_page() ),
-            'is_mobile'        => boolval( $rdb_device_detect->mobile_detect() ),
-            'is_tablet'        => boolval( $rdb_device_detect->is_tablet() ),
+            'is_mobile'        => boolval( wp_is_mobile() ),
+            'is_tablet'        => boolval( $rdb_device->is_tablet() ),
             'is_term'          => boolval( is_archive() ),
             'is_wpclubmanager' => function_exists( 'is_wpclubmanager' ) ? boolval( is_wpclubmanager() ) : false,
             'post_id'          => ( is_singular() ? $post_id : '' ),
@@ -314,7 +198,7 @@ class RDB_Styles_Scripts {
          *
          * @since 1.0.0
          */
-        wp_enqueue_script( 'jquery', includes_url( 'js/jquery/jquery.js' ), false, '1.12.4-wp', true );
+        wp_enqueue_script( 'jquery', includes_url( 'js/jquery/jquery.js' ), false, '3.6.0', true );
 
         /**
          * Request & retrieve the latest Moment.js libraries.
@@ -426,62 +310,62 @@ class RDB_Styles_Scripts {
                 'ver' => '1.0.0',
             ),
             'rdb-front-page' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/front-page.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/front-page.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/front-page.css' ),
             ),
             'rdb-union' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/single-wpcm_club.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/single-wpcm_club.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_club.css' ),
             ),
             'rdb-match' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/single-wpcm_match.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/single-wpcm_match.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_match.css' ),
             ),
             'rdb-page' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/page.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page.css' ),
             ),
             'rdb-player' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/single-wpcm_player.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/single-wpcm_player.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_player.css' ),
             ),
             'rdb-single-staff' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/single-wpcm_staff.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/single-wpcm_staff.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/single-wpcm_staff.css' ),
             ),
             'rdb-staff' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page-staff.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/page-staff.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-staff.css' ),
             ),
             'rdb-team' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/taxonomy-wpcm_team.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/taxonomy-wpcm_team.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/taxonomy-wpcm_team.css' ),
             ),
             'rdb-teams' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page-teams.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/page-teams.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-teams.css' ),
             ),
             'rdb-opponents' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page-opponents.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/page-opponents.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-opponents.css' ),
             ),
             'rdb-venue' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/taxonomy-wpcm_venue.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/taxonomy-wpcm_venue.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/taxonomy-wpcm_venue.css' ),
             ),
             'rdb-venues' => array(
-                'src' => get_template_directory_uri() . '/' . $this->revision( 'dist/css/page-venues.css' ),
+                'src' => get_template_directory_uri() . '/dist/css/page-venues.css',
                 'dep' => false,
                 'ver' => rdb_file_version( 'dist/css/page-venues.css' ),
             ),
@@ -558,9 +442,7 @@ class RDB_Styles_Scripts {
         // $media = 'all';
         // phpcs:enable
 
-        $html = '<link rel="preload" as="style" id="' . esc_attr( $handle ) . '" href="' . esc_url( $href ) . '" type="text/css" media="' . esc_attr( $media ) . '" onload="this.rel=\'stylesheet\';this.media=\'all\';this.onload=null" />';
-
-        return $html;
+        return '<link rel="preload" as="style" id="' . esc_attr( $handle ) . '" href="' . esc_url( $href ) . '" type="text/css" media="' . esc_attr( $media ) . '" onload="this.rel=\'stylesheet\';this.media=\'all\';this.onload=null" />';
     }
 
     /**
@@ -572,40 +454,8 @@ class RDB_Styles_Scripts {
      */
     public function inline_styles() {
         echo '<style>';
-            echo file_get_contents( get_template_directory() . '/' . $this->revision( 'dist/css/above-the-fold.css' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+            echo file_get_contents( get_template_directory() . '/dist/css/above-the-fold.css' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
         echo '</style>';
-    }
-
-    /**
-     * Revision manifest map.
-     *
-     * @since 1.0.0
-     * @access private
-     *
-     * @param string $file The file to check the map for.
-     *
-     * @return array    The map for `src` files to `dist` files.
-     */
-    private function revision( $file ) {
-        if ( wp_get_environment_type() === 'local' ) {
-            return $file;
-        }
-
-        $css_rev = get_template_directory() . '/dist/css/rev-manifest.json';
-        $js_rev  = get_template_directory() . '/dist/js/rev-manifest.json';
-
-        if ( file_exists( $css_rev ) && file_exists( $js_rev ) ) {
-            $rev_css = json_decode( file_get_contents( $css_rev ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-            $rev_js  = json_decode( file_get_contents( $js_rev ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-
-            if ( preg_match( '/\.js$/', $file ) ) {
-                return $rev_js[ $file ];
-            }
-
-            return $rev_css[ $file ];
-        }
-
-        return $file;
     }
 
     /**
@@ -645,6 +495,9 @@ class RDB_Styles_Scripts {
 
         // Get WordPress' stock Moment.js version.
         if ( false === $ver ) {
+            // Delete expired transient.
+            delete_transient( $key );
+
             // WordPress' stock Moment.js file.
             $wp_moment = file_get_contents( ABSPATH . "wp-includes/js/dist/vendor/{$moment}" );
 
@@ -715,6 +568,198 @@ class RDB_Styles_Scripts {
         }
 
         return $register_scripts;
+    }
+
+    /**
+     * Front page assets.
+     *
+     * @since 1.2.0
+     * @access private
+     *
+     * @ignore
+     *
+     * @param array $deps Dependency array.
+     */
+    private function front_page( &$deps ) {
+        // DataTables.
+        wp_enqueue_style( 'datatables' );
+        wp_enqueue_style( 'datatables-yadcf' );
+        wp_enqueue_style( 'rdb-front-page' );
+
+        // Chosen on desktops.
+        if ( ! wp_is_mobile() ) {
+            wp_enqueue_style( 'chosen' );
+            wp_enqueue_script( 'chosen' );
+        }
+
+        // Moment.js library.
+        wp_enqueue_script( 'moment' );
+        $deps[] = 'moment';
+
+        // Moment locale.
+        if ( wp_script_is( 'moment-locale', 'registered' ) ) {
+            wp_enqueue_script( 'moment-locale' );
+            $deps[] = 'moment-locale';
+        }
+
+        // Moment timezone.
+        wp_enqueue_script( 'moment-timezone' );
+        $deps[] = 'moment-timezone';
+
+        // DataTables library.
+        wp_enqueue_script( 'dt' );
+        $deps[] = 'dt';
+
+        // Yet Another DataTables Custom Filter plug-in.
+        wp_enqueue_script( 'datatables-yadcf' );
+        $deps[] = 'datatables-yadcf';
+    }
+
+    /**
+     * Archive pages.
+     *
+     * @since 1.2.0
+     * @access private
+     *
+     * @ignore
+     *
+     * @param array $deps Dependency array.
+     */
+    private function archive( &$deps ) {
+        if ( false !== get_query_var( 'wpcm_venue', false )
+            || false !== get_query_var( 'wpcm_team', false )
+        ) {
+            if ( ! wp_is_mobile() ) {
+                wp_enqueue_style( 'chosen' );
+                wp_enqueue_script( 'chosen' );
+            }
+
+            if ( false !== get_query_var( 'wpcm_team', false ) ) {
+                wp_enqueue_style( 'rdb-team' );
+                wp_enqueue_script( 'imagesloaded' );
+                wp_enqueue_script( 'wp-util' );
+
+                $deps[] = 'imagesloaded';
+                $deps[] = 'wp-util';
+            } else {
+                wp_enqueue_style( 'rdb-venue' );
+            }
+
+            wp_enqueue_style( 'datatables' );
+
+            wp_enqueue_script( 'moment' );
+            $deps[] = 'moment';
+
+            if ( wp_script_is( 'moment-locale', 'registered' ) ) {
+                wp_enqueue_script( 'moment-locale' );
+                $deps[] = 'moment-locale';
+            }
+
+            wp_enqueue_script( 'moment-timezone' );
+            $deps[] = 'moment-timezone';
+
+            wp_enqueue_script( 'dt' );
+            $deps[] = 'dt';
+        }//end if
+    }
+
+    /**
+     * Club post type.
+     *
+     * @since 1.2.0
+     * @access private
+     *
+     * @ignore
+     *
+     * @param array $deps Dependency array.
+     */
+    private function wpcm_club( &$deps ) {
+        wp_enqueue_style( 'rdb-union' );
+        wp_enqueue_style( 'datatables' );
+        wp_enqueue_script( 'dt' );
+
+        $deps[] = 'dt';
+    }
+
+    /**
+     * Match post type.
+     *
+     * @since 1.2.0
+     * @access private
+     *
+     * @ignore
+     *
+     * @param array $deps Dependency array.
+     */
+    private function wpcm_match( &$deps ) {
+        if ( ! wp_style_is( 'dashicons' ) ) {
+            wp_enqueue_style( 'dashicons' );
+        }
+
+        wp_enqueue_style( 'rdb-match' );
+        wp_enqueue_style( 'datatables' );
+        wp_enqueue_script( 'dt' );
+        wp_enqueue_script( 'wp-util' );
+
+        $deps[] = 'wp-util';
+        $deps[] = 'dt';
+    }
+
+    /**
+     * Player post type.
+     *
+     * @since 1.2.0
+     * @access private
+     *
+     * @ignore
+     *
+     * @param array $deps Dependency array.
+     */
+    private function wpcm_player( &$deps ) {
+        wp_enqueue_style( 'rdb-player' );
+        wp_enqueue_style( 'datatables' );
+        wp_enqueue_script( 'dt' );
+
+        $deps[] = 'dt';
+    }
+
+    /**
+     * Page post type.
+     *
+     * @since 1.2.0
+     * @access private
+     *
+     * @ignore
+     *
+     * @param array $deps Dependency array.
+     */
+    private function page( &$deps ) {
+        // Pages with cards.
+        $cards = array( 'staff', 'teams', 'venues', 'opponents' );
+
+        if ( is_page( $cards ) ) {
+            // Stylesheet for a cards page.
+            foreach ( $cards as $page ) {
+                if ( ( 'venues' === $page || 'opponents' === $page ) && false === wp_is_mobile() ) {
+                    wp_enqueue_style( 'chosen' );
+                    wp_enqueue_script( 'chosen' );
+
+                    $deps[] = 'chosen';
+                }
+
+                if ( is_page( $page ) ) {
+                    wp_enqueue_style( "rdb-{$page}" );
+                }
+            }
+
+            wp_enqueue_script( 'imagesloaded' );
+            wp_enqueue_script( 'wp-util' );
+
+            $deps[] = 'imagesloaded';
+            $deps[] = 'wp-util';
+        } else {
+            wp_enqueue_style( 'rdb-page' );
+        }//end if
     }
 }
 

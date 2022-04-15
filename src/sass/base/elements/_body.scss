@@ -9,13 +9,13 @@ body {
 
     &.logged-in {
         @include breakpoint(wordpress) {
-            .mm-navbars_top {
+            .mm-navbars_top { // stylelint-disable-line
                 margin-top: $size__adminbar;
             }
         }
     }
 
-    .tax-wpcm_venue {
+    .tax-wpcm_venue { // stylelint-disable-line
         display: flex;
         flex-direction: column;
 

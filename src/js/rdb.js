@@ -1,10 +1,14 @@
-import { FrontPage, TaxWpcmVenue, TaxWpcmTeam, common, pageOpponents, pageStaff, pageVenues, singleWpcmClub, singleWpcmPlayer, singleWpcmMatch } from './modules';
-import { master } from './utils';
+import { Modernizr } from 'Vendor'; // eslint-disable-line
+import { FrontPage, TaxWpcmVenue, TaxWpcmTeam, common, pageOpponents, pageStaff, pageVenues, singleWpcmClub, singleWpcmPlayer, singleWpcmMatch } from 'Modules';
+import { sniper } from 'Utils';
 
 /**
  * Main JavaScript file.
  *
  * @author Davey Jacobson <daveyjake21@gmail.com>
+ *
+ * @param {object} win Window object.
+ * @param {jQuery} $   jQuery instance.
  */
 ( function( win, $ ) {
     const scope = {
@@ -40,7 +44,5 @@ import { master } from './utils';
         }
     };
 
-    const $win = $( win );
-
-    $win.on( 'load', master.shooter( scope ) );
+    $( win ).on( 'load', sniper.rifle( scope ) );
 })( window, window.jQuery );

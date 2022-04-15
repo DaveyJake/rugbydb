@@ -1,14 +1,19 @@
-import '../_vendor/mmenu/mmenu.polyfills';
-import { Foundation } from '../_vendor';
-import { Mmenu, Mhead } from '../_vendor/mmenu/mmenu';
-import { rdb } from '../utils';
 /**
- * jQuery.mmenu.
+ * Mobile menu.
+ *
+ * @namespace mmenu
+ * @memberof ui
  *
  * @since 1.0.0
  */
+
+import 'Vendor/mmenu/mmenu.polyfills';
+import { Foundation } from 'Vendor';
+import { Mmenu, Mhead } from 'Vendor/mmenu/mmenu';
+import { rdb } from 'Utils';
+
 /* eslint-disable array-bracket-spacing, no-multi-spaces */
-( function() {
+const mmenu = ( function() {
     // Options.
     const mmenuOpts = {
         autoHeight: false,
@@ -26,7 +31,7 @@ import { rdb } from '../utils';
             {
                 position: 'bottom',
                 content: [
-                    '<a href="https://www.daveyjake.dev/contact/" rel="external"><i class="fas fa-envelope"></i></a>',
+                    '<a href="https://www.daveyjake.dev/" rel="external"><i class="fas fa-envelope"></i></a>',
                 ]
             }
         ],
@@ -41,6 +46,7 @@ import { rdb } from '../utils';
         },
         wrappers: ['wordpress']
     };
+
     // Configuration.
     const mmenuConf = {
         searchfield: {
@@ -72,9 +78,13 @@ import { rdb } from '../utils';
         }
     }
 
-    document.addEventListener( 'DOMContentLoaded', () => {
-        /* eslint-disable no-new */
-        new Mhead( '#masthead' );
-        new Mmenu( "#menu", mmenuOpts, mmenuConf );
-    });
+    return function() {
+        document.addEventListener( 'DOMContentLoaded', () => {
+            /* eslint-disable no-new */
+            new Mhead( '#masthead' );
+            new Mmenu( '#menu', mmenuOpts, mmenuConf );
+        });
+    };
 })();
+
+module.exports = { mmenu };

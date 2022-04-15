@@ -16,9 +16,12 @@ class RDB_WPCM_Settings {
     /**
      * USA Rugby Database Team IDs.
      *
+     * @since 1.0.0
+     * @static
+     *
      * @var array
      */
-    protected $rdb_teams = array( 'mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens' );
+    protected static $rdb_teams = array( 'mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens' );
 
     /**
      * Primary constructor.
@@ -70,7 +73,7 @@ class RDB_WPCM_Settings {
     /**
      * Rugby only.
      *
-     * @link {@see 'wpcm_sports'}
+     * @see {@link 'wpcm_sports'}
      *
      * @return array Should only contain rugby.
      */
@@ -107,7 +110,7 @@ class RDB_WPCM_Settings {
     /**
      * Rugby cards only.
      *
-     * @link {@see 'wpclubmanager_stats_cards'}
+     * @see {@link 'wpclubmanager_stats_cards'}
      *
      * @return array Should only contain 'yellowcards' and 'redcards'.
      */
@@ -120,7 +123,7 @@ class RDB_WPCM_Settings {
     /**
      * Default location: United States.
      *
-     * @link {@see 'wpclubmanager_countries'}
+     * @see {@link 'wpclubmanager_countries'}
      *
      * @return array
      */
@@ -256,7 +259,7 @@ class RDB_WPCM_Settings {
         $mens_sevens   = get_term_by( 'slug', 'mens-sevens', 'wpcm_team' );
         $womens_sevens = get_term_by( 'slug', 'womens-sevens', 'wpcm_team' );*/
 
-        foreach ( $this->rdb_teams as $i => $slug ) {
+        foreach ( self::$rdb_teams as $i => $slug ) {
             $team = get_term_by( 'slug', $slug, 'wpcm_team' );
             switch ( $i ) {
                 case 0:

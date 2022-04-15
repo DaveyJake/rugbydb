@@ -1,47 +1,46 @@
+/**
+ * Make AJAX request to REST API.
+ *
+ * @namespace Request
+ * @memberof utils
+ *
+ * @since 1.0.0
+ */
+
 import jQueryBridget from 'jquery-bridget';
 import Isotope from 'isotope-layout';
 import 'isotope-packery';
 import InfiniteScroll from 'infinite-scroll';
 import { _, $, rdb, wp } from './globals';
-import { util } from './helpers';
+import { helpers } from './helpers';
 
 InfiniteScroll.imagesLoaded = window.imagesLoaded;
 jQueryBridget( 'isotope', Isotope, $ );
 jQueryBridget( 'infiniteScroll', InfiniteScroll, $ );
 
-const { adminUrl, parseArgs } = util;
+const { adminUrl, parseArgs } = helpers;
 
 /**
- * Make AJAX request to REST API.
+ * Begin Request class.
  *
  * @since 1.0.0
- *
- * @param {String} route The post type slug.
- *
- * @return {jQuery}
  */
-
-/* eslint-disable no-extra-parens, computed-property-spacing */
-
 class Request {
     /**
      * Primary constructor.
      *
      * @since 1.0.0
      *
-     * @param {string} route Slug of requested post type.
-     * @param {object} args  {
-     *     The optional argument properties.
-     *
-     *     @type {string} nonce      Generated nonce key.
-     *     @type {bool}   collection Is the request for multiple items? Default true.
-     *     @type {number} postId     Post ID of requested item.
-     *     @type {string} postName   Post slug of the requested item.
-     *     @type {string} venue      The venue slug.
-     *     @type {string} grid       The grid attribute selector.
-     *     @type {string} per_page   The items per page to retrieve.
-     *     @type {string} page       The page number to retrieve.
-     * }
+     * @param {string} route           Slug of requested post type.
+     * @param {object} args            Class arguments.
+     * @param {string} args.nonce      Generated nonce key.
+     * @param {bool}   args.collection Is the request for multiple items? Default true.
+     * @param {number} args.postId     Post ID of requested item.
+     * @param {string} args.postName   Post slug of the requested item.
+     * @param {string} args.venue      The venue slug.
+     * @param {string} args.grid       The grid attribute selector.
+     * @param {string} args.per_page   The items per page to retrieve.
+     * @param {string} args.page       The page number to retrieve.
      *
      * @return {Request} JSON response from API.
      */
@@ -63,7 +62,7 @@ class Request {
         this.team = route.match( /\// ) ? this.route[1] : '';
         this.route = route.match( /\// ) ? this.route[0] : this.route; // eslint-disable-line
 
-        this.nonce = args.nonce;
+        this.nonce = ! _.isEmpty( args.nonce ) ? args.nonce : $( '#nonce' ).val();
         this.venue = args.venue;
         this.collection = args.collection;
         this.postId = args.postId;
@@ -84,12 +83,8 @@ class Request {
      * @access private
      *
      * @todo Paginate player profile requests. Limit response to 20.
-     *
-     * @return {jQuery.ajax} AJAX response from API.
      */
     _ajax() {
-        const self = this;
-
         const args = {
             action: `get_${ this.endpoint }`,
             route: this.route,
@@ -125,30 +120,26 @@ class Request {
             url: adminUrl( 'admin-ajax.php' ),
             data: args,
             dataType: 'json',
-            success: function( response ) {
-                if ( ! response.success || ( response.success && _.isUndefined( response.data ) ) ) {
-                    return this.error();
-                }
-
+        })
+            .done( ( response ) => {
                 const isoTmpls = ['mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens', 'team-usa-men', 'team-usa-women', 'staff', 'venues', 'opponents']; // eslint-disable-line
 
                 if ( _.includes( isoTmpls, rdb.post_name ) || _.includes( isoTmpls, rdb.term_slug ) ) {
-                    return self._isoTmpls( response );
+                    return this._isoTmpls( response );
                 } else if ( 'match' === self.route && self.postId > 0 ) {
-                    return self._timelineTmpl( response.data );
+                    return this._timelineTmpl( response.data );
                 }
 
                 return response.data;
-            },
-            error: function( xhr, textStatus, errorThrown ) {
+            })
+            .fail( ( xhr, textStatus, errorThrown ) => {
                 console.dir( xhr ); // eslint-disable-line
                 console.log( textStatus );
                 console.log( errorThrown );
-            },
-            complete: function() {
+            })
+            .always( () => {
                 $( '#scroll-status' ).remove();
-            }
-        });
+            });
     }
 
     /**
@@ -156,9 +147,8 @@ class Request {
      *
      * @since 1.0.0
      * @access private
-     * @static
      *
-     * @param {JSON}   response AJAX API response data.
+     * @param {object} response AJAX API response data.
      */
     _isoTmpls( response ) {
         const $selector = $( this.grid ).imagesLoaded( function() {
@@ -204,6 +194,26 @@ class Request {
         _.each( obj, function( data ) {
             return Request._filterTmpl( data, $selector );
         });
+    }
+
+    /**
+     * Parse JS templates.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param {JSON} data AJAX API response data.
+     */
+    _timelineTmpl( data ) {
+        if ( _.isString( data ) ) {
+            return;
+        }
+
+        const $selector = $( '#rdb-match-timeline' ),
+              template  = wp.template( $selector.data( 'tmpl' ) ),
+              result    = template( data );
+
+        return $selector.append( result );
     }
 
     /**
@@ -307,28 +317,6 @@ class Request {
 
             $selector.isotope({ filter: `[data-${ data.attrName }="${ filterValue }"], [data-order="${ optNode }"]` });
         }
-    }
-
-    /**
-     * Parse JS templates.
-     *
-     * @since 1.0.0
-     * @access private
-     * @static
-     *
-     * @param {JSON} data AJAX API response data.
-     */
-    _timelineTmpl( data ) {
-        if ( _.isString( data ) ) {
-            return;
-        }
-
-        const $selector = $( '#rdb-match-timeline' ),
-              tmpl      = $selector.data( 'tmpl' ),
-              template  = wp.template( tmpl ),
-              result    = template( data );
-
-        return $selector.append( result );
     }
 }
 

@@ -12,22 +12,29 @@ globals:
   Foundation: true
   jQuery: true
   lodash: true
+  Modernizr: readonly
   wp: readonly
   tinymce: readonly
+  _wpUtilSettings: readonly
 plugins:
   - import
+  - jsdoc
 extends:
   - plugin:@wordpress/eslint-plugin/custom
+  - plugin:@wordpress/eslint-plugin/es5
   - plugin:@wordpress/eslint-plugin/esnext
   - plugin:@wordpress/eslint-plugin/i18n
   - plugin:@wordpress/eslint-plugin/jsdoc
-parser: babel-eslint
+parser: '@babel/eslint-parser'
 parserOptions:
-  ecmaVersion: 2017
-  sourceType: module
+  babelOptions:
+    configFile: ./.babelrc
   ecmaFeatures:
     modules: true
     impliedStrict: true
+  ecmaVersion: 2020
+  requireConfigFile: false
+  sourceType: module
 rules:
   array-bracket-spacing: 0
   block-scoped-var: error
@@ -42,6 +49,7 @@ rules:
   comma-style:
     - error
     - last
+  computed-property-spacing: 0
   dot-notation:
     - error
     - allowKeywords: false
@@ -52,7 +60,8 @@ rules:
   indent:
     - error
     - 4
-    - VariableDeclarator: first
+    - SwitchCase: 1
+      VariableDeclarator: first
   jsdoc/check-types:
     - error
     - exemptTagContexts:
@@ -60,7 +69,14 @@ rules:
         types: true
       - tag: return
         types: true
-  new-cap: error
+  jsdoc/tag-lines:
+    - warn
+    - any
+    - noEndLines: true
+      tags:
+        param:
+          lines: any
+  new-cap: 0
   no-bitwise: error
   no-caller: error
   no-cond-assign:
@@ -74,7 +90,7 @@ rules:
     - error
     - exceptions:
       - Date
-  no-extra-parens: warn
+  no-extra-parens: 0
   no-irregular-whitespace: error
   no-iterator: error
   no-loop-func: error
@@ -118,6 +134,11 @@ rules:
     - error
     - inside
 settings:
+  import/resolver:
+    alias:
+      map:
+        - - '@'
+          - ./src/js
   jsdoc:
     ignorePrivate: true
     preferredTypes:

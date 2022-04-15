@@ -1,5 +1,5 @@
-import { $ } from '../utils';
-import { cards } from '../ui';
+import { $ } from 'Utils';
+import { cards } from 'UI';
 /**
  * Opponents page.
  *

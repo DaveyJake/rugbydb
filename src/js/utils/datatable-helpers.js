@@ -1,13 +1,16 @@
-import { _, $, rdb, moment } from './globals';
-import { COUNTRIES, US_DATE, TIMEZONE } from './constants';
-
 /**
  * DataTables Helper Functions.
+ *
+ * @namespace DTHelper
+ * @memberof utils
  *
  * @since 1.0.0
  */
 
-/* eslint-disable computed-property-spacing */
+import { _, $, rdb, moment } from './globals';
+import { COUNTRIES, US_DATE, TIMEZONE } from './constants';
+
+/* eslint-disable computed-property-spacing, indent */
 
 class DTHelper {
     /**
@@ -44,7 +47,7 @@ class DTHelper {
         const m     = moment( date ),
               human = m.tz( TIMEZONE ).format( US_DATE );
 
-        return `<a id="match-${ matchId }-date-link" class="wpcm-matches-list-link" href="${ links.match }" rel="bookmark">${ human }</a>`;
+        return `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-date-link" class="wpcm-matches-list-link" href="${ links.match }" rel="bookmark">${ human }</a>`;
     }
 
     /**
@@ -62,28 +65,26 @@ class DTHelper {
               fixture  = match.fixture,
               result   = match.result,
               homeLogo = match.logo.home,
-              homeRet  = match.logo.home_retina,
               awayLogo = match.logo.away,
-              awayRet  = match.logo.away_retina,
               links    = match.links,
               teams    = fixture.split( /\sv\s/ ),
               scores   = result.split( /\s-\s/ );
 
         return [
             '<div class="fixture-result">',
-            `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-result-link" class="flex" href="${ links.match }" title="${ fixture }" rel="bookmark">`,
-            '<div class="inline-cell">',
-            `<img class="icon" data-interchange="[${ homeRet }, retina],[${ homeLogo }, default]" alt="${ teams[0] }" height="22" />`,
-            '</div>',
-            '<div class="inline-cell">',
-            `<span class="result">${ scores[0] } - ${ scores[1] }</span>`,
-            '</div>',
-            '<dispatchEvent(event: Event) class="inline-cell">',
-            `<img class="icon" data-interchange="[${ awayRet }, retina],[${ awayLogo }, default]" alt="${ teams[1] }" height="22" />`,
-            '</div>',
-            '</a>',
+                `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-result-link" class="flex" href="${ links.match }" title="${ fixture }" rel="bookmark">`,
+                    '<div class="inline-cell">',
+                        `<img class="icon" data-interchange="[${ homeLogo }, small]" alt="${ teams[0] }" height="22" />`,
+                    '</div>',
+                    '<div class="inline-cell">',
+                        `<span class="result">${ scores }</span>`,
+                    '</div>',
+                    '<div class="inline-cell">',
+                        `<img class="icon" data-interchange="[${ awayLogo }, small]" alt="${ teams[1] }" height="22" />`,
+                    '</div>',
+                '</a>',
             '</div>'
-        ].join( ' ' );
+        ].join( '' );
     }
 
     /**
@@ -117,11 +118,14 @@ class DTHelper {
      * @return {string}      HTML output.
      */
     static venueLink( venue ) {
-        const link = new URL( venue.link );
+        const link = new URL( venue.permalink );
 
-        return `<a id="venue-${ venue.id }-link" href="${ link.pathname }" title="${ venue.name }" rel="bookmark">` +
-            `<span class="flag-icon flag-icon-squared flag-icon-${ 'ie' !== venue.country ? 'squared-' + venue.country : venue.country }" title="${ COUNTRIES[ venue.country.toUpperCase() ] }"></span>` +
-        ` ${ venue.name }</a>`;
+        return [
+            `<a id="${ rdb.template.replace( /\.php/, '' ) }-venue-${ venue.id }-link" href="${ link.pathname }" title="${ venue.name }" rel="bookmark">`,
+                `<span class="flag-icon flag-icon-squared flag-icon-${ 'ie' !== venue.country ? 'squared-' + venue.country : venue.country }" title="${ COUNTRIES[ venue.country.toUpperCase() ] }"></span>`,
+                ` ${ venue.name }`,
+            '</a>'
+        ].join( '' );
     }
 
     /**

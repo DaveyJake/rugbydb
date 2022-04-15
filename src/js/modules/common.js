@@ -1,7 +1,5 @@
-import '../ui/mmenu';
-import { Modernizr } from '../_vendor';
-import { logoLettering, navigation } from '../ui';
-import { util, $ } from '../utils';
+import { mmenu, navigation, logoLettering } from 'UI'; // eslint-disable-line
+import { rdb, $ } from 'Utils';
 
 /**
  * Common-use modules.
@@ -9,9 +7,11 @@ import { util, $ } from '../utils';
  * @since 1.0.0
  */
 const common = function() {
-    const $doc = $( document );
+    mmenu();
 
-    $doc.foundation();
+    if ( ! rdb.is_front_page ) {
+        $( document ).foundation();
+    }
 
     $.ajaxSetup({ cache: true });
 

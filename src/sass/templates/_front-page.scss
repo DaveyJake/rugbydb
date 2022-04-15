@@ -36,14 +36,25 @@
         #all-matches {
             font-size: 0.875em;
 
-            tbody {
-                th,
-                td {
+            thead,
+            tfoot {
+                th {
                     height: rem-calc(36px);
+                    padding: 0;
+
+                    &.control {
+                        padding-right: 2rem;
+                    }
+
+                    &.date {
+                        width: 200px !important;
+                    }
+
+                    &.fixture {
+                        width: 60% !important;
+                    }
 
                     &:not(.control) {
-                        width: 50% !important;
-
                         @include breakpoint(medium) {
                             width: 33.3333% !important;
                         }
@@ -53,9 +64,19 @@
                         }
                     }
                 }
+            }
 
-                td.venue {
-                    @include text(right);
+            tbody {
+                td {
+                    &.date {
+                        @include breakpoint(wordpress) {
+                            padding-left: 10px;
+                        }
+                    }
+
+                    &.venue {
+                        @include text(right);
+                    }
                 }
             }
 
@@ -83,6 +104,7 @@
             &_wrapper {
                 .wpcm-row {
                     &:first-child {
+                        // stylelint-disable
                         #all-matches_filter {
                             width: 100%;
                             margin-bottom: 0.5em;
@@ -104,10 +126,11 @@
                                 width: 56%;
                             }
                         }
+                        // stylelint-enable
                     }
 
                     &:last-child {
-                        .paging_full_numbers {
+                        .paging_full_numbers { // stylelint-disable-line
                             margin: auto;
                         }
 

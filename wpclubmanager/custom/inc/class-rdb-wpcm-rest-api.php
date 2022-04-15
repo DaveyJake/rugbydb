@@ -11,19 +11,13 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! isset( $rdb_uk ) ) {
+global $rdb_uk;
+
+if ( empty( $rdb_uk ) ) {
     include_once get_template_directory() . '/inc/rdb-uk-countries.php';
 }
 
 class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
-    /**
-     * Theme namespace.
-     *
-     * @since 1.0.0
-     *
-     * @var string
-     */
-    public $domain = 'rugby-database';
 
     /**
      * Every match found in WordPress database.
@@ -114,94 +108,134 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
     );
 
     /**
+     * Theme namespace.
+     *
+     * @since 1.0.0
+     * @static
+     *
+     * @var string
+     */
+    public static $domain;
+
+    /**
      * Terms specific to `wpcm_match` post type.
      *
      * @since 1.0.0
+     * @static
      *
      * @var array
      */
-    public $match_taxes = array( 'competitions', 'seasons', 'teams', 'venues' );
+    public static $match_taxes;
 
     /**
      * Terms specific to `wpcm_player` post type.
      *
      * @since 1.0.0
+     * @static
      *
      * @var array
      */
-    public $player_taxes = array( 'positions', 'seasons', 'teams' );
+    public static $player_taxes;
 
     /**
-     * Terms specific to `wpcm_venue` taxonomy term.
+     * Post types specific to `wpcm_venue` taxonomy term.
      *
      * @since 1.0.0
+     * @static
      *
      * @var array
      */
-    public $venue_types = array( 'matches', 'unions' );
+    public static $venue_types;
 
     /**
      * Venue meta key regex.
      *
      * @since 1.0.0
+     * @static
      *
      * @var string
      */
-    public $meta_regex = '/^(_)?(wpcm|usar)_/';
+    public static $meta_regex;
 
     /**
      * WordPress internal namespace.
      *
      * @since 1.0.0
+     * @static
      *
      * @var string
      */
-    public $ns = 'wp/v2';
+    public static $ns;
 
     /**
      * Theme-specific namespace.
      *
      * @since 1.0.0
+     * @static
      *
      * @var string
      */
-    public $namespace = 'rdb/v1';
+    public static $namespace;
 
     /**
      * Core taxonomies for API.
      *
      * @since 1.0.0
+     * @static
      *
      * @var array
      */
-    public $taxonomies = array( 'wpcm_comp', 'wpcm_position', 'wpcm_season', 'wpcm_team' );
+    public static $taxonomies;
 
     /**
      * Team slugs.
      *
      * @since 1.0.0
+     * @static
      *
      * @var array
      */
-    public $teams = array( 'mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens', 'team-usa-men', 'team-usa-women' );
+    public static $teams;
 
     /**
      * Pre-used venue meta keys.
      *
      * @since 1.0.0
+     * @static
      *
      * @var array
      */
-    public $used_meta_keys = array( 'wpcm_capacity', 'wpcm_latitude', 'wpcm_longitude', 'wr_id', 'wr_name' );
+    public static $used_meta_keys;
 
     /**
      * Taxonomy query parameter.
      *
      * @since 1.0.0
+     * @static
      *
      * @var array
      */
-    public $venue_query_var = array( 'taxonomy' => 'wpcm_venue' );
+    public static $venue_query_var;
+
+    /**
+     * Embeddable content.
+     *
+     * @since 1.0.0
+     * @static
+     *
+     * @var array
+     */
+    private static $embeddable;
+
+    /**
+     * Embeddable venue.
+     *
+     * @since 1.0.0
+     * @static
+     *
+     * @var array
+     */
+    private static $embeddable_venue;
 
     /**
      * Initialize class.
@@ -209,19 +243,50 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      * @return RDB_WPCM_REST_API
      */
     public function __construct() {
+        self::$ns         = 'wp/v2';
+        self::$namespace  = 'rdb/v1';
+        self::$domain     = 'rugby-database';
+        self::$meta_regex = '/^(_)?(wpcm|usar)_/';
+
+        self::$venue_types  = array( 'matches', 'unions' );
+        self::$player_taxes = array( 'positions', 'seasons', 'teams' );
+        self::$match_taxes  = array( 'competitions', 'seasons', 'teams', 'venues' );
+
+        self::$taxonomies = array(
+            'wpcm_comp', 'wpcm_position', 'wpcm_season', 'wpcm_team'
+        );
+
+        self::$used_meta_keys = array(
+            'wpcm_capacity', 'wpcm_latitude', 'wpcm_longitude', 'wr_id', 'wr_name'
+        );
+
+        self::$teams = array(
+            'mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens',
+            'team-usa-men', 'team-usa-women'
+        );
+
+        self::$venue_query_var  = array( 'taxonomy' => 'wpcm_venue' );
+        self::$embeddable       = array( 'embeddable' => true );
+        self::$embeddable_venue = array(
+            'embeddable' => true,
+            'taxonomy' => 'wpcm_venue',
+        );
+
         $this->matches = get_posts( $this->match_args );
         $this->players = get_posts( $this->player_args );
         $this->staff   = get_posts( $this->staff_args );
 
-        add_action( 'rest_api_init', array( $this, 'wpcm_rest_api' ) );
+        add_action( 'rest_api_init', array( $this, 'wpcm_rest_api' ), 9 );
     }
 
     /**
      * Create rest route for API.
      *
      * @since 1.0.0
+     *
+     * @param WP_REST_Server $wp_rest_server Server object.
      */
-    public function wpcm_rest_api() {
+    public function wpcm_rest_api( WP_REST_Server $wp_rest_server ) {
         /**
          * Context argument for rest route.
          *
@@ -239,7 +304,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
          * @var array
          */
         $id_arg = array(
-            'description'       => esc_html__( 'The ID for the object.', $this->domain ),
+            'description'       => esc_html__( 'The ID for the object.', self::$domain ),
             'type'              => 'integer',
             'validate_callback' => array( $this, 'validate_request_arg' ),
             'sanitize_callback' => array( $this, 'sanitize_request_arg' ),
@@ -253,7 +318,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
          * @var array
          */
         $slug_arg = array(
-            'description'       => esc_html__( 'The term assigned to the object from either `wpcm_team` or `wpcm_venue` taxonomy.', $this->domain ),
+            'description'       => esc_html__( 'The term assigned to the object from either `wpcm_team` or `wpcm_venue` taxonomy.', self::$domain ),
             'type'              => 'string',
             'validate_callback' => array( $this, 'validate_request_arg' ),
             'sanitize_callback' => array( $this, 'sanitize_request_arg' ),
@@ -267,7 +332,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
          * @var array
          */
         $season_arg = array(
-            'description'       => esc_html__( 'The term assigned to the object from the `wpcm_season` taxonomy.', $this->domain ),
+            'description'       => esc_html__( 'The term assigned to the object from the `wpcm_season` taxonomy.', self::$domain ),
             'type'              => 'string',
             'validate_callback' => array( $this, 'validate_request_arg' ),
             'sanitize_callback' => array( $this, 'sanitize_request_arg' ),
@@ -296,7 +361,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
          *
          * @since 1.0.0
          */
-        foreach ( $this->routes as $item => $items ) {
+        foreach ( self::$routes as $item => $items ) {
             $items_method = array( $this, "get_{$items}" );
 
             if ( 'club' === $item ) {
@@ -313,11 +378,11 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                  * @since 1.0.0
                  */
                 register_rest_route(
-                    $this->namespace,
+                    self::$namespace,
                     '/' . $items,
                     array(
                         array(
-                            'methods'             => WP_REST_Server::READABLE,
+                            'methods'             => $wp_rest_server::READABLE,
                             'callback'            => $items_method,
                             'permission_callback' => '__return_true',
                         ),
@@ -325,11 +390,11 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 );
 
                 register_rest_route(
-                    $this->namespace,
+                    self::$namespace,
                     '/' . $items . '/(?P<slug>[a-z0-9-]+)',
                     array(
                         array(
-                            'methods'             => WP_REST_Server::READABLE,
+                            'methods'             => $wp_rest_server::READABLE,
                             'callback'            => $items_method,
                             'permission_callback' => '__return_true',
                             'args' => array(
@@ -341,11 +406,11 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 );
 
                 register_rest_route(
-                    $this->namespace,
+                    self::$namespace,
                     '/' . $items . '/(?P<slug>[a-z-]+)/(?P<season>[0-9-]+)',
                     array(
                         array(
-                            'methods'             => WP_REST_Server::READABLE,
+                            'methods'             => $wp_rest_server::READABLE,
                             'callback'            => $items_method,
                             'permission_callback' => '__return_true',
                             'args' => array(
@@ -358,34 +423,40 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 );
             }
 
-            $id_args = array(
-                'methods'             => WP_REST_Server::READABLE,
-                'callback'            => $item_method,
-                'permission_callback' => '__return_true',
-                'args' => array(
-                    'context' => $context_arg,
-                    'id'      => $id_arg,
-                ),
-            );
-
-            $slug_args = array(
-                'methods'             => WP_REST_Server::READABLE,
-                'callback'            => $item_method,
-                'permission_callback' => '__return_true',
-                'args' => array(
-                    'context' => $context_arg,
-                    'slug'    => $slug_arg,
-                ),
-            );
-
-            if ( in_array( $item, array( 'match', 'player' ), true ) ) {
-                $id_args['schema']   = call_user_func( array( $this, 'schema' ), $item );
-                $slug_args['schema'] = call_user_func( array( $this, 'schema' ), $item );
-            }
-
+            // Primary single item routes.
             if ( in_array( $item, $single_item, true ) && is_callable( $item_method ) ) {
-                register_rest_route( $this->namespace, '/' . $item . '/(?P<id>[\d]+)', array( $id_args ) );
-                register_rest_route( $this->namespace, '/' . $item . '/(?P<slug>[a-z-]+)', array( $slug_args ) );
+                $id_args = array(
+                    'methods'             => $wp_rest_server::READABLE,
+                    'callback'            => $item_method,
+                    'permission_callback' => '__return_true',
+                    'args' => array(
+                        'context' => $context_arg,
+                        'id'      => $id_arg,
+                    ),
+                    'schema' => '',
+                );
+
+                $slug_args = array(
+                    'methods'             => $wp_rest_server::READABLE,
+                    'callback'            => $item_method,
+                    'permission_callback' => '__return_true',
+                    'args' => array(
+                        'context' => $context_arg,
+                        'slug'    => $slug_arg,
+                    ),
+                    'schema' => '',
+                );
+
+                if ( in_array( $item, array( 'match', 'player' ), true ) ) {
+                    $id_args['schema']   = call_user_func( array( $this, 'schema' ), $item );
+                    $slug_args['schema'] = call_user_func( array( $this, 'schema' ), $item );
+                } else {
+                    unset( $id_args['schema'] );
+                    unset( $slug_args['schema'] );
+                }
+
+                register_rest_route( self::$namespace, '/' . $item . '/(?P<id>[\d]+)', array( $id_args ) );
+                register_rest_route( self::$namespace, '/' . $item . '/(?P<slug>[a-z-]+)', array( $slug_args ) );
             }
         }
     }
@@ -474,7 +545,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
 
         // Customize API keys attached to the response.
         foreach ( $whitelist as $key ) {
-            if ( preg_match( $this->meta_regex, $key ) ) {
+            if ( preg_match( self::$meta_regex, $key ) ) {
                 if ( 'wpcm_home_club' === $key ) {
                     $alt_key = 'home';
                 }
@@ -482,7 +553,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                     $alt_key = 'away';
                 }
                 else {
-                    $alt_key = preg_replace( $this->meta_regex, '', $key );
+                    $alt_key = preg_replace( self::$meta_regex, '', $key );
                 }
             }
             else {
@@ -507,7 +578,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         );
 
         // Combine date entries.
-        $api['date']['local'] = $api['match_datetime_local'];
+        $api['date']['local'] = $api['_usar_match_datetime_local'];
 
         // Adjust competing teams.
         $home = get_post( $api['home'] );
@@ -599,27 +670,36 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
 
         // Remove duplicates.
         unset( $api['referee_country'] );
-        unset( $api['match_datetime_local'] );
+        unset( $api['_usar_match_datetime_local'] );
         unset( $api['home_goals'] );
         unset( $api['away_goals'] );
         unset( $api['comp_status'] );
         unset( $api['wr_id'] );
         unset( $api['wr_usa_team'] );
 
-        $response = new WP_REST_Response( $api );
-
-        $response->add_link( 'about', rest_url( "{$this->ns}/wpcm_match" ) );
-        $response->add_link( 'self', rest_url( "{$this->namespace}/matches/{$data['id']}" ) );
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/matches" ) );
-
         $team = isset( $team[0] ) ? $team[0]->slug : $team->slug;
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/matches/{$team}" ) );
 
-        foreach ( $this->match_taxes as $taxonomy ) {
+        // Namespace URLs.
+        $about_url    = rest_url( sprintf( '%s/wpcm_match', self::$ns ) );
+        $self_url     = rest_url( sprintf( '%s/matches/$d', self::$namespace, $data['id'] ) );
+        $collection   = rest_url( sprintf( '%s/matches', self::$namespace ) );
+        $team_matches = rest_url( sprintf( '%1$s/matches/%2$s', self::$namespace, $team ) );
+
+        // Response URLs.
+        $response = new WP_REST_Response( $api );
+        $response->add_link( 'about', $about_url );
+        $response->add_link( 'self', $self_url );
+        $response->add_link( 'collection', $collection );
+        $response->add_link( 'collection', $team_matches );
+
+        foreach ( self::$match_taxes as $taxonomy ) {
+            $term_url = rest_url( sprintf( '%1$s/%2$s', self::$namespace, $taxonomy ) );
+            $term_url = add_query_arg( 'post', $match->ID, $term_url );
+
             $response->add_link(
                 'https://api.w.org/term',
-                add_query_arg( 'post', $match->ID, rest_url( "{$this->namespace}/{$taxonomy}" ) ),
-                array( 'taxonomy' => 'wpcm_' . rtrim( $taxonomy, 's' ) )
+                $term_url,
+                array( 'taxonomy' => sprintf( 'wpcm_%s', rtrim( $taxonomy, 's' ) ) )
             );
         }
 
@@ -660,6 +740,10 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      */
     public function get_player( $data ) {
         $args = $this->wp_get_args_player( $data );
+
+        // Teams.
+        $fifteens = array( 'mens-eagles', 'womens-eagles' );
+        $sevens   = array( 'mens-sevens', 'womens-sevens', 'team-usa-men', 'team-usa-women' );
 
         /**
          * Player's post object.
@@ -708,9 +792,9 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             $team = get_the_terms( $match_id, 'wpcm_team' );
             $team = isset( $team[0] ) ? $team[0]->slug : $team->slug;
 
-            if ( in_array( $team, array( 'mens-eagles', 'womens-eagles' ), true ) ) {
+            if ( in_array( $team, $fifteens, true ) ) {
                 $xv_matches[] = $match_id;
-            } elseif ( in_array( $team, array( 'mens-sevens', 'womens-sevens', 'team-usa-men', 'team-usa-women' ), true ) ) {
+            } elseif ( in_array( $team, $sevens, true ) ) {
                 $sv_matches[] = $match_id;
             }
         }
@@ -882,22 +966,36 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             'wr_id'     => absint( get_post_meta( $post->ID, 'wr_id', true ) ),
         );
 
-        $response = new WP_REST_Response( $api );
-
-        $response->add_link( 'about', rest_url( "{$this->ns}/types/wpcm_player" ) );
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/players" ) );
-
         $team = isset( $teams[0] ) ? $teams[0]->slug : $teams->slug;
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/players/{$team}" ) );
 
-        $response->add_link( 'self', rest_url( "{$this->ns}/players/{$post->ID}" ) );
-        $response->add_link( 'https://api.w.org/attachment', add_query_arg( 'parent', $post->ID, rest_url( "{$this->namespace}/media" ) ) );
+        // Namespace URLs.
+        $about_url      = rest_url( sprintf( '%s/types/wpcm_player', self::$ns ) );
+        $collection     = rest_url( sprintf( '%s/players', self::$namespace ) );
+        $team_players   = rest_url( sprintf( '%1$s/players/%2$s', self::$namespace, $team ) );
+        $self_url       = rest_url( sprintf( '%s/players/%d', self::$ns, $post->ID ) );
+        $attachment_url = rest_url( sprintf( '%s/media', self::$namespace ) );
+        $attachment_url = add_query_arg( 'parent', $post->ID, $attachment_url );
 
-        foreach ( $this->player_taxes as $term ) {
-            $response->add_link( 'https://api.w.org/term', add_query_arg( 'post', $post->ID, rest_url( "wp/v2/{$term}" ) ), array(
-                'embeddable' => true,
-                'taxonomy'   => 'wpcm_' . rtrim( $term, 's' ),
-            ) );
+        // Response URLs.
+        $response = new WP_REST_Response( $api );
+        $response->add_link( 'about', $about_url );
+        $response->add_link( 'collection', $collection );
+        $response->add_link( 'collection', $team_players );
+        $response->add_link( 'self', $self_url );
+        $response->add_link( 'https://api.w.org/attachment', $attachment_url );
+
+        foreach ( self::$player_taxes as $term ) {
+            $post_url = rest_url( sprintf( 'wp/v2/%s', $term ) );
+            $post_url = add_query_arg( 'post', $post->ID, $post_url );
+
+            $response->add_link(
+                'https://api.w.org/term',
+                $post_url,
+                array(
+                    'embeddable' => true,
+                    'taxonomy'   => sprintf( 'wpcm_%s', rtrim( $term, 's' ) ),
+                )
+            );
         }
 
         return $response->data;
@@ -908,7 +1006,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      *
      * @since 1.0.0
      *
-     * @return WP_REST_Response    All found players.
+     * @return WP_REST_Response All found players.
      */
     public function get_players( $data ) {
         $api = array();
@@ -1005,11 +1103,14 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         $args  = $this->wp_get_args_union( $data );
         $union = get_posts( $args );
         $post  = $union[0];
+
         // Union URL.
-        $link  = rdb_slash_permalink( $post->ID );
+        $link = rdb_slash_permalink( $post->ID );
+
         // Logo URL.
         $thumb = get_the_post_thumbnail_url( $data['id'] );
         $media = $data['id'];
+
         if ( empty( $thumb ) ) {
             $thumb = get_the_post_thumbnail_url( $post->post_parent );
             $media = $post->post_parent;
@@ -1043,15 +1144,26 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             }
         }
 
+        // Namespace URLs.
+        $about_url      = rest_url( sprintf( '%s/types/wpcm_club', self::$ns ) );
+        $collection     = rest_url( sprintf( '%s/unions', self::$namespace ) );
+        $attachment_url = rest_url( sprintf( '%s/media', self::$ns ) );
+        $attachment_url = add_query_arg( 'parent', $media, $attachment_url );
+        $venue_post     = rest_url( sprintf( '%s/venues', self::$namespace ) );
+        $venue_post     = add_query_arg( 'post', $data['id'], $venue_post );
+
+        // Response URLs.
         $response = new WP_REST_Response( $api );
-        $response->add_link( 'about', rest_url( "{$this->ns}/types/wpcm_club" ) );
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/unions" ) );
-        $response->add_link( 'https://api.w.org/attachment', add_query_arg( 'parent', $media, rest_url( "{$this->ns}/media" ) ) );
-        $response->add_link( 'https://api.w.org/featuredmedia', add_query_arg( 'parent', $media, rest_url( "{$this->ns}/media" ) ), array( 'embeddable' => true ) );
-        $response->add_link( 'https://api.w.org/term', add_query_arg( 'post', $data['id'], rest_url( "{$this->namespace}/venues" ) ), array( 'embeddable' => true, 'taxonomy' => 'wpcm_venue' ) );
+        $response->add_link( 'about', $about_url );
+        $response->add_link( 'collection', $collection );
+        $response->add_link( 'https://api.w.org/attachment', $attachment_url );
+        $response->add_link( 'https://api.w.org/featuredmedia', $attachment_url, self::$embeddable );
+        $response->add_link( 'https://api.w.org/term', $venue_post, self::$embeddable_venue );
 
         if ( $post->post_parent > 0 ) {
-            $response->add_link( 'up', rest_url( "{$this->namespace}/unions/{$post->post_parent}" ), array( 'embeddable' => true ) );
+            $parent_url = rest_url( sprintf( '%s/unions/%d', self::$namespace, $post->post_parent ) );
+
+            $response->add_link( 'up', $parent_url, self::$embeddable );
         } else {
             unset( $api['parent'] );
         }
@@ -1074,8 +1186,10 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         foreach ( $unions as $post ) {
             // Club URL.
             $link = rdb_slash_permalink( $post->ID );
+
             // Logo URL.
             $thumb = get_the_post_thumbnail_url( $post->ID );
+
             $media = $post->ID;
             if ( empty( $thumb ) ) {
                 $thumb = get_the_post_thumbnail_url( $post->post_parent );
@@ -1111,27 +1225,35 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 }
             }
 
-            $response = new WP_REST_Response( $data );
-            $response->add_link( 'about', rest_url( "{$this->ns}/types/wpcm_club" ) );
-            $response->add_link( 'collection', rest_url( "{$this->namespace}/unions" ) );
-            $response->add_link( 'https://api.w.org/attachment', add_query_arg( 'parent', $media, rest_url( "{$this->ns}/media" ) ) );
+            // Namespace URLs.
+            $about_url      = rest_url( sprintf( '%s/types/wpcm_club', self::$ns ) );
+            $collection     = rest_url( sprintf( '%s/unions', self::$namespace ) );
+            $attachment_url = rest_url( sprintf( '%s/media', self::$ns ) );
+            $attachment_url = add_query_arg( 'parent', $media, $attachment_url );
+            $venue_post     = rest_url( sprintf( '%s/venues', self::$namespace ) );
+            $venue_post     = add_query_arg( 'post', $data['id'], $venue_post );
 
+            // Response URLs.
+            $response = new WP_REST_Response( $data );
+            $response->add_link( 'about', $about_url );
+            $response->add_link( 'collection', $collection );
+            $response->add_link( 'https://api.w.org/attachment', $attachment_url );
+
+            // Thumbnail URL.
             if ( isset( $meta['_thumbnail_id'][0] ) ) {
-                $response->add_link(
-                    'https://api.w.org/featuredmedia',
-                    rest_url( "{$this->ns}/media/{$meta['_thumbnail_id'][0]}" ),
-                    array( 'embeddable' => true )
-                );
+                $featured_media = rest_url( sprintf( '%1$s/media/%2$s', self::$ns, $meta['_thumbnail_id'][0] ) );
+
+                $response->add_link( 'https://api.w.org/featuredmedia', $featured_media, self::$embeddable );
             }
 
-            $response->add_link(
-                'https://api.w.org/term',
-                add_query_arg( 'post', $data['id'], rest_url( "{$this->namespace}/venues" ) ),
-                array( 'embeddable' => true, 'taxonomy' => 'wpcm_venue' )
-            );
+            // Venue post URL.
+            $response->add_link( 'https://api.w.org/term', $venue_post, self::$embeddable_venue );
 
+            // Union parent URL.
             if ( $post->post_parent > 0 ) {
-                $response->add_link( 'up', rest_url( "{$this->namespace}/unions/{$post->post_parent}" ), array( 'embeddable' => true ) );
+                $parent_url = rest_url( sprintf( '%s/unions/%d', self::$namespace, $post->post_parent ) );
+
+                $response->add_link( 'up', $parent_url, self::$embeddable );
             } else {
                 unset( $data['parent'] );
             }
@@ -1161,7 +1283,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         }
 
         $venue = get_term_by( $field, $term, 'wpcm_venue' );
-        $terms = apply_filters( 'taxonomy-images-get-terms', $venue->term_id, $this->venue_query_var );
+        $terms = apply_filters( 'taxonomy-images-get-terms', $venue->term_id, self::$venue_query_var );
         $image = wp_get_attachment_image_src( $terms[0]->image_id, 'thumbnail' );
 
         /**
@@ -1183,8 +1305,11 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             'slug'        => $venue->slug,
             'taxonomy'    => 'wpcm_venue',
             'meta'        => array(
-                'capacity'    => absint( $meta['wpcm_capacity'][0] ),
-                'geo'         => array( (float) $meta['wpcm_latitude'][0], (float) $meta['wpcm_longitude'][0] ),
+                'capacity' => absint( $meta['wpcm_capacity'][0] ),
+                'geo'      => array(
+                    (float) $meta['wpcm_latitude'][0],
+                    (float) $meta['wpcm_longitude'][0],
+                ),
                 'world_rugby' => array(
                     'id'   => absint( $meta['wr_id'][0] ),
                     'name' => $meta['wr_name'][0],
@@ -1196,11 +1321,11 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         $meta_keys = array_keys( $meta );
 
         foreach ( $meta_keys as $key ) {
-            if ( ! in_array( $key, $this->used_meta_keys, true ) ) {
+            if ( ! in_array( $key, self::$used_meta_keys, true ) ) {
                 $meta_value = $meta[ $key ][0];
 
-                if ( preg_match( $this->meta_regex, $key ) ) {
-                    $key = preg_replace( $this->meta_regex, '', $key );
+                if ( preg_match( self::$meta_regex, $key ) ) {
+                    $key = preg_replace( self::$meta_regex, '', $key );
                 }
 
                 $api['meta'][ $key ] = $meta_value;
@@ -1212,23 +1337,38 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             unset( $api['parent'] );
         }
 
-        // Build response.
+        // Namespace URLs.
+        $about_url      = rest_url( sprintf( '%s/taxonomies/wpcm_venue', self::$ns ) );
+        $collection     = rest_url( sprintf( '%s/venues', self::$namespace ) );
+        $self_url       = rest_url( sprintf( '%s/venues/%d', self::$namespace, $venue->term_id ) );
+        $attachment_url = rest_url( sprintf( '%s/media', self::$ns ) );
+        $attachment_url = add_query_arg( 'parent', $venue->term_id, $attachment_url );
+        $featured_media = rest_url( sprintf( '%s/media/%d', self::$ns, $terms[0]->image_id ) );
+        $venue_post     = rest_url( sprintf( '%s/matches', self::$ns ) );
+        $venue_post     = add_query_arg( 'venues', $venue->term_id, $venue_post );
+
+        // Build response and API links.
         $response = new WP_REST_Response( $api );
+        $response->add_link( 'about', $about_url );
+        $response->add_link( 'collection', $collection );
+        $response->add_link( 'self', $self_url );
+        $response->add_link( 'https://api.w.org/attachment', $attachment_url );
+        $response->add_link( 'https://api.w.org/featuredmedia', $featured_media );
+        $response->add_link( 'https://api.w.org/post_type', $venue_post );
 
-        // Build API links.
-        $response->add_link( 'about', rest_url( "{$this->ns}/taxonomies/wpcm_venue" ) );
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/venues" ) );
-        $response->add_link( 'self', rest_url( "{$this->namespace}/venues/{$venue->term_id}" ) );
-        $response->add_link( 'https://api.w.org/attachment', add_query_arg( 'parent', $venue->term_id, rest_url( "{$this->ns}/media" ) ) );
-        $response->add_link( 'https://api.w.org/featuredmedia', rest_url( "{$this->ns}/media/{$terms[0]->image_id}" ) );
-        $response->add_link( 'https://api.w.org/post_type', add_query_arg( 'venues', $venue->term_id, rest_url( "{$this->ns}/matches" ) ) );
+        foreach ( self::$venue_types as $venue_type ) {
+            $venue_type_url = rest_url( sprintf( '%1$s/%2$s', self::$namespace, $venue_type ) );
+            $venue_type_url = add_query_arg( 'venues', $venue->term_id, $venue_type_url );
 
-        foreach ( $this->venue_types as $venue_type ) {
-            $response->add_link( 'https://api.w.org/term', add_query_arg( 'venues', $venue->term_id, rest_url( "{$this->namespace}/{$venue_type}" ) ), $this->venue_query_var );
+            $response->add_link( 'https://api.w.org/term', $venue_type_url, self::$venue_query_var );
         }
 
         if ( $venue->parent > 0 ) {
-            $response->add_link( 'up', rest_url( "{$this->namespace}/venues/{$venue->parent}" ), array( 'embeddable' => true ) );
+            $response->add_link(
+                'up',
+                rest_url( sprintf( '%s/venues/%d', self::$namespace, $venue->parent ) ),
+                self::$embeddable
+            );
         }
 
         return $response->data;
@@ -1267,7 +1407,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
          *
          * @var WP_Term[]
          */
-        $venues = apply_filters( 'taxonomy-images-get-terms', 0, $this->venue_query_var );
+        $venues = apply_filters( 'taxonomy-images-get-terms', 0, self::$venue_query_var );
 
         foreach ( $venues as $venue ) {
             // Venue image.
@@ -1285,22 +1425,22 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
              */
             $data = array(
                 'id'          => $venue->term_id,
-                'count'       => $venue->count,
+                'match_count' => $venue->count,
                 'description' => $venue->description,
                 'image'       => $image[0],
-                'link'        => get_term_link( $venue->term_id ), // deprecated
                 'permalink'   => get_term_link( $venue->term_id ),
                 'name'        => $venue->name,
                 'parent'      => $venue->parent,
                 'slug'        => $venue->slug,
                 'taxonomy'    => 'wpcm_venue',
-                'meta'        => array(
-                    'capacity'    => absint( $meta['wpcm_capacity'][0] ),
-                    'geo'         => array( (float) $meta['wpcm_latitude'][0], (float) $meta['wpcm_longitude'][0] ),
-                    'world_rugby' => array(
-                        'id'   => absint( $meta['wr_id'][0] ),
-                        'name' => $meta['wr_name'][0],
-                    ),
+                'capacity'    => absint( $meta['wpcm_capacity'][0] ),
+                'geo'         => array(
+                    (float) $meta['wpcm_latitude'][0],
+                    (float) $meta['wpcm_longitude'][0],
+                ),
+                'world_rugby' => array(
+                    'id'   => absint( $meta['wr_id'][0] ),
+                    'name' => $meta['wr_name'][0],
                 ),
             );
 
@@ -1310,34 +1450,47 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             }
 
             foreach ( $meta_keys as $key ) {
-                if ( ! in_array( $key, $this->used_meta_keys, true ) ) {
+                if ( ! in_array( $key, self::$used_meta_keys, true ) ) {
                     $meta_value = $meta[ $key ][0];
 
-                    if ( preg_match( $this->meta_regex, $key ) ) {
-                        $key = preg_replace( $this->meta_regex, '', $key );
+                    if ( preg_match( self::$meta_regex, $key ) ) {
+                        $key = preg_replace( self::$meta_regex, '', $key );
                     }
 
-                    $data['meta'][ $key ] = $meta_value;
+                    $data[ $key ] = $meta_value;
                 }
             }
 
+            // Response URLs.
+            $about_url      = rest_url( sprintf( '%s/taxonomies/wpcm_venue', self::$ns ) );
+            $collection     = rest_url( sprintf( '%s/venues', self::$namespace ) );
+            $self_url       = rest_url( sprintf( '%1$s/venues/%2$s', self::$namespace, $venue->term_id ) );
+            $attachment_url = rest_url( sprintf( '%s/media', self::$ns ) );
+            $attachment_url = add_query_arg( 'parent', $venue->term_id, $attachment_url );
+            $featured_media = rest_url( sprintf( '%1$s/media/%2$s', self::$ns, $terms[0]->image_id ) );
+            $venue_matches  = rest_url( sprintf( '%s/matches', self::$ns ) );
+            $venue_matches  = add_query_arg( 'venues', $venue->term_id, $venue_matches );
+
             // Build response.
             $response = new WP_REST_Response( $data );
+            $response->add_link( 'about', $about_url );
+            $response->add_link( 'collection', $collection );
+            $response->add_link( 'self', $self_url );
+            $response->add_link( 'https://api.w.org/attachment', $attachment_url );
+            $response->add_link( 'https://api.w.org/featuredmedia', $featured_media );
+            $response->add_link( 'https://api.w.org/post_type', $venue_matches );
 
-            // Build API links.
-            $response->add_link( 'about', rest_url( "{$this->ns}/taxonomies/wpcm_venue" ) );
-            $response->add_link( 'collection', rest_url( "{$this->namespace}/venues" ) );
-            $response->add_link( 'self', rest_url( "{$this->namespace}/venues/{$venue->term_id}" ) );
-            $response->add_link( 'https://api.w.org/attachment', add_query_arg( 'parent', $venue->term_id, rest_url( "{$this->ns}/media" ) ) );
-            $response->add_link( 'https://api.w.org/featuredmedia', rest_url( "{$this->ns}/media/{$terms[0]->image_id}" ) );
-            $response->add_link( 'https://api.w.org/post_type', add_query_arg( 'venues', $venue->term_id, rest_url( "{$this->ns}/matches" ) ) );
+            foreach ( self::$venue_types as $venue_type ) {
+                $venue_type_url = rest_url( sprintf( '%1$s/%2$s', self::$namespace, $venue_type ) );
+                $venue_type_url = add_query_arg( 'venues', $venue->term_id, $venue_type_url );
 
-            foreach ( $this->venue_types as $venue_type ) {
-                $response->add_link( 'https://api.w.org/term', add_query_arg( 'venues', $venue->term_id, rest_url( "{$this->namespace}/{$venue_type}" ) ), $this->venue_query_var );
+                $response->add_link( 'https://api.w.org/term', $venue_type_url, self::$venue_query_var );
             }
 
             if ( $venue->parent > 0 ) {
-                $response->add_link( 'up', rest_url( "{$this->namespace}/venues/{$venue->parent}" ), array( 'embeddable' => true ) );
+                $venue_parent = rest_url( sprintf( '%s/venues/%d', self::$namespace, $venue->parent ) );
+
+                $response->add_link( 'up', $venue_parent, self::$embeddable );
             }
 
             // Build the API response.
@@ -1374,11 +1527,11 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
              * This code won't execute because we have specified this argument as required.
              * If we reused this validation callback and did not have required args then this would fire.
              */
-            return new WP_Error( 'rest_invalid_param', wp_sprintf( esc_html__( '%s was not registered as a request argument.', $this->domain ), $param ), array( 'status' => 400 ) );
+            return new WP_Error( 'rest_invalid_param', wp_sprintf( esc_html__( '%s was not registered as a request argument.', self::$domain ), $param ), array( 'status' => 400 ) );
         }
 
         // If we got this far then something went wrong--don't use user input.
-        return new WP_Error( 'rest_api_sad', esc_html__( 'Something went terribly wrong.', $this->domain ), array( 'status' => 500 ) );
+        return new WP_Error( 'rest_api_sad', esc_html__( 'Something went terribly wrong.', self::$domain ), array( 'status' => 500 ) );
     }
 
     /**
@@ -1404,31 +1557,31 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         // Schema template: match.
         $match = array(
             'ID' => array(
-                'description'  => esc_html__( 'Unique identifier for the object.', $this->domain ),
+                'description'  => esc_html__( 'Unique identifier for the object.', self::$domain ),
                 'type'         => 'integer',
                 'context'      => array( 'view' ),
                 'readonly'     => true,
             ),
             'competition' => array(
-                'description' => esc_html__( 'The terms assigned to the object in the `wpcm_comp` taxonomy.', $this->domain ),
+                'description' => esc_html__( 'The terms assigned to the object in the `wpcm_comp` taxonomy.', self::$domain ),
                 'type'        => 'object',
                 'properties'  => array(
                     'name' => array(
-                        'description' => esc_html__( 'The name of the term assigned to the object in the `wpcm_comp` taxonomy.', $this->domain ),
+                        'description' => esc_html__( 'The name of the term assigned to the object in the `wpcm_comp` taxonomy.', self::$domain ),
                         'type'        => 'string',
                     ),
                     'parent' => array(
-                        'description' => esc_html__( 'The parent name of the term assigned to the object in the `wpcm_comp` taxonomy.', $this->domain ),
+                        'description' => esc_html__( 'The parent name of the term assigned to the object in the `wpcm_comp` taxonomy.', self::$domain ),
                         'type'        => 'string',
                     ),
                     'status' => array(
-                        'description' => esc_html__( 'The meta value assigned to the object with a meta key of `wpcm_comp_status`.', $this->domain ),
+                        'description' => esc_html__( 'The meta value assigned to the object with a meta key of `wpcm_comp_status`.', self::$domain ),
                         'type'        => 'string',
                     ),
                 ),
             ),
             'date' => array(
-                'description' => esc_html__( 'Date of the match in GMT, website and local to venue.', $this->domain ),
+                'description' => esc_html__( 'Date of the match in GMT, website and local to venue.', self::$domain ),
                 'type'        => 'object',
                 'properties'  => array(
                     'GMT' => array(
@@ -1449,15 +1602,15 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 ),
             ),
             'fixture' => array(
-                'description' => esc_html__( 'The `post_title` featuring the home team versus the away team.', $this->domain ),
+                'description' => esc_html__( 'The `post_title` featuring the home team versus the away team.', self::$domain ),
                 'type'        => 'string',
             ),
             'friendly' => array(
-                'description' => esc_html__( 'Whether or not the match took place at venue that was not home to either competing team.', $this->domain ),
+                'description' => esc_html__( 'Whether or not the match took place at venue that was not home to either competing team.', self::$domain ),
                 'type'        => 'boolean',
             ),
             'links' => array(
-                'description' => esc_html__( 'URLs for the home team, away team and dedicated page for the object.', $this->domain ),
+                'description' => esc_html__( 'URLs for the home team, away team and dedicated page for the object.', self::$domain ),
                 'type'        => 'object',
                 'properties'  => array(
                     'away_union' => array(
@@ -1475,7 +1628,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 ),
             ),
             'logo' => array(
-                'description' => esc_html__( 'The home logo and away logo URLs.', $this->domain ),
+                'description' => esc_html__( 'The home logo and away logo URLs.', self::$domain ),
                 'type'        => 'object',
                 'properties'  => array(
                     'away' => array(
@@ -1489,64 +1642,64 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 ),
             ),
             'outcome' => array(
-                'description' => esc_html__( 'Either `win`, `lose` or `draw` respective to the USA\'s performance.', $this->domain ),
+                'description' => esc_html__( 'Either `win`, `lose` or `draw` respective to the USA\'s performance.', self::$domain ),
                 'type'        => 'string',
                 'minLength'   => 3,
                 'maxLength'   => 4,
             ),
             'result' => array(
-                'description' => esc_html__( 'The home score followed by the away score of the match.', $this->domain ),
+                'description' => esc_html__( 'The home score followed by the away score of the match.', self::$domain ),
                 'type'        => 'string',
                 'pattern'     => '^([0-9]+)(\s-\s)([0-9]+)$',
             ),
             'season' => array(
-                'description' => esc_html__( 'The name of the term assigned to the object in the `wpcm_season` taxonomy.', $this->domain ),
+                'description' => esc_html__( 'The name of the term assigned to the object in the `wpcm_season` taxonomy.', self::$domain ),
                 'type'        => array( 'string', 'integer' ),
             ),
             'team' => array(
-                'description' => esc_html__( 'The USA team attached to this object.', $this->domain ),
+                'description' => esc_html__( 'The USA team attached to this object.', self::$domain ),
                 'type'        => 'object',
                 'properties'  => array(
                     'name' => array(
-                        'description' => esc_html__( 'The display name of the term assigned to this object in the `wpcm_team` taxonomy.', $this->domain ),
+                        'description' => esc_html__( 'The display name of the term assigned to this object in the `wpcm_team` taxonomy.', self::$domain ),
                         'type'        => 'string',
                     ),
                     'slug' => array(
-                        'description' => esc_html__( 'The SEO-friendly version of the term assigned to this object in the `wpcm_team` taxonomy.', $this->domain ),
+                        'description' => esc_html__( 'The SEO-friendly version of the term assigned to this object in the `wpcm_team` taxonomy.', self::$domain ),
                         'type'        => 'string',
                     ),
                 ),
             ),
             'venue' => array(
-                'description' => esc_html__( 'The term attached to the object in the `wpcm_venue` taxonomy.', $this->domain ),
+                'description' => esc_html__( 'The term attached to the object in the `wpcm_venue` taxonomy.', self::$domain ),
                 'type'        => 'object',
                 'properties'  => array(
                     'id' => array(
-                        'description'  => esc_html__( 'Unique identifier for the object.', $this->domain ),
+                        'description'  => esc_html__( 'Unique identifier for the object.', self::$domain ),
                         'type'         => 'integer',
                         'context'      => array( 'view' ),
                         'readonly'     => true,
                     ),
                     'name' => array(
-                        'description' => esc_html__( 'The name of the object in the `wpcm_venue` taxonomy.', $this->domain ),
+                        'description' => esc_html__( 'The name of the object in the `wpcm_venue` taxonomy.', self::$domain ),
                         'type'        => 'string',
                     ),
                     'country' => array(
-                        'description' => esc_html__( 'The ISO 3166-1 alpha-2 code of the country the venue is located in.', $this->domain ),
+                        'description' => esc_html__( 'The ISO 3166-1 alpha-2 code of the country the venue is located in.', self::$domain ),
                         'type'        => 'string',
                         'minLength'   => 2,
                         'maxLength'   => 2,
                     ),
                     'timezone' => array(
-                        'description' => esc_html__( 'The identifier as found in the Internet Assigned Numbers Authority Time Zone Database.', $this->domain ),
+                        'description' => esc_html__( 'The identifier as found in the Internet Assigned Numbers Authority Time Zone Database.', self::$domain ),
                         'type'        => 'string',
                     ),
                     'neutral' => array(
-                        'description' => esc_html__( 'Whether the venue attached to the object is home to either of the teams competing.', $this->domain ),
+                        'description' => esc_html__( 'Whether the venue attached to the object is home to either of the teams competing.', self::$domain ),
                         'type'        => 'boolean',
                     ),
                     'link' => array(
-                        'description' => esc_html__( 'The URL of the dedicated page for this venue.', $this->domain ),
+                        'description' => esc_html__( 'The URL of the dedicated page for this venue.', self::$domain ),
                         'type'        => 'string',
                         'format'      => 'uri',
                     ),
@@ -1557,49 +1710,49 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         // Schema template: player.
         $player = array(
             'ID' => array(
-                'description'  => esc_html__( 'Unique identifier for the object.', $this->domain ),
+                'description'  => esc_html__( 'Unique identifier for the object.', self::$domain ),
                 'type'         => 'integer',
                 'context'      => array( 'view' ),
                 'readonly'     => true,
             ),
             'title' => array(
-                'description' => esc_html__( 'The `_wpcm_firstname` and `_wpcm_lastname` meta values of the object.', $this->domain ),
+                'description' => esc_html__( 'The `_wpcm_firstname` and `_wpcm_lastname` meta values of the object.', self::$domain ),
                 'type'        => 'string',
             ),
             'slug' => array(
-                'description' => esc_html__( 'The URL-friendly `post_name` aka first name and last name of the player.', $this->domain ),
+                'description' => esc_html__( 'The URL-friendly `post_name` aka first name and last name of the player.', self::$domain ),
                 'type'        => 'string',
             ),
             'content' => array(
-                'description' => esc_html__( 'The content for the object.', $this->domain ),
+                'description' => esc_html__( 'The content for the object.', self::$domain ),
                 'type'        => 'object',
             ),
             'badge' => array(
-                'description' => esc_html__( 'The `wpcm_number` meta value of the object.', $this->domain ),
+                'description' => esc_html__( 'The `wpcm_number` meta value of the object.', self::$domain ),
                 'type'        => 'integer',
             ),
             'competitions' => array(
-                'description' => esc_html__( 'The list of `wpcm_comp` terms attached to the object.', $this->domain ),
+                'description' => esc_html__( 'The list of `wpcm_comp` terms attached to the object.', self::$domain ),
                 'type'        => 'array',
             ),
             'debut_date' => array(
-                'description' => esc_html__( 'The `_usar_date_first_test` meta value of the object.', $this->domain ),
+                'description' => esc_html__( 'The `_usar_date_first_test` meta value of the object.', self::$domain ),
                 'type'        => 'date',
             ),
             'final_date' => array(
-                'description' => esc_html__( 'The `_usar_date_last_test` meta value of the object.', $this->domain ),
+                'description' => esc_html__( 'The `_usar_date_last_test` meta value of the object.', self::$domain ),
                 'type'        => 'date',
             ),
             'image' => array(
-                'description' => esc_html__( 'The URL of the object\'s featured image.', $this->domain ),
+                'description' => esc_html__( 'The URL of the object\'s featured image.', self::$domain ),
                 'type'        => 'uri',
             ),
             'match_list' => array(
-                'description' => esc_html__( 'The compacted grouping of matches where the object appears.', $this->domain ),
+                'description' => esc_html__( 'The compacted grouping of matches where the object appears.', self::$domain ),
                 'type'        => 'object',
                 'properties'  => array(
                     'wp' => array(
-                        'description' => esc_html__( 'The WordPress ID of the individual match objects.', $this->domain ),
+                        'description' => esc_html__( 'The WordPress ID of the individual match objects.', self::$domain ),
                         'type'        => 'object',
                         'properties'  => array(
                             'xv' => array(
@@ -1611,7 +1764,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                         ),
                     ),
                     'wr' => array(
-                        'description' => esc_html__( 'The World Rugby ID of the individual match objects.', $this->domain ),
+                        'description' => esc_html__( 'The World Rugby ID of the individual match objects.', self::$domain ),
                         'type'        => 'object',
                         'properties'  => array(
                             'xv' => array(
@@ -1625,7 +1778,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 ),
             ),
             'matches' => array(
-                'description' => esc_html__( 'The human-readable grouping of matches where the object appears.', $this->domain ),
+                'description' => esc_html__( 'The human-readable grouping of matches where the object appears.', self::$domain ),
                 'type'        => 'object',
                 'properties'  => array(
                     'friendly' => array(
@@ -1678,19 +1831,19 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 ),
             ),
             'positions' => array(
-                'description' => esc_html__( 'The list of `wpcm_position` terms attached to the object.', $this->domain ),
+                'description' => esc_html__( 'The list of `wpcm_position` terms attached to the object.', self::$domain ),
                 'type'        => 'array',
             ),
             'seasons' => array(
-                'description' => esc_html__( 'The list of `wpcm_season` terms attached to the object.', $this->domain ),
+                'description' => esc_html__( 'The list of `wpcm_season` terms attached to the object.', self::$domain ),
                 'type'        => 'array',
             ),
             'teams' => array(
-                'description' => esc_html__( 'The list of `wpcm_team` terms attached to the object.', $this->domain ),
+                'description' => esc_html__( 'The list of `wpcm_team` terms attached to the object.', self::$domain ),
                 'type'        => 'array',
             ),
             'wr_id' => array(
-                'description' => esc_html__( 'The World Rugby ID number of the object.', $this->domain ),
+                'description' => esc_html__( 'The World Rugby ID number of the object.', self::$domain ),
                 'type'        => 'integer',
             ),
         );
@@ -1725,9 +1878,25 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             $argument = $attributes['args'][ $param ];
             // Check to make sure our argument is a string.
             if ( 'integer' === $argument['type'] && ! is_numeric( $value ) ) {
-                return new WP_Error( 'rest_invalid_param', wp_sprintf( esc_html__( '%1$s is not of type %2$s', $this->domain ), $param, 'integer' ), array( 'status' => 400 ) );
+                return new WP_Error(
+                    'rest_invalid_param',
+                    wp_sprintf(
+                        esc_html__( '%1$s is not of type %2$s', self::$domain ),
+                        $param,
+                        'integer'
+                    ),
+                    array( 'status' => 400 )
+                );
             } elseif ( 'string' === $argument['type'] && ! is_string( $value ) ) {
-                return new WP_Error( 'rest_invalid_param', wp_sprintf( esc_html__( '%1$s is not of type %2$s', $this->domain ), $param, 'string' ), array( 'status' => 400 ) );
+                return new WP_Error(
+                    'rest_invalid_param',
+                    wp_sprintf(
+                        esc_html__( '%1$s is not of type %2$s', self::$domain ),
+                        $param,
+                        'string'
+                    ),
+                    array( 'status' => 400 )
+                );
             }
 
             $team     = term_exists( $value, 'wpcm_team' );
@@ -1738,18 +1907,45 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
 
             $post = get_page_by_path( $value, OBJECT, 'wpcm_player' );
 
-            if ( ( 'slug' === $param || 'season' === $param ) && empty( $team ) && empty( $venue ) && empty( $season ) && empty( $comp ) && empty( $position ) && is_null( $post ) ) {
-                return new WP_Error( 'rest_invalid_param', wp_sprintf( esc_html__( '`%1$s` is not a term in `%2$s`, `%3$s`, `%4$s`, `%5$s`, `%6$s`, nor is it a `%7$s` object.', $this->domain ), $value, 'wpcm_team', 'wpcm_comp', 'wpcm_venue', 'wpcm_season', 'wpcm_position', 'wpcm_player' ), array( 'status' => 400 ) );
+            if ( ( 'slug' === $param || 'season' === $param )
+                && empty( $team )
+                && empty( $venue )
+                && empty( $season )
+                && empty( $comp )
+                && empty( $position )
+                && is_null( $post )
+            ) {
+                return new WP_Error(
+                    'rest_invalid_param',
+                    wp_sprintf(
+                        esc_html__( '`%1$s` is not a term in `%2$s`, `%3$s`, `%4$s`, `%5$s`, `%6$s`, nor is it a `%7$s` object.', self::$domain ),
+                        $value,
+                        'wpcm_team',
+                        'wpcm_comp',
+                        'wpcm_venue',
+                        'wpcm_season',
+                        'wpcm_position',
+                        'wpcm_player'
+                    ),
+                    array( 'status' => 400 )
+                );
             }
         } else {
             /*
              * This code won't execute because we have specified this argument as required.
              * If we reused this validation callback and did not have required args then this would fire.
              */
-            return new WP_Error( 'rest_invalid_param', wp_sprintf( esc_html__( '%s was not registered as a request argument.', $this->domain ), $param ), array( 'status' => 400 ) );
+            return new WP_Error(
+                'rest_invalid_param',
+                wp_sprintf(
+                    esc_html__( '%s was not registered as a request argument.', self::$domain ),
+                    $param
+                ),
+                array( 'status' => 400 )
+            );
         }
 
-        // If we got this far then the data is valid.
+        // If we get this far then the data is valid.
         return true;
     }
 
@@ -1763,7 +1959,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      *
      * @param WP_REST_Request $data Match team query parameters.
      *
-     * @return array    Filtered match query parameters.
+     * @return array Filtered match query parameters.
      */
     private function wp_get_args_match( $data ) {
         if ( isset( $data['slug'] ) ) {
@@ -1987,7 +2183,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      *
      * @param array|string $match_list Player's match list.
      *
-     * @return string    List of WP match IDs.
+     * @return string List of WP match IDs.
      */
     private function wp_get_match_ID( $match_list ) {
         $wp_match_list = array();
@@ -2032,7 +2228,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      *
      * @param string[] $match_ids Array of match IDs.
      *
-     * @return array   Match timestamps.
+     * @return array Match timestamps.
      */
     private function wp_get_match_timestamps( $match_ids ) {
         $match_dates = array();
@@ -2171,7 +2367,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      * @param array      $played_at  Player's position IDs.
      * @param array      $played_for Player's team IDs.
      *
-     * @return array    Positions and teams played for.
+     * @return array Positions and teams played for.
      */
     private function wp_get_player_data( $player_id, &$played_at, &$played_for ) {
         $positions = get_the_terms( $player_id, 'wpcm_position' );
@@ -2200,7 +2396,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      *
      * @param int|string $player_id Player's WordPress ID value.
      *
-     * @return array    Player's match history indexed by player's ID.
+     * @return array Player's match history indexed by player's ID.
      */
     private function wp_get_player_history( $player_id ) {
         /**
@@ -2235,15 +2431,15 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      * @since 1.0.0
      *
      * @see RDB_WPCM_REST_API::get_matches()
+     * @see RDB_WPCM_REST_API::union_logo_url()
      *
      * @param array $match Match response data.
      *
-     * @return array    Parsed data.
+     * @return array Parsed data.
      */
     private function wp_parse_match( $match ) {
         $meta = get_post_meta( $match->ID );
         $team = get_the_terms( $match->ID, 'wpcm_team' );
-
         $data = array(
             'ID'      => $match->ID,
             'fixture' => $match->post_title,
@@ -2254,14 +2450,20 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                 'timestamp' => strtotime( $match->post_date_gmt ),
             ),
             'team' => array(
-                'name' => isset( $team[0] ) ? $team[0]->name : ( is_object( $team ) ? $team->name : error_log( "Team missing from match {$match->ID} in API" ) ),
-                'slug' => isset( $team[0] ) ? $team[0]->slug : ( is_object( $team ) ? $team->slug : error_log( "Team missing from match {$match->ID} in API" ) ),
+                'name' => isset( $team[0] )
+                    ? $team[0]->name
+                    : ( is_object( $team )
+                        ? $team->name
+                        : error_log( "Team missing from match {$match->ID} in API" ) ),
+                'slug' => isset( $team[0] )
+                    ? $team[0]->slug
+                    : ( is_object( $team )
+                        ? $team->slug
+                        : error_log( "Team missing from match {$match->ID} in API" ) ),
             ),
             'logo' => array(
-                'home'        => '',
-                'home_retina' => '',
-                'away'        => '',
-                'away_retina' => '',
+                'home' => '',
+                'away' => '',
             ),
             'links'       => '',
             'competition' => '',
@@ -2272,95 +2474,9 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             'venue'       => '',
         );
 
-        $parts = preg_split( '/\sv\s/', $data['fixture'] );
-        $home  = $parts[0];
-        $away  = $parts[1];
-
-        if ( preg_match( '/Russia/', $home ) ) {
-            $home = 'Russia Bears';
-        }
-
-        if ( preg_match( '/Russia/', $away ) ) {
-            $away = 'Russia Bears';
-        }
-
-        $home_svg    = 'dist/img/unions/' . sanitize_title( $home ) . '.svg';
-        $home_png    = 'dist/img/unions/' . sanitize_title( $home ) . '.png';
-        $home_2x_png = 'dist/img/unions/' . sanitize_title( $home ) . '@2x.png';
-        $away_svg    = 'dist/img/unions/' . sanitize_title( $away ) . '.svg';
-        $away_png    = 'dist/img/unions/' . sanitize_title( $away ) . '.png';
-        $away_2x_png = 'dist/img/unions/' . sanitize_title( $away ) . '@2x.png';
-
-        // Home club - SVG images if they exist, or retina PNGs.
-        if ( file_exists( get_theme_file_path( $home_svg ) ) ) {
-            $data['logo']['home_retina'] = get_theme_file_uri( $home_svg );
-
-            if ( empty( $data['logo']['home_retina'] ) && file_exists( get_theme_file_path( $home_2x_png ) ) ) {
-                $data['logo']['home_retina'] = get_theme_file_uri( $home_2x_png );
-
-                if ( empty( $data['logo']['home_retina'] ) && file_exists( get_theme_file_path( str_replace( '-7s', '', $home_2x_png ) ) ) ) {
-                    $data['logo']['home_retina'] = get_theme_file_uri( str_replace( '-7s', '', $home_2x_png ) );
-                }
-            }
-        }
-
-        // Away club - SVG images if they exist, or retina PNGs.
-        if ( file_exists( get_theme_file_path( $away_svg ) ) ) {
-            $data['logo']['away_retina'] = get_theme_file_uri( $away_svg );
-
-            if ( empty( $data['logo']['away_retina'] ) && file_exists( get_theme_file_path( $away_2x_png ) ) ) {
-                $data['logo']['away_retina'] = get_theme_file_uri( $away_2x_png );
-
-                if ( empty( $data['logo']['away_retina'] ) && file_exists( get_theme_file_path( str_replace( '-7s', '', $away_2x_png ) ) ) ) {
-                    $data['logo']['away_retina'] = get_theme_file_uri( str_replace( '-7s', '', $away_2x_png ) );
-                }
-            }
-        }
-
-        $home_club = $meta['wpcm_home_club'][0];
-        $away_club = $meta['wpcm_away_club'][0];
-
-        $data['logo']['home'] = wp_get_attachment_image_url( get_post_thumbnail_id( $home_club ), 'small', true );
-        if ( empty( $data['logo']['home'] ) ) {
-            $data['logo']['home'] = get_the_post_thumbnail_url( $home_club, 'small' );
-
-            if ( empty( $data['logo']['home'] ) && file_exists( get_theme_file_path( $home_png ) ) ) {
-                $data['logo']['home'] = get_theme_file_uri( $home_png );
-
-                if ( empty( $data['logo']['home'] ) && file_exists( get_theme_file_path( str_replace( '-7s', '', $home_png ) ) ) ) {
-                    $data['logo']['home'] = get_theme_file_uri( str_replace( '-7s', '', $home_png ) );
-                } else {
-                    $home_union = get_post( $home_club );
-
-                    $data['logo']['home'] = get_the_post_thumbnail_url( $home_union->post_parent, 'small' );
-                }
-            }
-        }
-
-        $data['logo']['away'] = wp_get_attachment_image_url( get_post_thumbnail_id( $away_club ), 'small', true );
-        if ( empty( $data['logo']['away'] ) ) {
-            $data['logo']['away'] = get_the_post_thumbnail_url( $away_club, 'small' );
-
-            if ( empty( $data['logo']['away'] ) && file_exists( get_theme_file_path( $away_png ) ) ) {
-                $data['logo']['away'] = get_theme_file_uri( $away_png );
-
-                if ( empty( $data['logo']['away'] ) && file_exists( get_theme_file_path( str_replace( '-7s', '', $away_png ) ) ) ) {
-                    $data['logo']['away'] = get_theme_file_uri( str_replace( '-7s', '', $away_png ) );
-                } else {
-                    $away_union = get_post( $away_club );
-
-                    $data['logo']['away'] = get_the_post_thumbnail_url( $away_union->post_parent, 'small' );
-                }
-            }
-        }
-
-        if ( empty( $data['logo']['home_retina'] ) ) {
-            $data['logo']['home_retina'] = $data['logo']['home'];
-        }
-
-        if ( empty( $data['logo']['away_retina'] ) ) {
-            $data['logo']['away_retina'] = $data['logo']['away'];
-        }
+        // Union logos.
+        self::union_logo_url( 'home', $meta, $data );
+        self::union_logo_url( 'away', $meta, $data );
 
         // Links to home club, match page & away club.
         $data['links'] = array(
@@ -2385,15 +2501,16 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         $competitions = get_the_terms( $match->ID, 'wpcm_comp' );
         $competition  = isset( $competitions[0] ) ? $competitions[0] : $competitions;
         $season       = get_the_terms( $match->ID, 'wpcm_season' );
-        $team         = get_the_terms( $match->ID, 'wpcm_team' );
+        $_team        = get_the_terms( $match->ID, 'wpcm_team' );
+        $team         = isset( $_team[0] ) ? $_team[0]->slug : $_team->slug;
         $venue        = get_the_terms( $match->ID, 'wpcm_venue' );
 
         $parent = '';
-
         if ( ! empty( $competition->parent ) ) {
             $parent = get_term_by( 'term_id', $competition->parent, 'wpcm_comp' );
         }
 
+        // Competition fild.
         $data['competition'] = array(
             'name'   => ! empty( $competition->name ) ? $competition->name : '',
             'label'  => ! empty( $competition->term_id ) ? get_term_meta( $competition->term_id, 'wpcm_comp_label', true ) : '',
@@ -2402,7 +2519,9 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         );
 
         // Test match or Friendly?
-        $data['friendly'] = ! empty( $meta['wpcm_friendly'][0] ) ? boolval( $meta['wpcm_friendly'][0] ) : false;
+        $data['friendly'] = ! empty( $meta['wpcm_friendly'][0] )
+            ? boolval( $meta['wpcm_friendly'][0] )
+            : false;
 
         // Competition status?
         if ( isset( $meta['wpcm_comp_status'][0] ) ) {
@@ -2413,33 +2532,39 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
 
         // Match meta details.
         $data['season']  = $season[0]->slug;
-        $data['result']  = wp_sprintf( '%1$d - %2$d', $meta['wpcm_home_goals'][0], $meta['wpcm_away_goals'][0] );
+        $data['result']  = sprintf( '%1$d - %2$d', $meta['wpcm_home_goals'][0], $meta['wpcm_away_goals'][0] );
         $data['outcome'] = wpcm_get_match_outcome( $match->ID );
 
         // Match Venue
-        $venue_meta     = get_term_meta( $venue[0]->term_id );
-        $venue_city     = ! empty( $venue_meta['addressLocality'][0] ) ? sanitize_title( $venue_meta['addressLocality'][0] ) : '';
-        $venue_country  = ! empty( $venue_meta['addressCountry'][0] ) ? sanitize_title( $venue_meta['addressCountry'][0] ) : '';
+        $venue_meta = get_term_meta( $venue[0]->term_id );
+        $venue_city = ! empty( $venue_meta['addressLocality'][0] )
+            ? sanitize_title( $venue_meta['addressLocality'][0] )
+            : '';
+        $venue_country = ! empty( $venue_meta['addressCountry'][0] )
+            ? sanitize_title( $venue_meta['addressCountry'][0] )
+            : '';
         $venue_timezone = new DateTime( $data['date']['GMT'] );
         $venue_timezone->setTimezone( new DateTimeZone( $venue_meta['usar_timezone'][0] ) );
+
         $tz = $venue_timezone->format( 'T' );
 
         if ( preg_match( '/[^A-Z]+/', $tz ) ) {
             $tz = 'GMT' . $tz;
         }
 
-        // Match venue container.
+        // Match venue field.
         $data['venue'] = array(
             'id'       => $venue[0]->term_id,
             'name'     => $venue[0]->name,
             'country'  => $venue_country,
             'link'     => get_term_link( $venue[0]->term_id ),
             'timezone' => $tz,
-            'neutral'  => ! empty( $meta['wpcm_neutral'][0] ) ? boolval( $meta['wpcm_neutral'][0] ) : false,
+            'neutral'  => ! empty( $meta['wpcm_neutral'][0] )
+                ? boolval( $meta['wpcm_neutral'][0] )
+                : false,
         );
 
         global $rdb_uk;
-
         if ( 'gb' === $data['venue']['country'] ) {
             foreach ( (array) $rdb_uk as $country => $cities ) {
                 if ( in_array( $venue_city, $cities, true ) ) {
@@ -2448,20 +2573,27 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             }
         }
 
+        // Namespace URLs.
+        $about_url         = rest_url( sprintf( '%s/wpcm_match', self::$ns ) );
+        $self_url          = rest_url( sprintf( '%1$s/matches/%2$s', self::$namespace, $data['ID'] ) );
+        $entire_collection = rest_url( sprintf( '%s/matches', self::$namespace ) );
+        $team_collection   = rest_url( sprintf( '%1$s/matches/%2$s', self::$namespace, $team ) );
+
+        // Namespace links and response.
         $response = new WP_REST_Response( $data );
+        $response->add_link( 'about', $about_url );
+        $response->add_link( 'self', $self_url );
+        $response->add_link( 'collection', $entire_collection );
+        $response->add_link( 'collection', $team_collection );
 
-        $response->add_link( 'about', rest_url( "{$this->ns}/wpcm_match" ) );
-        $response->add_link( 'self', rest_url( "{$this->namespace}/matches/{$data['ID']}" ) );
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/matches" ) );
+        foreach ( self::$match_taxes as $taxonomy ) {
+            $url = rest_url( sprintf( '%1$s/%2$s', self::$namespace, $taxonomy ) );
+            $url = add_query_arg( 'post', $match->ID, $url );
 
-        $team = isset( $team[0] ) ? $team[0]->slug : $team->slug;
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/matches/{$team}" ) );
-
-        foreach ( $this->match_taxes as $taxonomy ) {
             $response->add_link(
                 'https://api.w.org/term',
-                add_query_arg( 'post', $match->ID, rest_url( "{$this->namespace}/{$taxonomy}" ) ),
-                array( 'taxonomy' => 'wpcm_' . rtrim( $taxonomy, 's' ) )
+                $url,
+                array( 'taxonomy' => sprintf( 'wpcm_%s', rtrim( $taxonomy, 's' ) ) )
             );
         }
 
@@ -2475,7 +2607,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      *
      * @param array $matches Match response data.
      *
-     * @return array    Parsed data.
+     * @return array Parsed data.
      */
     private function wp_parse_match_venue( $matches ) {
         $countries = WPCM()->countries->countries;
@@ -2532,7 +2664,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      *
      * @param array $players Players response data.
      *
-     * @return array    Parsed data.
+     * @return array Parsed data.
      */
     private function wp_parse_player( $player ) {
         /**
@@ -2713,7 +2845,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         $data = array(
             'ID'           => $player->ID,
             'name'         => array(
-                'official' => sprintf( '%s %s', $player_first_name, $player_last_name ),
+                'official' => sprintf( '%1$s %2$s', $player_first_name, $player_last_name ),
                 'known_as' => $player_nick,
                 'first'    => $player_first_name,
                 'last'     => $player_last_name,
@@ -2764,24 +2896,41 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
             'wr_id' => absint( get_post_meta( $player->ID, 'wr_id', true ) ),
         );
 
+        // Namespace URLs.
+        $about_url      = rest_url( sprintf( '%s/types/wpcm_player', self::$ns ) );
+        $collection     = rest_url( sprintf( '%s/players', self::$namespace ) );
+        $self_url       = rest_url( sprintf( '%1$s/players/%2$s', self::$ns, $data['ID'] ) );
+        $attachment_url = rest_url( sprintf( '%s/media', self::$namespace ) );
+        $attachment_url = add_query_arg( 'parent', $data['ID'], $attachment_url );
+
+        // Response URLs.
         $response = new WP_REST_Response( $data );
+        $response->add_link( 'about', $about_url );
+        $response->add_link( 'collection', $collection );
 
-        $response->add_link( 'about', rest_url( "{$this->ns}/types/wpcm_player" ) );
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/players" ) );
-
+        // Team URLs.
         $teams = get_the_terms( $player->ID, 'wpcm_team' );
         foreach ( $teams as $team ) {
-            $response->add_link( 'collection', rest_url( "{$this->namespace}/players/{$team->slug}" ) );
+            $team_collection = rest_url( sprintf( '%1$s/players/%2$s', self::$namespace, $team->slug ) );
+
+            $response->add_link( 'collection', $team_collection );
         }
 
-        $response->add_link( 'self', rest_url( "{$this->ns}/players/{$data['ID']}" ) );
-        $response->add_link( 'https://api.w.org/attachment', add_query_arg( 'parent', $data['ID'], rest_url( "{$this->namespace}/media" ) ) );
+        $response->add_link( 'self', $self_url );
+        $response->add_link( 'https://api.w.org/attachment', $attachment_url );
 
-        foreach ( $this->player_taxes as $term ) {
-            $response->add_link( 'https://api.w.org/term', add_query_arg( 'post', $data['ID'], rest_url( "{$this->ns}/{$term}" ) ), array(
-                'embeddable' => true,
-                'taxonomy'   => 'wpcm_' . rtrim( $term, 's' ),
-            ) );
+        // Term URL.
+        foreach ( self::$player_taxes as $term ) {
+            $term_url = add_query_arg( 'post', $data['ID'], rest_url( sprintf( '%1$s/%2$s', self::$ns, $term ) ) );
+
+            $response->add_link(
+                'https://api.w.org/term',
+                $term_url,
+                array(
+                    'embeddable' => true,
+                    'taxonomy'   => sprintf( 'wpcm_%s', rtrim( $term, 's' ) ),
+                )
+            );
         }
 
         return $response->data;
@@ -2797,7 +2946,7 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      *
      * @param array $staffers Staff response data.
      *
-     * @return array    Parsed data.
+     * @return array Parsed data.
      */
     private function wp_parse_staff( $staff ) {
         $served_as  = array();
@@ -2852,14 +3001,87 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
         );
 
         $response = new WP_REST_Response( $data );
-
-        $response->add_link( 'about', rest_url( "{$this->ns}/wpcm_staff" ) );
-        $response->add_link( 'self', rest_url( "{$this->namespace}/staff/{$data['ID']}" ) );
-        $response->add_link( 'collection', rest_url( "{$this->namespace}/staff" ) );
-        $response->add_link( 'https://api.w.org/term', add_query_arg( 'post', $data['ID'], rest_url( "{$this->namespace}/jobs" ) ) );
-        $response->add_link( 'https://api.w.org/term', add_query_arg( 'post', $data['ID'], rest_url( "{$this->namespace}/teams" ) ) );
+        $response->add_link( 'about', rest_url( sprintf( '%s/wpcm_staff', self::$ns ) ) );
+        $response->add_link( 'self', rest_url( sprintf( '%1$s/staff/%2$s', self::$namespace, $data['ID'] ) ) );
+        $response->add_link( 'collection', rest_url( sprintf( '%s/staff', self::$namespace ) ) );
+        $response->add_link( 'https://api.w.org/term', add_query_arg( 'post', $data['ID'], rest_url( sprintf( '%s/jobs', self::$namespace ) ) ) );
+        $response->add_link( 'https://api.w.org/term', add_query_arg( 'post', $data['ID'], rest_url( sprintf( '%s/teams', self::$namespace ) ) ) );
 
         return $response->data;
+    }
+
+    /**
+     * Parse club logo URL.
+     *
+     * @since 1.2.0
+     * @access private
+     * @static
+     *
+     * @see RDB_WPCM_REST_API::wp_parse_match()
+     *
+     * @param string $side Accepts 'home' or 'away'.
+     * @param array  $meta Post meta.
+     * @param array  $data API response object template.
+     */
+    private static function union_logo_url( $side, &$meta, &$data ) {
+        $parts = preg_split( '/ v /', $data['fixture'] );
+        $home  = $parts[0];
+        $away  = $parts[1];
+
+        if ( preg_match( '/Barbarians/', $$side ) ) {
+            $$side = 'Barbarians FC';
+        } elseif ( preg_match( '/Russia/', $$side ) ) {
+            $$side = 'Russia Bears';
+        } elseif ( preg_match( '/New Zealand/', $$side ) ) {
+            if ( preg_match( '/Womens 7s$/', $$side ) ) {
+                $$side = 'Black Ferns 7s';
+            } elseif ( preg_match( '/Women$/', $$side ) ) {
+                $$side = 'Black Ferns';
+            } elseif ( preg_match( '/7s$/', $$side ) ) {
+                $$side = 'All Blacks Sevens';
+            } else {
+                $$side = 'All Blacks';
+            }
+        }
+
+        $side_svg    = "{$side}_svg";
+        $side_png    = "{$side}_png";
+        $side_2x_png = "{$side}_2x_png";
+        $side_regex  = '/(-womens?)?(-7s)?/';
+
+        // Get logo from club ID.
+        $club_id               = $meta["wpcm_{$side}_club"][0];
+        $union                 = get_post( $club_id );
+        $data['logo'][ $side ] = get_the_post_thumbnail_url( $club_id, 'small' );
+
+        // Global logos from `dist` directory.
+        $$side_svg    = 'dist/img/unions/' . sanitize_title( $$side ) . '.svg';
+        $$side_png    = 'dist/img/unions/' . sanitize_title( $$side ) . '.png';
+        $$side_2x_png = 'dist/img/unions/' . sanitize_title( $$side ) . '@2x.png';
+
+        // Check the global image paths.
+        if ( ! file_exists( get_theme_file_path( $$side_svg ) ) ) {
+            $$side_svg = preg_replace( $side_regex, '', $$side_svg );
+        }
+
+        if ( ! file_exists( get_theme_file_path( $$side_2x_png ) ) ) {
+            $$side_2x_png = preg_replace( $side_regex, '', $$side_2x_png );
+        }
+
+        if ( ! file_exists( get_theme_file_path( $$side_png ) ) ) {
+            $$side_png = preg_replace( $side_regex, '', $$side_png );
+        }
+
+        // SVG images if they exist, or retina PNGs.
+        if ( file_exists( get_theme_file_path( $$side_svg ) ) ) {
+            $data['logo'][ $side ] = get_theme_file_uri( $$side_svg );
+        } elseif ( file_exists( get_theme_file_path( $$side_2x_png ) ) ) {
+            $data['logo'][ $side ] = get_theme_file_uri( $$side_2x_png );
+        } elseif ( file_exists( get_theme_file_path( $$side_png ) ) ) {
+            $data['logo'][ $side ] = get_theme_file_uri( $$side_png );
+        } else {
+            $data['logo'][ $side ] = get_the_post_thumbnail_url( $union->post_parent, 'small' );
+        }
     }
 }
 
@@ -2867,8 +3089,5 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
  * Initialize the custom RESTful API.
  *
  * @since 1.0.0
- *
- * @global RDB_WPCM_REST_API $rdb_wpcm_rest_api
  */
-new RDB_WPCM_REST_API();
-
+return new RDB_WPCM_REST_API();

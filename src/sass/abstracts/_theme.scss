@@ -1,0 +1,32 @@
+$theme: (
+    'version': 1,
+    'settings': (
+        'color': (
+            'custom': true,
+            'palette': ((
+                'name': Red,
+                'slug': red,
+                'color': #c42033
+            ), (
+                'name': White,
+                'slug': white,
+                'color': #fff
+            ), (
+                'name': Blue,
+                'slug': blue,
+                'color': #162c53
+            ))
+        ),
+        'custom': (
+            'baseFont': 16,
+            'body': (
+                'typography': (
+                    'lineHeight': 1.1
+                )
+            )
+        )
+    ),
+    'styles': (
+        
+    )
+);

@@ -1,4 +1,10 @@
 @import 'page';
 @import 'plugins/flag-icon';
 @import 'plugins/chosen';
+@import 'components/content/tabs';
+@import 'components/content/cards';
+@import 'components/content/datatables';
+@import 'components/content/wpcm-matches-list';
+@import 'partials/wpcm-team';
 @import 'templates/wpcm_team';
+

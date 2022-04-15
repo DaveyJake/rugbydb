@@ -1,4 +1,3 @@
-import { _, $, rdb, yadcf, BREAKPOINTS, COUNTRIES, DT_LOADING, DTHelper, util, ksort } from '../utils';
 /**
  * The front page module.
  *
@@ -10,7 +9,9 @@ import { _, $, rdb, yadcf, BREAKPOINTS, COUNTRIES, DT_LOADING, DTHelper, util, k
  * @since  1.0.0
  */
 
-const { adminUrl } = util;
+import { _, $, rdb, yadcf, BREAKPOINTS, COUNTRIES, DT_LOADING, DTHelper, helpers, ksort } from 'Utils';
+
+const { adminUrl } = helpers;
 
 /* eslint-disable computed-property-spacing, no-else-return, arrow-parens, new-cap, no-unused-vars */
 
@@ -19,10 +20,7 @@ const { adminUrl } = util;
  *
  * @since 1.0.0
  *
- * @type     {FrontPage}
- * @property {jQuery}    table          The main table.
- * @property {jQuery}    $tableSelector The target DOM node.
- * @property {Function}  dtErrorHandler Custom DataTable error handler.
+ * @type {FrontPage}
  */
 class FrontPage extends DTHelper {
     /**
@@ -47,6 +45,8 @@ class FrontPage extends DTHelper {
         this.table = this._dataTable();
 
         this._yadcf();
+
+        this.$table.on( 'page.dt draw.dt', FrontPage._reInitIcons );
     }
 
     /**
@@ -54,8 +54,6 @@ class FrontPage extends DTHelper {
      *
      * @since 1.0.0
      * @access private
-     *
-     * @param {string} data  Option group response.
      */
     _yadcf() {
         /**
@@ -166,8 +164,12 @@ class FrontPage extends DTHelper {
      * @since 1.0.0
      * @access private
      *
-     * @link https://datatables.net/reference/event/
-     * @see init.dt search.dt page.dt order.dt length.dt
+     * @see {@link https://datatables.net/reference/event/}
+     * @see init.dt
+     * @see search.dt
+     * @see page.dt
+     * @see order.dt
+     * @see length.dt
      *
      * @return {DataTable} Current DT instance.
      */
@@ -217,11 +219,7 @@ class FrontPage extends DTHelper {
                 },
                 dataSrc: ( response ) => {
                     if ( ! response.success ) {
-                        $( '#all-matches' ).on( 'error.dt', function( e, settings, techNote, message ) {
-                            console.log( 'An error has been reported by DataTables: ', message );
-                        }).DataTable(); // eslint-disable-line
-
-                        window.location.reload();
+                        return DTHelper.dtErrorHandler( this.$table );
                     }
 
                     let oldData = sessionStorage.allMatches;
@@ -384,7 +382,7 @@ class FrontPage extends DTHelper {
                 infoEmpty: 'Try reloading the page',
                 loadingRecords: DT_LOADING,
                 search: '',
-                searchPlaceholder: 'Search Matches (Hint: Try "friendly", "ireland", or even "rwc")',
+                searchPlaceholder: 'Search Matches (Ex: friendly, ireland, rwc)',
                 zeroRecords: 'Try reloading the page',
             },
             order: [
@@ -402,17 +400,16 @@ class FrontPage extends DTHelper {
                     target: 0
                 }
             },
-            initComplete: function() {
+            drawCallback: function( settings ) {
                 const api = this.api();
 
-                const $teamFilters = $( '.team-filters' );
+                const $teamFilters = $( '.team-filters' ),
+                      $matchType   = $teamFilters.find( '.match-type' );
 
                 $teamFilters.on( 'change', 'input[name="wpcm_team"]', function( e ) {
                     $( `#${ e.currentTarget.value }` ).toggleClass( 'active' );
 
-                    const $matchType = $teamFilters.find( '.match-type' );
-
-                    if ( 'mens-eagles' === e.currentTarget.value || 'womens-eagles' === e.currentTarget.value ) {
+                    if ( 'mens-eagles' === event.currentTarget.value || 'womens-eagles' === event.currentTarget.value ) {
                         $matchType.removeClass( 'hide' ).addClass( 'active' );
                     } else {
                         $matchType.removeClass( 'active' ).addClass( 'hide' );
@@ -427,17 +424,14 @@ class FrontPage extends DTHelper {
                     api.draw();
                 });
 
-                $teamFilters.on( 'change', 'input[name="wpcm_friendly"]', function() {
-                    api.draw();
-                });
+                $teamFilters.on( 'change', 'input[name="wpcm_friendly"]', api.draw );
 
-                $( '.match-filters' ).on( 'change', 'select', function() {
-                    api.draw();
-                });
+                $( '.match-filters' ).on( 'change', 'select', api.draw );
+            },
+            initComplete: function() {
+                const api = this.api();
 
-                self.$win.on( 'resize orientationchange', _.throttle( function() {
-                    api.draw();
-                }, 300 ) );
+                self.$win.on( 'resize orientationchange', _.throttle( api.draw, 300 ) );
 
                 api.columns.adjust();
             }
@@ -454,45 +448,63 @@ class FrontPage extends DTHelper {
      *
      * @param {Object[]} responseData REST API response data.
      *
-     * @return {string}    HTML sting of grouped options.
+     * @return {string}  HTML sting of grouped options.
      */
     _venueOptions( responseData ) {
-        if ( sessionStorage.venueOptions ) {
-            return sessionStorage.venueOptions;
-        }
-
-        let venueGroup   = {},
-            venueOptions = '';
-
-        _.each( responseData, ( match ) => {
-            venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ] = [];
-        });
-
-        _.each( responseData, ( match ) => {
-            if ( ! _.includes( venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ], match.venue.name ) ) {
-                venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ].push( match.venue.name );
+        if ( ! _.isString( responseData ) ) {
+            // Check if response has already been saved.
+            if ( sessionStorage.venueOptions ) {
+                return sessionStorage.venueOptions;
             }
-        });
 
-        _.each( responseData, ( match ) => {
-            venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ] = _.sortBy( venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ], venue => venue.toLowerCase() );
-        });
+            let venueGroup   = {},
+                venueOptions = '';
 
-        venueGroup = ksort( venueGroup );
-
-        venueOptions += '<option value="">Select Venue</option>';
-
-        _.each( venueGroup, ( venues, country ) => {
-            venueOptions += `<optgroup label="${ country }">`;
-
-            _.each( venues, ( venue ) => {
-                venueOptions += `<option value="${ venue }">${ venue }</option>`;
+            _.each( responseData, ( match ) => {
+                venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ] = [];
             });
 
-            venueOptions += `</optgroup>`;
-        });
+            _.each( responseData, ( match ) => {
+                if ( ! _.includes( venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ], match.venue.name ) ) {
+                    venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ].push( match.venue.name );
+                }
+            });
 
-        sessionStorage.setItem( 'venueOptions', venueOptions );
+            _.each( responseData, ( match ) => {
+                venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ] = _.sortBy( venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ], venue => venue.toLowerCase() );
+            });
+
+            venueGroup = ksort( venueGroup );
+
+            venueOptions += '<option value="">Select Venue</option>';
+
+            _.each( venueGroup, ( venues, country ) => {
+                venueOptions += `<optgroup label="${ country }">`;
+
+                _.each( venues, ( venue ) => {
+                    venueOptions += `<option value="${ venue }">${ venue }</option>`;
+                });
+
+                venueOptions += `</optgroup>`;
+            });
+
+            sessionStorage.setItem( 'venueOptions', venueOptions );
+        }
+    }
+
+    /**
+     * Reinitialize the icons.
+     *
+     * @since 1.2.0
+     * @access private
+     * @static
+     *
+     * @param {DataTable} api DataTables instance API.
+     */
+    static _reInitIcons() {
+        $( '.icon' ).each( function() {
+            $( this ).foundation();
+        });
     }
 
     /**

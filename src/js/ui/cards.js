@@ -1,4 +1,4 @@
-import { _, rdb, Request } from '../utils';
+import { _, rdb, Request } from 'Utils';
 
 /**
  * Generate cards from API.
@@ -7,12 +7,12 @@ import { _, rdb, Request } from '../utils';
  *
  * @param {string}   template Name of target template.
  * @param {string}   endpoint Name of target API endpoint.
- * @param {object}   args     Object is documented in `rugbydb/src/js/utils/requests.js`.
  * @param {Function} callback Callback function to fire.
+ * @param {object}   args     Object is documented in `rugbydb/src/js/utils/requests.js`.
  *
  * @return {Request}          API request and response.
  */
-const cards = function( template, endpoint, args, callback = null ) {
+const cards = function( template, endpoint, callback = null, args = {} ) {
     if ( template !== rdb.template ) {
         return;
     }
@@ -29,10 +29,10 @@ const cards = function( template, endpoint, args, callback = null ) {
  *
  * @since 1.0.0
  *
- * @param {string}  addressLocality Venue's city or postal town.
- * @param {string}  addressCountry  Venue's country.
+ * @param {string} addressLocality Venue's city or postal town.
+ * @param {string} addressCountry  Venue's country.
  *
- * @return {string}                 Respective country abbreviation.
+ * @return {string} Respective country abbreviation.
  */
 const ukCountry = function( addressLocality, addressCountry ) {
     let abbr;

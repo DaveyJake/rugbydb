@@ -10,14 +10,14 @@
 defined( 'ABSPATH' ) || exit;
 
 // Load `Mobile_Detect` class.
-require_once get_template_directory() . '/inc/libs/Mobile_Detect.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
+require_once get_template_directory() . '/inc/devicedetect/Mobile_Detect.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
 /**
  * All detection features for the theme.
  *
  * @since 1.0.0
  */
-class RDB_Device_Detect {
+class RDB_Device {
     /**
      * Mobile detect library.
      *
@@ -57,7 +57,7 @@ class RDB_Device_Detect {
      * Primary constructor.
      *
      * @since 1.0.0
-     * @since 1.0.1 Added RDB_Device_Detect::autoload_sinergi()
+     * @since 1.0.1 Added RDB_Device::autoload_sinergi()
      */
     public function __construct() {
         $this->autoload_sinergi();
@@ -70,7 +70,7 @@ class RDB_Device_Detect {
         /**
          * Proper mobile detection.
          */
-        add_filter( 'wp_is_mobile', array( $this, 'mobile_detect' ) );
+        add_filter( 'wp_is_mobile', array( $this, 'is_mobile' ) );
 
         /**
          * Customize body classes based on detection.
@@ -102,7 +102,7 @@ class RDB_Device_Detect {
         // Adds class based on device.
         if ( wp_is_mobile() ) {
             $classes[] = 'ua-mobile';
-        } elseif ( $this->mobile_detect->isTablet() ) {
+        } elseif ( $this->is_tablet() ) {
             $classes[] = 'ua-tablet';
         } else {
             $classes[] = 'ua-desktop';
@@ -150,20 +150,20 @@ class RDB_Device_Detect {
      * @global Mobile_Detect $this->mobile_detect Detect mobile devices.
      */
     public function hide_mobile_admin() {
-        if ( ( wp_is_mobile() || $this->mobile_detect->isTablet() ) && is_user_logged_in() ) {
+        if ( wp_is_mobile() || $this->is_tablet() ) {
             add_filter( 'show_admin_bar', '__return_false' ); // phpcs:ignore WPThemeReview.PluginTerritory.AdminBarRemoval.RemovalDetected
         }
     }
 
     /**
-     * Black_Bird_Tactical mobile detection using {@see 'wp_is_mobile'}.
+     * True mobile detection using {@see 'wp_is_mobile'} filter.
      *
-     * @global Mobile_Detect $this->mobile_detect Detect mobile devices.
+     * @see RDB_Device::is_tablet()
      *
      * @return bool True for phones. False for everything else.
      */
-    public function mobile_detect() {
-        if ( $this->mobile_detect->isMobile() && ! $this->mobile_detect->isTablet() ) {
+    public function is_mobile() {
+        if ( $this->mobile_detect->isMobile() && ! $this->is_tablet() ) {
             return true;
         }
 
@@ -171,11 +171,9 @@ class RDB_Device_Detect {
     }
 
     /**
-     * Black_Bird_Tactical tablet detection.
+     * Tablet detection.
      *
-     * @static
-     *
-     * @global Mobile_Detect $this->mobile_detect Detect mobile devices.
+     * Shorthand for RDB_Device::mobile_detect::isTablet().
      *
      * @return bool True for phones. False for everything else.
      */
@@ -202,7 +200,7 @@ class RDB_Device_Detect {
             $prefix = 'Sinergi\\BrowserDetector\\';
 
             // Base directory for the namespace prefix.
-            $base_dir = __DIR__ . '/libs/';
+            $base_dir = __DIR__ . '/devicedetect/';
 
             // Does the class use the namespace prefix?
             $len = strlen( $prefix );
@@ -230,4 +228,4 @@ class RDB_Device_Detect {
     }
 }
 
-$GLOBALS['rdb_device_detect']  = new RDB_Device_Detect();
+$GLOBALS['rdb_device']  = new RDB_Device();

@@ -1,5 +1,5 @@
-import { Foundation } from '../_vendor';
-import { Request, rdb, _, $ } from '../utils';
+import { Foundation } from 'Vendor';
+import { Request, rdb, _, $ } from 'Utils';
 
 /**
  * Single match page.
@@ -62,13 +62,12 @@ const singleWpcmMatch = function() {
         initComplete: function() {
             const table = this.api();
 
-            $( window ).on( 'resize orientationchange', Foundation.util.throttle( function() {
-                table.draw();
-            }, 300 ) );
+            $( window ).on( 'resize orientationchange', Foundation.util.throttle( table.draw(), 300 ) );
 
             table.columns.adjust();
         }
     };
+
     // Lineup tables.
     $( '.wpcm-lineup-table, .wpcm-subs-table' ).DataTable( options ); // eslint-disable-line
 
@@ -81,7 +80,13 @@ const singleWpcmMatch = function() {
             return '';
         }
 
-        return new Request( 'match', nonce, 'timeline', wrId );
+        const args = {
+            collection: 'timeline',
+            nonce: nonce,
+            wrId: wrId
+        };
+
+        return new Request( 'match', args );
     }
 };
 

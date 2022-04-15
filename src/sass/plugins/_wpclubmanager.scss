@@ -1,17 +1,28 @@
+@mixin wpcm-clear-table {
+    &::before,
+    &::after {
+        content: ' ';
+        display: table;
+    }
+
+    &::after {
+        clear: both;
+    }
+}
+
+@mixin wpcm-font($size: 1.6em, $weight: normal) {
+    font: {
+        size: $size;
+        weight: $weight;
+    }
+}
+
+$half-em: 0.5em;
+$wpcm-font-size: 0.913em;
+
 .wpclubmanager {
     .clearfix {
-        *zoom: 1;
-
-        &:before {
-            content: ' ';
-            display: table;
-        }
-
-        &:after {
-            content: ' ';
-            display: table;
-            clear: both;
-        }
+        @include wpcm-clear-table;
     }
 
     .wpcm {
@@ -21,39 +32,19 @@
 
         &-row {
             width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 0;
-            margin-bottom: 0;
+            margin: 0 auto;
 
-            &:before {
-                content: ' ';
-                display: table;
-            }
-
-            &:after {
-                content: ' ';
-                display: table;
-                clear: both;
-            }
+            @include wpcm-clear-table;
 
             & & {
                 width: auto;
-                margin-top: 0;
-                margin-bottom: 0;
                 max-width: none;
-                *zoom: 1;
-
-                &:before {
-                    content: ' ';
-                    display: table;
+                margin: {
+                    top: 0;
+                    bottom: 0;
                 }
 
-                &:after {
-                    content: ' ';
-                    display: table;
-                    clear: both;
-                }
+                @include wpcm-clear-table;
             }
         }
 
@@ -61,15 +52,18 @@
             cursor: pointer;
         }
 
-        &-view-link {
+        &-view-link,
+        &-entry-content {
             display: block;
-            float: right;
+        }
+
+        &-view-link {
             margin: 1.5em 0 0;
+            float: right;
         }
 
         &-entry-content {
             clear: both;
-            display: block;
         }
 
         /*
@@ -80,13 +74,24 @@
 
         /* Staff */
         &-staff {
+            &-bio,
             &-shortcode {
                 clear: both;
             }
 
+            &-bio,
+            &-image,
+            &-info {
+                margin-bottom: 2em;
+            }
+
+            &-bio,
+            &-meta table {
+                width: 100%;
+            }
+
             &-image {
                 float: left;
-                margin-bottom: 2em;
                 width: 40%;
 
                 img {
@@ -96,29 +101,21 @@
 
             &-info {
                 float: right;
-                margin-bottom: 2em;
                 width: 50%;
 
                 h1 {
-                    font-size: 1.6em;
-                    font-weight: normal;
                     margin: 0 0 1.4em;
+                    @include wpcm-font;
                 }
             }
 
             &-meta table {
-                width: 100%;
-
                 th {
                     font-weight: bold;
                 }
             }
 
             &-bio {
-                clear: both;
-                margin-bottom: 2em;
-                width: 100%;
-
                 h3 {
                     margin-bottom: 1em;
                 }
@@ -130,20 +127,23 @@
             text-align: center;
             width: 100%;
 
+            th,
             td {
                 text-align: center;
             }
 
             th {
-                text-align: center;
-
                 &.number {
                     width: auto;
                 }
             }
 
-            thead td.name, tbody td.name, thead th.position, tbody td.position {
-                text-align: left;
+            thead,
+            tbody {
+                .name,
+                .position {
+                    text-align: left;
+                }
             }
         }
 
@@ -157,51 +157,48 @@
                 width: 100%;
             }
 
-            thead th, tbody td {
+            thead th,
+            tbody td {
                 text-align: center;
+
+                &.club {
+                    text-align: left;
+                }
             }
 
             tr.highlighted {
                 background: rgba(0, 0, 0, 0.1);
             }
-
-            table {
-                thead th.club, tbody td.club {
-                    text-align: left;
-                }
-            }
         }
 
         /* Matches */
         &-fixtures-shortcode {
-            th, td.wpcm-date {}
+            th.opponents, td.wpcm-date {}
 
-            th.venue, td.venue {
-                text-align: center;
-            }
-
-            th {
-                &.opponents {}
-
+            th,
+            td {
+                &.venue,
                 &.result {
                     text-align: center;
                 }
             }
 
             td {
-                &.result {
-                    text-align: center;
-                }
-
                 span {
-                    &.win, &.draw, &.loss, &.postponed {
-                        background: green;
+                    &.win,
+                    &.draw,
+                    &.loss,
+                    &.postponed {
+                        display: block;
+                        width: 1rem;
+                        height: 1rem;
                         border-radius: 10px;
                         color: $color__white;
-                        display: block;
                         float: right;
-                        height: 16px;
-                        width: 16px;
+                    }
+
+                    &.win {
+                        background: green;
                     }
 
                     &.draw {
@@ -228,81 +225,67 @@
                         padding: 0;
 
                         li {
-                            clear: both;
-                            float: left;
-                            list-style: none !important;
                             margin-bottom: 1.5em;
+                            list-style: none !important;
+                            float: left;
+                            clear: both;
                         }
                     }
 
                     .fixture-meta {
-                        float: left;
-                        font-size: .913em;
                         margin-bottom: 1em;
                         width: 100%;
+                        float: left;
+                        font-size: $wpcm-font-size;
 
-                        .competition {
-                            padding: .5em;
+                        .competition,
+                        .team {
+                            padding: $half-em;
                             text-transform: uppercase;
                         }
 
                         .team {
                             float: right;
-                            padding: .5em;
-                            text-transform: uppercase;
                         }
                     }
 
                     .clubs {
-                        float: left;
                         width: 100%;
+                        float: left;
 
                         a {
                             display: block;
                         }
 
-                        .home{
-                            &-clubs {
-                                display: block;
-                                float: left;
-                                font-size: 1.15em;
-                                line-height: 36px;
-                                margin: 0;
-                                padding: 0 2%;
-                                width: 96%;
-                            }
-
-                            &-logo {
-                                float: left;
-                                height: 30px;
-                                margin-right: 1em;
-                                width: 30px;
-                            }
-                        }
-
+                        .home,
                         .away {
+                            &-clubs,
+                            &-logo {
+                                float: left;
+                            }
+
                             &-clubs {
                                 display: block;
-                                float: left;
-                                font-size: 1.15em;
-                                line-height: 36px;
                                 margin: 0;
                                 padding: 0 2%;
                                 width: 96%;
+                                line-height: 36px;
+                                font-size: 1.15em;
                             }
 
                             &-logo {
-                                float: left;
-                                height: 30px;
                                 margin-right: 1em;
                                 width: 30px;
+                                height: 30px;
                             }
                         }
 
                         .score {
                             float: right;
-                            font-size: 1.4em;
-                            font-weight: bold;
+                            font: {
+                                size: 1.4em;
+                                weight: bold;
+                            }
                         }
                     }
 
@@ -319,7 +302,7 @@
                     }
 
                     .kickoff {
-                        padding: .5em;
+                        padding: $half-em;
                     }
                 }
             }
@@ -330,37 +313,71 @@
             *******************************************************
             */
 
-            &-info {
-                padding: .5em 0;
-                text-align: center;
-            }
-
+            &-comp,
             &-date {
-                font-size: .913em;
-                padding-top: .4em;
+                font-size: $wpcm-font-size;
                 text-transform: uppercase;
             }
 
-            &-comp {
-                font-size: .913em;
-                padding-top: .8em;
-                text-transform: uppercase;
-            }
-
-            &-fixture {
-                padding: 1.5em 0 2em;
+            &-info,
+            &-fixture,
+            &-home-club,
+            &-away-club,
+            &-score {
                 text-align: center;
+            }
+
+            &-meta,
+            &-status {
+                padding: $half-em 0;
+            }
+
+            &-team,
+            &-referee,
+            &-attendance {
+                font-size: $wpcm-font-size;
+            }
+
+            &-team,
+            &-referee {
+                padding-right: $half-em;
+                text-align: right;
+            }
+
+            &-referee,
+            &-attendance {
+                padding-top: $half-em;
+            }
+
+            &-attendance,
+            &-venue {
+                padding-left: $half-em;
+                text-align: left;
             }
 
             &-home,
             &-away {
                 &-club {
-                    font-size: 1.4em;
-                    font-weight: 600;
-                    padding-top: .5em;
-                    text-align: center;
+                    padding-top: $half-em;
                     width: 37%;
+                    @include wpcm-font(1.4em, 600);
                 }
+            }
+
+            &-info {
+                padding: $half-em 0;
+            }
+
+            &-date {
+                padding-top: 0.4em;
+            }
+
+            &-comp {
+                padding-top: 0.8em;
+            }
+
+            &-fixture {
+                padding: 1.5em 0 2em;
             }
 
             &-home-club {
@@ -370,7 +387,7 @@
                 }
 
                 &-badge {
-                    padding-left: 0.5em;
+                    padding-left: $half-em;
                 }
             }
 
@@ -381,30 +398,25 @@
                 }
 
                 &-badge {
-                    padding-right: 0.5em;
+                    padding-right: $half-em;
                 }
             }
 
             &-score {
                 display: inline-block;
+                width: 24%;
                 font: {
                     size: 2.4em;
                     weight: 600;
                 }
-                text-align: center;
-                width: 24%;
 
                 &-delimiter {
+                    line-height: 1em;
                     font: {
                         size: 1em;
                         weight: 600;
                     }
-                    line-height: 1em;
                 }
-            }
-
-            &-status {
-                padding: .5em 0;
             }
 
             &-overtime {
@@ -412,37 +424,18 @@
             }
 
             &-meta {
-                padding: .5em 0;
+                &-left,
+                &-right {
+                    width: 50%;
+                }
 
                 &-left {
                     float: left;
-                    width: 50%;
                 }
 
                 &-right {
                     float: right;
-                    width: 50%;
                 }
-            }
-
-            &-team {
-                font-size: .913em;
-                padding-right: .5em;
-                text-align: right;
-            }
-
-            &-referee {
-                font-size: .913em;
-                padding-right: .5em;
-                padding-top: .5em;
-                text-align: right;
-            }
-
-            &-attendance {
-                font-size: .913em;
-                padding-left: .5em;
-                padding-top: .5em;
-                text-align: left;
             }
 
             &-report {
@@ -455,18 +448,8 @@
                 table:not(.dataTable) {
                     width: 100%;
 
-                    th {
-                        &.name {
-                            width: 50%;
-
-                            .sub {
-                                font-size: .913em;
-                                font-style: italic;
-                                font-weight: normal;
-                                padding-left: 1em;
-                            }
-                        }
-
+                    th,
+                    td {
                         &.goals,
                         &.assists,
                         &.rating {
@@ -474,11 +457,30 @@
                         }
                     }
 
+                    th {
+                        &.name {
+                            width: 50%;
+
+                            .sub {
+                                padding-left: 1em;
+                                font: {
+                                    size: $wpcm-font-size;
+                                    style: italic;
+                                    weight: normal;
+                                }
+                            }
+
+                            span.mvp {
+                                margin-left: 1em;
+                                color: #e5c100;
+                            }
+                        }
+                    }
+
                     td {
                         &.goals,
                         &.assists,
                         &.rating {
-                            text-align: center;
                             width: 9%;
                         }
 
@@ -497,18 +499,13 @@
                             }
 
                             .yellowcard {
-                                background-position: 0px 0px;
+                                background-position: 0 0;
                             }
 
                             .redcard {
-                                background-position: -12px 0px;
+                                background-position: -12px 0;
                             }
                         }
-                    }
-
-                    th.name span.mvp {
-                        color: #e5c100;
-                        margin-left: 16px;
                     }
                 }
 
@@ -531,18 +528,16 @@
             }
 
             &-venue {
-                font-size: .913em;
-                padding-left: .5em;
-                text-align: left;
+                font-size: $wpcm-font-size;
 
                 &-info .wpcm_map_canvas {
                     max-width: 100%;
                 }
 
                 &-address {
-                    clear: both;
                     margin-top: 1em;
-                    padding: 1em .5em;
+                    padding: 1em $half-em;
+                    clear: both;
                 }
             }
 
@@ -565,85 +560,87 @@
         &-countdown {
             display: block;
             margin: 10px 0;
-            text-align: center;
             width: 100%;
+            text-align: center;
         }
 
         &-ticker-countdown {
             vertical-align: middle;
 
             div {
-                color: #444;
                 display: inline-block;
-                font-size: .9em;
                 margin-left: 4px;
                 text-align: center;
+                color: #444;
+                font-size: .9em;
 
                 &:first-of-type {
                     margin-left: 0;
                 }
 
                 span {
-                    background: #eee;
                     display: block;
-                    font-size: 1.5em;
-                    font-weight: 600;
-                    width: 32px;
-                    height: 32px;
-                    line-height: 32px;
+                    width: 2em;
+                    height: 2em;
+                    line-height: 2em;
+                    background: #eee;
+                    font: {
+                        size: 1.5em;
+                        weight: 600;
+                    }
                 }
             }
         }
 
         &-birthdays-widget {
             li {
-                float: left;
                 margin-bottom: 1.5em;
                 width: 100%;
+                float: left;
 
                 h3.happy-birthday {
                     margin: 0;
                     padding: 0;
                 }
 
-                .birthday-post {
-                    width: 100%;
-                    overflow: hidden;
-                    _overflow: visible;
-                    zoom: 1;
-                }
-
-                .birthday-meta {
-                    overflow: hidden;
-                    _overflow: visible;
-                    zoom: 1;
-                }
-
-                .birthday-post .birthday-image {
-                    float: left;
-                    margin: 3px 10px 0 0;
-
-                    img {
-                        display: block;
+                .birthday {
+                    &-post,
+                    &-meta {
+                        overflow: hidden;
+                        _overflow: visible;
+                        zoom: 1;
                     }
-                }
 
-                .birthday-meta h4 {
-                    margin: 0;
-                    padding: 0;
-                    width: 100%;
+                    &-post {
+                        width: 100%;
+                    }
 
-                    span {
-                        float: right;
+                    &-meta h4 {
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+
+                        span {
+                            float: right;
+                        }
+                    }
+
+                    &-post .birthday-image {
+                        float: left;
+                        margin: 3px 10px 0 0;
+
+                        img {
+                            display: block;
+                        }
                     }
                 }
             }
 
             p.birthdate {
-                float: left;
-                font-size: .913em;
                 margin: 0;
                 padding: 0;
+                float: left;
+                font-size: $wpcm-font-size;
             }
         }
 
@@ -654,9 +651,15 @@
         */
 
         &-profile {
+            &-image,
+            &-meta,
+            &-stats,
+            &-bio {
+                margin-bottom: 2em;
+            }
+
             &-image {
                 float: left;
-                margin-bottom: 2em;
                 width: 33.333%;
 
                 img {
@@ -666,15 +669,11 @@
 
             &-meta {
                 float: right;
-                margin-bottom: 2em;
                 width: 58.333%;
 
                 h1 {
-                    font: {
-                        size: 1.6em;
-                        weight: normal;
-                    }
                     margin: 0 0 1.4em;
+                    @include wpcm-font;
                 }
 
                 table {
@@ -687,8 +686,6 @@
             }
 
             &-stats {
-                margin-bottom: 2em;
-
                 &-block,
                 h4 {
                     margin-bottom: 1.5em;
@@ -698,16 +695,16 @@
                     &,
                     &-multi {
                         margin: 0;
-                        border-bottom: 1px solid $color__border-input;
                         padding-left: 6px;
+                        border-bottom: 1px solid $color__border-input;
                     }
 
                     li,
                     &-multi li {
                         display: inline-block;
-                        border: 1px solid $color__border-input;
                         position: relative;
                         margin-bottom: -1px;
+                        border: 1px solid $color__border-input;
                         background: $color__background-button;
                         font: {
                             weight: 700;
@@ -715,17 +712,17 @@
                         }
 
                         a {
-                            color: $color__text-input;
                             display: inline-block;
                             padding: 8px 12px;
+                            color: $color__text-input;
                             text-decoration: none;
                         }
 
                         &.tabs {
                             &,
                             &-multi {
-                                background: $color__white;
                                 border-bottom: 1px solid $color__white;
+                                background: $color__white;
                             }
                         }
                     }
@@ -734,19 +731,15 @@
                 .tabs-panel {
                     &,
                     &-multi {
+                        margin-top: 1.4em;
                         height: auto;
                         overflow: auto;
-                        margin-top: 1.4em;
 
                         table td {
                             text-align: center;
                         }
                     }
                 }
-            }
-
-            &-bio {
-                margin-bottom: 2em;
             }
         }
 
@@ -760,9 +753,11 @@
         &-archive {
             &-sponsors {
                 .wpcm-entry-title {
-                    font-size: 1.6em;
-                    font-weight: normal;
                     margin: 0 0 1em;
+                    font: {
+                        size: 1.6em;
+                        weight: normal;
+                    }
                 }
             }
         }
@@ -773,21 +768,23 @@
             }
 
             &-image {
-                float: left;
                 width: 40%;
+                float: left;
             }
 
             &-thumbnail {
-                float: right;
                 margin-bottom: 2em;
                 width: 25%;
+                float: right;
             }
 
             &-details {
                 h2 {
-                    font-size: 1.6em;
-                    font-weight: normal;
                     margin: 0 0 1em;
+                    font: {
+                        size: 1.6em;
+                        weight: normal;
+                    }
                 }
             }
 
@@ -820,9 +817,9 @@
         &-club {
             &-details {
                 h2 {
+                    margin: 0 0 1em;
                     font-size: 1.6em;
                     font-weight: normal;
-                    margin: 0 0 1em;
 
                     img {
                         margin-right: 15px;
@@ -983,7 +980,7 @@
 
         &-area & p.birthdate {
             float: left;
-            font-size: .913em;
+            font-size: $wpcm-font-size;
             margin: 0;
             padding: 0;
         }

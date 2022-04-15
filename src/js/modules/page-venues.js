@@ -1,5 +1,6 @@
-import { $ } from '../utils';
-import { cards, ukCountry } from '../ui';
+import { $ } from 'Utils';
+import { cards, ukCountry } from 'UI';
+
 /**
  * Venues page.
  *

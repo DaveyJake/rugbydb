@@ -1,4 +1,23 @@
-**/_vendor/**
+# System Files
 .DS_Store
+
+# Directories
+dev
+dist
+node_modules
+vendor
+
+# Files
+*.cjs
+*.json
+*.lock
 *.min.js
 **/_*.js
+gulpfile.babel.js
+
+# Dev-specific Files
+.postcssrc.*
+.tailwindcssrc.*
+
+# Theme Dependency Files
+**/_vendor/**

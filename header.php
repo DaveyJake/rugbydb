@@ -52,4 +52,6 @@ defined( 'ABSPATH' ) || exit;
 
             echo '</div>';
 
-        echo '</header><!-- #masthead -->';
+            echo '<!-- #masthead > .wpcm-row -->';
+
+        echo '</header>';

@@ -1,16 +1,64 @@
-// Transparent white.
+///
+// Theme Functions & Mixins
 //
-// @param number $opacity Default 0.5.
-@function transparent-white($opacity: 0.5) {
-    $str: 'rgba(255, 255, 255, #{$opacity})';
+// @since 1.0.0
+///
 
-    @return unquote($str);
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// FUNCTIONS //////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+///
+// Check if variable is a list.
+//
+// @param {mixed} $variable Anything to check.
+//
+// @return {bool} True if list. False if not.
+///
+@function is-list($variable) {
+    // Just in case a list is surrounded by quotes.
+    @if type-of($variable) == string {
+        $variable: unquote($variable);
+    }
+
+    @return type-of($variable) == list;
 }
 
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// MIXINS ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+// Absolute bottom.
+@mixin absolute-bottom($bottom: 0) {
+    position: absolute;
+    top: auto;
+    bottom: $bottom;
+    @content;
+}
+
+// Absolute top.
+@mixin absolute-top($top: 0) {
+    position: absolute;
+    top: $top;
+    bottom: auto;
+    @content;
+}
+
+///
 // Borders.
 //
 // @param string $direction Accepts 'all', 'vertical', 'horizontal'.
 // @param list   $args      Border style short-hand.
+///
 @mixin border($direction: all, $style: '1px solid #000') {
     @if $direction == vertical {
         border: {
@@ -27,40 +75,51 @@
     }
 }
 
+///
+// Border radius.
+//
+// @param {string} $tb     Accepts 'top', 'bottom'.
+// @param {string} $lr     Accepts 'left', 'right'.
+// @param {number} $radius Number output in px.
+///
+@mixin border-radius($dir: null, $radius: 0) {
+    @if ($dir == top or $dir == bottom) {
+        border-#{$dir}-left-radius: $radius;
+        border-#{$dir}-right-radius: $radius;
+    } @else if ($dir == left or $dir == right) {
+        border-top-#{$dir}-radius: $radius;
+        border-bottom-#{$dir}-radius: $radius;
+    } @else {
+        border-radius: $radius;
+    }
+}
+
+///
 // CSS calculator written for SCSS.
 //
 // @param string $property   CSS property.
 // @param string $expression Mathematical expression.
+///
 @mixin calc($property, $expression) {
     #{$property}: calc(#{$expression});
 }
 
-// Offset for club colors..
-//
-// @param string $primary   Club's primary color.
-// @param string $secondary Club's secondary color.
-//
-// @return string Corrected color.
-@function club-colors($primary, $secondary) {
-    $fallback: #fff;
-
-    $lightness: (lightness(#{$primary}) - lightness(#{$secondary}));
-
-    @if ($primary == $fallback) {
-        @return $secondary;
-    } @else if ($secondary == $fallback) {
-        @return $primary;
-    } @else if ($lightness > 0) {
-        @return $primary;
-    } @else {
-        @return $secondary;
-    }
+// Center block.
+@mixin center-block {
+    display: block;
+    margin: auto;
 }
 
+// Column width with margin.
+@mixin column-width($columns, $columns__margin, $numberColumns: 3) {
+    width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
+}
+
+///
 // Background image.
 //
 // @param string $url Path to image.
-//
+///
 @mixin element-background($url) {
     background: {
         image: url($url);
@@ -70,25 +129,115 @@
     }
 }
 
+///
+// Equal width amongst child elemnts.
+//
+// @param {number} $elements Total number of elements.
+///
+@mixin equal-width($elements: 4) {
+    width: calc(100% / $elements);
+}
+
+// Flexbox.
+@mixin flex($justify-content: center, $align-content: center, $align-items: flex-start) {
+    display: flex;
+    justify-content: $justify-content;
+    align: {
+        content: $align-content;
+        items: $align-items;
+    }
+    @content;
+}
+
+// Flex between.
+@mixin flex-between {
+    @include flex(space-between);
+}
+
+// Flex center.
+@mixin flex-center {
+    @include flex($align-items: center);
+}
+
+// Flex column.
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+    @content;
+}
+
+// Flex evenly.
+@mixin flex-evenly {
+    @include flex(space-evenly);
+}
+
+// Float element.
+@mixin float($dir) {
+    float: $dir;
+}
+
+// Full
+@mixin full {
+    @include full-width;
+    @include full-height;
+}
+
+// Center element full-width.
+@mixin full-center-width {
+    margin: auto;
+    max-width: $size__site-main-width;
+}
+
+// Full Height.
+@mixin full-height {
+    height: 100%;
+}
+
+// Full Width.
+@mixin full-width {
+    width: 100%;
+}
+
+// Half Width.
+@mixin half-width {
+    width: 50%;
+}
+
+// Horizontal spacing.
+@mixin horizontal-space($type, $value) {
+    @include spacing($type, 'horizontal', $value);
+}
+
+// Level 2 List.
+@mixin level-two-list {
+    ul {
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+        float: left;
+        position: absolute;
+        top: 100%;
+        left: -999em;
+        z-index: 99999;
+
+        li {
+            ul {
+                left: -999em;
+                top: 0;
+            }
+
+            &:hover,
+            &.focus {
+                > ul {
+                    display: block;
+                    left: auto;
+                }
+            }
+        }
+    }
+}
+
 // Relative element.
 @mixin relative {
     position: relative;
-    @content;
-}
-
-// Absolute top.
-@mixin absolute-top($top: 0) {
-    position: absolute;
-    top: $top;
-    bottom: auto;
-    @content;
-}
-
-// Absolute bottom.
-@mixin absolute-bottom($bottom: 0) {
-    position: absolute;
-    top: auto;
-    bottom: $bottom;
     @content;
 }
 
@@ -105,6 +254,48 @@
     }
 }
 
+///
+// Directional spacing.
+//
+// @param {string}      $space-type Accepts 'margin' or 'padding'.
+// @param {string}      $direction  Accepts 'top', 'right', 'bottom', 'left',
+//                                  'horizontal' or 'vertical'.
+// @param {number|list} $values     Accepts a single number or a list of numbers.
+///
+@mixin spacing($space-type, $direction, $values) {
+    @if is-list($values) {
+        #{$space-type}: unquote($values);
+    } @else {
+        @if $direction == 'horizontal' {
+            #{$space-type}: {
+                left: $values;
+                right: $values;
+            }
+        }
+    }
+}
+
+///
+// Text-align
+//
+// @param string $dir Accepts 'left', 'center', 'right'. Only use when need to
+//                    override third-party library.
+///
+@mixin text($dir: left) {
+    text-align: $dir !important;
+}
+
+///
+// Transparent white.
+//
+// @param number $opacity Default 0.5.
+///
+@function transparent-white($opacity: 0.5) {
+    $str: 'rgba(255, 255, 255, #{$opacity})';
+
+    @return unquote($str);
+}
+
 // Typekit: Industry.
 @mixin typekit-industry {
     font: {
@@ -113,116 +304,60 @@
     }
 }
 
-// Center block.
-@mixin center-block {
-    display: block;
-    margin: auto;
+// Vertical spacing.
+@mixin vertical-space($type, $value) {
+    @include spacing($type, 'vertical', $value);
 }
 
-// Center element full-width.
-@mixin full-center-width {
-    margin: auto;
-    max-width: $size__site-main-width;
-}
 
-// Column width with margin.
-@mixin column-width($columns, $columns__margin, $numberColumns: 3) {
-    width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
-}
 
-// Float element.
-@mixin float($dir) {
-    float: $dir;
-}
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////// BEGIN WPCM SPECIFIC MIXINS //////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-// Full Height.
-@mixin full-height {
-    height: 100%;
-}
 
-// Full Width.
-@mixin full-width {
-    width: 100%;
-}
 
-// Full
-@mixin full {
-    @include full-width;
-    @include full-height;
-}
 
-// Half Width.
-@mixin half-width {
-    width: 50%;
-}
-
-// Equal width amongst child elemnts.
+///
+// Offset for club colors..
 //
-// @param {number} $elements Total number of elements.
+// @param string $primary   Club's primary color.
+// @param string $secondary Club's secondary color.
 //
-@mixin equal-width($elements: 4) {
-    $width: (100 / $elements);
-    width: unquote('#{$width}%');
-}
+// @return string Corrected color.
+///
+@function club-colors($primary, $secondary) {
+    $fallback: #fff;
 
-// Level 2 List.
-@mixin level-two-list {
-    ul {
-        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-        float: left;
-        position: absolute;
-        top: 100%;
-        left: -999em;
-        z-index: 99999;
+    $lightness: (lightness(#{$primary}) - lightness(#{$secondary}));
 
-        li {
-
-            ul {
-                left: -999em;
-                top: 0;
-            }
-
-            &:hover,
-            &.focus {
-
-                > ul {
-                    display: block;
-                    left: auto;
-                }
-            }
-        }
+    @if ($primary == $fallback) {
+        @return $secondary;
+    } @else if ($secondary == $fallback) {
+        @return $primary;
+    } @else if ($lightness > 0) {
+        @return $primary;
+    } @else {
+        @return $secondary;
     }
 }
 
-// Flexbox.
-@mixin flex($justify-content: center, $align-content: center, $align-items: flex-start) {
-    display: flex;
-    justify-content: $justify-content;
-    align-content: $align-content;
-    align-items: $align-items;
-    @content;
+// Chosen dropdown filters.
+@mixin dropdown-spacing {
+    float: left;
+    margin: 0.5%;
 }
 
-// Flex between.
-@mixin flex-between {
-    @include flex(space-between);
+// Menu item hover.
+@mixin menu-item-hover {
+    background: #fff;
+    color: darken($color__blue, 5%) !important;
+    transition: $hover-transition;
 }
 
-// Flex center.
-@mixin flex-center {
-    @include flex(center, center, center);
-}
-
-// Flex column.
-@mixin flex-column {
-    display: flex;
-    flex-direction: column;
-    @content;
-}
-
-// Flex evenly.
-@mixin flex-evenly {
-    @include flex(space-evenly);
+// No wrap white-space.
+@mixin nowrap {
+    white-space: nowrap;
 }
 
 // Score block.
@@ -231,6 +366,7 @@
     width: 145px;
     height: 120px;
     line-height: 1.4;
+
     background: $color__background-body;
     color: $color__white;
     font-size: 1.7em;
@@ -238,54 +374,9 @@
         family: industry, sans-serif;
         weight: 900;
     }
+
     @include breakpoint(medium) {
         font-size: 1.5em;
     }
     z-index: 9;
-}
-
-// Text-align
-//
-// @param string $dir Accepts 'left', 'center', 'right'. Only use when need to
-//                    override third-party library.
-@mixin text($dir: left) {
-    text-align: $dir !important;
-}
-
-// BEGIN WPCM SPECIFIC MIXINS
-
-// Chosen dropdown filters.
-@mixin dropdown-spacing {
-    float: left;
-    margin: 0.5%;
-}
-
-// No wrap white-space.
-@mixin nowrap {
-    white-space: nowrap;
-}
-
-// Border radius.
-//
-// @param {string} $tb     Accepts 'top', 'bottom'.
-// @param {string} $lr     Accepts 'left', 'right'.
-// @param {number} $radius Number output in px.
-//
-@mixin border-radius($dir: null, $radius: 0) {
-    @if ($dir == top or $dir == bottom) {
-        border-#{$dir}-left-radius: $radius;
-        border-#{$dir}-right-radius: $radius;
-    } @else if ($dir == left or $dir == right) {
-        border-top-#{$dir}-radius: $radius;
-        border-bottom-#{$dir}-radius: $radius;
-    } @else {
-        border-radius: $radius;
-    }
-}
-
-// Menu item hover.
-@mixin menu-item-hover {
-    background: #fff;
-    color: darken($color__blue, 5%) !important;
-    transition: $hover-transition;
 }

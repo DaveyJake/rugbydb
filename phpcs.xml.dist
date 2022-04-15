@@ -35,18 +35,20 @@
 	<file>.</file>
 
 	<!-- Exclude patterns. -->
-	<exclude-pattern>/.niu/*</exclude-pattern>
-	<exclude-pattern>/inc/rdb-custom-header*</exclude-pattern>
-	<exclude-pattern>/inc/libs/*</exclude-pattern>
-	<exclude-pattern>/node_modules/*</exclude-pattern>
-	<exclude-pattern>/inc/class-rdb-taxonomy-*</exclude-pattern>
-	<exclude-pattern>/inc/class-rdb-tracking-*</exclude-pattern>
+	<exclude-pattern>functions.php</exclude-pattern>
 	<exclude-pattern>dist/img/*</exclude-pattern>
+	<exclude-pattern>inc/class-rdb-taxonomy-*</exclude-pattern>
+	<exclude-pattern>inc/class-rdb-tracking-*</exclude-pattern>
+	<exclude-pattern>inc/devicedetect/*</exclude-pattern>
+	<exclude-pattern>inc/rdb-custom-header*</exclude-pattern>
+	<exclude-pattern>node_modules/*</exclude-pattern>
 	<exclude-pattern>src/img/*</exclude-pattern>
-    <exclude-pattern>/vendor/*</exclude-pattern>
-    <exclude-pattern>/_wpclubmanager/*</exclude-pattern>
-    <exclude-pattern>/wpclubmanager/*</exclude-pattern>
-	<exclude-pattern>/WR/*</exclude-pattern>
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>wpclubmanager/*</exclude-pattern>
+    <exclude-pattern>WR/*</exclude-pattern>
+	<exclude-pattern>.niu/*</exclude-pattern>
+	<exclude-pattern>_wpclubmanager/*</exclude-pattern>
+    <exclude-pattern>wpcs/*</exclude-pattern>
 
 
 	<!--
@@ -126,7 +128,7 @@
 		 Multiple valid text domains can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="rdb,rugby-database"/>
+			<property name="text_domain" type="array" value="rdb,rugby-database,rugby-db"/>
 		</properties>
 	</rule>
 
@@ -168,7 +170,7 @@
 	#############################################################################
 	-->
 
-	<config name="testVersion" value="7.0"/>
+	<config name="testVersion" value="7.4"/>
 	<rule ref="PHPCompatibilityWP"/>
 
 </ruleset>

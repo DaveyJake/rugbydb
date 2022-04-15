@@ -10,7 +10,32 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Get WP Club Manager directory path.
+ *
+ * @since 1.1.0
+ *
+ * @return string Path to `wpclubmanager` relative to the theme.
+ */
+function get_wpcm_directory( $slug = '', $file = '' ) {
+    if ( ! empty( $slug ) ) {
+        if ( ! preg_match( '/custom\//', $slug ) ) {
+            $slug = "custom/{$slug}";
+        }
+
+        if ( ! empty( $file ) ) {
+            return wpclubmanager_get_template_part( $slug, rtrim( $file, '.php' ) );
+        }
+
+        return wpclubmanager_get_template( rtrim( $slug, '.php' ) . '.php' );
+    }
+
+    return get_template_directory() . '/wpclubmanager/custom';
+}
+
+/**
  * Helper function rdb_that checks an array for string keys aka an associative array.
+ *
+ * @since 1.0.0
  *
  * @param array $array Array to check.
  *
@@ -22,6 +47,8 @@ function rdb_is_assoc_array( $array ) {
 
 /**
  * Used the last modified unix date of a file as its version.
+ *
+ * @since 1.0.0
  *
  * @param string $file File path with no leading slash.
  *
@@ -41,6 +68,8 @@ function rdb_file_version( $file ) {
 
 /**
  * Get the current slug.
+ *
+ * @since 1.0.0
  *
  * @param WP_Post|object $post Current post object. Defaults to global $post object.
  *
@@ -79,18 +108,20 @@ function rdb_parse_args( $args, $defaults ) {
  * One-line remote get for theme.
  *
  * @since 1.0.0
+ * @since 1.2.0 - Added `$args` parameter.
  *
  * @param string $url         URL to remote request.
  * @param bool   $assoc_array True to decode data as associative array. Default false.
+ * @param array  $args        Optional remote request arguments.
  *
  * @return array|object Decoded data.
  */
-function rdb_remote_get( $url, $assoc_array = false ) {
+function rdb_remote_get( $url, $assoc_array = false, $args = array() ) {
     $trans_key = md5( $url );
     $data      = get_transient( $trans_key );
 
     if ( false === $data ) {
-        $response = wp_remote_get( $url );
+        $response = wp_remote_get( $url, $args );
 
         if ( is_wp_error( $response ) ) {
             return $response->get_error_message();
@@ -114,7 +145,7 @@ function rdb_remote_get( $url, $assoc_array = false ) {
  * @author BeAPI {@link http://www.beapi.fr}
  * @link   https://github.com/herewithme/wp-filters-extras/blob/master/wp-filters-extras.php
  *
- * @see remove_class_method()
+ * @see rdb_remove_class_method()
  *
  * @param array|string ...$args {
  *     The essential arguments needed to remove a class method.
@@ -166,12 +197,9 @@ function rdb_remove_class_method( ...$args ) {
     }
 
     // Are the `$args` an associative array or comma-separated?
-    if ( rdb_is_assoc_array( $args ) ) {
-        $args = wp_parse_args( $args, $defaults );
-    } else {
-        $args = rdb_parse_args( $args, $defaults );
-    }
+    $args = rdb_is_assoc_array( $args ) ? wp_parse_args( $args, $defaults ) : rdb_parse_args( $args, $defaults );
 
+    // Arguments map.
     $hook_name   = $args['hook_name'];
     $method_name = $args['method_name'];
     $priority    = $args['priority'];
@@ -185,8 +213,10 @@ function rdb_remove_class_method( ...$args ) {
 
     // Loop only on registered filters.
     foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
+
         // Always check if filter is an array.
         if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
+
             // Conditions.
             $conditions = array(
                 is_object( $filter_array['function'][0] ),
@@ -221,6 +251,7 @@ function rdb_remove_class_method( ...$args ) {
 /**
  * Switch hyphens (-) with underscores (_) or vice-versa.
  *
+ * @since 1.0.0
  * @access private
  *
  * @see rdb_input_box()
@@ -239,6 +270,7 @@ function _rdb_args_fill( array &$args ) {
 /**
  * Convert associative array to HTML attributes.
  *
+ * @since 1.0.0
  * @access private
  *
  * @author lordspace
@@ -265,6 +297,12 @@ function _rdb_array_attrs( array $attributes, bool $make_them_data = false ) {
         if ( is_bool( $value ) && $value ) {
             $pairs[] = $name;
         } else {
+            if ( 'href' === $name || 'src' === $name || wp_http_validate_url( $value ) ) {
+                $value = esc_url( $value );
+            } else {
+                $value = esc_attr( $value );
+            }
+
             $pairs[] = sprintf( '%s="%s"', $name, $value );
         }
     }
@@ -275,6 +313,7 @@ function _rdb_array_attrs( array $attributes, bool $make_them_data = false ) {
 /**
  * Covert associative array to HTML attribute=value pairs.
  *
+ * @since 1.0.0
  * @access private
  *
  * @see rdb_input_box()
@@ -287,8 +326,10 @@ function _rdb_array_attrs( array $attributes, bool $make_them_data = false ) {
  */
 function _rdb_attr_value( array &$args, string $attrs = '' ) {
     foreach ( $args as $attr => $value ) {
-        if ( 'icon' !== $attr && 'echo' !== $attr ) {
-            $attrs .= $attr . '="' . esc_attr( $value ) . '" ';
+        if ( 'href' === $attr || 'src' === $attr || wp_http_validate_url( $value ) ) {
+            $attrs .= $attr . '="' . esc_url( trim( $value ) ) . '" ';
+        } elseif ( 'icon' !== $attr && 'echo' !== $attr ) {
+            $attrs .= $attr . '="' . esc_attr( trim( $value ) ) . '" ';
         }
     }
 
@@ -362,6 +403,8 @@ function rdb_kses_svg_ruleset() {
 
 /**
  * Generate an `select` dropdown box.
+ *
+ * @since 1.0.0
  *
  * @see _rdb_args_fill()
  * @see _rdb_attr_value()
@@ -457,6 +500,8 @@ function rdb_dropdown_menu( $args = '' ) {
 /**
  * Generate an `input` text box.
  *
+ * @since 1.0.0
+ *
  * @see _rdb_args_fill()
  * @see _rdb_attr_value()
  *
@@ -508,9 +553,8 @@ function rdb_input_box( $args = '' ) {
 /**
  * Rename player images on upload.
  *
- * @access private
- *
  * @since 1.0.0
+ * @access private
  *
  * @see 'sanitize_file_name'
  *
@@ -545,6 +589,8 @@ function _rdb_rename_uploaded_player_images( $filename, $filename_raw ) {
 
 /**
  * Retrieve the selected value for a given dropdown menu.
+ *
+ * @since 1.0.0
  *
  * @param array|string $terms Can either be a taxonomy or multiple taxonomies.
  *
@@ -609,7 +655,7 @@ function rdb_svg_list() {
 /**
  * Load SVG Icons.
  *
- * @since 2.5.0
+ * @since 1.0.0
  *
  * @see array rdb_svg_list()
  *
@@ -636,6 +682,8 @@ function rdb_get_svgs() {
 
 /**
  * Get specified SVG icon for use.
+ *
+ * @since 1.0.0
  *
  * @see rdb_svg_list()
  * @see _rdb_attr_value()
@@ -677,6 +725,8 @@ function rdb_get_svg( string $icon, $attrs = '' ) {
 /**
  * Output the specified SVG icon in template.
  *
+ * @since 1.0.0
+ *
  * @see rdb_get_svg()
  * @see rdb_kses_svg_ruleset()
  *
@@ -692,6 +742,8 @@ function rdb_svg( $icon, $attrs = '' ) {
 /**
  * Print the SVG output inside the DOM.
  *
+ * @since 1.0.0
+ *
  * @see rdb_get_svgs()
  * @see rdb_kses_svg_ruleset()
  */
@@ -700,7 +752,6 @@ function rdb_svgs() {
         echo wp_kses( rdb_get_svgs(), rdb_kses_svg_ruleset() );
     echo '</defs></svg>';
 }
-
 add_action( 'rdb_body_open', 'rdb_svgs' );
 
 /**
@@ -756,7 +807,7 @@ function rdb_tmpl() {
         $rdb_slug = rtrim( $rdb_page, 's' );
 
         // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
-        require_once get_template_directory() . "/inc/tmpl/{$rdb_slug}.php";
+        require_once get_template_directory() . sprintf( '/inc/tmpl/%s.php', $rdb_slug );
     }
 }
 

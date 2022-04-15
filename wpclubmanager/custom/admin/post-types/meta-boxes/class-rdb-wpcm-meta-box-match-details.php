@@ -53,84 +53,85 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
 
         if ( is_array( $venues ) ) {
             $venue = $venues[0]->term_id;
+        } elseif ( is_array( $default_venue ) ) {
+            $venue = $default_venue[0]->term_id;
         } else {
-            if ( is_array( $default_venue ) )
-            {
-                $venue = $default_venue[0]->term_id;
-            }
-            else
-            {
-                $venue = -1;
-            }
+            $venue = -1;
         }
 
-        $date  = get_the_date( 'Y-m-d' );
+        $date = get_the_date( 'Y-m-d' );
 
         $local_datetime = get_post_meta( $post->ID, '_usar_match_datetime_local', true );
         $parts          = preg_split( '/\s/', $local_datetime );
         $local_date     = $parts[0];
         $local_time     = $parts[1];
 
-        $timezone   = get_post_meta( $post->ID, '_usar_match_timezone', true );
-        $timezone   = empty( $timezone ) ? ETC_UTC : $timezone;
+        $timezone   = get_term_meta( $venue, 'usar_timezone', true );
         $format     = sprintf( '%s %s', $local_date, $local_time );
         $local      = new DateTime( $format, new DateTimeZone( $timezone ) );
         $local_date = $local->format( 'Y-m-d' );
 
-        rdb_wpcm_wp_text_input( array(
-            'id'                => 'wpcm_match_date',
-            'label'             => __( 'Date & Time', 'wp-club-manager' ),
-            'placeholder'       => _x( 'YYYY-MM-DD', 'placeholder', 'wp-club-manager' ),
-            'value'             => $date,
-            'description'       => '',
-            'wrapper_class'     => 'wpcm-match-date',
-            'class'             => 'wpcm-date-picker',
-            'custom_attributes' => array(
-                'pattern' => "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"
-            ),
-        ) );
+        rdb_wpcm_wp_text_input(
+            array(
+                'id'                => 'wpcm_match_date',
+                'label'             => __( 'Date & Time', 'wp-club-manager' ),
+                'placeholder'       => _x( 'YYYY-MM-DD', 'placeholder', 'wp-club-manager' ),
+                'value'             => $date,
+                'description'       => '',
+                'wrapper_class'     => 'wpcm-match-date',
+                'class'             => 'wpcm-date-picker',
+                'custom_attributes' => array(
+                    'pattern' => "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"
+                ),
+            )
+        );
 
-        rdb_wpcm_wp_text_input( array(
-            'id'                => 'usar_match_date_local',
-            'label'             => __( 'Local Date & Time', 'wp-club-manager' ),
-            'placeholder'       => _x( 'YYYY-MM-DD', 'placeholder', 'wp-club-manager' ),
-            'value'             => $local_date,
-            'wrapper_class'     => 'usar-match-date-local',
-            'class'             => 'wpcm-date-picker',
-            'custom_attributes' => array(
-                'pattern' => "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"
-            ),
-        ) );
-
+        rdb_wpcm_wp_text_input(
+            array(
+                'id'                => 'usar_match_date_local',
+                'label'             => __( 'Local Date & Time', 'wp-club-manager' ),
+                'placeholder'       => _x( 'YYYY-MM-DD', 'placeholder', 'wp-club-manager' ),
+                'value'             => $local_date,
+                'wrapper_class'     => 'usar-match-date-local',
+                'class'             => 'wpcm-date-picker',
+                'custom_attributes' => array(
+                    'pattern' => "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"
+                ),
+            )
+        );
         ?>
         <p>
             <label><?php esc_html_e( 'Competition', 'wp-club-manager' ); ?></label>
             <?php
-            wp_dropdown_categories(array(
-                'orderby'    => 'tax_position',
-                'meta_key'   => 'tax_position',
-                'hide_empty' => false,
-                'taxonomy'   => 'wpcm_comp',
-                'selected'   => $comp,
-                'name'       => 'wpcm_comp',
-                'class'      => 'chosen_select',
-            ));
+            wp_dropdown_categories(
+                array(
+                    'orderby'    => 'tax_position',
+                    'meta_key'   => 'tax_position',
+                    'hide_empty' => false,
+                    'taxonomy'   => 'wpcm_comp',
+                    'selected'   => $comp,
+                    'name'       => 'wpcm_comp',
+                    'class'      => 'chosen_select',
+                )
+            );
             ?>
-            <input type="text" name="wpcm_comp_status" id="wpcm_comp_status" value="<?php echo $wpcm_comp_status; ?>" placeholder="<?php esc_html_e( 'Round (Optional)', 'wp-club-manager' ); ?>" />
+            <input type="text" name="wpcm_comp_status" id="wpcm_comp_status" value="<?php echo esc_attr( $wpcm_comp_status ); ?>" placeholder="<?php esc_html_e( 'Round (Optional)', 'wp-club-manager' ); ?>" />
             <label class="selectit wpcm-cb-block friendly"><input type="checkbox" name="wpcm_friendly" id="wpcm_friendly" value="<?php echo esc_attr( $friendly ); ?>" <?php checked( $friendly, 1 ); ?> /><?php esc_html_e( 'Friendly?', 'wp-club-manager' ); ?></label>
         </p>
         <p>
             <label><?php esc_html_e( 'Season', 'wp-club-manager' ); ?></label>
             <?php
-            wp_dropdown_categories( array(
-                'orderby'    => 'tax_position',
-                'meta_key'   => 'tax_position',
-                'hide_empty' => false,
-                'taxonomy'   => 'wpcm_season',
-                'selected'   => $season,
-                'name'       => 'wpcm_season',
-                'class'      => 'chosen_select',
-            ));
+            wp_dropdown_categories(
+                array(
+                    'orderby'    => 'tax_position',
+                    'meta_key'   => 'tax_position',
+                    'hide_empty' => false,
+                    'taxonomy'   => 'wpcm_season',
+                    'selected'   => $season,
+                    'name'       => 'wpcm_season',
+                    'class'      => 'chosen_select',
+                )
+            );
             ?>
         </p>
         <?php
@@ -140,15 +141,17 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
             <p>
                 <label><?php esc_html_e( 'Team', 'wp-club-manager' ); ?></label>
                 <?php
-                wp_dropdown_categories( array(
-                    'orderby'    => 'tax_position',
-                    'meta_key'   => 'tax_position',
-                    'hide_empty' => false,
-                    'taxonomy'   => 'wpcm_team',
-                    'selected'   => $team,
-                    'name'       => 'wpcm_match_team',
-                    'class'      => 'chosen_select',
-                ) );
+                wp_dropdown_categories(
+                    array(
+                        'orderby'    => 'tax_position',
+                        'meta_key'   => 'tax_position',
+                        'hide_empty' => false,
+                        'taxonomy'   => 'wpcm_team',
+                        'selected'   => $team,
+                        'name'       => 'wpcm_match_team',
+                        'class'      => 'chosen_select',
+                    )
+                );
                 ?>
             </p>
             <?php
@@ -157,15 +160,17 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
         <p>
             <label><?php esc_html_e( 'Venue', 'wp-club-manager' ); ?></label>
             <?php
-            wp_dropdown_categories( array(
-                'show_option_none' => __( 'None' ),
-                'orderby'          => 'title',
-                'hide_empty'       => false,
-                'taxonomy'         => 'wpcm_venue',
-                'selected'         => $venue,
-                'name'             => 'wpcm_venue',
-                'class'            => 'chosen_select',
-            ) );
+            wp_dropdown_categories(
+                array(
+                    'show_option_none' => __( 'None' ),
+                    'orderby'          => 'title',
+                    'hide_empty'       => false,
+                    'taxonomy'         => 'wpcm_venue',
+                    'selected'         => $venue,
+                    'name'             => 'wpcm_venue',
+                    'class'            => 'chosen_select',
+                )
+            );
             ?>
             <label class="selectit wpcm-cb-block">
                 <input type="checkbox" name="wpcm_neutral" id="wpcm_neutral" value="<?php echo esc_attr( $neutral ); ?>" <?php checked( $neutral, 1 ); ?> />

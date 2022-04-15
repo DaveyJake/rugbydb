@@ -152,14 +152,17 @@ if ( ! function_exists( 'rdb_facebook_image_sizes' ) ) :
         $cropped    = array( 'wpcm_player', 'wpcm_staff' );
 
 	    foreach ( $post_types as $post_type ) {
+	    	$regular = sprintf( 'facebook_%s', $post_type );
+	    	$retina  = sprintf( 'facebook_retina_%s', $post_type );
+
 	        if ( in_array( $post_type, $cropped, true ) ) {
 	            $crop = array( 'center', 'top' );
 	        } else {
 	            $crop = false;
 	        }
 
-	        add_image_size( "facebook_retina_{$post_type}", 1080, 562, $crop );
-	        add_image_size( "facebook_{$post_type}", 540, 281, $crop );
+	        add_image_size( $retina, 1080, 562, $crop );
+	        add_image_size( $regular, 540, 281, $crop );
 	    }
 	}
 endif;

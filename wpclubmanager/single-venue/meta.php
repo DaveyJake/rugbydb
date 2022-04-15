@@ -24,7 +24,9 @@ echo '<div class="wpcm-venue-info">';
             echo '<h3>' . __( 'Address', 'wp-club-manager' ) . '</h3>';
 
             echo '<p class="address">';
+
                 echo stripslashes( nl2br( $rdb_venue_info['wpcm_address'][0] ) );
+
             echo '</p>';
 
         endif;
@@ -32,15 +34,19 @@ echo '<div class="wpcm-venue-info">';
     echo '</div>';
 
     if ( ! empty( $rdb_venue_info['wpcm_capacity'][0] ) ) :
+
         echo '<div class="wpcm-venue-capacity">';
 
             echo '<h3>' . __( 'Capacity', 'wp-club-manager' ) . '</h3>';
 
             echo '<p class="capacity">';
+
                 echo number_format( stripslashes( $rdb_venue_info['wpcm_capacity'][0] ) );
+
             echo '</p>';
 
         echo '</div>';
+
     endif;
 
 echo '</div>';

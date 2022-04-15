@@ -138,7 +138,7 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
 
         $match_datetime->setTimezone( wp_timezone() );
 
-        echo '<span class="website-timezone">' . $match_datetime->format( 'T' ) . ' (' . $timezone_picker::formatted_offset( $match_datetime->getOffset() ) . ')</span>';
+        echo '<span class="website-timezone">' . esc_html( $match_datetime->format( 'T' ) ) . ' (' . esc_html( $timezone_picker::formatted_offset( $match_datetime->getOffset() ) ) . ')</span>';
     }
 
     /**
@@ -176,13 +176,16 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
         global $timezone_picker;
 
         $match_datetime = $this->get_match_datetime_meta( $post );
+
         $offset         = $match_datetime['offset'];
         $timezone       = $match_datetime['timezone'];
         $match_datetime = $match_datetime['dateTime'];
 
+        d( $offset );
+
         $match_datetime->setTimezone( new DateTimeZone( $timezone ) );
 
-        echo '<span class="website-timezone">' . $match_datetime->format( 'T' ) . ' (' . $offset . ')</span>';
+        echo '<span class="website-timezone">' . esc_html( sprintf( '%1$s (%2$s:00)', $match_datetime->format( 'T' ), $offset ) ) . '</span>';
     }
 
     /**
@@ -220,12 +223,13 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
         }
         else {
             // Format the date and time.
-            $_match_datetime = sprintf( '%s %s', $_POST['usar_match_date_local'], $_POST['usar_match_kickoff_local'] . ':00' );
+            $_match_datetime = sprintf( '%1$s %2$s', $_POST['usar_match_date_local'], $_POST['usar_match_kickoff_local'] . ':00' );
+
             // Save local match timezone as GMT offset.
             if ( ! empty( $_POST['wpcm_venue'] ) ) {
                 $venue_timezone = get_term_meta( $_POST['wpcm_venue'], 'usar_timezone', true );
                 $match_datetime = new DateTime( $_match_datetime, new DateTimeZone( $venue_timezone ) );
-                $local_datetime = sprintf( '%s %s', $match_datetime->format( DATE_TIME ), $timezone_picker::formatted_offset( $match_datetime->getOffset() ) );
+                $local_datetime = sprintf( '%1$s %2$s', $match_datetime->format( DATE_TIME ), $timezone_picker::formatted_offset( $match_datetime->getOffset() ) );
             }
             else {
                 $local_datetime = $_match_datetime;
@@ -280,7 +284,7 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
         $timezone = get_term_meta( $term[0]->term_id, 'usar_timezone', true );
         $timezone = ! empty( $timezone ) ? $timezone : ETC_UTC;
 
-        $local = new DateTime( sprintf( '%s %s', $local_date, $local_time ), new DateTimeZone( $timezone ) );
+        $local = new DateTime( sprintf( '%1$s %2$s', $local_date, $local_time ), new DateTimeZone( $timezone ) );
 
         if ( empty( $offset ) ) {
             $offset = $timezone_picker::formatted_offset( $local->getOffset() );

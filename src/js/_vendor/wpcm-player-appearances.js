@@ -1,4 +1,4 @@
-import { $ } from '../utils';
+import { $ } from 'Utils';
 
 /**
  * WP Club Manager: Player Appearances.

@@ -108,3 +108,5 @@ class RDB_WPCM_Shortcodes {
         }
     }
 }
+
+return new RDB_WPCM_Shortcodes();

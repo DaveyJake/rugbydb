@@ -45,7 +45,7 @@
     }
 
     //	adjust for min- and max-width
-    @media all and (max-width: $minWidth / $width) {
+    @media all and (max-width: div($minWidth, $width)) {
         .mm-wrapper_opening {
             #{$cls}.mm-menu_opened ~ .mm-slideout {
                 transform: translate3d($minWidth, 0, 0);
@@ -53,7 +53,7 @@
         }
     }
 
-    @media all and (min-width: $maxWidth / $width) {
+    @media all and (min-width: div($maxWidth, $width)) {
         .mm-wrapper_opening {
             #{$cls}.mm-menu_opened ~ .mm-slideout {
                 transform: translate3d($maxWidth, 0, 0);
@@ -71,7 +71,7 @@
         z-index: $nr;
 
         @if ($nr > 0) {
-            width: ceil(100% / $nr * 100) / 100;
+            width: div(ceil(div(100%, $nr * 100)), 100);
         }
         else {
             width: 100%;
@@ -141,14 +141,14 @@
     }
 
     //	adjust for min- and max-width
-    @media all and (max-width: $minWidth / $width) {
+    @media all and (max-width: div($minWidth, $width)) {
         .mm-wrapper_opening {
             #{$cls}.mm-menu_position-right.mm-menu_opened ~ .mm-slideout {
                 transform: translate3d(-$minWidth, 0, 0);
             }
         }
     }
-    @media all and (min-width: $maxWidth / $width) {
+    @media all and (min-width: div($maxWidth, $width)) {
         .mm-wrapper_opening {
             #{$cls}.mm-menu_position-right.mm-menu_opened ~ .mm-slideout {
                 transform: translate3d(-$maxWidth, 0, 0);

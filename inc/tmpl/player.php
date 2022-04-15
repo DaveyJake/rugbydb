@@ -18,7 +18,8 @@ function rdb_tmpl_player() {
         var seasons   = _.join( data.filters.seasons, ' ' ),
             positions = _.join( _.map( data.positions, window.sanitizeTitle ), ' ' ),
             comps     = _.join( data.filters.comps, ' ' ),
-            classes   = _.join( [ seasons, positions, comps ], ' ' );
+            classes   = _.join( [ seasons, positions, comps ], ' ' ),
+            permalink = `/player/${ data.slug }/`;
 
         if ( data.matches.total.overall > 0 ) {
             #>
@@ -26,11 +27,11 @@ function rdb_tmpl_player() {
                 <div class="card__container" shadow>
                     <div class="card__container__background"><span style="background-image: url({{ img }});"></span></div>
                     <div class="card__container__image">
-                        <a class="help_tip" href="/player/{{ data.slug }}" title="{{ name }}">
+                        <a class="help_tip" href="{{ permalink }}" title="{{ name }}">
                             <span class="card__image" style="background-image: url({{ img }});"></span>
                         </a>
                         <span class="card__container__title">
-                            <a class="help_tip" href="/player/{{ data.slug }}" title="{{ name }}">
+                            <a class="help_tip" href="{{ permalink }}" title="{{ name }}">
                                 <span class="card__title">{{ name }}</span>
                             </a>
                         </span>

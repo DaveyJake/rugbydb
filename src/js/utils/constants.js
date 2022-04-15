@@ -1,6 +1,3 @@
-import Cookies from 'js-cookie';
-import { util } from './helpers';
-const { adminUrl } = util;
 /**
  * Global JavaScript constants.
  *
@@ -10,6 +7,10 @@ const { adminUrl } = util;
  * @author Davey Jacobson <daveyjake21@gmail.com>
  * @since  1.0.0
  */
+
+import Cookies from 'js-cookie';
+import { helpers } from './helpers';
+const { adminUrl } = helpers;
 
 /**
  * ISO-2 country abbreviation to name.
@@ -313,7 +314,7 @@ const FIFTEEN_MINUTES = new Date( ( new Date().getTime() + 15 ) * 60 * 1000 );
  *
  * @type {HTMLElement}
  */
-const DT_LOADING = '<img src="' + adminUrl( 'images/wpspin_light-2x.gif' ) + '" width="16" height="16" alt="Loading data..." />';
+const DT_LOADING = `<img src="${ adminUrl( 'images/wpspin_light-2x.gif' ) }" width="16" height="16" alt="Loading data..." />`;
 
 /**
  * Internationalization instance.

@@ -8,7 +8,6 @@
 defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Admin {
-
     /**
      * Primary constructor.
      *
@@ -24,31 +23,30 @@ class RDB_WPCM_Admin {
      * @since RDB 1.0.0
      */
     private function admin_includes() {
-        require_once 'admin/class-rdb-wpcm-admin-columns.php';
-        require_once 'admin/class-rdb-wpcm-admin-assets.php';
-        require_once 'admin/class-rdb-wpcm-admin-post-types.php';
-        require_once 'admin/class-rdb-wpcm-admin-dashboard.php';
-        require_once 'admin/class-rdb-wpcm-admin-menus.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-admin-columns.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-admin-assets.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-admin-post-types.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-admin-dashboard.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-admin-menus.php';
 
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-club-details.php';
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-details.php';
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-details-custom.php';
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-player-enhancements.php';
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-report-enhancements.php';
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-result.php';
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-player-details.php';
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-player-stats.php';
-        require_once 'admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-roster-players.php';
-        require_once 'admin/class-rdb-wpcm-admin-meta-boxes.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-club-details.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-details.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-details-custom.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-player-enhancements.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-report-enhancements.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-match-result.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-player-details.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-player-stats.php';
+        require_once get_wpcm_directory() . '/admin/post-types/meta-boxes/class-rdb-wpcm-meta-box-roster-players.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-admin-meta-boxes.php';
 
-        require_once 'admin/class-rdb-wpcm-comps.php';
-        require_once 'admin/class-rdb-wpcm-positions.php';
-        require_once 'admin/class-rdb-wpcm-seasons.php';
-        require_once 'admin/class-rdb-wpcm-teams.php';
-        require_once 'admin/class-rdb-wpcm-venues.php';
-        require_once 'admin/rdb-wpcm-theme-editor.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-comps.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-positions.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-seasons.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-teams.php';
+        require_once get_wpcm_directory() . '/admin/class-rdb-wpcm-venues.php';
+        require_once get_wpcm_directory() . '/admin/rdb-wpcm-theme-editor.php';
     }
-
 }
 
 return new RDB_WPCM_Admin();

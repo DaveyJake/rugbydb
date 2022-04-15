@@ -1,0 +1,21 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "bugfixes": true,
+                "corejs": {
+                    "version": "3.18",
+                    "proposals": true
+                },
+                "debug": true,
+                "exclude": ["plugin-transform-regenerator"],
+                "forceAllTransforms": true,
+                "targets": {
+                    "esmodules": true
+                },
+                "useBuiltIns": "usage"
+            }
+        ]
+    ]
+}

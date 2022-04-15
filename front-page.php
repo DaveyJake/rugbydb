@@ -9,6 +9,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+d( rest_url() );
+
 // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact, Squiz.PHP.CommentedOutCode.Found, Squiz.Commenting.InlineComment.InvalidEndChar
 
 get_header();

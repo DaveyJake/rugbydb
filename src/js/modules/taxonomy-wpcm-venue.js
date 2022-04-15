@@ -1,4 +1,4 @@
-import { _, $, rdb, util, BREAKPOINTS, DT_LOADING, DTHelper } from '../utils';
+import { _, $, rdb, helpers, BREAKPOINTS, DT_LOADING, DTHelper } from 'Utils';
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -7,7 +7,7 @@ import { _, $, rdb, util, BREAKPOINTS, DT_LOADING, DTHelper } from '../utils';
  *
  * @type {Function}
  */
-const { adminUrl } = util;
+const { adminUrl } = helpers;
 
 /**
  * Venue template.
@@ -39,6 +39,7 @@ class TaxWpcmVenue extends DTHelper {
      * DataTables configuration.
      *
      * @since 1.0.0
+     * @access private
      */
     _dataTable() {
         // Column width.
@@ -60,7 +61,7 @@ class TaxWpcmVenue extends DTHelper {
                 },
                 dataSrc: ( response ) => {
                     if ( ! response.success ) {
-                        return DTHelper.dtErrorHandler();
+                        return DTHelper.dtErrorHandler( this.$table );
                     }
 
                     const oldData = sessionStorage.allMatches,
@@ -114,26 +115,26 @@ class TaxWpcmVenue extends DTHelper {
                     targets: 0
                 },
                 {
-                    createdCell: function( td, cellData, rowData, row, col ) {
+                    createdCell: function( td, cellData, rowData ) { // additional args: row, col
                         $( td ).attr( 'data-sort', rowData.sort );
                         $( td ).addClass( 'wpcm-matches-list-col wpcm-matches-list-date' );
                     },
                     targets: 1
                 },
                 {
-                    createdCell: function( td, cellData, rowData, row, col ) {
+                    createdCell: function( td ) { // additional args: cellData, rowData, row, col
                         $( td ).addClass( 'wpcm-matches-list-col wpcm-matches-list-fixture flex' );
                     },
                     targets: 2
                 },
                 {
-                    createdCell: function( td, cellData, rowData, row, col ) {
+                    createdCell: function( td ) { // additional args: cellData, rowData, row, col
                         $( td ).addClass( 'wpcm-matches-list-col wpcm-matches-list-team' );
                     },
                     targets: 3
                 },
                 {
-                    createdCell: function( td, cellData, rowData, row, col ) {
+                    createdCell: function( td ) { // additional args: cellData, rowData, row, col
                         $( td ).addClass( 'wpcm-matches-list-col wpcm-matches-list-info' );
                     },
                     targets: 4
@@ -144,7 +145,7 @@ class TaxWpcmVenue extends DTHelper {
                     data: 'ID',
                     className: 'control match-id sorting_disabled',
                     render: function( data ) {
-                        return `<span class="hide">${ data }</span>`;
+                        return `<span class='hide'>${ data }</span>`;
                     },
                     width: '1px'
                 },
@@ -193,11 +194,11 @@ class TaxWpcmVenue extends DTHelper {
                     data: 'sort',
                     className: 'timestamp hide',
                     render: function( data ) {
-                        return `<span class="hide">${ data }</span>`;
+                        return `<span class='hide'>${ data }</span>`;
                     }
                 }
             ],
-            createdRow( row, data, dataIndex, cells ) {
+            createdRow( row, data ) { // additional args: dataIndex, cells
                 $( row ).addClass( `wpcm-matches-list-item ${ data.outcome }` );
             },
             buttons: false,

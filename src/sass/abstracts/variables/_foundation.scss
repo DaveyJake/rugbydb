@@ -2,8 +2,12 @@
 //
 // @since 1.0.0
 
-/// Font size attribute applied to `<html>` and `<body>`. We use 100% by default so the value is inherited from the user's browser settings.
-/// @type Number
+///
+// Font size attribute applied to `<html>` and `<body>`. We use 100% by default
+// so the value is inherited from the user's browser settings.
+//
+// @type Number
+///
 $global-font-size: 100% !default;
 
 /// Global width of your site. Used by the grid to determine row width.
@@ -46,8 +50,12 @@ $body-font-color: $color__text-main !default;
 /// @type List
 $body-font-family: $font__main !default;
 
-/// Set to `true` to enable antialiased type, using the `-webkit-font-smoothing` and `-moz-osx-font-smoothing` CSS properties.
-/// @type Boolean
+///
+// Set to `true` to enable antialiased type, using the `-webkit-font-smoothing`
+// and `-moz-osx-font-smoothing` CSS properties.
+//
+// @type Boolean
+///
 $body-antialiased: true !default;
 
 /// The browser treats everything as a box. We will too.

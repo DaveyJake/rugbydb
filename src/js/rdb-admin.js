@@ -73,7 +73,7 @@ function wpmuDefenderGeoIPLookup( pagenow ) {
  *
  * @param {jQuery} $ Main jQuery instance.
  */
-( function( $ ) { // eslint-line-disable
+( function( $ ) { // eslint-disable-line
     // Included globals.
     const pageNow = window.pagenow;
 

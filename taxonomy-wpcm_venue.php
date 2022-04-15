@@ -22,11 +22,11 @@ get_header();
      */
     do_action( 'wpclubmanager_before_main_content' );
 
-        if ( taxonomy_exists( 'wpcm_venue' ) && function_exists( 'wpclubmanager_get_template_part' ) ) :
+    if ( taxonomy_exists( 'wpcm_venue' ) && function_exists( 'wpclubmanager_get_template_part' ) ) :
 
-            wpclubmanager_get_template_part( 'content', 'single-venue' );
+        wpclubmanager_get_template_part( 'content', 'single-venue' );
 
-        endif;
+    endif;
 
     /**
      * Hook: `wpclubmanager_after_main_content`

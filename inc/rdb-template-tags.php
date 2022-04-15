@@ -332,11 +332,9 @@ if ( ! function_exists( 'rdb_site_menu' ) ) :
             }
 
             $html .= '>';
-
-                $html .= '<span class="' . esc_attr( "menu-icon icon-{$icon}" ) . '">';
-                    $html .= '<i class="' . esc_attr( "fas fa-{$icon}" ) . '"></i>';
+                $html .= '<span class="' . esc_attr( sprintf( 'menu-icon icon-%s', $icon ) ) . '">';
+                    $html .= '<i class="' . esc_attr( sprintf( 'fas fa-%s', $icon ) ) . '"></i>';
                 $html .= '</span>';
-
             $html .= '</a>';
 
             echo wp_kses( $html, rdb_kses_svg_ruleset() );

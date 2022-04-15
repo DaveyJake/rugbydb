@@ -1,65 +1,74 @@
+/**
+ * WP Club Manager API: Post Type Screens.
+ *
+ * This class modifies the UI for the WP Club Manager post type screens.
+ *
+ * @file This file defines the RDBWPCMAdmin class.
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
+ * @since 1.2.0
+ */
+
 /*global ajaxurl, inlineEditPost, inlineEditL10n, wpclubmanager_admin */
-jQuery( function( $ ) {
-    var pagenow = window.pagenow,
-        typenow = window.typenow;
+
+// Global jQuery instance.
+const $ = window.jQuery;
+
+class RDBWPCMAdmin {
+    /**
+     * Primary constructor.
+     *
+     * @since 1.2.0
+     */
+    constructor() {
+        this.pagenow = window.pagenow;
+        this.typenow = window.typenow;
+
+        this.$selectTimezone = $( 'select.rdb_chosen_select' );
+
+        this.unions();
+        this.matches();
+        this.players();
+        this.seasons();
+        this.venues();
+        this.singleMatch();
+        this.singlePlayer();
+
+    }
 
     /**
-     * Timezone select.
+     * The `edit-wpcm_club` screen.
+     *
+     * @since 1.2.0
      */
-    var $selectTimezone = $( 'select.rdb_chosen_select' );
-
-    /**
-     * Set checked values.
-     *
-     * @since 1.0.0
-     *
-     * @param {jQuery} $el Element to target.
-     *
-     * @return {number}    1 if true. 0 if false.
-     */
-    function setCheckedValue( $el ) {
-        if ( $el.is( ':checked' ) ) {
-            $el.val( 1 );
-        } else {
-            $el.val( 0 );
+    unions() {
+        if ( 'edit-wpcm_club' !== this.pagenow ) {
+            return;
         }
-    }
 
-    /**
-     * Set selected value.
-     *
-     * @since 1.0.0
-     *
-     * @param {jQuery}        $el   Element to target.
-     * @param {string|number} value Selected value.
-     */
-    function setSelectedValue( $el, value ) {
-        $el.find( 'option' ).each( function() {
-            $( this ).removeAttr( 'selected' );
-        });
-
-        $el.find( `option[value="${value}"]` ).attr( 'selected', 'selected' );
-    }
-
-    // Unions.
-    if ( 'edit-wpcm_club' === pagenow )
-    {
         // When opening the quick edit panel...
         $( '#the-list' ).on( 'click', '.editinline', function() {
             inlineEditPost.revert();
 
-            var post_id           = $( this ).parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
-                $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
-                nickname          = $wpcm_inline_data.find( '.nickname' ).text(),
-                wrId              = $wpcm_inline_data.find( '.wr-id' ).text();
+            const post_id           = $( this ).parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
+                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
+                  nickname          = $wpcm_inline_data.find( '.nickname' ).text(),
+                  wrId              = $wpcm_inline_data.find( '.wr-id' ).text();
 
             $( '[name="_wpcm_club_nickname"]' ).val( nickname );
             $( '[name="wr_id"]' ).val( wrId );
         });
     }
-    // Matches.
-    else if ( 'edit-wpcm_match' === pagenow )
-    {
+
+    /**
+     * The `edit-wpcm_match` screen.
+     *
+     * @since 1.2.0
+     */
+    matches() {
+        if ( 'edit-wpcm_match' !== this.pagenow ) {
+            return;
+        }
+
         // Non-Test match tooltip.
         $( '.red' ).each( function() {
             $( this ).tooltip({
@@ -75,26 +84,27 @@ jQuery( function( $ ) {
         $( '#the-list' ).on( 'click', '.editinline', function() {
             inlineEditPost.revert();
 
-            var post_id           = $( this ).parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
-                $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
-                wrId              = $wpcm_inline_data.find( '.wr-id' ).text(),
-                compStatus        = $wpcm_inline_data.find( '.comp-status' ).text(),
-                scrumId           = $wpcm_inline_data.find( '.usar-scrum-id' ).text(),
-                refereeCountry    = $wpcm_inline_data.find( '.referee-country' ).text(),
-                neutral           = $wpcm_inline_data.find( '.neutral' ).text(),
-                friendly          = $wpcm_inline_data.find( '.friendly' ).text(),
-                played            = $wpcm_inline_data.find( '.played' ).text(),
-                opponent          = $wpcm_inline_data.find( '.opponent' ).text(),
-                homeScoreHT       = $wpcm_inline_data.find( '.home-ht-goals' ).text(),
-                awayScoreHT       = $wpcm_inline_data.find( '.away-ht-goals' ).text(),
-                videoUrl          = $wpcm_inline_data.find( '.video' ).text();
+            const post_id           = $( this ).parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
+                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
+                  wrId              = $wpcm_inline_data.find( '.wr-id' ).text(),
+                  compStatus        = $wpcm_inline_data.find( '.comp-status' ).text(),
+                  scrumId           = $wpcm_inline_data.find( '.usar-scrum-id' ).text(),
+                  refereeCountry    = $wpcm_inline_data.find( '.referee-country' ).text(),
+                  opponent          = $wpcm_inline_data.find( '.opponent' ).text(),
+                  homeScoreHT       = $wpcm_inline_data.find( '.home-ht-goals' ).text(),
+                  awayScoreHT       = $wpcm_inline_data.find( '.away-ht-goals' ).text(),
+                  videoUrl          = $wpcm_inline_data.find( '.video' ).text();
+
+            let neutral  = parseInt( $wpcm_inline_data.find( '.neutral' ).text(), 10 );
+                friendly = parseInt( $wpcm_inline_data.find( '.friendly' ).text(), 10 );
+                played   = parseInt( $wpcm_inline_data.find( '.played' ).text(), 10 );
 
             // Competition status.
             $( '[name="wpcm_comp_status"]' ).val( compStatus );
 
             // Referee country.
             if ( refereeCountry ) {
-                setTimeout( setSelectedValue( $( '#wpcm_referee_country' ), refereeCountry ), 0 );
+                setTimeout( RDBWPCMAdmin.setSelectedValue( $( '#wpcm_referee_country' ), refereeCountry ), 0 );
             }
 
             // World Rugby ID.
@@ -103,7 +113,7 @@ jQuery( function( $ ) {
 
             // Opponent
             if ( opponent ) {
-                setTimeout( setSelectedValue( $( '#post_opponent' ), opponent ), 0 );
+                setTimeout( RDBWPCMAdmin.setSelectedValue( $( '#post_opponent' ), opponent ), 0 );
             }
 
             // Halftime score.
@@ -111,13 +121,9 @@ jQuery( function( $ ) {
             $( '[name="wpcm_goals[q1][away]"]' ).val( awayScoreHT );
 
             // Neutral & Friendly checkboxes.
-            var $neutral  = $( 'input[name="wpcm_neutral"]', '.inline-edit-row' ),
-                $friendly = $( 'input[name="wpcm_friendly"]', '.inline-edit-row' ),
-                $played   = $( 'input[name="wpcm_played"]', '.inline-edit-row' );
-
-            neutral  = parseInt( neutral, 10 );
-            friendly = parseInt( friendly, 10 );
-            played   = parseInt( played, 10 );
+            const $neutral  = $( 'input[name="wpcm_neutral"]', '.inline-edit-row' ),
+                  $friendly = $( 'input[name="wpcm_friendly"]', '.inline-edit-row' ),
+                  $played   = $( 'input[name="wpcm_played"]', '.inline-edit-row' );
 
             // Neutral venue.
             if ( neutral > 0 ) {
@@ -129,7 +135,7 @@ jQuery( function( $ ) {
             }
 
             $neutral.on( 'click', function() {
-                setCheckedValue( $( this ) );
+                RDBWPCMAdmin.setCheckedValue( $( this ) );
             });
 
             // Non-Test match.
@@ -142,7 +148,7 @@ jQuery( function( $ ) {
             }
 
             $friendly.on( 'click', function() {
-                setCheckedValue( $( this ) );
+                RDBWPCMAdmin.setCheckedValue( $( this ) );
             });
 
             // Played.
@@ -158,63 +164,103 @@ jQuery( function( $ ) {
             $( '[name="_wpcm_video"]' ).val( videoUrl );
         });
     }
-    // Players.
-    else if ( 'edit-wpcm_player' === pagenow )
-    {
+
+    /**
+     * The `edit-wpcm_player` screen.
+     *
+     * @since 1.2.0
+     */
+    players() {
+        if ( 'edit-wpcm_player' !== this.pagenow ) {
+            return;
+        }
+
         $( '#the-list' ).on( 'click', '.editinline', function() {
             inlineEditPost.revert();
 
-            var post_id           = $( this ).closest( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
-                $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
-                nname             = $wpcm_inline_data.find( '.nname' ).text(),
-                wr_id             = $wpcm_inline_data.find( '.wr-id' ).text();
+            const post_id           = $( this ).closest( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
+                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
+                  nname             = $wpcm_inline_data.find( '.nname' ).text(),
+                  wrId              = $wpcm_inline_data.find( '.wr-id' ).text();
 
             $( 'input[name="_usar_nickname"]', '.inline-edit-row' ).val( nname );
-            $( 'input[name="wr_id"]', '.inline-edit-row' ).val( wr_id );
+            $( 'input[name="wr_id"]', '.inline-edit-row' ).val( wrId );
         });
     }
-    // Seasons.
-    else if ( 'edit-wpcm_season' === pagenow )
-    {
-        var $specialYear = $( 'input.rdb-special-event-year' );
+
+    /**
+     * The `edit-wpcm_season` screen.
+     *
+     * @since 1.2.0
+     */
+    seasons() {
+        if ( 'edit-wpcm_season' !== this.pagenow ) {
+            return;
+        }
+
+        const $specialYear = $( 'input.rdb-special-event-year' );
 
         $specialYear.on( 'click', function() {
-            setCheckedValue( $( this ) );
+            RDBWPCMAdmin.setCheckedValue( $( this ) );
         });
     }
-    // Venues.
-    else if ( 'edit-wpcm_venue' === pagenow )
-    {
+
+    /**
+     * The `edit-wpcm_venue` screen.
+     *
+     * @since 1.2.0
+     */
+    venues() {
+        if ( 'edit-wpcm_venue' !== this.pagenow ) {
+            return;
+        }
+
         // Display options.
-        $selectTimezone.chosen({
+        this.$selectTimezone.chosen({
             disable_search_threshold: 18
         });
     }
-    // Single Match.
-    else if ( 'wpcm_match' === pagenow )
-    {
+
+    /**
+     * The `edit-post` screen for a single `wpcm_match`.
+     *
+     * @since 1.2.0
+     */
+    singleMatch() {
+        if ( 'wpcm_match' !== this.typenow ) {
+            return;
+        }
+
         // Display options.
-        $selectTimezone.chosen({
+        this.$selectTimezone.chosen({
             width: '291px',
             disable_search_threshold: 18
         });
 
         // Neutral & Friendly checkboxes.
-        var $neutral  = $( 'input[name="wpcm_neutral"]' ),
-            $friendly = $( 'input[name="wpcm_friendly"]' );
+        const $neutral  = $( 'input[name="wpcm_neutral"]' ),
+              $friendly = $( 'input[name="wpcm_friendly"]' );
 
         $neutral.on( 'click', function() {
-            setCheckedValue( $( this ) );
+            RDBWPCMAdmin.setCheckedValue( $( this ) );
         });
 
         $friendly.on( 'click', function() {
-            setCheckedValue( $( this ) );
+            RDBWPCMAdmin.setCheckedValue( $( this ) );
         });
     }
-    // Single Player.
-    else if ( 'wpcm_player' === pagenow )
-    {
-        var $body = $( document.body );
+
+    /**
+     * The `edit-post` screen for a single `wpcm_player`.
+     *
+     * @since 1.2.0
+     */
+    singlePlayer() {
+        if ( 'wpcm_player' !== this.typenow ) {
+            return;
+        }
+
+        const $body = $( document.body );
 
         $body.on( 'click', function() {
             $( '.wpcm_error_tip' ).fadeOut( '100', function() {
@@ -230,4 +276,41 @@ jQuery( function( $ ) {
             'delay': 200
         });
     }
-});
+
+    /**
+     * Set checked values.
+     *
+     * @since 1.2.0
+     * @static
+     *
+     * @param {jQuery} $el Element to target.
+     *
+     * @return {number}    1 if true. 0 if false.
+     */
+    static setCheckedValue( $el ) {
+        if ( $el.is( ':checked' ) ) {
+            $el.val( 1 );
+        } else {
+            $el.val( 0 );
+        }
+    }
+
+    /**
+     * Set selected value.
+     *
+     * @since 1.2.0
+     * @static
+     *
+     * @param {jQuery}        $el   Element to target.
+     * @param {string|number} value Selected value.
+     */
+    static setSelectedValue( $el, value ) {
+        $el.find( 'option' ).each( function() {
+            $( this ).removeAttr( 'selected' );
+        });
+
+        $el.find( `option[value="${value}"]` ).attr( 'selected', 'selected' );
+    }
+}
+
+new RDBWPCMAdmin();

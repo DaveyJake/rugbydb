@@ -4,6 +4,7 @@
  *
  * @author Davey Jacobson <djacobson@usa.rugby>
  * @since 1.0.0
+ * @since 1.0.1 - Added {@see _rdb_attr_value()} to parse the form type tag attributes.
  *
  * @package Rugby_Database
  */
@@ -43,6 +44,8 @@ function rdb_taxonomy_template( $taxonomy = null ) {
  * @since 1.0.0
  * @access private
  *
+ * @see rdb_taxonomy_template()
+ *
  * @param string $taxonomy Taxonomy slug.
  * @param string $slug     Term slug.
  */
@@ -70,12 +73,7 @@ function rdb_get_term_template_class( $class = '', $tax = '' ) {
     $query_var = get_query_var( $tax );
     $term      = get_term_by( 'slug', $query_var, $tax );
 
-    $classes = array(
-        'taxonomy'
-        , $tax
-        , "term-{$term->term_id}"
-        , $query_var
-    );
+    $classes = array( 'taxonomy', $tax, "term-{$term->term_id}", $query_var );
 
     if ( ! empty( $class ) ) {
         if ( ! is_array( $class ) ) {
@@ -155,6 +153,8 @@ function rdb_get_player_images( $size = 'player_single' ) {
 /**
  * Decode address for Google Maps.
  *
+ * @since 1.0.0
+ *
  * @param string $address Formatted address with no line-breaks.
  *
  * @return mixed          Associative array with `lat`, `lng` and `place_id` keys.
@@ -226,6 +226,8 @@ function rdb_wpcm_decode_address( $address ) {
 /**
  * Get head coach for match.
  *
+ * @since 1.0.0
+ *
  * @param int $post_id The current post ID.
  *
  * @return string      Name of head coach.
@@ -276,6 +278,8 @@ function rdb_wpcm_get_head_coach( $post_id ) {
 
 /**
  * Get match team names.
+ *
+ * @since 1.0.0
  *
  * @param int  $post_id  The current post ID.
  * @param bool $abbr     Club abbreviation.
@@ -333,9 +337,11 @@ function rdb_wpcm_get_match_clubs( $post_id, $abbr = false, $nickname = false ) 
 /**
  * Get match competition.
  *
+ * @since 1.0.0
+ *
  * @param int $post_id The current post ID value.
  *
- * @return array
+ * @return array The competition, competition label and status of the match.
  */
 function rdb_wpcm_get_match_comp( $post_id ) {
     if ( empty( $post_id ) ) {
@@ -376,7 +382,7 @@ function rdb_wpcm_get_match_comp( $post_id ) {
  *
  * @param WP_Post|int $post Current post object
  *
- * @return string $result
+ * @return array HT score, final score, team one score, team two score, and delimeter.
  */
 function rdb_wpcm_get_match_result( $post ) {
     $sport      = 'rugby';
@@ -438,9 +444,11 @@ function rdb_wpcm_get_match_result( $post ) {
 /**
  * Get match team.
  *
+ * @since 1.0.0
+ *
  * @param int $post The current post ID.
  *
- * @return array
+ * @return array Team name and label.
  */
 function rdb_wpcm_get_match_team( $post_id ) {
     $teams = get_the_terms( $post_id, 'wpcm_team' );
@@ -546,6 +554,8 @@ function rdb_wpcm_get_match_venue( $post ) {
 /**
  * Get team display names.
  *
+ * @since 1.0.0
+ *
  * @param int $post_id  The default club ID.
  * @param int $match_id The current match ID.
  *
@@ -584,6 +594,8 @@ function rdb_wpcm_get_team_name( $post_id, $match_id ) {
 /**
  * Get timezone from venue.
  *
+ * @since 1.0.0
+ *
  * @param array|string $args {
  *     Optional arguments. At least one is required.
  *
@@ -606,6 +618,7 @@ function rdb_wpcm_get_venue_timezone( ...$args ) {
     }
     elseif ( $args['post_id'] > 0 ) {
         $terms = get_the_terms( $args['post_id'], 'wpcm_venue' );
+
         return get_term_meta( $terms[0]->term_id, 'usar_timezone', true );
     }
     else {
@@ -615,6 +628,8 @@ function rdb_wpcm_get_venue_timezone( ...$args ) {
 
 /**
  * Get venue timezone from Google.
+ *
+ * @since 1.0.0
  *
  * @param WP_Term $venue    Term object.
  * @param object  $match_id World Rugby match data.
@@ -671,11 +686,72 @@ function rdb_google_venue_timezone( $venue, $match_id ) {
 }
 
 /**
+ * Get venue weather from RapidAPI.
+ *
+ * @since 1.2.0
+ *
+ * @param
+ *
+ * @return object {
+ *     Default `current` field values.
+ *
+ *     @type int    $last_updated_epoch Timestamp. ex: 1649204100
+ *     @type string $last_updated       Date string. ex: 2022-04-06 01:15"
+ *     @type float  $temp_c             Temperature in celsius. ex: 9.5
+ *     @type float  $temp_f             Temperature in fairenheight. ex: 49.1
+ *     @type int    $is_day             Day number of the week. 0-6.
+ *     @type object $condition          {
+ *         @type string $text Description of weather. ex: "Overcast"
+ *         @type string $icon URL of weather icon descriptor. ex: "//cdn.weatherapi.com/weather/64x64/night/122.png"
+ *         @type int    $code Ignore.
+ *     }
+ *     @type float  $wind_mph            Wind speed in MPH. ex: 13.4
+ *     @type float  $wind_kph            Wind speed in KM per hour. ex: 21.6
+ *     @type int    $wind_degree         Wind angle in deg. ex: 238
+ *     @type string $wind_dir            Wind direction. ex: WSW
+ *     @type float  $pressure_mb         1005
+ *     @type float  $pressure_in         29.67
+ *     @type float  $precip_mm           0
+ *     @type float  $precip_in           0
+ *     @type int    $humidity            66
+ *     @type float  $cloud               100
+ *     @type float  $feelslike_c         6.6
+ *     @type float  $feelslike_f         43.9
+ *     @type float  $vis_km              10
+ *     @type float  $vis_miles           6
+ *     @type float  $uv                  1
+ *     @type float  $gust_mph            20.8
+ *     @type float  $gust_kph            33.5
+ * }
+ */
+function rdb_wpcm_get_venue_weather( $rdb_term ) {
+    $rdb_venue_info = get_term_meta( $rdb_term->term_id );
+
+    $rdb_lat = $rdb_venue_info['wpcm_latitude'];
+    $rdb_lng = $rdb_venue_info['wpcm_longitude'];
+
+    $rdb_weather = rdb_remote_get(
+        add_query_arg( 'q', sprintf( '%s,%s', $rdb_lat, $rdb_lng ), 'https://weatherapi-com.p.rapidapi.com/current.json' ),
+        false,
+        array(
+            'headers' => array(
+                'X-RapidAPI-Host' => 'weatherapi-com.p.rapidapi.com',
+                'X-RapidAPI-Key'  => '5792834c99msh48dbcb3527eccc2p14057bjsn19e750fd8f94',
+            ),
+        )
+    );
+
+    return $rdb_weather->current;
+}
+
+/**
  * Get club head to heads.
+ *
+ * @since 1.0.0
  *
  * @param int $post_id Current post ID.
  *
- * @return array       All head-to-head matches.
+ * @return array All head-to-head matches.
  */
 function rdb_wpcm_head_to_heads( $post_id ) {
     $club    = get_default_club();
@@ -912,7 +988,7 @@ function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name
 
                         $options = $$var;
                     }
-                break;
+                    break;
                 case 'position':
                     if ( 'position' === $name ) {
                         foreach ( $xv_positions as $position ) {
@@ -921,7 +997,7 @@ function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name
 
                         $options = $$var;
                     }
-                break;
+                    break;
                 case 'season':
                     if ( 'season' === $name ) {
                         foreach ( $options as $slug => $season ) {
@@ -932,7 +1008,7 @@ function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name
 
                         $options = $$var;
                     }
-                break;
+                    break;
             }
         elseif ( in_array( $query_var, $sv, true ) ) :
             switch ( $dropdown ) {
@@ -971,7 +1047,7 @@ function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name
 
                         $options = $html;
                     }
-                break;
+                    break;
                 case 'position':
                     if ( 'position' === $name ) {
                         foreach ( $sv_positions as $position ) {
@@ -980,7 +1056,7 @@ function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name
 
                         $options = $$var;
                     }
-                break;
+                    break;
                 case 'season':
                     if ( 'season' === $name ) {
                         foreach ( $options as $slug => $season ) {
@@ -1021,7 +1097,7 @@ function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name
 
                         $options = $html;
                     }
-                break;
+                    break;
                 case 'season':
                     if ( 'season' === $name ) {
                         foreach ( $options as $slug => $season ) {
@@ -1032,7 +1108,7 @@ function rdb_player_dropdown_filter( $options, $group, $terms, $query_var, $name
 
                         $options = $$var;
                     }
-                break;
+                    break;
             }
         endif;
     }
@@ -1061,7 +1137,7 @@ add_action( 'init', 'rdb_player_dropdown_filters' );
  *
  * @param int $post_id Post object ID.
  *
- * @return string      Post permalink with trailing slash.
+ * @return string Post permalink with trailing slash.
  */
 function rdb_slash_permalink( $post_id ) {
     return trailingslashit( get_permalink( $post_id ) );
@@ -1076,6 +1152,8 @@ remove_filter( 'the_excerpt', 'wpautop' );
 
 /**
  * Add shortcode filter to {@see 'the_content'}.
+ *
+ * @since 1.0.0
  */
 add_action( 'the_content', 'do_shortcode' );
 
@@ -1239,6 +1317,9 @@ add_action( 'wp_ajax_nopriv_get_match', 'rdb_wpcm_match_timeline_data', 10 );
  * Output a text input box.
  *
  * @since 1.0.0
+ * @since 1.0.1 - Added {@see _rdb_attr_value()} to parse the 'input' tag attributes.
+ *
+ * @see _rdb_attr_value()
  *
  * @global int|string     $thepostid The current post ID.
  * @global WP_Post|object $post      The current post object.
@@ -1274,8 +1355,6 @@ function rdb_wpcm_wp_text_input( $field ) {
     $field['type']          = isset( $field['type'] ) ? $field['type'] : 'text';
     $field['maxlength']     = isset( $field['maxlength'] ) ? $field['maxlength'] : '';
 
-    ( ! empty( $field['maxlength'] ) ? $maxlength = 'maxlength="' . esc_attr( $field['maxlength'] ) . '"' : $maxlength = '' );
-
     if ( ! empty( $field['wrapper_class'] ) ) {
         echo '<p class="' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">';
     }
@@ -1284,7 +1363,19 @@ function rdb_wpcm_wp_text_input( $field ) {
         echo '<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
     }
 
-    echo '<input type="' . esc_attr( $field['type'] ) . '" class="' . esc_attr( $field['class'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '" ' . $maxlength . ' />';
+    $attrs = array_filter(
+        array(
+            'type'        => $field['type'],
+            'class'       => $field['class'],
+            'name'        => $field['name'],
+            'id'          => $field['id'],
+            'value'       => $field['value'],
+            'placeholder' => $field['placeholder'],
+            'maxlength'   => ( ! empty( $field['maxlength'] ) ? $field['maxlength'] : '' ),
+        )
+    );
+
+    echo '<input ' . _rdb_attr_value( $attrs ) . ' />';
 
     if ( ! empty( $field['description'] ) ) {
         if ( isset( $field['desc_tip'] ) && false !== $field['desc_tip'] ) {
@@ -1329,6 +1420,9 @@ function rdb_wpcm_wp_text_input( $field ) {
  * Output a textarea input box.
  *
  * @since 1.0.0
+ * @since 1.0.1 - Added {@see _rdb_attr_value()} to parse the 'textarea' tag attributes.
+ *
+ * @see _rdb_attr_value()
  *
  * @global int|string     $thepostid The current post ID.
  * @global WP_Post|object $post      The current post object.
@@ -1370,7 +1464,18 @@ function rdb_wpcm_wp_textarea_input( $field ) {
         echo '<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
     }
 
-    echo '<textarea class="' . esc_attr( $field['class'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '" rows="' . esc_attr( $field['rows'] ) . '" cols="' . esc_attr( $field['cols'] ) . '">' . esc_textarea( $field['value'] ) . '</textarea>';
+    $attrs = array_filter(
+        array(
+            'class'       => $field['class'],
+            'name'        => $field['name'],
+            'id'          => $field['id'],
+            'placeholder' => $field['placeholder'],
+            'row'         => $field['rows'],
+            'cols'        => $field['cols'],
+        )
+    );
+
+    echo '<textarea ' . _rdb_attr_value( $attrs ) . '>' . esc_textarea( $field['value'] ) . '</textarea>';
 
     if ( ! empty( $field['description'] ) ) {
         if ( isset( $field['desc_tip'] ) && false !== $field['desc_tip'] ) {
@@ -1434,9 +1539,21 @@ function rdb_wpcm_wp_select( $field ) {
     }
 
     // The select element tag.
-    echo '<select id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['id'] ) . '" class="' . esc_attr( $field['class'] ) . '"' . ( ! empty( $field['placeholder'] ) ? ' data-placeholder="' . esc_attr( $field['placeholder'] ) . '"' : '' ) . '>';
+    $attrs = array_filter(
+        array(
+            'id'               => $field['id'],
+            'name'             => $field['name'],
+            'class'            => $field['class'],
+            'data-placeholder' => ( ! empty( $field['placeholder'] ) ? $field['placeholder'] : '' ),
+        )
+    );
+
+    echo '<select ' . _rdb_attr_value( $attrs ) . ' >';
+
     foreach ( $field['options'] as $key => $value ) {
+
         if ( is_array( $value ) ) {
+
             echo '<optgroup label="' . esc_attr( $key ) . '">';
 
             foreach ( $value as $k => $v ) {
@@ -1444,19 +1561,34 @@ function rdb_wpcm_wp_select( $field ) {
             }
 
             echo '</optgroup>';
+
         } else {
+
             echo '<option value="' . esc_attr( $key ) . '" ' . selected( esc_attr( $field['value'] ), esc_attr( $key ), false ) . '>' . esc_html( $value ) . '</option>';
+
         }
+
     }
+
     echo '</select>';
 
     // Tooltip description.
     if ( ! empty( $field['description'] ) ) {
+
         if ( isset( $field['desc_tip'] ) && false !== $field['desc_tip'] ) {
-            echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . esc_url( WPCM()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />';
+
+            printf(
+                '<img class="help_tip" data-tip="%1$s" src="%2$s" height="16" width="16" />',
+                esc_attr( $field['description'] ),
+                esc_url( WPCM()->plugin_url() ) . '/assets/images/help.png'
+            );
+
         } else {
-            echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+
+            printf( '<span class="description">%s</span>', wp_kses_post( $field['description'] ) );
+
         }
+
     }
 
     if ( ! empty( $field['wrapper_class'] ) ) {

@@ -1,11 +1,24 @@
-import { $ } from './globals';
-
 /**
  * Helper functions.
  *
+ * @namespace helpers
+ * @memberof utils
+ *
  * @since 1.0.0
  */
-const util = {
+
+import { $ } from './globals';
+
+/**
+ * Begin helpers module.
+ *
+ * @module helpers
+ *
+ * @since 1.0.0
+ *
+ * @type {Object}
+ */
+const helpers = {
     /**
      * JavaScript version of WordPress's `admin_url` PHP function.
      *
@@ -15,9 +28,10 @@ const util = {
      *
      * @return {string} Website admin URL to specified file.
      */
-    adminUrl: function( path ) {
+    adminUrl( path ) {
         return `${ location.origin }/wp-admin/${ path }`;
     },
+
     /**
      * Check if Chosen.js dropdown goes beyond the DOM viewport.
      *
@@ -28,7 +42,7 @@ const util = {
      *
      * @return {bool}  True if value is greater than viewport height. False if not.
      */
-    dropdownExceedsBottomViewport: function( chosenContainer ) {
+    dropdownExceedsBottomViewport( chosenContainer ) {
         const html           = document.documentElement,
               dropdown       = chosenContainer.find( '.chosen-drop' ),
               dropdownTop    = dropdown.offset().top - html.scrollTop,
@@ -37,6 +51,7 @@ const util = {
 
         return dropdownTop + dropdownHeight > viewportHeight;
     },
+
     /**
      * Convert hex string to RGB string.
      *
@@ -46,7 +61,7 @@ const util = {
      *
      * @return {string}    Red, green and blue numeric.
      */
-    hex2rgb: function( hex ) {
+    hex2rgb( hex ) {
         /* eslint-disable */
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
 
@@ -58,6 +73,7 @@ const util = {
             }
             : null;
     },
+
     /**
      * Get color lightness.
      *
@@ -67,13 +83,14 @@ const util = {
      *
      * @return {number}    Color lightness.
      */
-    lightness: function( hex ) {
-        const color = util.hex2rgb( hex );
+    lightness( hex ) {
+        const color = helpers.hex2rgb( hex );
 
         if ( null !== color ) {
            return ( 1/2 * ( Math.max( color.r, color.g, color.b ) + Math.min( color.r, color.g, color.b ) ) );
         }
     },
+
     /**
      * Match HTML element height.
      *
@@ -82,7 +99,7 @@ const util = {
      * @param {HTMLElement} elA Some HTML element.
      * @param {HTMLElement} elB HTML element whose height to match.
      */
-    matchHeight: function( elA, elB ) {
+    matchHeight( elA, elB ) {
         if ( ! ( elA instanceof jQuery ) ) {
             elA = $( elA );
         }
@@ -102,6 +119,7 @@ const util = {
             }
         });
     },
+
     /**
      * Match element width.
      *
@@ -110,7 +128,7 @@ const util = {
      * @param {HTMLELement} elA Some HTML element.
      * @param {HTMLElement} elB Another HTML element with the width we need.
      */
-    matchWidth: function( elA, elB ) {
+    matchWidth( elA, elB ) {
         if ( ! ( elA instanceof jQuery ) ) {
             elA = $( elA );
         }
@@ -119,10 +137,9 @@ const util = {
             elB = $( elB );
         }
 
-        const targetWidth = elB.width();
-
-        elA.width( targetWidth );
+        elA.width( elB.width() );
     },
+
     /**
      * Merges together defaults and args much like the WP `wp_parse_args` function
      *
@@ -133,7 +150,7 @@ const util = {
      *
      * @return {object}    Arguments to be used instead of defaults.
     */
-    parseArgs: function( args, defaults ) {
+    parseArgs( args, defaults ) {
         if ( typeof args !== 'object' ) {
             args = {};
         }
@@ -144,6 +161,7 @@ const util = {
 
         return $.extend( {}, defaults, args );
     },
+
     /**
      * WordPress `sanitize_title` for JS.
      *
@@ -154,7 +172,7 @@ const util = {
      *
      * @return {string}       The sanitized-hyphenated-string.
      */
-    sanitizeTitle: function( string ) {
+    sanitizeTitle( string ) {
         string = string.replace( /^\s+|\s+$/g, '' );
         string = string.toLowerCase();
 
@@ -178,4 +196,4 @@ const util = {
     }
 };
 
-module.exports = { util };
+module.exports = { helpers };

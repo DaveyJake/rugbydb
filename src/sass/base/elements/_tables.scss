@@ -1,5 +1,72 @@
+$table-border: 1px solid $color__table-border;
+$table-padding: 0.5rem 0.625rem 0.625rem;
+$hover-background: (
+    thead: $color__thead-hover,
+    tbody: $color__tbody-hover,
+    tfoot: $color__tfoot-hover
+);
+
 table {
-    &:not(.dataTable) {
+    th,
+    td {
+        padding: $table-padding;
+
+        font-family: $font__post-title;
+
+        @include breakpoint(mobile down) {
+            font-size: 80%;
+        }
+    }
+
+    th {
+        font-weight: 600 !important;
+    }
+
+    td {
+        font-weight: 500;
+    }
+
+    thead,
+    tbody,
+    tfoot {
+        border: $table-border;
+    }
+
+    thead,
+    tfoot {
+        background: $color__blue;
+        color: $color__white;
+
+        tr {
+            background: transparent;
+        }
+
+        th {
+            font-weight: 600;
+            @include text(center);
+        }
+
+        td {
+            text-align: left;
+        }
+    }
+
+    tbody {
+        background-color: $color__table-background;
+
+        tr {
+            &:nth-child(even) {
+                border-bottom: 0;
+            }
+        }
+    }
+
+    caption {
+        padding: $table-padding;
+        font-weight: 600;
+    }
+
+    &:not(.dataTable) { // stylelint-disable-line
         border: 1px solid #ddd;
         width: 100%;
         margin-bottom: 1rem;
@@ -7,19 +74,8 @@ table {
         thead,
         tfoot {
             background-color: $color__table-background;
-            background: $color__tbody;
+            // background: $color__tbody;
             color: $color__table-font;
-        }
-
-        &.unstriped {
-            tbody {
-                background-color: $color__table-background;
-                tr {
-                    border-bottom: 0;
-                    border-bottom: 1px solid $color__table-border;
-                    background-color: $color__table-background;
-                }
-            }
         }
 
         &.scroll {
@@ -28,44 +84,35 @@ table {
             overflow-x: auto;
         }
 
-        &.hover {
-            thead {
-                tr {
-                    &:hover {
-                        background-color: $color__thead-hover;
-                    }
-                }
-            }
-            tfoot {
-                tr {
+        &.table-scroll {
+            overflow-x: auto;
+        }
+        // stylelint-disable
+        &:not(.unstriped) {
+            tr {
+                &:nth-of-type(even) {
                     &:hover {
                         background-color: $color__tfoot-hover;
                     }
                 }
             }
-            tbody {
-                tr {
-                    &:hover {
-                        background-color: $color__tbody-hover;
-                    }
-                }
-            }
-            &:not(.unstriped) {
-                tr {
-                    &:nth-of-type(even) {
-                        &:hover {
-                            background-color: $color__tfoot-hover;
-                        }
-                    }
-                }
-            }
         }
 
-        &.table-scroll {
-            overflow-x: auto;
+        &.unstriped {
+            tbody,
+            tbody tr {
+                background-color: $color__table-background;
+            }
+
+            tbody tr {
+                // border-bottom: 0;
+                border-bottom: $table-border;
+            }
         }
+        // stylelint-enable
     }
 
+    // stylelint-disable
     // &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
     //     > .dtr-control:before {
     //         line-height: 14px !important;
@@ -83,90 +130,35 @@ table {
         //     }
         // }
     }
-}
-
-th,
-td {
-    font-family: $font__post-title;
-    @include breakpoint(mobile down) {
-        font-size: 80%;
-    }
-}
-
-th {
-    font-weight: 600 !important;
-}
-
-td {
-    font-weight: 500;
-}
-
-thead,
-tfoot {
-    background: $color__blue;
-    border: 1px solid $color__table-border;
-    color: $color__white;
-    tr {
-        background: transparent;
-    }
-    th {
-        padding: 0.5rem 0.625rem 0.625rem;
-        font-weight: 600;
-        text-align: center !important;
-    }
-    td {
-        padding: 0.5rem 0.625rem 0.625rem;
-        text-align: left;
-    }
-}
-
-tbody {
-    border: 1px solid $color__table-border;
-    background-color: $color__table-background;
-    th {
-        padding: 0.5rem 0.625rem 0.625rem;
-    }
-    td {
-        padding: 0.5rem 0.625rem 0.625rem;
-    }
-    tr {
-        &:nth-child(even) {
-            border-bottom: 0;
-        }
-    }
-}
-
-caption {
-    padding: 0.5rem 0.625rem 0.625rem;
-    font-weight: 600;
+    // stylelint-enable
 }
 
 // Table stack.
 @include breakpoint(wordpress down) {
     table.stack {
-        thead {
-            display: none;
-        }
+        thead,
         tfoot {
             display: none;
         }
-        tr {
+
+        tr,
+        th,
+        td {
             display: block;
+        }
+
+        tr {
+            &:not(.description) {
+                text-align: center;
+            }
 
             th {
                 background: $color__blue;
                 color: $color__white;
             }
+        }
 
-            &:not(.description) {
-                text-align: center;
-            }
-        }
-        th {
-            display: block;
-        }
         td {
-            display: block;
             border-top: 0;
         }
     }

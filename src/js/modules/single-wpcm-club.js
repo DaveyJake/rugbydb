@@ -1,4 +1,4 @@
-import { _, rdb, wp, $, util } from '../utils';
+import { _, rdb, $, helpers } from 'Utils';
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -7,7 +7,7 @@ import { _, rdb, wp, $, util } from '../utils';
  *
  * @type {Function}
  */
-const { adminUrl, lightness, sanitizeTitle } = util;
+const { lightness, sanitizeTitle } = helpers;
 
 /**
  * Single club/union page.
@@ -15,6 +15,7 @@ const { adminUrl, lightness, sanitizeTitle } = util;
  * @since 1.0.0
  */
 const singleWpcmClub = function() {
+    // Bail if we're not looking at a club.
     if ( 'single-club.php' !== rdb.template ) {
         return;
     }
@@ -30,13 +31,9 @@ const singleWpcmClub = function() {
 
     const primary     = lightness( primaryColor ),
           secondary   = lightness( secondaryColor ),
-          actualLight = parseInt( primary - secondary, 10 );
+          actualLight = primary - secondary;
 
-    if ( actualLight < 0 ) {
-        $wpcmClub.prop( 'style' ).setProperty( '--background', primaryColor );
-    } else {
-        $wpcmClub.prop( 'style' ).setProperty( '--background', secondaryColor );
-    }
+    $wpcmClub.prop( 'style' ).setProperty( '--background', actualLight < 0 ? primaryColor : secondaryColor );
 
     // Column width.
     const colWidth = '25%';
@@ -93,7 +90,7 @@ const singleWpcmClub = function() {
             {
                 data: 'result',
                 title: 'Fixture',
-                render: function( data, type, row, meta ) {
+                render: function( data ) { // optional params: type, row, meta
                     return `<a id="${ data.referrer }" href="${ data.permalink }" class="wpcm-matches-list-link" target="_blank" rel="bookmark">` +
                                 `<span class="wpcm-matches-list-club1 ${ sanitizeTitle( data.home ) }">` +
                                     data.home +
@@ -111,7 +108,7 @@ const singleWpcmClub = function() {
             {
                 data: 'venue',
                 title: 'Venue',
-                render: function( data, type, row, meta ) {
+                render: function( data ) {
                     return `<td class="wpcm-matches-list-col wpcm-matches-list-venue">` +
                                 `<a id="${ data.linkId }" href="${ data.link }" rel="bookmark">${ data.name }</a>` +
                             `</td>`;
@@ -132,7 +129,7 @@ const singleWpcmClub = function() {
         paging: false,
         info: false,
         rowId: 'idStr',
-        initComplete: function( settings, json ) {
+        initComplete: function() { // optional params: settings, json
             const api = this.api();
 
             _.each( api.context[0].aoData, function( row ) { // eslint-disable-line

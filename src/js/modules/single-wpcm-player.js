@@ -1,5 +1,5 @@
-import { rdb, util, _, $, BREAKPOINTS } from '../utils';
-import { wpcmPA } from '../_vendor/wpcm-player-appearances';
+import { rdb, helpers, _, $, BREAKPOINTS } from 'Utils';
+import { wpcmPA } from 'Vendor/wpcm-player-appearances';
 
 /**
  * Single player page.
@@ -15,13 +15,12 @@ const singleWpcmPlayer = function() {
     $( wpcmPA() );
 
     // Auto-adjust header height.
-    util.matchHeight( '.wpcm-entry-header .wpcm-profile__image', '.wpcm-profile__meta table' );
+    helpers.matchHeight( '.wpcm-entry-header .wpcm-profile__image', '.wpcm-profile__meta table' );
     $( '.fade-in' ).css({ opacity: 1, transition: 'opacity 0.75s ease-in' });
     $( '.wpcm-profile__image' ).fadeIn( 'slow' );
 
     // Stats table interaction.
-    const tableUI = window.statsTableUI;
-    _.each( tableUI, function( cb ) {
+    _.each( window.statsTableUI, function( cb ) {
         cb( $ );
     });
 

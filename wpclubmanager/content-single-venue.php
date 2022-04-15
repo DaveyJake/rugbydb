@@ -26,6 +26,7 @@ do_action( 'wpclubmanager_before_single_venue' );
          *
          * @hooked rdb_single_venue_title - 5
          * @hooked rdb_single_venue_dropdown - 10
+         * @hooked rdb_single_venue_weather - 15
          */
         do_action( 'rdb_single_venue_header' );
 

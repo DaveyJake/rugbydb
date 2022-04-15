@@ -10,13 +10,15 @@
 defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Post_Types {
-
     /**
      * Targeted taxonomies.
      *
+     * @since 1.0.0
+     * @static
+     *
      * @var array
      */
-    public $taxes = array(
+    public static $taxes = array(
         'comp'     => 'competitions',
         'jobs'     => 'jobs',
         'position' => 'positions',
@@ -28,9 +30,12 @@ class RDB_WPCM_Post_Types {
     /**
      * Targeted post types.
      *
+     * @since 1.0.0
+     * @static
+     *
      * @var array
      */
-    public $routes = array(
+    public static $routes = array(
         'club'   => 'unions',
         'match'  => 'matches',
         'player' => 'players',
@@ -45,11 +50,11 @@ class RDB_WPCM_Post_Types {
     public function __construct() {
         add_filter( 'wpclubmanager_taxonomy_objects_wpcm_venue', array( $this, 'venue_taxonomy_objects' ) );
 
-        foreach ( $this->taxes as $tax => $path ) {
+        foreach ( self::$taxes as $tax => $path ) {
             add_filter( "wpclubmanager_taxonomy_args_wpcm_{$tax}", array( $this, "wpcm_rest_api_args_{$tax}" ), 5 );
         }
 
-        foreach ( $this->routes as $type => $path ) {
+        foreach ( self::$routes as $type => $path ) {
             if ( 'sstaff' === $type ) {
                 $type = $path;
             }
@@ -283,7 +288,6 @@ class RDB_WPCM_Post_Types {
 
         return $args;
     }
-
 }
 
-new RDB_WPCM_Post_Types();
+return new RDB_WPCM_Post_Types();

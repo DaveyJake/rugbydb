@@ -9,6 +9,10 @@
  * http://creativecommons.org/licenses/by-nc/4.0/
  */
 
+@import './variables';
+@import './includes';
+@import './mixins';
+
 // There's a bug in the CSS polyfill that'll override the :root vars with the .mm-menu_them-* vars
 // Therefore we'll import the themes file first.
 @import '../../../../node_modules/mmenu-js/src/extensions/themes/mmenu.themes.scss';
@@ -30,7 +34,6 @@
 @import '../../../../node_modules/mmenu-js/src/extensions/popup/mmenu.popup.scss';
 @import '../../../../node_modules/mmenu-js/src/extensions/positioning/mmenu.positioning.scss';
 @import '../../../../node_modules/mmenu-js/src/extensions/shadows/mmenu.shadows.scss';
-@import '../../../../node_modules/mmenu-js/src/extensions/themes/mmenu.themes.scss';
 
 .ua-tablet .mm-menu_popup {
     top: 21.5% !important;

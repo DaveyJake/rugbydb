@@ -243,3 +243,5 @@ class RDB_WPCM_REST_Controller extends WP_REST_Controller {
         );
     }
 }
+
+return new RDB_WPCM_REST_Controller();

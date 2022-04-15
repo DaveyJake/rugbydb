@@ -16,9 +16,8 @@
     display: inline-block;
 }
 
-// Styles Google Maps and embeds properly
-// sass-lint:disable-line no-ids
-.map_canvas {
+// Styles Google Maps and embeds properly.
+.map_canvas { // stylelint-disable-line
     img,
     iframe,
     embed,

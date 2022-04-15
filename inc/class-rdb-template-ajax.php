@@ -72,6 +72,16 @@ class RDB_Template_AJAX {
     public $team;
 
     /**
+     * Transient key for WP Cache.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @var string
+     */
+    private $transient;
+
+    /**
      * Taxonomy value for `wpcm_venue`.
      *
      * @since 1.0.0
@@ -91,6 +101,8 @@ class RDB_Template_AJAX {
             $this->route  = preg_match( '/_/', $this->action ) ? preg_split( '/_/', $this->action )[1] : 'posts';
         }
 
+        $this->transient = $this->route;
+
         if ( isset( $_REQUEST['collection'] ) ) {
             $this->collection = sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) );
         } else {
@@ -98,21 +110,25 @@ class RDB_Template_AJAX {
         }
 
         if ( isset( $_REQUEST['post_id'] ) ) {
-            $this->post_id = sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) );
+            $this->post_id    = sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) );
+            $this->transient .= '_' . $this->post_id;
         } else {
             $this->post_id = 0;
         }
 
         if ( isset( $_REQUEST['post_name'] ) ) {
-            $this->post_name = sanitize_text_field( wp_unslash( $_REQUEST['post_name'] ) );
+            $this->post_name  = sanitize_text_field( wp_unslash( $_REQUEST['post_name'] ) );
+            $this->transient .= '_' . $this->post_name;
         }
 
         if ( isset( $_REQUEST['venue'] ) ) {
-            $this->venue = sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) );
+            $this->venue      = sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) );
+            $this->transient .= '_' . $this->venue;
         }
 
         if ( isset( $_REQUEST['team'] ) ) {
-            $this->team = sanitize_text_field( wp_unslash( $_REQUEST['team'] ) );
+            $this->team       = sanitize_text_field( wp_unslash( $_REQUEST['team'] ) );
+            $this->transient .= '_' . $this->team;
         }
 
         if ( isset( $_REQUEST['per_page'] ) ) {
@@ -121,6 +137,10 @@ class RDB_Template_AJAX {
 
         if ( isset( $_REQUEST['page'] ) ) {
             $this->page = sanitize_text_field( wp_unslash( $_REQUEST['page'] ) );
+        }
+
+        if ( is_front_page() ) {
+            $this->transient .= '_front_page';
         }
 
         if ( isset( $_REQUEST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), $this->action ) ) {
@@ -136,7 +156,7 @@ class RDB_Template_AJAX {
      */
     public function request() {
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-            $endpoint = "rdb/v1/{$this->route}/";
+            $endpoint = sprintf( 'rdb/v1/%s/', $this->route );
 
             if ( ! empty( $this->venue ) ) {
                 $endpoint .= $this->venue;
@@ -161,7 +181,7 @@ class RDB_Template_AJAX {
                 $url = rest_url( $endpoint );
             }
 
-            $data = $this->parse_response( $url );
+            $data = $this->parse_response( $url, $this->transient );
 
             $this->send_json( $data );
         }//end if
@@ -177,12 +197,12 @@ class RDB_Template_AJAX {
      *
      * @todo Paginate player profile requests. Limit response to 20.
      *
-     * @param string $url API endpoint URL.
+     * @param string $url       API endpoint URL.
+     * @param string $transient Transient cache key.
      *
      * @return array|object API response.
      */
-    private function parse_response( $url ) {
-        $transient = md5( $url );
+    private function parse_response( $url, $transient ) {
         // phpcs:disable
         // if ( ! is_front_page() ) {
         //     delete_transient( $transient );
@@ -192,6 +212,8 @@ class RDB_Template_AJAX {
         $data = get_transient( $transient );
 
         if ( false === $data ) {
+            delete_transient( $transient );
+
             $response    = wp_remote_get( $url );
             $status_code = absint( wp_remote_retrieve_response_code( $response ) );
 

@@ -1,5 +1,5 @@
-import { Foundation } from '../_vendor';
-import { _, $, rdb, util, wp, BREAKPOINTS, DT_LOADING, DTHelper } from '../utils';
+import { Foundation } from 'Vendor';
+import { _, $, rdb, helpers, wp, BREAKPOINTS, DT_LOADING, DTHelper } from 'Utils';
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -8,7 +8,7 @@ import { _, $, rdb, util, wp, BREAKPOINTS, DT_LOADING, DTHelper } from '../utils
  *
  * @type {Function}
  */
-const { adminUrl, sanitizeTitle } = util;
+const { adminUrl, sanitizeTitle } = helpers;
 window.sanitizeTitle = sanitizeTitle;
 
 /**
@@ -174,11 +174,7 @@ class TaxWpcmTeam extends DTHelper {
                 },
                 dataSrc: ( response ) => {
                     if ( ! response.success ) {
-                        $( '#all-matches' ).on( 'error.dt', function( e, settings, techNote, message ) {
-                            console.log( 'An error has been reported by DataTables: ', message );
-                        }).DataTable(); // eslint-disable-line
-
-                        return window.location.reload();
+                        return DTHelper.dtErrorHandler( this.$table );
                     }
 
                     let oldData = sessionStorage.allMatches;

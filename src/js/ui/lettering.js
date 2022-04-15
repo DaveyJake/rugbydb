@@ -1,5 +1,5 @@
-import { $ } from '../utils/globals';
-import '../_vendor/lettering';
+import { $ } from 'Utils';
+import 'Vendor/lettering';
 /**
  * Lettering.js config.
  *
@@ -12,6 +12,7 @@ const logoLettering = function() {
 
     $( '.logo > span > span span' ).each( function() {
         const charClass = $( this ).text();
+
         $( this ).addClass( 'char-' + charClass );
     });
 };

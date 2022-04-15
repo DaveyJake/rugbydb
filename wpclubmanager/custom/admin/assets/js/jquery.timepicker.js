@@ -21,7 +21,7 @@
         // Browser globals
         factory( jQuery );
     }
-} )( function( $ ) {
+})( function( $ ) {
     var _ONE_DAY = 86400;
     var _lang = {
         am: 'am',
@@ -1312,6 +1312,7 @@
     // Plugin entry
     $.fn.jquery_timepicker = function( method ) {
         if ( ! this.length ) return this;
+
         if ( methods[ method ] ) {
             // check if this element is a timepicker
             if ( ! this.hasClass( 'ui-timepicker-input' ) ) {
@@ -1382,4 +1383,4 @@
         useSelect: false,
         wrapHours: true
     };
-} );
+});
