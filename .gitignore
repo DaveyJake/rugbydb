@@ -9,6 +9,7 @@ dist/img/page-items/*
 gulpfile.babel.js
 node_modules
 package.json
+dev
 src
 vendor
 .DS_Store
