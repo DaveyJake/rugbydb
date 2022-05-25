@@ -11,7 +11,6 @@
 defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Positions {
-
     /**
      * Taxonomy slug.
      *

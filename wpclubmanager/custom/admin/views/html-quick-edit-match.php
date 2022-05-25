@@ -5,9 +5,7 @@
  * @package Rugby_Database
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // phpcs:ignore Exit if accessed directly
-}
+defined( 'ABSPATH' ) || exit;
 ?>
 <fieldset class="inline-edit-col-left">
 	<legend class="inline-edit-legend"><?php esc_html_e( 'Quick Edit', 'wp-club-manager' ); ?></legend>
@@ -97,6 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<span class="input-text-wrap">
 					<input type="text" class="alignleft text referee" name="wpcm_referee" value="">
 					<select class="alignright" name="wpcm_referee_country" id="wpcm_referee_country">
+	                    <option value=""></option>
 						<?php $countries->country_dropdown_options(); ?>
 					</select>
 				</span>

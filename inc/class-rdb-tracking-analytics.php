@@ -70,7 +70,7 @@ class RDB_Tracking_Analytics {
     public function google_tag_manager_noscript() {
         ?>
         <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo esc_html( GOOGLE_TAG_MANAGER ); ?>"
+        <noscript><iframe src="<?php echo add_query_arg( 'id', esc_html( GOOGLE_TAG_MANAGER ), 'https://www.googletagmanager.com/ns.html' ); ?>"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
         <?php

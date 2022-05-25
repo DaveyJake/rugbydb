@@ -215,6 +215,58 @@
     }
 }
 
+// Mobile App Menu
+.mm {
+    $border: 1px solid var(--wp--preset--color--white);
+
+    &-menu {
+        .admin-bar & {
+            margin-top: 2rem;
+        }
+    }
+
+    &-menu,
+    &-listview {
+        background: theme-get(4);
+    }
+
+    &-btn--next::after,
+    &-btn--prev::before,
+    &-listitem,
+    &-navbar {
+        color: var(--wp--preset--color--white);
+    }
+
+    &-btn--next::after,
+    &-btn--prev::before {
+        border: 2px solid var(--wp--preset--color--white);
+        border-bottom: none;
+        border-right: none;
+    }
+
+    &-searchfield__input input {
+        border: $border;
+    }
+
+    &-listitem {
+        border-color: var(--wp--preset--color--white);
+    }
+
+    &-listview {
+        border-top: $border;
+    }
+
+    &-navbar {
+        border-bottom: $border;
+    }
+
+    &-navbars {
+        &--top {
+            border-bottom-color: var(--wp--preset--color--white);
+        }
+    }
+}
+
 // Mobile screen width.
 @include breakpoint(37.5em) {
     .main-navigation ul {

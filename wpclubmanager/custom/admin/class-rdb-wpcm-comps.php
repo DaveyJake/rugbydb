@@ -11,6 +11,14 @@
 defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Comps {
+    /**
+     * Target taxonomy.
+     *
+     * @since 1.0.0
+     *
+     * @var string
+     */
+    public $taxonomy = 'wpcm_comp';
 
     /**
      * Primary constructor.

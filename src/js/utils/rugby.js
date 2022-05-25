@@ -1,7 +1,7 @@
 /**
  * Make AJAX request to REST API.
  *
- * @namespace Request
+ * @namespace Rugby
  * @memberof utils
  *
  * @since 1.0.0
@@ -21,11 +21,11 @@ jQueryBridget( 'infiniteScroll', InfiniteScroll, $ );
 const { adminUrl, parseArgs } = helpers;
 
 /**
- * Begin Request class.
+ * Begin Rugby class.
  *
  * @since 1.0.0
  */
-class Request {
+class Rugby {
     /**
      * Primary constructor.
      *
@@ -42,7 +42,7 @@ class Request {
      * @param {string} args.per_page   The items per page to retrieve.
      * @param {string} args.page       The page number to retrieve.
      *
-     * @return {Request} JSON response from API.
+     * @return {Rugby} JSON response from API.
      */
     constructor( route = '', args = '' ) {
         this.defaults = {
@@ -71,7 +71,7 @@ class Request {
         this.perPage = args.per_page;
         this.page = args.page;
 
-        this.endpoint = Request._endpointMap( this.route );
+        this.endpoint = Rugby._endpointMap( this.route );
 
         this._ajax();
     }
@@ -192,7 +192,7 @@ class Request {
         ];
 
         _.each( obj, function( data ) {
-            return Request._filterTmpl( data, $selector );
+            return Rugby._filterTmpl( data, $selector );
         });
     }
 
@@ -223,7 +223,7 @@ class Request {
      * @access private
      * @static
      *
-     * @param {string} request Request slug.
+     * @param {string} request Rugby slug.
      *
      * @return {string} Correct slug.
      */
@@ -285,15 +285,15 @@ class Request {
 
         if ( rdb.is_mobile ) {
             $( '.chosen_select' ).on( 'change', function() {
-                return Request.__filterTmpl( this.value, $selector, data );
+                return Rugby.__filterTmpl( this.value, $selector, data );
             });
         } else {
             $( '.chosen_select' ).on( 'change', function( e, params ) {
                 if ( _.isUndefined( params ) ) {
-                    return Request.__filterTmpl( e.target.value, $selector, data );
+                    return Rugby.__filterTmpl( e.target.value, $selector, data );
                 }
 
-                return Request.__filterTmpl( params.selected, $selector, data );
+                return Rugby.__filterTmpl( params.selected, $selector, data );
             });
         }
     }
@@ -320,4 +320,4 @@ class Request {
     }
 }
 
-module.exports = { Request };
+module.exports = { Rugby };

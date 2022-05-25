@@ -5,7 +5,7 @@ export { textNode } from './string';
 export { empty, inArray, ksort, ucfirst, ucwords } from './php';
 export { helpers } from './helpers';
 export { DTHelper } from './datatable-helpers';
-export { Request } from './request';
+export { Rugby } from './rugby';
 
 /**
  * JavaScript initializer.

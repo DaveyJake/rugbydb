@@ -99,6 +99,7 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
                 ),
             )
         );
+
         ?>
         <p>
             <label><?php esc_html_e( 'Competition', 'wp-club-manager' ); ?></label>
@@ -135,6 +136,7 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
             ?>
         </p>
         <?php
+
         if ( is_club_mode() && has_teams() )
         {
             ?>
@@ -156,6 +158,7 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
             </p>
             <?php
         }
+
         ?>
         <p>
             <label><?php esc_html_e( 'Venue', 'wp-club-manager' ); ?></label>
@@ -178,6 +181,7 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
             </label>
         </p>
         <?php
+
         if ( 'yes' === get_option( 'wpcm_results_show_attendance' ) )
         {
             wpclubmanager_wp_text_input( array( 'id' => 'wpcm_attendance', 'label' => __( 'Attendance', 'wp-club-manager' ) ) );
@@ -189,16 +193,9 @@ class RDB_WPCM_Meta_Box_Match_Details extends WPCM_Meta_Box_Match_Details {
             ?>
             <p class="wpclubmanager-match-referee">
                 <label><?php esc_html_e( 'Referee', 'wp-club-manager' ); ?></label>
-                <?php if ( ! empty( $referee_list ) ) : ?>
-                    <select name="wpcm_referee" id="wpcm_referee" class="combify-input">
-                    <?php foreach ( $referee_list as $option ) : ?>
-                        <option value="<?php echo esc_attr( $option ); ?>"<?php selected( $option, $referee ); ?>><?php echo esc_html( $option ); ?></option>
-                    <?php endforeach; ?>
-                    </select>
-                <?php else : ?>
-                    <input type="text" class="regular-text" name="wpcm_referee" id="wpcm_referee" value="<?php echo esc_attr( $referee ); ?>" />
-                <?php endif; ?>
+                <input type="text" class="regular-text" name="wpcm_referee" id="wpcm_referee" value="<?php echo esc_attr( $referee ); ?>" />
                 <select class="chosen_select" name="wpcm_referee_country" id="wpcm_referee_country" data-placeholder="Select Country">
+                    <option value=""></option>
                     <?php WPCM()->countries->country_dropdown_options( $referee_country ); ?>
                 </select>
             </p>

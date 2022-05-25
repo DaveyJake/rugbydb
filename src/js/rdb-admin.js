@@ -2,7 +2,7 @@
 /**
  * Main customizer file.
  *
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  */
 
 /**

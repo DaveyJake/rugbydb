@@ -1,21 +1,44 @@
 <?php
 /**
- * Setup the theme
+ * Setup the theme.
  *
  * @package Rugby_Database
  */
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! function_exists( 'rdb_setup' ) ) :
+/**
+ * Begin RDB_Theme_Setup class.
+ *
+ * @since 1.1.0
+ */
+class RDB_Theme_Setup {
+	/**
+	 * Primary constructor.
+	 *
+	 * @since 1.1.0
+	 */
+	public function __construct() {
+		// Initialize the theme.
+		add_action( 'after_setup_theme', array( $this, 'rdb_setup' ) );
+
+		// Load custom image sizes.
+		add_action( 'init', array( $this, 'rdb_reset_image_sizes' ), 10 );
+
+		// Set the content width.
+		add_action( 'after_setup_theme', array( $this, 'rdb_content_width' ), 0 );
+	}
+
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
 	 * Note that this function is hooked into the after_setup_theme hook, which
 	 * runs before the init hook. The init hook is too late for some features, such
 	 * as indicating support for post thumbnails.
+	 *
+	 * @since 1.0.0
 	 */
-	function rdb_setup() {
+	public function rdb_setup() {
 		/*
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
@@ -55,6 +78,8 @@ if ( ! function_exists( 'rdb_setup' ) ) :
 
 		/**
 		 * Switch default core markup for search form, comment form, and comments to output valid HTML5.
+		 *
+		 * @since 1.0.0
          *
          * Accepts 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script'.
 		 */
@@ -78,6 +103,8 @@ if ( ! function_exists( 'rdb_setup' ) ) :
 		/**
 		 * Add support for core custom logo.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @link https://codex.wordpress.org/Theme_Logo
 		 */
 		add_theme_support(
@@ -90,42 +117,42 @@ if ( ! function_exists( 'rdb_setup' ) ) :
 			)
 		);
 	}
-endif;
 
-if ( ! function_exists( 'rdb_content_width' ) ) :
 	/**
 	 * Set the content width in pixels, based on the theme's design and stylesheet.
 	 *
 	 * Priority 0 to make it available to lower priority callbacks.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @global int $content_width
 	 */
-	function rdb_content_width() {
+	public function rdb_content_width() {
 		// This variable is intended to be overruled from themes.
 		// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
 		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		$GLOBALS['content_width'] = apply_filters( 'rdb_content_width', 1280 );
 	}
-endif;
 
-if ( ! function_exists( 'rdb_custom_excerpt_length' ) ) :
 	/**
 	 * Customize excerpt word count length.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return int The max number of words allowed.
 	 */
-	function rdb_custom_excerpt_length() {
+	public function rdb_custom_excerpt_length() {
 	    return 22;
 	}
-endif;
 
-if ( ! function_exists( 'rdb_reset_image_sizes' ) ) :
 	/**
 	 * Remove and reset image sizes.
 	 *
-	 * @access private
+	 * @since 1.0.0
+	 *
+	 * @see RDB_Theme_Setup->rdb_facebook_image_sizes()
 	 */
-	function rdb_reset_image_sizes() {
+	public function rdb_reset_image_sizes() {
 	    remove_image_size( 'detail' );
 	    remove_image_size( 'thumbnail' );
 	    remove_image_size( 'medium' );
@@ -136,18 +163,19 @@ if ( ! function_exists( 'rdb_reset_image_sizes' ) ) :
 	    add_image_size( 'large', 1199, 1199 );
 
 	    // Add custom FB image sizes.
-	    rdb_facebook_image_sizes();
+	    $this->rdb_facebook_image_sizes();
 	}
-endif;
 
-if ( ! function_exists( 'rdb_facebook_image_sizes' ) ) :
 	/**
 	 * Generate Facebook post image sizes by `post_type`.
 	 *
-	 * @see 'rdb_facebook_post_image_size'
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @see RDB_Theme_Setup->rdb_facebook_post_image_size()
 	 * @see 'add_image_size'
 	 */
-	function rdb_facebook_image_sizes() {
+	private function rdb_facebook_image_sizes() {
         $post_types = array( 'page', 'post', 'wpcm_club', 'wpcm_match', 'wpcm_player', 'wpcm_staff' );
         $cropped    = array( 'wpcm_player', 'wpcm_staff' );
 
@@ -165,13 +193,6 @@ if ( ! function_exists( 'rdb_facebook_image_sizes' ) ) :
 	        add_image_size( $regular, 540, 281, $crop );
 	    }
 	}
-endif;
+}
 
-// Initialize the theme.
-add_action( 'after_setup_theme', 'rdb_setup' );
-
-// Load custom image sizes.
-add_action( 'init', 'rdb_reset_image_sizes', 10 );
-
-// Set the content width.
-add_action( 'after_setup_theme', 'rdb_content_width', 0 );
+return new RDB_Theme_Setup();

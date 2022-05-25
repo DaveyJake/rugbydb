@@ -25,6 +25,32 @@ function rdb_ajax() {
 }
 
 /**
+ * Added additional HTML tags to whitelist via {@see 'wp_kses_allowed_html'}.
+ *
+ * @since 1.2.0
+ *
+ * @param array[] $html    Allowed HTML tags.
+ * @param string  $context Context name.
+ */
+function rdb_allowed_html_tags( $allowedposttags, $context ) {
+    if ( 'post' !== $context ) {
+        return $allowedposttags;
+    }
+
+    $allowedposttags['input'] = array(
+        'id'       => true,
+        'class'    => true,
+        'name'     => true,
+        'type'     => true,
+        'value'    => true,
+        'readonly' => true,
+        'disabled' => true,
+    );
+
+    return $allowedposttags;
+}
+
+/**
  * Auto-hyperlink known URLs found in {@see 'the_content'}.
  *
  * @since 1.0.0
@@ -35,14 +61,19 @@ function rdb_ajax() {
  */
 function rdb_auto_hyperlink( $content ) {
     global $post;
+
     // The RegEx formula for all URLs.
     $regex = '/^([^\[]])[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,5}(\/\S*)?/';
+
     // Find 'em all!
     preg_match_all( $regex, $content, $matches, PREG_PATTERN_ORDER );
+
     // Get the important chunk.
     $matches = $matches[0];
+
     // The replacements.
     $replacements = array();
+
     // Iterate over matches.
     foreach ( $matches as $i => $match ) {
         $slug   = sanitize_title( $match );
@@ -53,16 +84,17 @@ function rdb_auto_hyperlink( $content ) {
 
     // Update content.
     $content = str_replace( $matches, $replacements, $content );
+
     // Return the content.
     return $content;
 }
 
 /**
- * Adds custom classes to the array of body classes.
+ * Adds custom classes to the array of body classes using {@see 'body_class'}.
  *
  * @param array $classes Classes for the body element.
  *
- * @return array
+ * @return array Filtered body classes.
  */
 function rdb_body_classes( $classes ) {
     // Adds a class of hfeed to non-singular pages.
@@ -82,16 +114,18 @@ function rdb_body_classes( $classes ) {
 
     // All pages.
     if ( is_page() && ! is_front_page() ) {
-        $title = get_the_title();
+        $slug = sanitize_title( get_the_title() );
 
-        $classes[] = sprintf( 'page-%s', sanitize_title( $title ) );
+        $classes[] = sprintf( 'page-%s', $slug );
     }
 
     return $classes;
 }
 
 /**
- * Filters the CSS classes applied to a menu item’s list item element.
+ * Filters the CSS classes applied to a menu item’s list item element using {@see 'nav_menu_css_class'}.
+ *
+ * @since 1.0.1
  *
  * @param string[] $classes Array of the CSS classes applied to the menu's <li> element.
  * @param WP_Post  $item    Current menu item.
@@ -99,7 +133,15 @@ function rdb_body_classes( $classes ) {
  * @param int      $depth   Depth of menu item. Used for padding.
  */
 function rdb_menu_item_classes( $classes, $item, $args, $depth ) {
-    $whitelist = array( 'menu-item', 'menu-item-home', 'toggler', 'current-menu-item', 'current-menu-parent', 'current-menu-ancestor' );
+    $whitelist = array(
+        'menu-item',
+        'menu-item-home',
+        sprintf( 'menu-item-%s', $item->post_name ),
+        'toggler',
+        'current-menu-item',
+        'current-menu-parent',
+        'current-menu-ancestor',
+    );
 
     if ( 'main-menu' === $args->theme_location ) {
         $classes = array();
@@ -107,8 +149,6 @@ function rdb_menu_item_classes( $classes, $item, $args, $depth ) {
         $item_classes = array_intersect( $whitelist, $item->classes );
 
         $classes = array_merge( $classes, $item_classes );
-
-        $classes[] = sprintf( 'menu-item-%s', $item->post_name );
     }
 
     return $classes;
@@ -116,6 +156,8 @@ function rdb_menu_item_classes( $classes, $item, $args, $depth ) {
 
 /**
  * Add a pingback url auto-discovery header for single posts, pages, or attachments.
+ *
+ * @since 1.0.0
  */
 function rdb_pingback_header() {
     if ( is_singular() && pings_open() ) {
@@ -125,6 +167,8 @@ function rdb_pingback_header() {
 
 /**
  * Add RDB favicons.
+ *
+ * @since 1.0.0
  */
 function rdb_favicons() {
     // phpcs:disable WPThemeReview.CoreFunctionality.NoFavicon.NoFavicon
@@ -135,13 +179,13 @@ function rdb_favicons() {
 }
 
 /**
- * Filters for the players page.
+ * Filters for the players page using {@see 'rdb_shortcodes_tabs'}.
  *
  * @since 1.0.0
  *
- * @see 'rdb_shortcodes_tabs'
- *
  * @param int $post_id Current post ID.
+ *
+ * @return mixed HTML output.
  */
 function rdb_players_page_filters( $post_id ) {
     $post = get_post( $post_id );
@@ -187,12 +231,10 @@ function rdb_players_page_filters( $post_id ) {
 }
 
 /**
- * Prevent images being resized by post type.
+ * Prevent images being resized by post type using {@see 'intermediate_image_sizes'}
+ * and {@see 'intermediate_image_sizes_advanced'}.
  *
- * @since Rugby_Database 1.0.0
- *
- * @see 'intermediate_image_sizes'
- * @see 'intermediate_image_sizes_advanced'
+ * @since 1.0.0
  *
  * @link https://rudrastyh.com/wordpress/image-sizes.html
  *
@@ -204,17 +246,19 @@ function rdb_prevent_post_type_image_resize( $sizes ) {
     $sizes = (array) $sizes;
 
     if ( isset( $_GET['post_id'] ) ) {
-        $post_id = sanitize_text_field( wp_unslash( $_GET['post_id'] ) );
+        $post_id = sanitize_query_param( $_GET['post_id'] );
     }
 
     if ( isset( $_GET['ids'] ) ) {
-        $post_ids = sanitize_text_field( wp_unslash( $_GET['ids'] ) );
+        $post_ids = sanitize_query_param( $_GET['ids'] );
     }
 
     if ( ! empty( $post_id ) ) {
         $post_type = get_post_type( $post_id );
 
-        return _rdb_prevent_post_type_image_resize( $post_type, $sizes );
+        $sizes = _rdb_prevent_post_type_image_resize( $post_type, $sizes );
+
+        return $sizes;
     }
 
     if ( ! empty( $post_ids ) ) {
@@ -227,7 +271,9 @@ function rdb_prevent_post_type_image_resize( $sizes ) {
 
             $post_type = $post->post_type;
 
-            return _rdb_prevent_post_type_image_resize( $post_type, $sizes );
+            $sizes = _rdb_prevent_post_type_image_resize( $post_type, $sizes );
+
+            return $sizes;
         }
     }
 }
@@ -246,12 +292,14 @@ function rdb_prevent_post_type_image_resize( $sizes ) {
  * @return array Sizes safe to use.
  */
 function _rdb_prevent_post_type_image_resize( $post_type, $sizes ) {
+    // Facebook sizes.
     $fb_regular = sprintf( 'facebook_%s', $post_type );
     $fb_retina  = sprintf( 'facebook_retina_%s', $post_type );
 
     // Post types.
     $default_types   = array( 'post', 'page' );
     $players_coaches = array( 'wpcm_player', 'wpcm_staff' );
+
     // Image sizes.
     $defaults     = get_intermediate_image_sizes();
     $social_sizes = array( 'thumbnail', $fb_regular, $fb_retina );
@@ -293,11 +341,10 @@ function rdb_purge_hooks() {
 }
 
 /**
- * Purge AJAX transients when clubs, matches, players, rosters, or staff are saved/updated.
+ * Purge AJAX transients when clubs, matches, players, rosters, or staff are saved/updated
+ * using {@see 'save_post_{$post_type}'}.
  *
  * @since 1.0.0
- *
- * @see 'save_post_{$post_type}'
  *
  * @param int     $post_ID Current post ID.
  * @param WP_Post $post    Current post object.
@@ -333,11 +380,9 @@ function rdb_purge_post_transient( $post_ID, $post, $update ) {
 }
 
 /**
- * Purge AJAX transient with venues are saved/updated.
+ * Purge AJAX transient with venues are saved/updated using {@see 'edited_{$taxonomy}'}.
  *
  * @since 1.0.0
- *
- * @see 'edited_{$taxonomy}'
  *
  * @param int  $term_id Term ID.
  * @param int  $tt_id   Term taxonomy ID.
@@ -359,7 +404,7 @@ function rdb_purge_term_transient( $term_id, $tt_id, $update ) {
 }
 
 /**
- * Disable or modify WPCM's LS+JSON integration.
+ * Disable or modify WPCM's JSON+LD integration.
  *
  * @since 1.0.0
  *
@@ -371,6 +416,7 @@ function rdb_schema_ld_json() {
 
     if ( ! ( has_filter( 'wpclubmanager_schema_front_page' ) && has_filter( 'wpclubmanager_schema_sports_event' ) ) ) {
         rdb_remove_class_method( 'wp_head', 'WPCM_Frontend_Scripts', 'load_json_ld' );
+
         // Front page.
         if ( is_front_page() ) {
             add_action( 'wp_head', 'rdb_schema_front_page', 5 );
@@ -386,6 +432,8 @@ function rdb_schema_ld_json() {
  * SchemaOrg integration on `front-page` with WP Club Manager.
  *
  * @since 1.0.0
+ *
+ * @see rdb_schema_ld_json()
  *
  * @param array $data Attribute-value pairs.
  */
@@ -423,6 +471,8 @@ function rdb_schema_front_page( $data = null ) {
  * SchemaOrg integration on `wpcm_match` post type with WP Club Manager.
  *
  * @since 1.0.0
+ *
+ * @see rdb_schema_ld_json()
  *
  * @global WP_Post $post Current post object.
  *
@@ -523,12 +573,14 @@ function rdb_schema_sports_event( $data = null ) {
     // Home team competitor.
     $home_team_property = array(
         '@type' => 'SportsTeam',
+        '@id'   => get_permalink( $home ),
         'name'  => $home_team,
     );
 
     // Away team competitor.
     $away_team_property = array(
         '@type' => 'SportsTeam',
+        '@id'   => get_permalink( $away ),
         'name'  => $away_team,
     );
 
@@ -666,6 +718,7 @@ function rdb_schema_sports_event( $data = null ) {
     }//end if
 }
 
+
 /** Filters *******************************************************************/
 
 // Custom body classes.
@@ -686,6 +739,9 @@ add_filter( 'the_content', 'rdb_auto_hyperlink' );
 
 // Taxonomy Images.
 add_filter( 'taxonomy_images/use_term_meta', '__return_true' );
+
+// Allowed HTML tags.
+add_filter( 'wp_kses_allowed_html', 'rdb_allowed_html_tags', 10, 2 );
 
 
 /** Actions *******************************************************************/

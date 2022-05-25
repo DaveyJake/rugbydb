@@ -26,7 +26,7 @@ class RDB_Styles_Scripts {
      *
      * @var string
      */
-    const DT_VERSION = '1.10.22';
+    const DT_VERSION = '1.12.1';
 
     /**
      * DataTables plug-in version.
@@ -103,7 +103,8 @@ class RDB_Styles_Scripts {
      * @see RDB_Styles_Scripts::register_styles()
      * @see RDB_Styles_Scripts::register_scripts()
      *
-     * @global RDB_Device_Detect $rdb_device Device detection library.
+     * @global RDB_Device $rdb_device Device detection library.
+     * @global string     $template   Current template name.
      */
     public function enqueue() {
         global $rdb_device, $template;
@@ -226,7 +227,7 @@ class RDB_Styles_Scripts {
                 'ftr' => true,
             ),
             'datatables'       => array(
-                'src' => 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-' . self::DT_VERSION . "/af-2.3.5/b-1.6.4/b-colvis-1.6.4/b-html5-1.6.4/b-print-1.6.4/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.3/r-2.2.6/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.0/sp-1.2.0/sl-1.3.1/datatables{$this->dev}.js",
+                'src' => 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-' . self::DT_VERSION . "/date-1.1.2/fc-4.1.0/fh-3.2.3/kt-2.7.0/r-2.3.0/rg-1.2.0/sc-2.0.6/sb-1.3.3/sp-2.0.1/sl-1.4.0/sr-1.1.1/datatables{$this->dev}.js",
                 'dep' => array( 'dt-vfs-fonts' ),
                 'ver' => self::DT_VERSION,
                 'ftr' => true,
@@ -295,7 +296,7 @@ class RDB_Styles_Scripts {
          */
         $register_styles = array(
             'datatables' => array(
-                'src' => 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-' . self::DT_VERSION . "/af-2.3.5/b-1.6.4/b-colvis-1.6.4/b-html5-1.6.4/b-print-1.6.4/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.3/r-2.2.6/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.0/sp-1.2.0/sl-1.3.1/datatables{$this->dev}.css",
+                'src' => 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-' . self::DT_VERSION . "/date-1.1.2/fc-4.1.0/fh-3.2.3/kt-2.7.0/r-2.3.0/rg-1.2.0/sc-2.0.6/sb-1.3.3/sp-2.0.1/sl-1.4.0/sr-1.1.1/datatables{$this->dev}.css",
                 'dep' => false,
                 'ver' => self::DT_VERSION,
             ),

@@ -3,7 +3,7 @@
  * This file contains all functions and their associated hooks used in custom
  * template files.
  *
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  * @package Rugby_Database
  * @since 1.0.0
  */

@@ -4,12 +4,115 @@
  *
  * @author Davey Jacobson <djacobson@usa.rugby>
  * @since 1.0.0
- * @since 1.0.1 - Added {@see _rdb_attr_value()} to parse the form type tag attributes.
+ * @since 1.1.0 - Added {@see _rdb_attr_value()} to parse the form type tag attributes.
+ * @since 1.2.0 - Added rdb_get_WR().
  *
  * @package Rugby_Database
  */
 
 defined( 'ABSPATH' ) || exit;
+
+/**
+ * Get World Rugby data directories.
+ *
+ * @since 1.2.0
+ *
+ * @see rdb_get_WR()
+ *
+ * @param array|string $args {
+ *     Optional arguments to include.
+ *
+ *     @type string $team      Accepts 'mens-eagles', 'womens-eagles', 'mens-sevens',
+ *                             'womens-sevens'. Default 'mens-eagles'.
+ *     @type string $type      Aceepts 'players', 'match'. Default 'match'.
+ *     @type string $directory Accepts 'summaries', 'timelines'. Default 'summaries'.
+ * }
+ *
+ * @return string Desired WR path.
+ */
+function rdb_get_WR( $args = '' ) {
+    $defaults = array(
+        'team'      => '',
+        'type'      => 'match',
+        'directory' => 'summaries',
+    );
+
+    $args = wp_parse_args( $args, $defaults );
+
+    if ( ! empty( $args['team'] ) ) {
+        return get_template_directory() . sprintf( '/WR/%1$s/%2$s', $args['type'], $args['team'] );
+    }
+
+    return get_template_directory() . sprintf( '/WR/%1$s/%2$s', $args['type'], $args['directory'] );
+}
+
+/**
+ * Get World Rugby player data.
+ *
+ * @since 1.2.0
+ *
+ * @see rdb_get_WR()
+ *
+ * @param string       $team Accepts 'mens-eagles', 'womens-eagles', 'mens-sevens',
+ *                           'womens-sevens'. Default ''.
+ * @param array|string $args See {@see rdb_get_WR()} for parameters.
+ *
+ * @return string WR path to summaries.
+ */
+function rdb_get_players( $team = '', $args = '' ) {
+    $team = ! empty( $team ) ? $team : 'mens-eagles';
+
+    $args = array(
+        'team' => $team,
+        'type' => 'players',
+    );
+
+    return rdb_get_WR( $args );
+}
+
+/**
+ * Get World Rugby summaries.
+ *
+ * @since 1.2.0
+ *
+ * @see rdb_get_WR()
+ *
+ * @param string       $team Accepts 'mens-eagles', 'womens-eagles', 'mens-sevens',
+ *                           'womens-sevens'. Default ''.
+ * @param array|string $args See {@see rdb_get_WR()} for parameters.
+ *
+ * @return string WR path to summaries.
+ */
+function rdb_get_summaries( $team = '', $args = '' ) {
+    if ( ! empty( $team ) ) {
+        $args['team'] = $team;
+    }
+
+    return rdb_get_WR( $args );
+}
+
+/**
+ * Get World Rugby timelines.
+ *
+ * @since 1.2.0
+ *
+ * @see rdb_get_WR()
+ *
+ * @param string       $team Accepts 'mens-eagles', 'womens-eagles', 'mens-sevens',
+ *                           'womens-sevens'. Default ''.
+ * @param array|string $args See {@see rdb_get_WR()} for parameters.
+ *
+ * @return string WR path to timelines.
+ */
+function rdb_get_timelines( $team = '', $args = '' ) {
+    $args = array( 'directory' => 'timelines' );
+
+    if ( ! empty( $team ) ) {
+        $args['team'] = $team;
+    }
+
+    return rdb_get_WR( $args );
+}
 
 /**
  * Add taxonomy template term as global variable.
@@ -22,7 +125,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @param string $taxonomy Taxonomy slug.
  *
- * @return string The global taxonomy slug for this template.
+ * @return string Empty string or the global taxonomy slug for this template.
  */
 function rdb_taxonomy_template( $taxonomy = null ) {
     $slug = get_query_var( $taxonomy );
@@ -35,7 +138,11 @@ function rdb_taxonomy_template( $taxonomy = null ) {
 
     global $rdb_tax_template;
 
-    return $rdb_tax_template;
+    if ( ! empty( $rdb_tax_template ) ) {
+        return $rdb_tax_template;
+    }
+
+    return ''; // fail silently
 }
 
 /**
@@ -48,6 +155,8 @@ function rdb_taxonomy_template( $taxonomy = null ) {
  *
  * @param string $taxonomy Taxonomy slug.
  * @param string $slug     Term slug.
+ *
+ * @return WP_Error|void Error if $slug doesn't exist. Otherwise sets global var.
  */
 function _rdb_taxonomy_template( $taxonomy, $slug ) {
     if ( ! term_exists( $slug, $taxonomy ) ) {
@@ -107,7 +216,7 @@ function rdb_get_term_template_class( $class = '', $tax = '' ) {
  *
  * @param string $size Image size. Default 'player_single'.
  *
- * @return array       List of attached URLs.
+ * @return array List of attached URLs.
  */
 function rdb_get_player_images( $size = 'player_single' ) {
     $post_id = get_the_ID();
@@ -157,7 +266,7 @@ function rdb_get_player_images( $size = 'player_single' ) {
  *
  * @param string $address Formatted address with no line-breaks.
  *
- * @return mixed          Associative array with `lat`, `lng` and `place_id` keys.
+ * @return mixed Associative array with `lat`, `lng` and `place_id` keys.
  */
 function rdb_wpcm_decode_address( $address ) {
     $address_hash = md5( $address );
@@ -230,7 +339,12 @@ function rdb_wpcm_decode_address( $address ) {
  *
  * @param int $post_id The current post ID.
  *
- * @return string      Name of head coach.
+ * @return array {
+ *     The following items are returned.
+ *
+ *     @type int    $id   Coach post ID.
+ *     @type string $name Coach post title.
+ * }
  */
 function rdb_wpcm_get_head_coach( $post_id ) {
     $teams     = get_the_terms( $post_id, 'wpcm_team' );
@@ -269,11 +383,13 @@ function rdb_wpcm_get_head_coach( $post_id ) {
 
             wp_reset_postdata();
 
-            return $coach;
+            return array(
+                '_id'  => sprintf( 'c%s', $staff_id[0] ),
+                'id'   => $staff_id[0],
+                'name' => $coach,
+            );
         }
     }
-
-    return '';
 }
 
 /**
@@ -285,7 +401,7 @@ function rdb_wpcm_get_head_coach( $post_id ) {
  * @param bool $abbr     Club abbreviation.
  * @param bool $nickname Club nickname.
  *
- * @return array $side1 $side2
+ * @return string[] The competing clubs.
  */
 function rdb_wpcm_get_match_clubs( $post_id, $abbr = false, $nickname = false ) {
     $club      = get_default_club();
@@ -328,8 +444,6 @@ function rdb_wpcm_get_match_clubs( $post_id, $abbr = false, $nickname = false ) 
             $side2 = get_club_abbreviation( $home_club );
         }
     }
-
-
 
     return array( $side1, $side2 );
 }
@@ -425,13 +539,13 @@ function rdb_wpcm_get_match_result( $post ) {
     } else {
 
         if ( '%home% vs %away%' === $format ) {
-            $result = $played ? sprintf( '%s %s %s', $home_goals, $delimiter, $away_goals ) : '';
-            $ht     = isset( $wpcm_goals['q1'] ) ? sprintf( '%s %s %s', $wpcm_goals['q1']['home'], $delimiter, $wpcm_goals['q1']['away'] ) : '';
+            $result = $played ? sprintf( '%1$s %2$s %3$s', $home_goals, $delimiter, $away_goals ) : '';
+            $ht     = isset( $wpcm_goals['q1'] ) ? sprintf( '%1$s %2$s %3$s', $wpcm_goals['q1']['home'], $delimiter, $wpcm_goals['q1']['away'] ) : '';
             $side1  = $played ? $home_goals : '';
             $side2  = $played ? $away_goals : '';
         } else {
-            $result = $played ? sprintf( '%s %s %s', $away_goals, $delimiter, $home_goals ) : '';
-            $ht     = isset( $wpcm_goals['q1'] ) ? sprintf( '%s %s %s', $wpcm_goals['q1']['away'], $delimiter, $wpcm_goals['q1']['home'] ) : '';
+            $result = $played ? sprintf( '%1$s %2$s %3$s', $away_goals, $delimiter, $home_goals ) : '';
+            $ht     = isset( $wpcm_goals['q1'] ) ? sprintf( '%1$s %2$s %3$s', $wpcm_goals['q1']['away'], $delimiter, $wpcm_goals['q1']['home'] ) : '';
             $side1  = $played ? $away_goals : '';
             $side2  = $played ? $home_goals : '';
         }
@@ -448,7 +562,12 @@ function rdb_wpcm_get_match_result( $post ) {
  *
  * @param int $post The current post ID.
  *
- * @return array Team name and label.
+ * @return array {
+ *     The values returned.
+ *
+ *     @type string $1 Team name.
+ *     @type string $2 Team label.
+ * }
  */
 function rdb_wpcm_get_match_team( $post_id ) {
     $teams = get_the_terms( $post_id, 'wpcm_team' );
@@ -457,9 +576,9 @@ function rdb_wpcm_get_match_team( $post_id ) {
         foreach ( $teams as $team ) {
             $name = $team->name;
             $team = reset( $teams );
-            $t_id = $team->term_id;
+            $id = $team->term_id;
 
-            $team_label = get_term_meta( $t_id, 'wpcm_team_label', true );
+            $team_label = get_term_meta( $id, 'wpcm_team_label', true );
 
             if ( $team_label ) {
                 $label = $team_label;
@@ -468,11 +587,12 @@ function rdb_wpcm_get_match_team( $post_id ) {
             }
         }
     } else {
-        $name = '';
+        $id    = 0;
+        $name  = '';
         $label = '';
     }
 
-    return array( $name, $label );
+    return array( $id, $name, $label );
 }
 
 /**
@@ -622,7 +742,7 @@ function rdb_wpcm_get_venue_timezone( ...$args ) {
         return get_term_meta( $terms[0]->term_id, 'usar_timezone', true );
     }
     else {
-        return 'You need to set a `post_id` or a `term_id` to use `rdb_wpcm_get_venue_timezone`';
+        return new WP_Error( 'unhappy_arguments', esc_html__( 'You need to set a `post_id` or a `term_id` to use `rdb_wpcm_get_venue_timezone`.', 'rugby-database' ), array( 'data' => $args ) );
     }
 }
 
@@ -633,6 +753,8 @@ function rdb_wpcm_get_venue_timezone( ...$args ) {
  *
  * @param WP_Term $venue    Term object.
  * @param object  $match_id World Rugby match data.
+ *
+ * @return array Indexed with venue's term $id and $timezone identifier.
  */
 function rdb_google_venue_timezone( $venue, $match_id ) {
     if ( ! file_exists( get_template_directory() . '/WR/wr-utilities.php' ) ) {
@@ -690,7 +812,7 @@ function rdb_google_venue_timezone( $venue, $match_id ) {
  *
  * @since 1.2.0
  *
- * @param
+ * @param WP_Term $rdb_term Term `wpcm_venue` object.
  *
  * @return object {
  *     Default `current` field values.
@@ -725,13 +847,13 @@ function rdb_google_venue_timezone( $venue, $match_id ) {
  * }
  */
 function rdb_wpcm_get_venue_weather( $rdb_term ) {
-    $rdb_venue_info = get_term_meta( $rdb_term->term_id );
+    $venue_info = get_term_meta( $rdb_term->term_id );
 
-    $rdb_lat = $rdb_venue_info['wpcm_latitude'];
-    $rdb_lng = $rdb_venue_info['wpcm_longitude'];
+    $lat = $rdb_venue_info['wpcm_latitude'][0];
+    $lng = $rdb_venue_info['wpcm_longitude'][0];
 
-    $rdb_weather = rdb_remote_get(
-        add_query_arg( 'q', sprintf( '%s,%s', $rdb_lat, $rdb_lng ), 'https://weatherapi-com.p.rapidapi.com/current.json' ),
+    $weather = rdb_remote_get(
+        add_query_arg( 'q', sprintf( '%1$s,%2$s', $rdb_lat, $rdb_lng ), 'https://weatherapi-com.p.rapidapi.com/current.json' ),
         false,
         array(
             'headers' => array(
@@ -741,7 +863,7 @@ function rdb_wpcm_get_venue_weather( $rdb_term ) {
         )
     );
 
-    return $rdb_weather->current;
+    return $weather->current;
 }
 
 /**
@@ -763,7 +885,9 @@ function rdb_wpcm_head_to_heads( $post_id ) {
         'posts_per_page' => -1,
         'post_parent'    => $post_id,
     );
+
     $children = get_posts( $child_args );
+
     wp_reset_postdata();
 
     $args = array(
@@ -798,6 +922,7 @@ function rdb_wpcm_head_to_heads( $post_id ) {
     );
 
     $club_matches = get_posts( $args );
+
     wp_reset_postdata();
 
     foreach ( $club_matches as $match ) {
@@ -837,6 +962,7 @@ function rdb_wpcm_head_to_heads( $post_id ) {
         );
 
         $child_matches = get_posts( $child_args );
+
         wp_reset_postdata();
 
         foreach ( $child_matches as $match ) {
@@ -877,13 +1003,14 @@ add_filter( 'wpcm_pa_enqueue_styles', 'rdb_dequeue_wpcm_style' );
  * Check for match timeline.
  *
  * @since 1.0.0
+ * @since 1.2.0 - Uses {@see rdb_get_WR()} to retrieve timelines path.
  *
  * @param int $wr_id World Rugby ID.
  *
  * @return bool Filename if timeline exists. False if not.
  */
 function rdb_has_timeline( $wr_id ) {
-    $timeline_dir = get_template_directory() . '/WR/match/timelines';
+    $timeline_dir = rdb_get_WR( array( 'directory' => 'timelines' ) );
 
     if ( file_exists( "{$timeline_dir}/{$wr_id}.json" ) ) {
         return "{$timeline_dir}/{$wr_id}.json";
@@ -901,13 +1028,14 @@ function rdb_has_timeline( $wr_id ) {
  *
  * @param int $wr_id World Rugby ID.
  *
- * @return bool Filename if timeline exists. False if not.
+ * @return object Timeline data if timeline exists. False if not.
  */
 function rdb_match_timeline( $wr_id ) {
     if ( empty( $wr_id ) ) {
         return '';
     }
 
+    // Check for and return path to timeline data.
     $timeline = rdb_has_timeline( $wr_id );
 
     if ( $timeline ) {
@@ -1277,11 +1405,15 @@ add_action( 'wpclubmanager_before_single_player', 'rdb_reset_wpcm_player_hooks',
  * @param array $data Formatted match list data.
  */
 function rdb_wpcm_club_match_list( $data ) {
-    echo '<script> ';
-        echo 'window.unionMatchList = function() { ';
-            echo 'sessionStorage.setItem( "unionMatchList", JSON.stringify( ' . wp_json_encode( $data ) . ' ) ); ';
-        echo '};';
-    echo '</script>';
+    $script = array(
+        '<script> ',
+            'window.unionMatchList = function() { ',
+                'sessionStorage.setItem( "unionMatchList", JSON.stringify( ' . wp_json_encode( $data ) . ' ) ); ',
+            '};',
+        '</script>',
+    );
+
+    echo implode( '', $script );
 }
 add_action( 'rdb_after_match_list', 'rdb_wpcm_club_match_list', 10 );
 
@@ -1299,9 +1431,9 @@ function rdb_wpcm_match_timeline_data() {
         $timeline = rdb_match_timeline( $wr_id );
 
         if ( ! empty( $timeline ) ) {
-            wp_send_json_success( $timeline, 200 );
+            wp_send_json_success( $timeline );
         } else {
-            wp_send_json_error( 'Match timeline is empty', 200 );
+            wp_send_json_error( 'Match timeline is empty' );
         }
     }
 
@@ -1542,7 +1674,7 @@ function rdb_wpcm_wp_select( $field ) {
     $attrs = array_filter(
         array(
             'id'               => $field['id'],
-            'name'             => $field['name'],
+            'name'             => isset( $field['name'] ) ? $field['name'] : $field['id'],
             'class'            => $field['class'],
             'data-placeholder' => ( ! empty( $field['placeholder'] ) ? $field['placeholder'] : '' ),
         )

@@ -127,14 +127,15 @@ class RDB_WPCM_Meta_Box_Match_Player_Enhancements {
         }
 
         $number = get_post_meta( $player_id, 'wpcm_number', true );
+        $wr_id  = get_post_meta( $player_id, 'wr_id', true );
 
         if ( $number )
         {
-            $squad_number = "<span class='capped'>Eagle #{$number}</span>";
+            $squad_number = '<span class="capped">Eagle #' . esc_html( $number ) . '&nbsp;|&nbsp;WR: ' . esc_html( $wr_id ) . '</span>';
         }
         else
         {
-            $squad_number = "<span class='capped'>Debut</span>";
+            $squad_number = '<span class="capped">Uncapped&nbsp;|&nbsp;WR: ' . esc_html( $wr_id ) . '</span>';
         }
 
         return $squad_number;

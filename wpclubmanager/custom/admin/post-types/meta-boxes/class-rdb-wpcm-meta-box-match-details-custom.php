@@ -37,9 +37,7 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
     }
 
     /**
-     * Save additional match detail fields.
-     *
-     * @link {@see 'wpclubmanager_after_admin_match_save'}
+     * Save additional match detail fields via {@see 'wpclubmanager_after_admin_match_save'}
      *
      * @param int $post_id The post ID of the match.
      */
@@ -181,11 +179,13 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
         $timezone       = $match_datetime['timezone'];
         $match_datetime = $match_datetime['dateTime'];
 
-        d( $offset );
+        if ( preg_match( '/T0[01]/', $offset ) ) {
+            $offset = preg_replace( '/T0(0|1)/', 'T+$1', $offset );
+        }
 
         $match_datetime->setTimezone( new DateTimeZone( $timezone ) );
 
-        echo '<span class="website-timezone">' . esc_html( sprintf( '%1$s (%2$s:00)', $match_datetime->format( 'T' ), $offset ) ) . '</span>';
+        echo '<span class="website-timezone">' . esc_html( sprintf( '%1$s (%2$s)', $match_datetime->format( 'T' ), $offset ) ) . '</span>';
     }
 
     /**
@@ -223,7 +223,7 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
         }
         else {
             // Format the date and time.
-            $_match_datetime = sprintf( '%1$s %2$s', $_POST['usar_match_date_local'], $_POST['usar_match_kickoff_local'] . ':00' );
+            $_match_datetime = sprintf( '%1$s %2$s', $_POST['usar_match_date_local'], $_POST['usar_match_kickoff_local'] );
 
             // Save local match timezone as GMT offset.
             if ( ! empty( $_POST['wpcm_venue'] ) ) {

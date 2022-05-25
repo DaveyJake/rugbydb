@@ -12,6 +12,15 @@ defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Teams {
     /**
+     * Target taxonomy.
+     *
+     * @since 1.0.0
+     *
+     * @var string
+     */
+    public $taxonomy = 'wpcm_team';
+
+    /**
      * Primary constructor.
      *
      * @return RDB_WPCM_Teams

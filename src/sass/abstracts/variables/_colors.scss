@@ -1,7 +1,9 @@
-$color__blue: #152c53;
-$color__red: #c42032;
-$color__black: #000;
-$color__white: #fff;
+$palette: map-get(map-get(map-get($theme, 'settings'), 'color'), 'palette');
+
+$color__blue: map-get(nth($palette, 3), 'color');
+$color__red: map-get(nth($palette, 1), 'color');
+$color__black: map-get(nth($palette, 5), 'color');
+$color__white: map-get(nth($palette, 2), 'color');
 
 $color__background-body: $color__blue;
 $color__background-header: rgba(16, 33, 63, 0.85);
@@ -43,9 +45,3 @@ $color__text-input: #555;
 $color__text-input-focus: #111;
 $color__text-inset: $color__white;
 $color__text-shadow: $color__black;
-
-// Foundation.
-$white: $color__text-inset;
-$primary-color: $color__blue;
-$light-gray: $color__background-main;
-$body-font-color: $color__text-main;

@@ -8,7 +8,7 @@
  * @since 1.2.0
  */
 
-/*global ajaxurl, inlineEditPost, inlineEditL10n, wpclubmanager_admin */
+/*global inlineEditPost */
 
 // Global jQuery instance.
 const $ = window.jQuery;
@@ -32,7 +32,6 @@ class RDBWPCMAdmin {
         this.venues();
         this.singleMatch();
         this.singlePlayer();
-
     }
 
     /**
@@ -49,8 +48,8 @@ class RDBWPCMAdmin {
         $( '#the-list' ).on( 'click', '.editinline', function() {
             inlineEditPost.revert();
 
-            const post_id           = $( this ).parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
-                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
+            const postId           = $( this ).parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
+                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + postId ), // eslint-disable-line
                   nickname          = $wpcm_inline_data.find( '.nickname' ).text(),
                   wrId              = $wpcm_inline_data.find( '.wr-id' ).text();
 
@@ -84,8 +83,8 @@ class RDBWPCMAdmin {
         $( '#the-list' ).on( 'click', '.editinline', function() {
             inlineEditPost.revert();
 
-            const post_id           = $( this ).parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
-                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
+            const postId           = $( this ).parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
+                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + postId ), // eslint-disable-line
                   wrId              = $wpcm_inline_data.find( '.wr-id' ).text(),
                   compStatus        = $wpcm_inline_data.find( '.comp-status' ).text(),
                   scrumId           = $wpcm_inline_data.find( '.usar-scrum-id' ).text(),
@@ -93,11 +92,11 @@ class RDBWPCMAdmin {
                   opponent          = $wpcm_inline_data.find( '.opponent' ).text(),
                   homeScoreHT       = $wpcm_inline_data.find( '.home-ht-goals' ).text(),
                   awayScoreHT       = $wpcm_inline_data.find( '.away-ht-goals' ).text(),
-                  videoUrl          = $wpcm_inline_data.find( '.video' ).text();
+                  videoUrl          = $wpcm_inline_data.find( '.video' ).text(),
 
-            let neutral  = parseInt( $wpcm_inline_data.find( '.neutral' ).text(), 10 );
-                friendly = parseInt( $wpcm_inline_data.find( '.friendly' ).text(), 10 );
-                played   = parseInt( $wpcm_inline_data.find( '.played' ).text(), 10 );
+                  neutral  = parseInt( $wpcm_inline_data.find( '.neutral' ).text(), 10 ),
+                  friendly = parseInt( $wpcm_inline_data.find( '.friendly' ).text(), 10 ),
+                  played   = parseInt( $wpcm_inline_data.find( '.played' ).text(), 10 );
 
             // Competition status.
             $( '[name="wpcm_comp_status"]' ).val( compStatus );
@@ -178,8 +177,8 @@ class RDBWPCMAdmin {
         $( '#the-list' ).on( 'click', '.editinline', function() {
             inlineEditPost.revert();
 
-            const post_id           = $( this ).closest( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
-                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + post_id ),
+            const postId            = $( this ).closest( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
+                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + postId ), // eslint-disable-line
                   nname             = $wpcm_inline_data.find( '.nname' ).text(),
                   wrId              = $wpcm_inline_data.find( '.wr-id' ).text();
 
@@ -218,6 +217,16 @@ class RDBWPCMAdmin {
         // Display options.
         this.$selectTimezone.chosen({
             disable_search_threshold: 18
+        });
+
+        // Add new field for former name.
+        let i = 1;
+        $( '#wr_former_name_btn' ).on( 'click', function() {
+            i++;
+
+            const $field = $( `<p><input type="text" class="wr-former-names" name="term_meta[wr_former_names][${ i }]" id="term_meta[wr_former_names][${ i }]" value=""></p>` );
+
+            $field.insertBefore( $( this ).parent( 'p' ) );
         });
     }
 
@@ -270,10 +279,10 @@ class RDBWPCMAdmin {
 
         // Tips.
         $( '.tips, .help_tip' ).tipTip({
-            'attribute': 'data-tip',
-            'fadeIn': 50,
-            'fadeOut': 50,
-            'delay': 200
+            attribute: 'data-tip',
+            fadeIn: 50,
+            fadeOut: 50,
+            delay: 200
         });
     }
 
@@ -284,8 +293,6 @@ class RDBWPCMAdmin {
      * @static
      *
      * @param {jQuery} $el Element to target.
-     *
-     * @return {number}    1 if true. 0 if false.
      */
     static setCheckedValue( $el ) {
         if ( $el.is( ':checked' ) ) {
@@ -309,8 +316,8 @@ class RDBWPCMAdmin {
             $( this ).removeAttr( 'selected' );
         });
 
-        $el.find( `option[value="${value}"]` ).attr( 'selected', 'selected' );
+        $el.find( `option[value="${ value }"]` ).attr( 'selected', 'selected' );
     }
 }
 
-new RDBWPCMAdmin();
+new RDBWPCMAdmin(); // eslint-disable-line

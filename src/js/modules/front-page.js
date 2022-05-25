@@ -5,7 +5,7 @@
  * the website home page.
  *
  * @file   This file defines the `FrontPage` module.
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  * @since  1.0.0
  */
 
@@ -38,6 +38,7 @@ class FrontPage extends DTHelper {
         FrontPage._filters();
 
         this.$win = $( window );
+
         this.$table = $( '#all-matches' );
 
         this.nonce = $( '#nonce' ).val();
@@ -133,7 +134,7 @@ class FrontPage extends DTHelper {
          */
         const venue = {
             column_number: 4,
-            column_data_type: _.isEmpty( sessionStorage.venueOptions ) ? 'text' : 'html',
+            column_data_type: sessionStorage.venueOptions ? 'html' : 'text',
             filter_type: 'select',
             filter_container_id: 'venue',
             filter_default_label: 'Select Venue',
@@ -191,11 +192,11 @@ class FrontPage extends DTHelper {
                     return true;
                 }
 
-                if ( ! _.includes( ['mens-eagles', 'womens-eagles'], searchData[7] ) ) {
-                    friendlies[0] = '*';
+                if ( ! _.includes( [ 'mens-eagles', 'womens-eagles' ], searchData[ 7 ] ) ) {
+                    friendlies[ 0 ] = '*';
                 }
 
-                if ( teams.indexOf( searchData[7] ) !== -1 && ( '*' === friendlies[0] || friendlies.indexOf( searchData[8] ) !== -1 ) ) {
+                if ( teams.indexOf( searchData[ 7 ] ) !== -1 && ( '*' === friendlies[ 0 ] || friendlies.indexOf( searchData[ 8 ] ) !== -1 ) ) {
                     return true;
                 }
 
@@ -206,41 +207,144 @@ class FrontPage extends DTHelper {
         // No more error alerts.
         $.fn.dataTable.ext.errMode = 'throw';
 
+        // Pipeline data.
+        $.fn.dataTable.pipeline = function( opts ) {
+            // Configuration options.
+            const conf = $.extend({
+                pages: 5, // number of pages to cache
+                url: '', // script url
+                data: null, // function or object with parameters to send to the server matching how `ajax.data` works in DataTables
+                method: 'GET', // Ajax HTTP method
+            }, opts );
+
+            // Private variables for storing the cache.
+            let cacheLower       = -1,
+                cacheUpper       = null,
+                cacheLastRequest = null,
+                cacheLastJson    = null;
+
+            return function( request, drawCallback, settings ) {
+                let ajax          = false,
+                    requestStart  = request.start;
+
+                const drawStart     = request.start,
+                      requestLength = request.length,
+                      requestEnd    = requestStart + requestLength;
+
+                if ( settings.clearCache ) {
+                    // API requested that the cache be cleared.
+                    ajax = true;
+                    settings.clearCache = false;
+                } else if ( cacheLower < 0 || requestStart < cacheLower || requestEnd > cacheUpper ) {
+                    // Outside cached data - need to make a request.
+                    ajax = true;
+                } else if (
+                    JSON.stringify( request.order ) !== JSON.stringify( cacheLastRequest.order ) ||
+                    JSON.stringify( request.columns ) !== JSON.stringify( cacheLastRequest.columns ) ||
+                    JSON.stringify( request.search ) !== JSON.stringify( cacheLastRequest.search )
+                ) {
+                    // Properties changed (ordering, columns, searching).
+                    ajax = true;
+                }
+
+                // Store the request for checking next time around.
+                cacheLastRequest = $.extend( true, {}, request );
+
+                if ( ajax ) {
+                    // Need data from the server.
+                    if ( requestStart < cacheLower ) {
+                        requestStart = requestStart - ( requestLength * ( conf.pages - 1 ) );
+
+                        if ( requestStart < 0 ) {
+                            requestStart = 0;
+                        }
+                    }
+
+                    cacheLower = requestStart;
+                    cacheUpper = requestStart + ( requestLength * conf.pages );
+
+                    request.start = requestStart;
+                    request.length = requestLength * conf.pages;
+
+                    // Provide the same `data` options as DataTables.
+                    if ( typeof conf.data === 'function' ) {
+                        /*
+                         * As a function it is executed with the data object as an arg
+                         * for manipulation. If an object is returned, it is used as the
+                         * data object to submit.
+                         */
+                        const d = conf.data( request );
+
+                        if ( d ) {
+                            $.extend( request, d );
+                        }
+                    } else if ( $.isPlainObject( conf.data ) ) {
+                        // As an object, the data given extends the default.
+                        $.extend( request, conf.data );
+                    }
+
+                    return $.ajax({
+                        type: conf.method,
+                        url: conf.url,
+                        data: request,
+                        dataType: 'json',
+                        cache: false,
+                        success: function( json ) {
+                            cacheLastJson = $.extend( true, {}, json );
+
+                            if ( cacheLower !== drawStart ) {
+                                json.data.splice( 0, drawStart - cacheLower );
+                            }
+                            if ( requestLength >= -1 ) {
+                                json.data.splice( requestLength, json.data.length );
+                            }
+
+                            drawCallback( json );
+                        }
+                    });
+                } else {
+                    const json = $.extend( true, {}, cacheLastJson );
+
+                    json.draw = request.draw; // Update the echo for each response.
+                    json.data.splice( 0, requestStart - cacheLower );
+                    json.data.splice( requestLength, json.data.length );
+
+                    drawCallback( json );
+                }
+            };
+        };
+
+        /*
+         * Register an API method that will empty the pipelined data, forcing an Ajax
+         * fetch on the next draw (i.e. `table.clearPipeline().draw()`).
+         */
+        $.fn.dataTable.Api.register( 'clearPipeline()', function() {
+            return this.iterator( 'table', function( settings ) {
+                settings.clearCache = true;
+            });
+        });
+
         // DataTable initializer.
-        const table = this.$table.DataTable({ // eslint-disable-line
+        const table = this.$table.DataTable( { // eslint-disable-line
             destroy: true,
             autoWidth: false,
             deferRender: true,
+            processing: true,
             ajax: {
                 url: adminUrl( 'admin-ajax.php' ),
                 data: {
                     action: 'get_matches',
                     nonce: this.nonce
                 },
-                dataSrc: ( response ) => {
-                    if ( ! response.success ) {
-                        return DTHelper.dtErrorHandler( this.$table );
-                    }
-
-                    let oldData = sessionStorage.allMatches;
-
-                    const newData = JSON.stringify( response.data );
-
-                    if ( newData !== oldData ) {
-                        sessionStorage.removeItem( 'allMatches' );
-                        sessionStorage.setItem( 'allMatches', newData );
-
-                        oldData = newData;
-                    }
-
-                    const responseData = JSON.parse( oldData ),
-                          final        = [];
+                dataSrc: ( json ) => {
+                    // Parsed data container.
+                    const final = [];
 
                     // Venue options.
-                    this._venueOptions( responseData );
+                    this._venueOptions( json.data );
 
                     // Parse response.
-                    _.each( responseData, ( match ) => {
+                    _.each( json.data, ( match ) => {
                         const api = {
                             ID: match.ID,
                             idStr: `match-${ match.ID }`,
@@ -249,23 +353,25 @@ class FrontPage extends DTHelper {
                                 filter: DTHelper.competition( match )
                             },
                             date: {
-                                display: DTHelper.formatDate( match.ID, match.date.GMT, match.links ),
-                                filter: match.season
+                                matchID: match.ID,
+                                display: match.date.GMT,
+                                filter: match.season,
+                                permalink: match.permalink,
+                                timestamp: match.date.timestamp,
+                                timezone: match.venue.timezone
                             },
                             fixture: {
                                 display: DTHelper.logoResult( match ),
-                                filter: DTHelper.opponent( match.fixture )
+                                filter: DTHelper.opponent( match.description )
                             },
                             venue: {
                                 display: DTHelper.venueLink( match.venue ),
                                 filter: match.venue.name
                             },
+                            neutral: match.venue.neutral ? 'neutral' : '',
                             friendly: match.friendly ? 'friendly' : 'test',
-                            label: match.competition.label,
-                            neutral: match.venue.neutral,
-                            sort: match.date.timestamp,
-                            team: match.team.slug,
-                            links: match.links
+                            label: ! _.isEmpty( match.competition.label ) ? match.competition.label : match.competition.name,
+                            team: match.team.name
                         };
 
                         final.push( api );
@@ -282,39 +388,28 @@ class FrontPage extends DTHelper {
                 },
                 {
                     className: 'date',
+                    name: 'date',
                     targets: 1
                 },
                 {
                     className: 'fixture',
+                    name: 'fixture',
                     targets: 2
                 },
                 {
                     className: 'competition min-medium',
+                    name: 'competition',
                     targets: 3
                 },
                 {
                     className: 'venue min-wordpress',
+                    name: 'venue',
                     targets: 4
                 },
                 {
-                    className: 'comp-label hide',
+                    className: 'hide',
                     visible: false,
-                    targets: 5
-                },
-                {
-                    className: 'timestamp hide',
-                    visible: false,
-                    targets: 6
-                },
-                {
-                    className: 'team hide',
-                    visible: false,
-                    targets: 7
-                },
-                {
-                    className: 'friendly hide',
-                    visible: false,
-                    targets: 8
+                    targets: [5, 6, 7, 8] // neutral, friendly, comp-label, team
                 }
             ],
             columns: [
@@ -327,12 +422,15 @@ class FrontPage extends DTHelper {
                 {
                     data: 'date',
                     title: 'Date',
-                    render: {
-                        _: 'display',
-                        display: 'display',
-                        filter: 'filter'
+                    render: function( data, type, row ) {
+                        if ( 'display' === type ) {
+                            return DTHelper.formatDate( data.matchID, data.display, data.permalink );
+                        } else if ( 'filter' === type ) {
+                            return data[ type ];
+                        }
+
+                        return data.timestamp;
                     },
-                    orderData: 6,
                     responsivePriority: 2
                 },
                 {
@@ -340,7 +438,6 @@ class FrontPage extends DTHelper {
                     title: 'Fixture',
                     render: {
                         _: 'display',
-                        display: 'display',
                         filter: 'filter'
                     },
                     responsivePriority: 1
@@ -350,7 +447,6 @@ class FrontPage extends DTHelper {
                     title: 'Event',
                     render: {
                         _: 'display',
-                        display: 'display',
                         filter: 'filter'
                     }
                 },
@@ -359,25 +455,24 @@ class FrontPage extends DTHelper {
                     title: 'Venue',
                     render: {
                         _: 'display',
-                        display: 'display',
                         filter: 'filter'
                     }
+                },
+                {
+                    data: 'neutral'
+                },
+                {
+                    data: 'friendly'
                 },
                 {
                     data: 'label'
                 },
                 {
-                    data: 'sort'
-                },
-                {
                     data: 'team'
-                },
-                {
-                    data: 'friendly'
                 }
             ],
             buttons: false,
-            dom: '<"wpcm-row"<"wpcm-column flex"fp>> + t + <"wpcm-row"<"wpcm-column pagination"p>>',
+            dom: '<"wpcm-row"<"wpcm-column flex"fp>>t<"wpcm-row"<"wpcm-column pagination"p>>',
             language: {
                 infoEmpty: 'Try reloading the page',
                 loadingRecords: DT_LOADING,
@@ -386,7 +481,7 @@ class FrontPage extends DTHelper {
                 zeroRecords: 'Try reloading the page',
             },
             order: [
-                [ 6, 'desc' ]
+                [ 1, 'desc' ]
             ],
             pageLength: 25,
             pagingType: 'full_numbers',
@@ -451,45 +546,66 @@ class FrontPage extends DTHelper {
      * @return {string}  HTML sting of grouped options.
      */
     _venueOptions( responseData ) {
-        if ( ! _.isString( responseData ) ) {
-            // Check if response has already been saved.
-            if ( sessionStorage.venueOptions ) {
-                return sessionStorage.venueOptions;
-            }
-
-            let venueGroup   = {},
-                venueOptions = '';
-
-            _.each( responseData, ( match ) => {
-                venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ] = [];
-            });
-
-            _.each( responseData, ( match ) => {
-                if ( ! _.includes( venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ], match.venue.name ) ) {
-                    venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ].push( match.venue.name );
-                }
-            });
-
-            _.each( responseData, ( match ) => {
-                venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ] = _.sortBy( venueGroup[ COUNTRIES[ match.venue.country.toUpperCase() ] ], venue => venue.toLowerCase() );
-            });
-
-            venueGroup = ksort( venueGroup );
-
-            venueOptions += '<option value="">Select Venue</option>';
-
-            _.each( venueGroup, ( venues, country ) => {
-                venueOptions += `<optgroup label="${ country }">`;
-
-                _.each( venues, ( venue ) => {
-                    venueOptions += `<option value="${ venue }">${ venue }</option>`;
-                });
-
-                venueOptions += `</optgroup>`;
-            });
-
-            sessionStorage.setItem( 'venueOptions', venueOptions );
+        // Check if response has already been saved.
+        if ( sessionStorage.venueOptions ) {
+            return sessionStorage.venueOptions;
         }
+
+        let venueGroup   = {},
+            venueOptions = '';
+
+        _.each( responseData, ( match ) => {
+            if ( 'GB' === match.venue.schema.addressCountry ) {
+                const country = DTHelper.flag( match.venue.schema );
+
+                venueGroup[ country[0] ] = [];
+            } else {
+                venueGroup[ COUNTRIES[ match.venue.schema.addressCountry.toUpperCase() ] ] = [];
+            }
+        });
+
+        // Push venue to respective country.
+        _.each( responseData, ( match ) => {
+            if ( 'GB' === match.venue.schema.addressCountry ) {
+                const country = DTHelper.flag( match.venue.schema );
+
+                if ( ! _.includes( venueGroup[ country[0] ], match.venue.name ) ) {
+                    venueGroup[ country[0] ].push( match.venue.name );
+                }
+            } else if ( ! _.includes( venueGroup[ COUNTRIES[ match.venue.schema.addressCountry.toUpperCase() ] ], match.venue.name ) ) {
+                venueGroup[ COUNTRIES[ match.venue.schema.addressCountry.toUpperCase() ] ].push( match.venue.name );
+            }
+        });
+
+        // Sort venues by name for each country.
+        _.each( responseData, ( match ) => {
+            if ( 'GB' === match.venue.schema.addressCountry ) {
+                const country = DTHelper.flag( match.venue.schema );
+
+                venueGroup[ country[0] ] = _.sortBy( venueGroup[ country[0] ], venue => venue.toLowerCase() );
+            } else {
+                venueGroup[ COUNTRIES[ match.venue.schema.addressCountry.toUpperCase() ] ] = _.sortBy( venueGroup[ COUNTRIES[ match.venue.schema.addressCountry.toUpperCase() ] ], venue => venue.toLowerCase() );
+            }
+        });
+
+        // Sort countries alphabetically.
+        venueGroup = ksort( venueGroup );
+        console.log( venueGroup );
+
+        // Build the group venue dropdown menu.
+        venueOptions += '<option value="">Select Venue</option>';
+
+        _.each( venueGroup, ( venues, country ) => {
+            venueOptions += `<optgroup label="${ country }">`;
+
+            _.each( venues, ( venue ) => {
+                venueOptions += `<option value="${ venue }">${ venue }</option>`;
+            });
+
+            venueOptions += `</optgroup>`;
+        });
+
+        sessionStorage.setItem( 'venueOptions', venueOptions );
     }
 
     /**
@@ -516,7 +632,7 @@ class FrontPage extends DTHelper {
      */
     static _filters() {
         if ( ! rdb.is_mobile ) {
-            $( '.chosen_select' ).chosen({ width: '49%' });
+            $( '.chosen_select' ).chosen( { width: '49%' });
         }
     }
 
@@ -536,7 +652,7 @@ class FrontPage extends DTHelper {
               $chk  = $( '.team-filters .match-type' );
 
         if ( _.xor( checkedBoxes, teams ).length === 0 ||
-            ( checkedBoxes.length === 1 && ( me === checkedBoxes[0] || we === checkedBoxes[0] ) )
+            ( checkedBoxes.length === 1 && ( me === checkedBoxes[ 0 ] || we === checkedBoxes[ 0 ] ) )
         ) {
             $chk.removeClass( 'hide' ).addClass( 'active' );
         } else {

@@ -130,12 +130,12 @@ class RDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
                 'ver' => WPCM_VERSION,
                 'ftr' => true,
             ),
-            'wpclubmanager-admin-combify' => array(
+            /*'wpclubmanager-admin-combify' => array(
                 'src' => WPCM()->plugin_url() . "/assets/js/admin/combify{$suffix}.js",
                 'dep' => array( 'jquery' ),
                 'ver' => WPCM_VERSION,
                 'ftr' => true,
-            ),
+            ),*/
             'wpclubmanager_dashboard_js' => array(
                 'src' => WPCM()->plugin_url() . '/assets/js/admin/wpcm-dashboard.js',
                 'dep' => array( 'jquery' ),

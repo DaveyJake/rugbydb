@@ -1,35 +1,40 @@
 'use strict';
 
-import _                                              from 'lodash';
-import fs                                             from 'fs';
-import path                                           from 'path';
-import { fileURLToPath }                              from 'url';
-import gulp                                           from 'gulp';
-import plugins                                        from 'gulp-load-plugins';
-import imagemin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin';
-import run                                            from 'gulp-run-command/index.js';
-import autoprefixer                                   from 'autoprefixer';
-import browserSync                                    from 'browser-sync';
-import colors                                         from 'ansi-colors';
-import cssnano                                        from 'cssnano';
-import dartSass                                       from 'sass';
-import log                                            from 'fancy-log';
-import named                                          from 'vinyl-named';
-import postcssImport                                  from 'postcss-easy-import';
-import postcssSortMQ                                  from 'postcss-sort-media-queries';
-import postcssStrip                                   from 'postcss-strip-inline-comments';
-import postcssReporter                                from 'postcss-reporter';
-import purgecssWP                                     from 'purgecss-with-wordpress';
-import rimraf                                         from 'rimraf';
-import yaml                                           from 'js-yaml';
-import ESLintPlugin                                   from 'eslint-webpack-plugin';
-import TerserPlugin                                   from 'terser-webpack-plugin';
-import webpackStream                                  from 'webpack-stream';
-import webpack2                                       from 'webpack';
-import webpackConfig                                  from './webpack.config.js';
+import _                 from 'lodash';
+import fs                from 'fs';
+import path              from 'path';
+import { fileURLToPath } from 'url';
+import gulp              from 'gulp';
+import plugins           from 'gulp-load-plugins';
+import imagemin, {
+    gifsicle,
+    mozjpeg,
+    optipng,
+    svgo
+}                        from 'gulp-imagemin';
+import run               from 'gulp-run-command/index.js';
+import autoprefixer      from 'autoprefixer';
+import browserSync       from 'browser-sync';
+import colors            from 'ansi-colors';
+import cssnano           from 'cssnano';
+import dartSass          from 'sass';
+import log               from 'fancy-log';
+import named             from 'vinyl-named';
+import postcssImport     from 'postcss-easy-import';
+import postcssSortMQ     from 'postcss-sort-media-queries';
+import postcssStrip      from 'postcss-strip-inline-comments';
+import postcssReporter   from 'postcss-reporter';
+import purgecssWP        from 'purgecss-with-wordpress';
+import rimraf            from 'rimraf';
+import yaml              from 'js-yaml';
+import ESLintPlugin      from 'eslint-webpack-plugin';
+import TerserPlugin      from 'terser-webpack-plugin';
+import webpackStream     from 'webpack-stream';
+import webpack2          from 'webpack';
+import webpackConfig     from './webpack.config.js';
 
 // Node legacy variables.
-const __dirname  = path.dirname( fileURLToPath( import.meta.url ) );
+const __dirname = path.dirname( fileURLToPath( import.meta.url ) );
 
 /**
  * Check for CLI flags.
@@ -83,31 +88,28 @@ const fileExists = filepath => {
 const loadConfig = () => {
     log( 'Loading config file...' );
 
+    let fileName = '';
+
     if ( fileExists( 'config.yml' ) ) {
-        // config.yml exists, load it
-        log( colors.bold.cyan( 'config.yml' ), 'exists, loading', colors.bold.cyan( 'config.yml' ) );
-
-        let ymlFile = fs.readFileSync( 'config.yml', 'utf8' );
-
-        return yaml.load( ymlFile );
-
+        fileName = 'config.yml';
     } else if ( fileExists( 'config-default.yml' ) ) {
-        // config-default.yml exists, load it
-        log( colors.bold.cyan( 'config.yml' ), 'does not exist, loading', colors.bold.cyan( 'config-default.yml' ) );
-
-        let ymlFile = fs.readFileSync( 'config-default.yml', 'utf8' );
-
-        return yaml.load( ymlFile );
-
+        fileName = 'config-default.yml';
     } else {
         // Exit if config.yml & config-default.yml do not exist
         log( 'Exiting process, no config file exists.' );
 
         process.exit(1);
     }
+
+    // If the main config file exists, load it!
+    log( colors.bold.cyan( fileName ), 'exists, loading', colors.bold.cyan( fileName ) );
+
+    const ymlFile = fs.readFileSync( fileName, 'utf8' );
+
+    return yaml.load( ymlFile );
 };
 
-// Load all Gulp plugins into one variable
+// Load all Gulp plugins into one variable.
 const $ = plugins({
     config: __dirname + '/package.json',
     postRequireTransforms: {
@@ -216,8 +218,8 @@ const UTIL = {
      */
     copyCss: function() {
         return gulp.src( PATHS.assets.css )
-            .pipe( $.rename( UTIL.destination ) )
-            .pipe( gulp.dest( './' ) );
+            .pipe( gulp.dest( PATHS.dist + '/css' ) )
+            .pipe( browser.reload({ stream: true }) );
     },
 
     /**
@@ -250,19 +252,29 @@ const UTIL = {
         } else {
             if ( path.basename.match( /(admin|widget|customizer)/ ) ) {
                 dirname = PATHS.admin;
-            } else {
+            }
+            else {
                 dirname = PATHS.dist;
             }
 
+            // Specify destination by file extension.
             if ( '.map' === path.extname ) {
                 if ( path.basename.match( /\.css/ ) ) {
-                    dirname += '/css';
+                    if ( PRODUCTION ) {
+                        dirname += '/css';
+                    } else {
+                        dirname = PATHS.src + '/css';
+                    }
                 } else if ( path.basename.match( /\.js/ ) ) {
                     dirname += '/js';
                 }
             }
             else if ( path.extname.match( /\.(js|css)$/ ) ) {
-                dirname += '/' + path.extname.slice( 1 ) + '/';
+                if ( '.css' === path.extname && DEV ) {
+                    dirname = PATHS.src + '/css';
+                } else {
+                    dirname += '/' + path.extname.slice( 1 ) + '/';
+                }
             }
             else if ( path.extname.match( /\.(eot|otf|svg|ttc|ttf|woff2?)$/ ) ) {
                 dirname += '/fonts/';
@@ -283,65 +295,40 @@ const UTIL = {
      * @since 1.0.0
      */
     images() {
+        const svgOpts = {
+            plugins: [
+                {
+                    name: 'removeComments',
+                    active: true
+                },
+                {
+                    name: 'cleanupAttrs',
+                    active: true
+                },
+                {
+                    name: 'convertStyleToAttrs',
+                    active: true
+                },
+                {
+                    name: 'removeEmptyContainers',
+                    active: true
+                }
+            ]
+        };
+
         return gulp.src( PATHS.images )
             .pipe(
                 $.if(
                     PRODUCTION,
                     // Production.
                     imagemin([
-                        mozjpeg({
-                            progressive: true
-                        }),
-                        optipng({
-                            optimizationLevel: 5
-                        }),
-                        gifsicle({
-                            interlaced: true
-                        }),
-                        svgo({
-                            plugins: [
-                                {
-                                    name: 'removeComments',
-                                    active: true
-                                },
-                                {
-                                    name: 'cleanupAttrs',
-                                    active: true
-                                },
-                                {
-                                    name: 'convertStyleToAttrs',
-                                    active: true
-                                },
-                                {
-                                    name: 'removeEmptyContainers',
-                                    active: true
-                                }
-                            ]
-                        })
+                        mozjpeg({ progressive: true }),
+                        optipng({ optimizationLevel: 5 }),
+                        gifsicle({ interlaced: true }),
+                        svgo( svgOpts )
                     ]),
                     // Development.
-                    imagemin([
-                        svgo({
-                            plugins: [
-                                {
-                                    name: 'removeComments',
-                                    active: true
-                                },
-                                {
-                                    name: 'cleanupAttrs',
-                                    active: true
-                                },
-                                {
-                                    name: 'convertStyleToAttrs',
-                                    active: true
-                                },
-                                {
-                                    name: 'removeEmptyContainers',
-                                    active: true
-                                }
-                            ]
-                        })
-                    ])
+                    imagemin([ svgo( svgOpts ) ])
                 )
             )
             .pipe( gulp.dest( PATHS.dist + '/img' ) );
@@ -353,6 +340,12 @@ const UTIL = {
      * @since 1.0.0
      */
     purgecss() {
+        if ( DEV ) {
+            return gulp.src( PATHS.purgecss )
+                .pipe( gulp.dest( PATHS.dist + '/css' ) )
+                .pipe( browser.reload({ stream: true }) );
+        }
+
         const dev = [
             /^dt-(.*)$/,
             /^dataTable/,
@@ -371,10 +364,10 @@ const UTIL = {
             purgecssWP.safelist.push( dev[ i ] );
         }
 
-        return gulp.src( PATHS.src + '/css' )
+        return gulp.src( PATHS.purgecss )
             .pipe(
                 $.purgecss({
-                    content: PATHS.purgecss,
+                    content: PATHS.purge,
                     safelist: {
                         standard: purgecssWP.safelist,
                         greedy: [
@@ -422,10 +415,7 @@ const UTIL = {
             )
             .pipe( $.if( PRODUCTION, $.cleanCss({ compatibility: 'edge' }) ) )
             .pipe( $.if( DEV, $.sourcemaps.write( '.' ) ) )
-            .pipe( $.if( PRODUCTION, gulp.dest( PATHS.src + '/css' ) ) )
-            .pipe( $.if( DEV, $.rename( UTIL.destination ) ) )
-            .pipe( $.if( DEV, gulp.dest( './' ) ) )
-            .pipe( browser.reload({ stream: true }) );
+            .pipe( gulp.dest( PATHS.src + '/css' ) );
     },
 
     /**
@@ -452,12 +442,10 @@ const UTIL = {
     watch: function() {
         gulp.watch( PATHS.assets.all, UTIL.copy );
 
-        // WordPress theme defaults.
-        gulp.watch( 'theme.json', gulp.series( 'json2scss', 'sass:build' ) )
+        // Stylesheets.
+        gulp.watch( 'theme.json', gulp.series( 'json2scss', 'lint:scss', 'sass:build', UTIL.copyCss ) )
             .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) + ' changed.' ) )
             .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) + ' was removed.' ) );
-
-        // Stylesheets.
         gulp.watch( PATHS.sass.watch, gulp.series( 'lint:scss', 'sass:build', UTIL.copyCss ) )
             .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) + ' changed.' ) )
             .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) + ' was removed.' ) );
@@ -502,11 +490,11 @@ const UTIL = {
                             comments: /translators:/i,
                         },
                         compress: {
-                            passes: 2,
+                            passes: 2
                         },
                         mangle: {
-                            reserved: ['__', '_n', '_nx', '_x'],
-                        },
+                            reserved: ['__', '_n', '_nx', '_x']
+                        }
                     },
                     extractComments: false
                 })
@@ -531,7 +519,7 @@ const UTIL = {
                 .pipe( named() )
                 .pipe( webpackStream( UTIL.webpack.config, webpack2 ) )
                 .pipe( $.rename( UTIL.destination ) )
-                .pipe( gulp.dest( './' ) )
+                .pipe( gulp.dest( './' ) );
         },
         watch() {
             const watchConfig = Object.assign( UTIL.webpack.config, {
@@ -541,10 +529,11 @@ const UTIL = {
 
             return gulp.src( PATHS.js.entries )
                 .pipe( named() )
-                .pipe( webpackStream( watchConfig, webpack2, UTIL.webpack.changeHandler )
-                    .on( 'error', err => {
-                        log( '[webpack:error]', err.toString({ colors: true }) )
-                    })
+                .pipe(
+                    webpackStream( watchConfig, webpack2, UTIL.webpack.changeHandler )
+                        .on( 'error', err => {
+                            log( '[webpack:error]', err.toString({ colors: true }) )
+                        })
                 )
                 .pipe( $.rename( UTIL.destination ) )
                 .pipe( gulp.dest( './' ) );
@@ -615,21 +604,17 @@ gulp.task( 'sass:build', gulp.series( UTIL.cleanStyleSheets, UTIL.sass ) );
 gulp.task( 'webpack:build', gulp.series( UTIL.cleanJavaScript, UTIL.webpack.build ) );
 gulp.task( 'webpack:watch', UTIL.webpack.watch );
 
-// Build the "dist" folder by running all of the below tasks.
+// Build task maintenance.
 const phpLint = ['lint:php', 'lint:wpcs'],
-      cjsLint = ['lint:js', 'lint:scss'],
-      asBuild = ['sass:build', 'webpack:build'];
+      staLint = ['lint:js', 'lint:scss'],
+      stBuild = ['sass:build', 'webpack:build'];
 
 // Task actions.
 const { clean, copy, images, purgecss, reload } = UTIL;
 
-if ( DEV ) {
-    gulp.task( 'build',
-        gulp.series( clean, ...phpLint, gulp.parallel( copy, ...cjsLint ), gulp.parallel( ...asBuild, images, copy ), reload ) );
-} else {
-    gulp.task( 'build',
-        gulp.series( clean, ...phpLint, gulp.parallel( copy, ...cjsLint ), gulp.parallel( ...asBuild, images, copy ), purgecss, reload ) );
-}
+// Build the 'dist' folder by running all of the below tasks.
+gulp.task( 'build',
+    gulp.series( clean, ...phpLint, gulp.parallel( copy, ...staLint ), gulp.parallel( ...stBuild, images, copy ), purgecss, reload ) );
 
 // Build the site, run the server, and watch for file changes
 gulp.task( 'default',

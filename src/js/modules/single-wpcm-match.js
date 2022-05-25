@@ -1,5 +1,5 @@
 import { Foundation } from 'Vendor';
-import { Request, rdb, _, $ } from 'Utils';
+import { Rugby, rdb, _, $ } from 'Utils';
 
 /**
  * Single match page.
@@ -86,7 +86,7 @@ const singleWpcmMatch = function() {
             wrId: wrId
         };
 
-        return new Request( 'match', args );
+        return new Rugby( 'match', args );
     }
 };
 

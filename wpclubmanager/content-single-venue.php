@@ -2,7 +2,7 @@
 /**
  * The template for displaying venue details in the taxonomy-wpcm_venue.php template
  *
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  * @package Rugby_Database
  * @since 1.0.0
  */

@@ -151,8 +151,17 @@ class RDB_WPCM_Timezone_Picker {
                     // Just time timezone label.
                     $timezones[ $timezone ] = self::format_timezone_name( $timezone );
                 } else {
+                    // GMT offset.
+                    $gmt_offset = self::format_GMT_offset( $offset );
+                    if ( preg_match( '/GMT0\d{2}\:/', $gmt_offset ) ) {
+                        $gmt_offset = preg_replace( '/(GMT)0(\d{2}\:)/', '$1+$2', $gmt_offset );
+                    }
+                    if ( preg_match( '/\d\:-\d/', $gmt_offset ) ) {
+                        $gmt_offset = preg_replace( '/(\d\:)-(\d)/', '$1$2', $gmt_offset );
+                    }
+
                     // Timezone shown with offset.
-                    $timezones[ $timezone ] = '(' . self::format_GMT_offset( $offset ) . ') ' . self::format_timezone_name( $timezone );
+                    $timezones[ $timezone ] = '(' . $gmt_offset . ') ' . self::format_timezone_name( $timezone );
                 }
             }
 

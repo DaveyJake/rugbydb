@@ -4,7 +4,7 @@
  *
  * Displays the player stats box.
  *
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  * @category Admin
  * @package Rugby_Databas
  * @subpackage WPCM_Meta_Box_Player_Stats

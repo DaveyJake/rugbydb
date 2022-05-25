@@ -169,6 +169,7 @@
 .post-type-wpcm_match #the-list #wpcm_referee_country {
     float: right !important;
     margin-top: 1px;
+    width:  61%;
 }
 
 .post-type-wpcm_match #post #wpcm_referee_country_chosen {
@@ -180,9 +181,6 @@
     margin-left: 10px;
 }
 
-.post-type-wpcm_match .wpclubmanager-match-referee > div:first-of-type {
-    float: left;
-}
 
 /** WPCM Taxonomies */
 [class*="taxonomy-wpcm_"]:not(.taxonomy-wpcm_venue) .wp-list-table .column-name {
@@ -218,6 +216,13 @@
 }
 .taxonomy-wpcm_venue #col-container .chosen-container-single .chosen-single {
     max-width: 33.22rem !important;
+}
+.taxonomy-wpcm_venue #term_meta_usar_timezone__chosen .chosen-single,
+.taxonomy-wpcm_venue #term_meta_usar_timezone__chosen .chosen-drop {
+    max-width: inherit !important;
+}
+.taxonomy-wpcm_venue .wr-former-names {
+    width: 100% !important;
 }
 
 [class*="taxonomy-wpcm_"] .column-capacity {

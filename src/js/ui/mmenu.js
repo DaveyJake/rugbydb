@@ -16,9 +16,6 @@ import { rdb } from 'Utils';
 const mmenu = ( function() {
     // Options.
     const mmenuOpts = {
-        autoHeight: false,
-        dropdown: false,
-        extensions: ['pagedim-black', 'theme-dark'],
         navbars: [
             {
                 position: 'top',
@@ -35,6 +32,9 @@ const mmenu = ( function() {
                 ]
             }
         ],
+        offCanvas: {
+            position: 'right'
+        },
         searchfield: {
             panel: {
                 dividers: false
@@ -44,7 +44,7 @@ const mmenu = ( function() {
             hover: true,
             parent: true
         },
-        wrappers: ['wordpress']
+        theme: 'dark'
     };
 
     // Configuration.
@@ -61,21 +61,9 @@ const mmenu = ( function() {
 
     // Tablet vs Mobile.
     if ( rdb.is_tablet ) {
-        mmenuOpts.autoHeight = true;
-        mmenuOpts.dropdown   = true;
-        mmenuOpts.extensions.push( 'popup' );
-    } else if ( ! ( rdb.is_tablet && rdb.is_mobile ) ) {
-        mmenuOpts.extensions.push( 'position-right' );
-    }
-
-    if ( Foundation.MediaQuery.atLeast( 'large' ) ) {
-        mmenuOpts.extensions.push( 'position-front' );
-    } else {
-        const index = mmenuOpts.extensions.indexOf( 'position-front' );
-
-        if ( index > -1 ) {
-            mmenuOpts.extensions.splice( index, 1 );
-        }
+        mmenuOpts.offCanvas.position = 'top';
+    } else if ( ! rdb.is_tablet && ! rdb.is_mobile && Foundation.MediaQuery.atLeast( 'large' ) ) {
+        mmenuOpts.offCanvas.position = 'right-front';
     }
 
     return function() {

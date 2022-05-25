@@ -13,9 +13,10 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Begin RDB_Front_Page_Filters.
+ *
+ * @since 1.0.0
  */
 class RDB_Front_Page_Filters {
-
     /**
      * Primary constructor.
      *
@@ -75,6 +76,7 @@ class RDB_Front_Page_Filters {
         );
 
         echo '<div class="team-filters flex clearfix">';
+
         foreach ( $teams as $team ) :
             $abbr = '';
 
@@ -99,15 +101,15 @@ class RDB_Front_Page_Filters {
                     break;
             }
 
-            echo '<label id="' . esc_attr( $team->slug ) . '">' .
+            $label = array(
+                '<label id="' . esc_attr( $team->slug ) . '">',
+                '<input type="checkbox" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" />&nbsp;',
+                '<span class="show-for-large">' . esc_html( $team->name ) . '</span>',
+                '<span class="hide-for-large">' . esc_html( $abbr ) . '</span>',
+                '</label>',
+            );
 
-                '<input type="checkbox" name="wpcm_team" value="' . esc_attr( $team->slug ) . '" />' .
-
-                ' <span class="show-for-large">' . esc_html( $team->name ) . '</span>' .
-
-                '<span class="hide-for-large">' . esc_html( $abbr ) . '</span>' .
-
-            '</label>';
+            echo wp_kses_post( implode( '', $label ) );
         endforeach;
 
         foreach ( $matches as $k => $v ) :
@@ -117,7 +119,7 @@ class RDB_Front_Page_Filters {
                 $checked = true;
             }
 
-            printf( '<label class="match-type hide"><input type="radio" name="wpcm_friendly" value="%1$s"%2$s /> <span>%3$s</span></label>', esc_attr( $k ), $checked ? ' checked' : '', esc_html( $v ) );
+            printf( '<label class="match-type hide"><input type="radio" name="wpcm_friendly" value="%1$s"%2$s />&nbsp;<span>%3$s</span></label>', esc_attr( $k ), $checked ? ' checked' : '', esc_html( $v ) );
         endforeach;
 
         echo '</div>';
@@ -159,7 +161,7 @@ class RDB_Front_Page_Filters {
         $opponents = array_unique( $opponents );
 
         foreach ( $opponents as $i => $opponent ) {
-            $union = get_page_by_title( $opponent, 'OBJECT', 'wpcm_club' );
+            $union = get_page_by_title( $opponent, OBJECT, 'wpcm_club' );
 
             $options[ absint( $union->ID ) ] = apply_filters( 'the_title', $union->post_title ); // @codingStandardsIgnoreLine
         }
@@ -213,7 +215,6 @@ class RDB_Front_Page_Filters {
 
         rdb_wpcm_wp_select( $fields );
     }
-
 }
 
 new RDB_Front_Page_Filters();

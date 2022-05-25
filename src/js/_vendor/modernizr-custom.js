@@ -148,14 +148,14 @@
 
     /*!
     {
-        "name": "XDomainRequest",
+        "name": "XDomainRugby",
         "property": "xdomainrequest",
         "tags": ["cors", "xdomainrequest", "ie9", "ie8"],
         "authors": ["Ivan Pan (@hypotenuse)"],
         "notes": [
         {
             "name": "MDN documentation",
-            "href": "https://developer.mozilla.org/en-US/docs/Web/API/XDomainRequest"
+            "href": "https://developer.mozilla.org/en-US/docs/Web/API/XDomainRugby"
         },
         {
             "name": "MSDN documentation",
@@ -164,10 +164,10 @@
     }
     !*/
     /* DOC
-    Detects support for XDomainRequest in IE9 & IE8
+    Detects support for XDomainRugby in IE9 & IE8
     */
 
-    Modernizr.addTest('xdomainrequest', 'XDomainRequest' in window);
+    Modernizr.addTest('xdomainrequest', 'XDomainRugby' in window);
 
     /*!
     {
@@ -1523,7 +1523,7 @@
      * ```js
      * var rAFProp = prefixed('requestAnimationFrame', window, false);
      *
-     * rafProp === 'WebkitRequestAnimationFrame' // in older webkit
+     * rafProp === 'WebkitRugbyAnimationFrame' // in older webkit
      * ```
      *
      * One common use case for prefixed is if you're trying to determine which transition
@@ -1553,7 +1553,7 @@
         if (!obj) {
             return testPropsAll(prop, 'pfx');
         } else {
-            // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
+            // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRugbyAnimationFrame'
             return testPropsAll(prop, obj, elem);
         }
     };

@@ -4,7 +4,7 @@
  * All JS variable-constants for this theme are defined in this file.
  *
  * @file   The file defines all theme-based JS constants.
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  * @since  1.0.0
  */
 
@@ -368,7 +368,7 @@ const TIMEZONE = INTL.timeZone;
  *
  * @type {string}
  */
-const US_DATE = 'MMMM D, YYYY';
+const US_DATE = 'MMMM D[,] YYYY';
 
 /**
  * US time format for Moment.js.

@@ -10,7 +10,7 @@
  * @version     2.1.3
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Meta_Box_Club_Details extends WPCM_Meta_Box_Club_Details {
 

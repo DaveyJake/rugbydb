@@ -7,17 +7,47 @@
         {
           "name": "Red",
           "slug": "red",
-          "color": "#c42033"
+          "color": "#c42032"
         },
         {
           "name": "White",
           "slug": "white",
-          "color": "#fff"
+          "color": "#efefef"
         },
         {
           "name": "Blue",
           "slug": "blue",
           "color": "#162c53"
+        },
+        {
+          "name": "Dark Blue",
+          "slug": "dark-blue",
+          "color": "#06355e"
+        },
+        {
+          "name": "Black",
+          "slug": "black",
+          "color": "#000"
+        },
+        {
+          "name": "Win",
+          "slug": "win",
+          "color": "#269e0b"
+        },
+        {
+          "name": "Loss",
+          "slug": "loss",
+          "color": "#9e0b2a"
+        },
+        {
+          "name": "Draw",
+          "slug": "draw",
+          "color": "#808080"
+        },
+        {
+          "name": "Postponed",
+          "slug": "postponed",
+          "color": "#363636"
         }
       ]
     },

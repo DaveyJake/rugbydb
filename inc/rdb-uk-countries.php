@@ -60,9 +60,9 @@ $GLOBALS['rdb_uk'] = array(
  *
  * @param WP_Term $venue Current term object. Default null.
  *
- * @return string    ISO-2 country name.
+ * @return string ISO-2 country name.
  */
-function rdb_venue_country( $venue = null ) {
+function rdb_venue_country( WP_Term $venue = null ) {
     global $rdb_uk;
 
     if ( is_null( $venue ) ) {
@@ -89,6 +89,8 @@ function rdb_venue_country( $venue = null ) {
         } elseif ( in_array( $city, $rdb_uk['wl'], true ) ) {
             return 'wl';
         }
+
+        return 'gb';
     }
 
     return strtolower( $meta );

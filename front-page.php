@@ -15,7 +15,7 @@ d( rest_url() );
 
 get_header();
 
-$rdb_result_columns = array( 'ID', 'Date', 'Fixture', 'Event', 'Venue', 'Label', 'Timestamp', 'Team', 'Friendly' );
+$rdb_result_columns = array( 'ID', 'Date', 'Fixture', 'Event', 'Venue', 'Neutral', 'Friendly', 'Label', 'Team' );
 
 echo '<main id="primary" class="site-main">';
 

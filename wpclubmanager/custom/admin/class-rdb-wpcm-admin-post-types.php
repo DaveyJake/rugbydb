@@ -163,7 +163,7 @@ class RDB_WPCM_Admin_Post_Types extends WPCM_Admin_Post_Types {
 
             if ( ! ( empty( $firstname ) && empty( $_POST['_wpcm_lastname'] ) ) ) {
                 $data['post_title'] = $firstname . ' ' . $lastname;
-                $data['post_name']  = sanitize_title( $firstname . '-' . $lastname );
+                $data['post_name']  = ! empty( $data['post_name'] ) ? $data['post_name'] : sanitize_title( $firstname . '-' . $lastname );
             }
         endif;
 

@@ -11,7 +11,6 @@
 defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Seasons {
-
     /**
      * Target taxonomy.
      *
@@ -19,7 +18,7 @@ class RDB_WPCM_Seasons {
      *
      * @var string
      */
-    public $taxonomy;
+    public $taxonomy = 'wpcm_season';
 
     /**
      * Primary constructor.
@@ -27,7 +26,9 @@ class RDB_WPCM_Seasons {
      * @return RDB_WPCM_Seasons
      */
     public function __construct() {
-        $this->taxonomy = 'wpcm_season';
+        if ( ! is_admin() ) {
+            return;
+        }
 
         add_action( 'init', array( $this, 'unset_wpcm_seasons' ) );
         add_action( 'before_wpcm_init', array( $this, 'reset_wpcm_seasons' ) );

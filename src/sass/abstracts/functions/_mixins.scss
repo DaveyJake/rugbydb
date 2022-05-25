@@ -28,6 +28,30 @@
     @return type-of($variable) == list;
 }
 
+///
+// Get value from `theme.json` SCSS map.
+//
+// @param {number} $nth Nth child index from list.
+// @param {string} $key Key from map to retrieve.
+//
+// @return {mixed} The value from `theme.json` SCSS map.
+///
+@function theme-get($nth: 1, $key: 'color') {
+    $palette: map-deep-get($theme, 'settings', 'color', 'palette');
+
+    @return map-get(nth($palette, $nth), $key);
+}
+
+///
+// Transparent white.
+//
+// @param number $opacity Default 0.5.
+///
+@function transparent-white($opacity: 0.5) {
+    $str: 'rgba(255, 255, 255, #{$opacity})';
+
+    @return unquote($str);
+}
 
 
 
@@ -271,6 +295,11 @@
                 left: $values;
                 right: $values;
             }
+        } @else if $direction == 'vertical' {
+            #{$space-type}: {
+                top: $values;
+                bottom: $values;
+            }
         }
     }
 }
@@ -283,17 +312,6 @@
 ///
 @mixin text($dir: left) {
     text-align: $dir !important;
-}
-
-///
-// Transparent white.
-//
-// @param number $opacity Default 0.5.
-///
-@function transparent-white($opacity: 0.5) {
-    $str: 'rgba(255, 255, 255, #{$opacity})';
-
-    @return unquote($str);
 }
 
 // Typekit: Industry.
@@ -327,7 +345,7 @@
 // @return string Corrected color.
 ///
 @function club-colors($primary, $secondary) {
-    $fallback: #fff;
+    $fallback: $color__white;
 
     $lightness: (lightness(#{$primary}) - lightness(#{$secondary}));
 
@@ -350,7 +368,7 @@
 
 // Menu item hover.
 @mixin menu-item-hover {
-    background: #fff;
+    background: $color__white;
     color: darken($color__blue, 5%) !important;
     transition: $hover-transition;
 }

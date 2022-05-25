@@ -9,6 +9,9 @@
 
 import { _, $, rdb, moment } from './globals';
 import { COUNTRIES, US_DATE, TIMEZONE } from './constants';
+import { empty } from './php';
+import { helpers } from './helpers';
+const { sanitizeTitle } = helpers;
 
 /* eslint-disable computed-property-spacing, indent */
 
@@ -21,14 +24,34 @@ class DTHelper {
      *
      * @param {object} match API response of match object.
      *
-     * @return {string}    Competition name.
+     * @return {string} Competition name.
      */
     static competition( match ) {
-        if ( _.isUndefined( match.competition ) ) {
-            location.reload();
+        if ( _.isUndefined( match ) || _.isBoolean( match ) ) {
+            return;
         }
 
-        return ( ! _.isEmpty( match.competition.parent ) ? match.competition.parent + ' - ' : '' ) + match.competition.name;
+        if ( ! _.isObject( match ) ) {
+            console.log( typeof match );
+        }
+
+        if ( _.isUndefined( match.competition ) ) {
+            if ( _.isUndefined( match.ID ) ) {
+                console.log( match );
+            } else {
+                console.log( `Match ${ match.ID } missing competition` );
+            }
+        }
+
+        let competition = '';
+
+        if ( empty( match.competition.parent ) ) {
+            competition = match.competition.name;
+        } else {
+            competition = `${ match.competition.parent } - ${ match.competition.name }`;
+        }
+
+        return competition;
     }
 
     /**
@@ -37,17 +60,17 @@ class DTHelper {
      * @since 1.0.0
      * @static
      *
-     * @param {number} matchId Current match ID.
-     * @param {string} date    ISO-8601 string.
-     * @param {object} links   Match URLs.
+     * @param {number} matchId   Current match ID.
+     * @param {string} date      ISO-8601 string.
+     * @param {string} permalink Match URLs.
      *
      * @return {string}        Human-readable date string.
      */
-    static formatDate( matchId, date, links ) {
-        const m     = moment( date ),
-              human = m.tz( TIMEZONE ).format( US_DATE );
+    static formatDate( matchId, date, permalink ) {
+        const m = moment.utc( date ).tz( TIMEZONE ),
+            human = m.format( US_DATE );
 
-        return `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-date-link" class="wpcm-matches-list-link" href="${ links.match }" rel="bookmark">${ human }</a>`;
+        return `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-date-link" class="wpcm-matches-list-link" href="${ permalink }" rel="bookmark">${ human }</a>`;
     }
 
     /**
@@ -58,26 +81,25 @@ class DTHelper {
      *
      * @param {object} match Current match.
      *
-     * @return {string}      HTML output.
+     * @return {string} HTML output.
      */
     static logoResult( match ) {
-        const matchId  = match.ID,
-              fixture  = match.fixture,
-              result   = match.result,
-              homeLogo = match.logo.home,
-              awayLogo = match.logo.away,
-              links    = match.links,
-              teams    = fixture.split( /\sv\s/ ),
-              scores   = result.split( /\s-\s/ );
+        const matchId = match.ID,
+            fixture = match.description,
+            result = `${ match.score.ft.home } - ${ match.score.ft.away }`,
+            homeLogo = match.competitor.home.logo,
+            awayLogo = match.competitor.away.logo,
+            permalink = match.permalink,
+            teams = fixture.split( /\sv\s/ );
 
         return [
             '<div class="fixture-result">',
-                `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-result-link" class="flex" href="${ links.match }" title="${ fixture }" rel="bookmark">`,
+                `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-result-link" class="flex" href="${ permalink }" title="${ fixture }" rel="bookmark">`,
                     '<div class="inline-cell">',
                         `<img class="icon" data-interchange="[${ homeLogo }, small]" alt="${ teams[0] }" height="22" />`,
                     '</div>',
                     '<div class="inline-cell">',
-                        `<span class="result">${ scores }</span>`,
+                        `<span class="result">${ result }</span>`,
                     '</div>',
                     '<div class="inline-cell">',
                         `<img class="icon" data-interchange="[${ awayLogo }, small]" alt="${ teams[1] }" height="22" />`,
@@ -115,17 +137,69 @@ class DTHelper {
      *
      * @param {object} venue Match venue object.
      *
-     * @return {string}      HTML output.
+     * @return {string} HTML output.
      */
     static venueLink( venue ) {
         const link = new URL( venue.permalink );
 
+        const [ country, flag ] = DTHelper.flag( venue.schema );
+
         return [
             `<a id="${ rdb.template.replace( /\.php/, '' ) }-venue-${ venue.id }-link" href="${ link.pathname }" title="${ venue.name }" rel="bookmark">`,
-                `<span class="flag-icon flag-icon-squared flag-icon-${ 'ie' !== venue.country ? 'squared-' + venue.country : venue.country }" title="${ COUNTRIES[ venue.country.toUpperCase() ] }"></span>`,
+                `<span class="flag-icon flag-icon-squared flag-icon-${ flag }" title="${ country }"></span>`,
                 ` ${ venue.name }`,
             '</a>'
         ].join( '' );
+    }
+
+    /**
+     * Get the appropriate country flag for the UK.
+     *
+     * @since 1.2.0
+     * @static
+     *
+     * @param {object} schema Venue's schemaOrg info.
+     *
+     * @return {array} The country and flag.
+     */
+    static flag( schema ) {
+        let flag = '',
+            city = '',
+            country = '';
+
+        const en = ['brighton', 'camborne', 'cambridge', 'coventry', 'gloucester', 'guildford', 'henley-on-thames', 'hersham', 'leeds', 'london', 'melrose', 'newcastle-upon-tyne', 'northampton', 'otley', 'stockport', 'sunbury-on-thames', 'twickenham', 'walton-on-thames', 'worcester'],
+              ie = ['castlereagh'],
+              sf = ['aberdeen', 'edinburgh', 'galashiels', 'glasgow', 'scotstoun'],
+              wl = ['brecon', 'cardiff', 'colwyn-bay', 'crosskeys', 'ebbw-vale', 'neath', 'newport', 'pontypool', 'pontypridd', 'whitland'];
+
+        if ( 'GB' === schema.addressCountry ) {
+            flag = 'squared-' + sanitizeTitle( schema.addressLocality );
+            city = sanitizeTitle( schema.addressLocality );
+
+            if ( _.includes( en, city ) ) {
+                country = 'EN';
+            } else if ( _.includes( ie, city ) ) {
+                country = 'IE';
+            } else if ( _.includes( sf, city ) ) {
+                country = 'SF';
+            } else if ( _.includes( wl, city ) ) {
+                country = 'WL';
+            } else {
+                country = 'GB';
+            }
+
+            country = COUNTRIES[ country ];
+        } else if ( 'IE' === schema.addressCountry ) {
+            flag = sanitizeTitle( schema.addressCountry );
+
+            country = COUNTRIES[ schema.addressCountry ];
+        } else {
+            flag = 'squared-' + sanitizeTitle( schema.addressCountry );
+
+            country = COUNTRIES[ schema.addressCountry ];
+        }
+
+        return [ country, flag ];
     }
 
     /**
@@ -144,7 +218,7 @@ class DTHelper {
 
         table.on( 'error.dt', function( e, settings, techNote, message ) {
             console.log( 'An error has been reported by DataTables: ', message );
-        }).DataTable(); // eslint-disable-line
+        } ).DataTable(); // eslint-disable-line
     }
 }
 

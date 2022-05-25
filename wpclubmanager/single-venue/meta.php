@@ -2,7 +2,7 @@
 /**
  * Venue metadata.
  *
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  * @package Rugby_Database
  * @since 1.0.0
  */

@@ -61,57 +61,57 @@ require_once get_template_directory() . '/inc/class-rdb-device.php';
 /**
  * Theme Analytics
  */
-// require get_template_directory() . '/inc/class-rdb-tracking-analytics.php';
+require_once get_template_directory() . '/inc/class-rdb-tracking-analytics.php';
 
 /**
  * Theme Functions
  */
-require get_template_directory() . '/inc/rdb-theme-functions.php';
+require_once get_template_directory() . '/inc/rdb-theme-functions.php';
 
 /**
  * Theme Setup
  */
-require get_template_directory() . '/inc/rdb-theme-setup.php';
+require_once get_template_directory() . '/inc/class-rdb-theme-setup.php';
 
 /**
  * Theme Shortcodes
  */
-require get_template_directory() . '/inc/class-rdb-shortcodes.php';
+require_once get_template_directory() . '/inc/class-rdb-shortcodes.php';
 
 /**
  * Theme Widgets
  */
-require get_template_directory() . '/inc/rdb-theme-widgets.php';
+require_once get_template_directory() . '/inc/rdb-theme-widgets.php';
 
 /**
  * Custom template tags for this theme.
  */
-require get_template_directory() . '/inc/rdb-template-tags.php';
+require_once get_template_directory() . '/inc/rdb-template-tags.php';
 
 /**
  * Functions which enhance the theme by hooking into WordPress.
  */
-require get_template_directory() . '/inc/rdb-template-functions.php';
+require_once get_template_directory() . '/inc/rdb-template-functions.php';
 
 /**
  * AJAX templates.
  */
-require get_template_directory() . '/inc/class-rdb-template-ajax.php';
+require_once get_template_directory() . '/inc/class-rdb-template-ajax.php';
 
 /**
  * Theme Scripts & Styles
  */
-require get_template_directory() . '/inc/class-rdb-styles-scripts.php';
+require_once get_template_directory() . '/inc/class-rdb-styles-scripts.php';
 
 /**
  * Front page filters.
  */
-require get_template_directory() . '/inc/class-rdb-front-page-filters.php';
+require_once get_template_directory() . '/inc/class-rdb-front-page-filters.php';
 
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/rdb-customizer.php';
+require_once get_template_directory() . '/inc/rdb-customizer.php';
 
 /**
  * Make sure core plugin is loaded.

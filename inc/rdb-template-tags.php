@@ -354,6 +354,10 @@ if ( ! function_exists( 'rdb_table_columns' ) ) :
         $ids = array( 'id', 'ID', 'timestamp', 'Timestamp' );
 
         if ( is_front_page() ) {
+            $ids[] = 'Timestamp';
+            $ids[] = 'Neutral';
+            $ids[] = 'Friendly';
+            $ids[] = 'Label';
             $ids[] = 'Team';
         }
 
@@ -361,13 +365,13 @@ if ( ! function_exists( 'rdb_table_columns' ) ) :
 
         foreach ( $columns as $column ) {
             if ( in_array( $column, $ids, true ) ) {
-                $column = '<span class="hide">' . $column . '</span>';
+                $column = '<span class="hide">' . esc_html( $column ) . '</span>';
             }
 
             if ( $tfoot ) {
-                $html[] = '<th rowspan="1" colspan="1">' . wp_kses_post( $column ) . '</th>';
+                $html[] = sprintf( '<th rowspan="1" colspan="1">%s</th>', $column );
             } else {
-                $html[] = '<th scope="column">' . wp_kses_post( $column ) . '</th>';
+                $html[] = sprintf( '<th scope="column">%s</th>', $column );
             }
         }
 
@@ -405,9 +409,9 @@ if ( ! function_exists( 'rdb_wpcm_countries' ) ) :
         // phpcs:disable
         echo '<div class="country-filter">';
             echo '<select id="country-picker" class="chosen_select" data-placeholder="Select a country">';
-            foreach ( $countries as $abbr => $country ) {
+            foreach ( $countries as $abbr => $country ) :
                 echo '<option value="' . esc_attr( $abbr ) . '">' . esc_html( $country ) . '</option>';
-            }
+            endforeach;
             echo '</select>';
         echo '</div>';
     }
@@ -442,11 +446,11 @@ if ( ! function_exists( 'rdb_unions' ) ) :
 
         echo '<div class="opponent-filter">';
             echo '<select id="opponent-picker" class="chosen_select">';
-            foreach ( $options as $k => $v ) {
-                if ( 'United States' !== $v ) {
+            foreach ( $options as $k => $v ) :
+                if ( 'United States' !== $v ) :
                     echo '<option value="' . esc_attr( $k ) . '">' . esc_html( $v ) . '</option>';
-                }
-            }
+                endif;
+            endforeach;
             echo '</select>';
         echo '</div>';
     }

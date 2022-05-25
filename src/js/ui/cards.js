@@ -1,4 +1,4 @@
-import { _, rdb, Request } from 'Utils';
+import { _, rdb, Rugby } from 'Utils';
 
 /**
  * Generate cards from API.
@@ -10,7 +10,7 @@ import { _, rdb, Request } from 'Utils';
  * @param {Function} callback Callback function to fire.
  * @param {object}   args     Object is documented in `rugbydb/src/js/utils/requests.js`.
  *
- * @return {Request}          API request and response.
+ * @return {Rugby}          API request and response.
  */
 const cards = function( template, endpoint, callback = null, args = {} ) {
     if ( template !== rdb.template ) {
@@ -21,7 +21,7 @@ const cards = function( template, endpoint, callback = null, args = {} ) {
         callback();
     }
 
-    return new Request( endpoint, args );
+    return new Rugby( endpoint, args );
 };
 
 /**

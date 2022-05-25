@@ -18,6 +18,10 @@ $global-width: $size__site-main-width !default;
 /// @type Number
 $global-lineheight: $font__line-height-body !default;
 
+/// Primary color.
+/// @type Color
+$primary-color: $color__blue;
+
 /// Color used for light gray UI items.
 /// @type Color
 $light-gray: $color__background-main !default;

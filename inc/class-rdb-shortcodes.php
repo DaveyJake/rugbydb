@@ -2,11 +2,10 @@
 /**
  * Theme API: Shortcodes
  *
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  *
  * @package Rugby_Database
  * @subpackage Shortcodes
- * @since 1.0.0
  */
 
 // phpcs:disable Squiz.Commenting,Squiz.WhiteSpace,Generic.WhiteSpace,Generic.Formatting,Generic.WhiteSpace.ScopeIndent.IncorrectExact
@@ -15,6 +14,8 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Begin shortcodes.
+ *
+ * @since 1.0.0
  */
 class RDB_Shortcodes {
     /**
@@ -98,6 +99,7 @@ class RDB_Shortcodes {
         $float         = sanitize_text_field( $atts['float'] );
         $width         = sanitize_text_field( $atts['width'] );
         $size          = 'full';
+
         // phpcs:disable
         if ( ! empty( $image_src ) ) {
             $class = 'article';
@@ -108,6 +110,7 @@ class RDB_Shortcodes {
             } else {
                 $src = $image_src;
             }
+
         } elseif ( $post_id > 0 && has_post_thumbnail( $post_id ) ) {
             $class = 'featured';
             $src   = get_the_post_thumbnail_url( $post_id, $size );
@@ -119,6 +122,7 @@ class RDB_Shortcodes {
             if ( empty( $caption ) ) {
                 $caption = get_the_post_thumbnail_caption( $post_id );
             }
+
         } else {
             $class = 'supplementary';
             $image = wp_get_attachment_image_src( $attachment_id, $size );
@@ -197,24 +201,26 @@ class RDB_Shortcodes {
         $img  = sanitize_text_field( $atts['img'] );
         $url  = trailingslashit( '/team/' . $slug );
 
-        // phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
-        $content = '<div id="' . esc_attr( $slug ) . '" class="card team">';
-            $content .= '<div class="card__container">';
-                $content .= '<div class="card__container__background" shadow><span style="background-image: url(' . esc_url( $img ) . ');"></span></div>';
-                $content .= '<div class="card__container__image">';
-                    $content .= '<a class="help_tip" href="' . esc_url( $url ) . '" title="' . esc_attr( $team ) . '">';
-                        $content .= '<span class="card__image" style="background-image: url(' . esc_url( $img ) . ');"></span>';
-                    $content .= '</a>';
-                    $content .= '<span class="card__container__title">';
-                        $content .= '<a class="help_tip" href="' . esc_url( $url ) . '" title="' . esc_attr( $team ) . '">';
-                            $content .= '<span class="card__title">' . esc_html( $team ) . '</span>';
-                        $content .= '</a>';
-                    $content .= '</span>';
-                $content .= '</div>';
-            $content .= '</div>';
-        $content .= '</div>';
+        // phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning,WordPress.Arrays.ArrayIndentation.ItemNotAligned
+        $content = array(
+            '<div id="' . esc_attr( $slug ) . '" class="card team">',
+                '<div class="card__container">',
+                    '<div class="card__container__background" shadow><span style="background-image: url(' . esc_url( $img ) . ');"></span></div>',
+                    '<div class="card__container__image">',
+                        '<a class="help_tip" href="' . esc_url( $url ) . '" title="' . esc_attr( $team ) . '">',
+                            '<span class="card__image" style="background-image: url(' . esc_url( $img ) . ');"></span>',
+                        '</a>',
+                        '<span class="card__container__title">',
+                            '<a class="help_tip" href="' . esc_url( $url ) . '" title="' . esc_attr( $team ) . '">',
+                                '<span class="card__title">' . esc_html( $team ) . '</span>',
+                            '</a>',
+                        '</span>',
+                    '</div>',
+                '</div>',
+            '</div>',
+        );
 
-        return $content;
+        return implode( '', $content );
     }
 
     /**
@@ -340,13 +346,13 @@ class RDB_Shortcodes {
         $competition = sanitize_text_field( $atts['competition'] );
 
         if ( ! empty( $atts['cms'] ) ) {
-            $url = sanitize_text_field( "https://usarugbystats.com/assets/img/clublogos/{$atts['cms']}.png" );
+            $url = sanitize_text_field( sprintf( 'https://usarugbystats.com/assets/img/clublogos/%s.png', $atts['cms'] ) );
         } else {
             $url = get_template_directory_uri();
 
             foreach ( $this->mlr_logos as $domain => $file ) {
                 if ( preg_match( '/' . $domain . '/', $site ) && ! empty( $competition ) ) {
-                    $file_path = 'dist/img/competitions/' . $competition . '/' . $file . '.svg';
+                    $file_path = sprintf( 'dist/img/competitions/%1$s/%2$s.svg', $competition, $file );
 
                     if ( file_exists( get_template_directory() . '/' . $file_path ) ) {
                         $url .= '/' . $file_path;
@@ -355,12 +361,25 @@ class RDB_Shortcodes {
             }
         }
 
-        $content  = '<a id="' . ( $atts['previous'] ? 'previous' : 'current' ) . '-club-post-' . get_the_ID() . '-to-' . sanitize_title( $name ) . '" class="' . ( $atts['previous'] ? 'previous' : 'current' ) . '-club-url" href="' . esc_url( $site ) . '" target="_blank" rel="external noopener noreferrer">';
-        $content .= '<img class="' . esc_attr( $class ) . '" src="' . esc_url( $url ) . '" alt="' . esc_attr( $name ) . '" />';
-        $content .= '&nbsp;<span>' . esc_html( $name ) . '</span>';
-        $content .= '</a>';
+        $anchor = sprintf(
+            '<a id="%1$s-club-post-%2$s-to-%3$s" class="%1$s-club-url" href="%4$s" target="_blank" rel="external noopener noreferrer">',
+            $atts['previous'] ? 'previous' : 'current',
+            get_the_ID(),
+            sanitize_title( $name ),
+            esc_url( $site )
+        );
 
-        return wp_kses_post( $content );
+        $image = sprintf(
+            '<img class="%1$s-club-url__image %2$s" src="%3$s" alt="%4$s" />',
+            $atts['previous'] ? 'previous' : 'current',
+            esc_attr( $class ),
+            esc_url( $url ),
+            esc_attr( $name )
+        );
+
+        $content = array( $anchor, $image, '&nbsp;<span>' . esc_html( $name ) . '</span></a>' );
+
+        return wp_kses_post( implode( '', $content ) );
     }
 
     /**
@@ -384,19 +403,21 @@ class RDB_Shortcodes {
         $active_class = empty( $active_class ) ? '' : ".{$active_class} ";
 
         // phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
-        $content = '<div class="page-load-status">';
-            $content .= '<div id="scroll-status" class="infinite-scroll-request">';
-                $content .= '<style> ' . $active_class . '.loader-ellips{font-size:20px;position:relative;width:4em;height:1em;margin:10px auto}' . $active_class . '.loader-ellips__dot{display:block;width:1em;height:1em;border-radius:.5em;background:#555;position:absolute;animation-duration:.5s;animation-timing-function:ease;animation-iteration-count:infinite}' . $active_class . '.loader-ellips__dot:nth-child(1),' . $active_class . '.loader-ellips__dot:nth-child(2){left:0}' . $active_class . '.loader-ellips__dot:nth-child(3){left:1.5em}' . $active_class . '.loader-ellips__dot:nth-child(4){left:3em}@keyframes reveal{from{transform:scale(0.001)}to{transform:scale(1)}}@keyframes slide{to{transform:translateX(1.5em)}}' . $active_class . '.loader-ellips__dot:nth-child(1){animation-name:reveal}' . $active_class . '.loader-ellips__dot:nth-child(2),' . $active_class . '.loader-ellips__dot:nth-child(3){animation-name:slide}' . $active_class . '.loader-ellips__dot:nth-child(4){animation-name:reveal;animation-direction:reverse} </style>';
-                $content .= '<div class="loader-ellips">';
-                    $content .= '<span class="loader-ellips__dot"></span>';
-                    $content .= '<span class="loader-ellips__dot"></span>';
-                    $content .= '<span class="loader-ellips__dot"></span>';
-                    $content .= '<span class="loader-ellips__dot"></span>';
-                $content .= '</div>';
-            $content .= '</div>';
-        $content .= '</div>';
+        $content = array(
+            '<div class="page-load-status">',
+                '<div id="scroll-status" class="infinite-scroll-request">',
+                    '<style> ' . $active_class . '.loader-ellips{font-size:20px;position:relative;width:4em;height:1em;margin:10px auto}' . $active_class . '.loader-ellips__dot{display:block;width:1em;height:1em;border-radius:.5em;background:#555;position:absolute;animation-duration:.5s;animation-timing-function:ease;animation-iteration-count:infinite}' . $active_class . '.loader-ellips__dot:nth-child(1),' . $active_class . '.loader-ellips__dot:nth-child(2){left:0}' . $active_class . '.loader-ellips__dot:nth-child(3){left:1.5em}' . $active_class . '.loader-ellips__dot:nth-child(4){left:3em}@keyframes reveal{from{transform:scale(0.001)}to{transform:scale(1)}}@keyframes slide{to{transform:translateX(1.5em)}}' . $active_class . '.loader-ellips__dot:nth-child(1){animation-name:reveal}' . $active_class . '.loader-ellips__dot:nth-child(2),' . $active_class . '.loader-ellips__dot:nth-child(3){animation-name:slide}' . $active_class . '.loader-ellips__dot:nth-child(4){animation-name:reveal;animation-direction:reverse} </style>',
+                    '<div class="loader-ellips">',
+                        '<span class="loader-ellips__dot"></span>',
+                        '<span class="loader-ellips__dot"></span>',
+                        '<span class="loader-ellips__dot"></span>',
+                        '<span class="loader-ellips__dot"></span>',
+                    '</div>',
+                '</div>',
+            '</div>',
+        );
 
-        return $content;
+        return implode( '', $content );
     }
 
     /**
@@ -444,8 +465,6 @@ class RDB_Shortcodes {
             $class .= 'flag-icon flag-icon-' . $country;
         }
 
-        $post_type = get_post_type();
-
         $content = '<span class="' . esc_attr( $class ) . '"></span>';
 
         return wp_kses_post( $content );
@@ -456,7 +475,7 @@ class RDB_Shortcodes {
      *
      * @since 1.0.0
      *
-     * @param array|null $atts    {
+     * @param array|null $atts {
      *     Shortcode attributes.
      *
      *     @type string $type Accepts 'player', 'staff', 'match', or 'union'.
@@ -484,7 +503,7 @@ class RDB_Shortcodes {
 
         $final_link = '/' . esc_html( $type ) . '/' . esc_html( $slug ) . '/';
 
-        return '<a id="quick-link-post-' . esc_attr( $origin ) . '-to-' . esc_attr( $slug ) . '" href="' . esc_url( $final_link ) . '">' . $content . '</a>';
+        return '<a id="quick-link-post-' . esc_attr( $origin ) . '-to-' . esc_attr( $slug ) . '" href="' . esc_url( $final_link ) . '">' . esc_html( $content ) . '</a>';
     }
 
     /**
@@ -494,7 +513,7 @@ class RDB_Shortcodes {
      *
      * @global WP_Post $post Current post object.
      *
-     * @param array|null $atts    {
+     * @param array|null $atts {
      *     Labels are required. The rest are optional.
      *
      *     @type string $labels    Comma-separated values.
@@ -529,13 +548,22 @@ class RDB_Shortcodes {
         $tab_hrefs = array_trim( explode( ',', $tab_hrefs ) );
 
         $content .= '<ul class="tabs no-bullets" data-tabs id="' . esc_attr( $menu_id ) . '">';
-        foreach ( $labels as $i => $label ) : // phpcs:ignore Generic.WhiteSpace.ScopeIndent.IncorrectExact
+
+        // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact, Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen, Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose
+        foreach ( $labels as $i => $label ) :
+
             $content .= '<li class="' . esc_attr( $tab_class ) . ( empty( $i ) ? ' is-active' : '' ) . '">';
+
                 $content .= '<a href="#' . esc_attr( sanitize_title( $tab_hrefs[ $i ] ) ) . '" aria-selected="' . ( empty( $i ) ? 'true' : 'false' ) . '">';
+
                     $content .= esc_html( $labels[ $i ] );
+
                 $content .= '</a>';
+
             $content .= '</li>';
+
         endforeach;
+
         $content .= '</ul>';
 
         return $content;
@@ -546,13 +574,14 @@ class RDB_Shortcodes {
      *
      * @since 1.0.0
      *
+     * @see RDB_Shortcodes->youtube_id()
+     *
      * @param array|null $atts    Shortcode attributes.
      * @param mixed|null $content Shortcode output.
      *
      * @return mixed Final HTML.
      */
     public function youtube( $atts = null, $content = null ) {
-
         $atts = shortcode_atts(
             array(
                 'end'   => '',
@@ -643,6 +672,9 @@ class RDB_Shortcodes {
      * Get YouTube video ID from URL
      *
      * @since 1.0.0
+     * @access private
+     *
+     * @see RDB_Shortcodes->youtube()
      *
      * @param string $video_url Video URL.
      *

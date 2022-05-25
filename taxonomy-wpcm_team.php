@@ -2,7 +2,7 @@
 /**
  * The main template file for displaying team information.
  *
- * @author Davey Jacobson <daveyjake21@gmail.com>
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  *
  * @package Rugby_Database
  * @since 1.0.0
@@ -22,11 +22,11 @@ get_header();
      */
     do_action( 'wpclubmanager_before_main_content' );
 
-        if ( taxonomy_exists( 'wpcm_team' ) && function_exists( 'wpclubmanager_get_template_part' ) ) :
+    if ( taxonomy_exists( 'wpcm_team' ) && function_exists( 'wpclubmanager_get_template_part' ) ) :
 
-            wpclubmanager_get_template_part( 'content', 'single-team' );
+        wpclubmanager_get_template_part( 'content', 'single-team' );
 
-        endif;
+    endif;
 
     /**
      * Hook: `wpclubmanager_after_main_content`
