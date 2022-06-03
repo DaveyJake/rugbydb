@@ -136,7 +136,7 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
 
         $match_datetime->setTimezone( wp_timezone() );
 
-        echo '<span class="website-timezone">' . esc_html( $match_datetime->format( 'T' ) ) . ' (' . esc_html( $timezone_picker::formatted_offset( $match_datetime->getOffset() ) ) . ')</span>';
+        echo '<span class="website-timezone">' . esc_html( $match_datetime->format( 'T' ) ) . ' (' . esc_html( $timezone_picker->formatted_offset( $match_datetime->getOffset() ) ) . ')</span>';
     }
 
     /**
@@ -229,7 +229,7 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
             if ( ! empty( $_POST['wpcm_venue'] ) ) {
                 $venue_timezone = get_term_meta( $_POST['wpcm_venue'], 'usar_timezone', true );
                 $match_datetime = new DateTime( $_match_datetime, new DateTimeZone( $venue_timezone ) );
-                $local_datetime = sprintf( '%1$s %2$s', $match_datetime->format( DATE_TIME ), $timezone_picker::formatted_offset( $match_datetime->getOffset() ) );
+                $local_datetime = sprintf( '%1$s %2$s', $match_datetime->format( DATE_TIME ), $timezone_picker->formatted_offset( $match_datetime->getOffset() ) );
             }
             else {
                 $local_datetime = $_match_datetime;
@@ -287,7 +287,7 @@ class RDB_WPCM_Meta_Box_Match_Details_Custom {
         $local = new DateTime( sprintf( '%1$s %2$s', $local_date, $local_time ), new DateTimeZone( $timezone ) );
 
         if ( empty( $offset ) ) {
-            $offset = $timezone_picker::formatted_offset( $local->getOffset() );
+            $offset = $timezone_picker->formatted_offset( $local->getOffset() );
         }
 
         return array(

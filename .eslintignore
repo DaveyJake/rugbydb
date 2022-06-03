@@ -1,23 +1,31 @@
 # System Files
 .DS_Store
 
-# Directories
-dev
-dist
-node_modules
-vendor
-
 # Files
 *.cjs
 *.json
 *.lock
+*.map
 *.min.js
 **/_*.js
+rdb.js
+rdb-admin.js
 gulpfile.babel.js
+jquery.dataTables.yadcf.js
 
 # Dev-specific Files
+.babelrc
+.editorconfig
+.git*
+.npmrc
 .postcssrc.*
+.stylelint*
 .tailwindcssrc.*
 
 # Theme Dependency Files
+**/dev/**
+**/dist/**
+**/node_modules/**
+**/vendor/**
 **/_vendor/**
+

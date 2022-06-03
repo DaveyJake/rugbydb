@@ -83,7 +83,7 @@ class RDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
                     echo '</tr>';
                 echo '</thead>';
                 echo '<tbody>';
-                    $ht_goals  = (array) unserialize( get_post_meta( $post->ID, 'wpcm_goals', true ) );
+                    $ht_goals  = (array) maybe_unserialize( get_post_meta( $post->ID, 'wpcm_goals', true ) );
                     $box_goals = array_merge( array( 'q1' => array( 'home' => '0', 'away' => '0' ) ), $ht_goals );
                     echo '<tr class="wpcm-ss-admin-tr-last">';
                         echo '<th align="right">';
@@ -114,7 +114,7 @@ class RDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
                     do_action( 'wpclubmanager_admin_results_table', $post->ID );
                     echo '<tr>';
                         echo '<th align="right">';
-                            _e( 'Final Score', 'wp-club-manager' );
+                            esc_html_e( 'Final Score', 'wp-club-manager' );
                         echo '</th>';
                         echo '<td><input type="text" name="wpcm_goals[total][home]" id="wpcm_goals_total_home" value="' . (int) $goals['total']['home'] . '" size="3" /></td>';
                         echo '<td><input type="text" name="wpcm_goals[total][away]" id="wpcm_goals_total_away" value="' . (int) $goals['total']['away'] . '" size="3" /></td>';
@@ -178,7 +178,7 @@ class RDB_WPCM_Meta_Box_Match_Result extends WPCM_Meta_Box_Match_Result {
             delete_post_meta( $post_id, 'wpcm_away_goals' );
         }
 
-        if ( 'rugby' === $sport && isset( $_POST['wpcm_bonus'] ) ) {
+        if ( 'rugby' === $sport && ! empty( $_POST['wpcm_bonus'] ) ) {
             if ( ! is_league_mode() ) {
                 $bonus = $_POST['wpcm_bonus'];
                 delete_post_meta( $post_id, 'wpcm_bonus', serialize( $bonus ) );

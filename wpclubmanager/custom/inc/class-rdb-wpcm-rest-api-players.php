@@ -78,21 +78,24 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
             ),
             'matches' => array(
                 'sevens' => array(
+                    '_ids'  => '',
                     'ids'   => '',
-                    'total' => 0,
+                    'total' => '',
                 ),
                 'friendly' => array(
+                    '_ids'  => '',
                     'ids'   => '',
-                    'total' => 0,
+                    'total' => '',
                 ),
                 'tests' => array(
+                    '_ids' => '',
                     'ids'  => '',
-                    'caps' => 0,
+                    'caps' => '',
                 ),
                 'total' => array(
-                    'xv'      => 0,
-                    '7s'      => 0,
-                    'overall' => 0,
+                    'xv'      => '',
+                    '7s'      => '',
+                    'overall' => '',
                 ),
             ),
             'positions'    => '',
@@ -342,6 +345,13 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
                     'friendly' => array(
                         'type'       => 'object',
                         'properties' => array(
+                            '_ids' => array(
+                                'type'        => 'array',
+                                'uniqueItems' => true,
+                                'items'       => array(
+                                    'type' => 'string'
+                                ),
+                            ),
                             'ids' => array(
                                 'type'        => 'array',
                                 'uniqueItems' => true,
@@ -357,6 +367,13 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
                     'sevens' => array(
                         'type'       => 'object',
                         'properties' => array(
+                            '_ids' => array(
+                                'type'        => 'array',
+                                'uniqueItems' => true,
+                                'items'       => array(
+                                    'type' => 'string'
+                                ),
+                            ),
                             'ids' => array(
                                 'type'        => 'array',
                                 'uniqueItems' => true,
@@ -372,6 +389,13 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
                     'tests' => array(
                         'type'       => 'object',
                         'properties' => array(
+                            '_ids' => array(
+                                'type'        => 'array',
+                                'uniqueItems' => true,
+                                'items'       => array(
+                                    'type' => 'string'
+                                ),
+                            ),
                             'ids' => array(
                                 'type'        => 'array',
                                 'uniqueItems' => true,
@@ -429,7 +453,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
                 'type'        => 'array',
                 'uniqueItems' => true,
                 'items'       => array(
-                    'type' => 'string',
+                    'type' => 'object',
                 ),
             ),
             'filters' => array(
@@ -579,7 +603,10 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
         // Teams: `wpcm_team`.
         if ( ! empty( $teams ) ) {
             foreach ( $teams as $team ) {
-                $played_for[] = $team->name;
+                $played_for[] = array(
+                    '_id'  => sprintf( 't%s', $team->term_id ),
+                    'name' => $team->name,
+                );
             }
         }
 
@@ -594,7 +621,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
         $played_during = array_unique_values( $played_during );
 
         // Date of debut match.
-        // $debut_date = get_post_meta( $player->ID, '_usar_date_first_test', true );
+        $debut_date = get_post_meta( $player->ID, '_usar_date_first_test', true );
         // If debut date is unknown...
         if ( empty( $debut_date ) || '1970-01-01' === $final_date ) {
             $match_timestamps = $this->match_timestamps( $xv_matches );
@@ -606,7 +633,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
         }
 
         // Date of last match played.
-        // $final_date = get_post_meta( $player->ID, '_usar_date_last_test', true );
+        $final_date = get_post_meta( $player->ID, '_usar_date_last_test', true );
         // If last match date is unknown...
         if ( empty( $final_date ) || '1970-01-01' === $final_date ) {
             $match_timestamps = $this->match_timestamps( $xv_matches );
@@ -685,14 +712,17 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
             ),
             'matches' => array(
                 'sevens' => array(
+                    '_ids'  => $this->mongodb_prefix( $sv_matches ),
                     'ids'   => array_int( $sv_matches ),
                     'total' => count( $sv_matches ),
                 ),
                 'friendly' => array(
+                    '_ids'  => $this->mongodb_prefix( $friendlies ),
                     'ids'   => $friendlies,
                     'total' => count( $friendlies ),
                 ),
                 'tests' => array(
+                    '_ids' => $this->mongodb_prefix( $tests ),
                     'ids'  => $tests,
                     'caps' => count( $tests ),
                 ),
@@ -745,7 +775,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
             if ( is_array( $player ) && array_key_exists( 'lineup', $player ) && array_key_exists( $player_id, $player['lineup'] ) ||
                  is_array( $player ) && array_key_exists( 'subs', $player ) && array_key_exists( $player_id, $player['subs'] ) ) {
 
-                $api[ $player_id ][] = $this->mongodb ? array_mongodb_prefix( $match->ID, 'match' ) : $match->ID;
+                $api[ $player_id ][] = $match->ID;
             }
         }
 
@@ -932,7 +962,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
             $match = get_posts( $args );
             $match = $match[0];
 
-            $wp_match_list[] = $this->mongodb ? array_mongodb_prefix( $match->ID, 'match' ) : $match->ID;
+            $wp_match_list[] = $match->ID;
         }
 
         return implode( '|', $wp_match_list );

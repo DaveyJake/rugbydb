@@ -12,9 +12,23 @@ $font__path: '/wp-content/themes/rugbydb/dist/fonts';
          url('#{$font__path}/rugby-icomoon.svg?tdx82d#icomoon') format('svg');
 }
 
+// Unnecessary button.
+select[name='wpcm_season'] {
+    + #match {
+        display: none !important;
+    }
+}
+
 // Slug box.
 .post-php #post_name {
     width: 100%;
+}
+
+// Player thumbnail images.
+.post-type-wpcm_player {
+    .attachment-player_thumbnail {
+        height: auto !important;
+    }
 }
 
 .taxonomy-wpcm_venue {

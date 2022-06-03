@@ -646,6 +646,27 @@ class RDB_WPCM_REST_API {
     }
 
     /**
+     * Prefix IDs for MongoDB.
+     *
+     * @since 2.0.0
+     *
+     * @param array  $ids  Object IDs.
+     * @param string $type Accepts 'match', 'player', 'union', 'club', 'coach',
+     *                     'roster', 'season', 'team', 'venue'.
+     */
+    public function mongodb_prefix( $ids, $type = 'match' ) {
+        if ( ! $this->mongodb ) {
+            return $ids;
+        }
+
+        foreach ( $ids as $i => $id ) {
+            $ids[ $i ] = array_mongodb_prefix( $id, $type );
+        }
+
+        return $ids;
+    }
+
+    /**
      * Replace dev domain with production domain on local environment.
      *
      * @since 2.0.0

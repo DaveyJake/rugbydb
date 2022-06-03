@@ -9,13 +9,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-d( rest_url() );
-
 // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact, Squiz.PHP.CommentedOutCode.Found, Squiz.Commenting.InlineComment.InvalidEndChar
 
 get_header();
 
-$rdb_result_columns = array( 'ID', 'Date', 'Fixture', 'Event', 'Venue', 'Neutral', 'Friendly', 'Label', 'Team' );
+$rdb_result_columns = array( 'ID', 'Date', 'Fixture', 'Event', 'Venue', 'Neutral', 'Friendly', 'Team' );
 
 echo '<main id="primary" class="site-main">';
 

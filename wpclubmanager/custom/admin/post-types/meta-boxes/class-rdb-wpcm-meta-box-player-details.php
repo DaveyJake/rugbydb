@@ -7,7 +7,7 @@
  * @since RDB 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if not directly accessed.
+defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
 
@@ -155,7 +155,6 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
 
         // Birthplace
         if ( metadata_exists( 'post', $post->ID, 'usar_birthplace' ) || ! isset( $_POST['usar_birthplace'] ) ) {
-
             $birthplace = get_post_meta( $post->ID, 'usar_birthplace', true );
             $hometown   = get_post_meta( $post->ID, 'wpcm_hometown', true );
 
@@ -320,77 +319,77 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
      */
     public static function save( $post_id, $post ) {
         // Save current club.
-        if ( isset( $_POST['_wpcm_player_club'] ) ) {
+        if ( ! empty( $_POST['_wpcm_player_club'] ) ) {
             update_post_meta( $post_id, '_wpcm_player_club', $_POST['_wpcm_player_club'] );
         } else {
             delete_post_meta( $post_id, '_wpcm_player_club' );
         }
 
         // Save birthday.
-        if ( isset( $_POST['wpcm_dob'] ) ) {
+        if ( ! empty( $_POST['wpcm_dob'] ) ) {
             update_post_meta( $post_id, 'wpcm_dob', $_POST['wpcm_dob'] );
         } else {
             delete_post_meta( $post_id, 'wpcm_dob' );
         }
 
         // Save first name.
-        if ( isset( $_POST['_wpcm_firstname'] ) ) {
+        if ( ! empty( $_POST['_wpcm_firstname'] ) ) {
             update_post_meta( $post_id, '_wpcm_firstname', $_POST['_wpcm_firstname'] );
         } else {
             delete_post_meta( $post_id, '_wpcm_firstname' );
         }
 
         // Save nickname.
-        if ( isset( $_POST['_usar_nickname'] ) ) {
+        if ( ! empty( $_POST['_usar_nickname'] ) ) {
             update_post_meta( $post_id, '_usar_nickname', $_POST['_usar_nickname'] );
         } else {
             delete_post_meta( $post_id, '_usar_nickname' );
         }
 
         // Save last name.
-        if ( isset( $_POST['_wpcm_lastname'] ) ) {
+        if ( ! empty( $_POST['_wpcm_lastname'] ) ) {
             update_post_meta( $post_id, '_wpcm_lastname', $_POST['_wpcm_lastname'] );
         } else {
             delete_post_meta( $post_id, '_wpcm_lastname' );
         }
 
         // Save badge number.
-        if ( isset( $_POST['wpcm_number'] ) ) {
+        if ( ! empty( $_POST['wpcm_number'] ) ) {
             update_post_meta( $post_id, 'wpcm_number', $_POST['wpcm_number'] );
         } else {
             delete_post_meta( $post_id, 'wpcm_number' );
         }
 
         // Save height.
-        if ( isset( $_POST['wpcm_height'] ) ) {
+        if ( ! empty( $_POST['wpcm_height'] ) ) {
             update_post_meta( $post_id, 'wpcm_height', $_POST['wpcm_height'] );
         } else {
             delete_post_meta( $post_id, 'wpcm_height' );
         }
 
         // Save weight.
-        if ( isset( $_POST['wpcm_weight'] ) ) {
+        if ( ! empty( $_POST['wpcm_weight'] ) ) {
             update_post_meta( $post_id, 'wpcm_weight', $_POST['wpcm_weight'] );
         } else {
             delete_post_meta( $post_id, 'wpcm_weight' );
         }
 
         // Save nationality.
-        if ( isset( $_POST['wpcm_natl'] ) ) {
+        if ( ! empty( $_POST['wpcm_natl'] ) ) {
             update_post_meta( $post_id, 'wpcm_natl', $_POST['wpcm_natl'] );
         } else {
             delete_post_meta( $post_id, 'wpcm_natl' );
         }
 
         // Save hometown.
-        if ( isset( $_POST['wpcm_hometown'] ) ) {
+        if ( ! empty( $_POST['wpcm_hometown'] ) ) {
             update_post_meta( $post_id, 'wpcm_hometown', $_POST['wpcm_hometown'] );
         } else {
             delete_post_meta( $post_id, 'wpcm_hometown' );
         }
 
         // Save previous clubs.
-        if ( isset( $_POST['wpcm_prevclubs'] ) ) {
+        if ( ! empty( $_POST['wpcm_prevclubs'] ) ) {
             update_post_meta( $post_id, 'wpcm_prevclubs', $_POST['wpcm_prevclubs'] );
         } else {
             delete_post_meta( $post_id, 'wpcm_prevclubs' );
@@ -400,66 +399,65 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         self::set_wpcm_player_additional_detail_fields( $post_id );
 
         // Save the unique badge.
-        if ( isset( $_POST['_usar_badge'] ) ) {
+        if ( ! empty( $_POST['_usar_badge'] ) ) {
             update_post_meta( $post_id, '_usar_badge', $_POST['_usar_badge'] );
         } else {
             delete_post_meta( $post_id, '_usar_badge' );
         }
 
         // Save the date of first match.
-        if ( isset( $_POST['_usar_date_first_test'] ) ) {
+        if ( ! empty( $_POST['_usar_date_first_test'] ) ) {
             update_post_meta( $post_id, '_usar_date_first_test', $_POST['_usar_date_first_test'] );
         } else {
             delete_post_meta( $post_id, '_usar_date_first_test' );
         }
 
         // Save the date of last match.
-        if ( isset( $_POST['_usar_date_last_test'] ) ) {
+        if ( ! empty( $_POST['_usar_date_last_test'] ) ) {
             update_post_meta( $post_id, '_usar_date_last_test', $_POST['_usar_date_last_test'] );
         } else {
             delete_post_meta( $post_id, '_usar_date_last_test' );
         }
 
         // Save the player's birthplace.
-        if ( isset( $_POST['usar_birthplace'] ) ) {
+        if ( ! empty( $_POST['usar_birthplace'] ) ) {
             update_post_meta( $post_id, 'usar_birthplace', $_POST['usar_birthplace'] );
         } else {
             delete_post_meta( $post_id, 'usar_birthplace' );
         }
 
         // Save the player's high school.
-        if ( isset( $_POST['usar_high_school'] ) ) {
+        if ( ! empty( $_POST['usar_high_school'] ) ) {
             update_post_meta( $post_id, 'usar_high_school', $_POST['usar_high_school'] );
         } else {
             delete_post_meta( $post_id, 'usar_high_school' );
         }
 
         // Save the player's university affiliation.
-        if ( isset( $_POST['usar_university'] ) ) {
+        if ( ! empty( $_POST['usar_university'] ) ) {
             update_post_meta( $post_id, 'usar_university', $_POST['usar_university'] );
         } else {
             delete_post_meta( $post_id, 'usar_university' );
         }
 
         // Save the player's ESPN Scrum ID.
-        if ( isset( $_POST['usar_scrum_id'] ) ) {
+        if ( ! empty( $_POST['usar_scrum_id'] ) ) {
             update_post_meta( $post_id, 'usar_scrum_id', $_POST['usar_scrum_id'] );
         } else {
             delete_post_meta( $post_id, 'usar_scrum_id' );
         }
 
         // Save the player's World Rugby ID.
-        if ( isset( $_POST['wr_id'] ) ) {
+        if ( ! empty( $_POST['wr_id'] ) ) {
             update_post_meta( $post_id, 'wr_id', $_POST['wr_id'] );
         } else {
             delete_post_meta( $post_id, 'wr_id' );
         }
 
         // Save the player's World Rugby match list.
-        if ( isset( $_POST['wr_match_list'] ) ) {
+        if ( ! empty( $_POST['wr_match_list'] ) ) {
             $match_list             = preg_replace( '/\s/', '', $_POST['wr_match_list'] );
-            $match_list             = preg_split( '/,/', $match_list );
-            $_POST['wr_match_list'] = implode( '|', $match_list );
+            $_POST['wr_match_list'] = preg_replace( '/,/', '|', $match_list );
 
             update_post_meta( $post_id, 'wr_match_list', $_POST['wr_match_list'] );
         } else {
@@ -486,7 +484,7 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
         }
 
         // Unique badge number.
-        if ( isset( $_POST['wpcm_number'] ) && ! isset( $_POST['_usar_badge'] ) ) {
+        if ( ! empty( $_POST['wpcm_number'] ) && ! isset( $_POST['_usar_badge'] ) ) {
             $valid = array( 'mens-eagles', 'womens-eagles' );
             // Teams attached to player.
             $teams = wp_get_object_terms( $post_id, 'wpcm_team' );
@@ -661,16 +659,20 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
      * Tooltip content.
      */
     public static function tooltip_content() {
-        echo '<script> ' .
-            'jQuery( document ).ready( function( $ ) { ' .
-                '$( "._usar_nickname_field " ).mouseenter( function() { ' .
-                    '$( ".help_tip" ).removeClass( "hidden" ); ' .
-                '}); ' .
-                '$( "._usar_nickname_field " ).mouseleave( function() { ' .
-                    '$( ".help_tip" ).addClass( "hidden" ); ' .
-                '}); ' .
-            '}); ' .
-        '</script>';
+        $script = array(
+            '<script> ',
+                'jQuery( document ).ready( function( $ ) { ',
+                    '$( "._usar_nickname_field " ).mouseenter( function() { ',
+                        '$( ".help_tip" ).removeClass( "hidden" ); ',
+                    '}); ',
+                    '$( "._usar_nickname_field " ).mouseleave( function() { ',
+                        '$( ".help_tip" ).addClass( "hidden" ); ',
+                    '}); ',
+                '}); ',
+            '</script>',
+        );
+
+        echo implode( '', $script );
     }
 
     /**
@@ -681,7 +683,7 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
     private static function debug_match_player_details() {
         if ( is_admin() && 'wpcm_match' === get_post_type() )
         {
-            if ( isset( $_POST['wpcm_players'] ) ) {
+            if ( ! empty( $_POST['wpcm_players'] ) ) {
                 $players = (array) $_POST['wpcm_players'];
 
                 if ( is_array( $players ) ) {
@@ -699,11 +701,11 @@ class RDB_WPCM_Meta_Box_Player_Details extends WPCM_Meta_Box_Player_Details {
             }
 
             if ( function_exists( 'd' ) ) {
-	            if ( isset( $_POST['wpcm_match_captain'] ) ) {
+	            if ( ! empty( $_POST['wpcm_match_captain'] ) ) {
 	                d( $_POST['wpcm_match_captain'] );
 	            }
 
-	            if ( isset( $_POST['wpcm_match_subs_not_used'] ) ) {
+	            if ( ! empty( $_POST['wpcm_match_subs_not_used'] ) ) {
 	                d( $_POST['wpcm_match_subs_not_used'] );
 	            }
 	        }

@@ -332,6 +332,8 @@ function _rdb_prevent_post_type_image_resize( $post_type, $sizes ) {
  */
 function rdb_purge_hooks() {
     add_action( 'saved_wpcm_venue', 'rdb_purge_term_transient', 10, 3 );
+    add_action( 'delete_plugin_transients', 'rdb_purge_term_transient', 10, 3 );
+    add_action( 'delete_plugin_transients', 'rdb_purge_post_transient', 10, 3 );
 
     $ajax_post_types = array( 'wpcm_club', 'wpcm_match', 'wpcm_player', 'wpcm_staff' );
 
@@ -440,7 +442,7 @@ function rdb_schema_ld_json() {
 function rdb_schema_front_page( $data = null ) {
     if ( is_null( $data ) ) {
         $data = array(
-            '@context'      => 'http://schema.org/',
+            '@context'      => 'https://schema.org/',
             '@type'         => 'WebSite',
             'name'          => 'RugbyDB.com',
             'about'         => 'Tracking the USA Rugby Eagles since 2019.',
@@ -451,7 +453,7 @@ function rdb_schema_front_page( $data = null ) {
             'url'           => site_url(),
         );
 
-        echo wp_kses_post( '<script type="application/ld+json">' . wp_json_encode( $data ) . '</script>' );
+        echo wp_kses_post( sprintf( '<script type="application/ld+json"> %s </script>', wp_json_encode( $data ) ) );
     } else {
         unset( $data['logo'] );
 
@@ -614,7 +616,7 @@ function rdb_schema_sports_event( $data = null ) {
          * SchemaOrg model if hooked into {@see 'rdb_ld_json'}.
          */
         $data = array(
-            '@context'    => 'http://schema.org',
+            '@context'    => 'https://schema.org',
             '@type'       => 'SportsEvent',
             'name'        => $name,
             'description' => $description,
@@ -662,7 +664,7 @@ function rdb_schema_sports_event( $data = null ) {
             $data['remainingAttendeeCapacity'] = absint( $venue_cap - $attendance );
         }
 
-        echo wp_kses_post( '<script type="ld+json">' . wp_json_encode( $data ) . '</script>' );
+        echo wp_kses_post( sprintf( '<script type="application/ld+json"> %s </script>', wp_json_encode( $data ) ) );
 
     } else {
         /**

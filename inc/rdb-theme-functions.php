@@ -10,33 +10,6 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Get WP Club Manager directory path.
- *
- * @since 1.1.0
- *
- * @return string Path to `wpclubmanager` relative to the theme.
- */
-function get_wpcm_directory( $slug = '', $file = '' ) {
-    if ( ! empty( $slug ) ) {
-        if ( ! preg_match( '/custom\//', $slug ) ) {
-            $slug = "custom/{$slug}";
-        }
-
-        if ( ! empty( $file ) ) {
-            $file = preg_replace( '/\.php$/', '', $file );
-
-            return wpclubmanager_get_template_part( $slug, $file );
-        }
-
-        $slug = preg_replace( '/\.php$/', '', $slug );
-
-        return wpclubmanager_get_template( sprintf( '%s.php', $slug ) );
-    }
-
-    return get_template_directory() . '/wpclubmanager/custom';
-}
-
-/**
  * Helper function rdb_that checks an array for string keys aka an associative array.
  *
  * @since 1.0.0

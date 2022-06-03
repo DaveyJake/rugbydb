@@ -103,7 +103,7 @@ class RDB_WPCM_Venues {
         // Timezone select element.
         $field = array(
             'id'      => 'term_meta[usar_timezone]',
-            'options' => $timezone_picker::list( true ),
+            'options' => $timezone_picker->list( true ),
             'value'   => '',
         );
 
@@ -171,7 +171,7 @@ class RDB_WPCM_Venues {
         </div>
         <div class="form-field">
             <label for="<?php echo esc_attr( $field['id'] ); ?>"><?php esc_html_e( 'Timezone', 'rugby-database' ); ?></label>
-            <?php echo ( $t_id > 0 ) ? $timezone_picker::dropdown( $field, $t_id ) : $timezone_picker::dropdown( $field ); ?>
+            <?php echo ( $t_id > 0 ) ? $timezone_picker->dropdown( $field, $t_id ) : $timezone_picker->dropdown( $field ); ?>
         </div>
         <div class="form-field">
             <label for="term_meta[wpcm_capacity]"><?php esc_html_e( 'Venue Capacity', 'wp-club-manager' ); ?></label>
@@ -213,7 +213,7 @@ class RDB_WPCM_Venues {
 
         $field = array(
             'id'      => 'term_meta[usar_timezone]',
-            'options' => $timezone_picker::list( true ),
+            'options' => $timezone_picker->list( true ),
             'value'   => $timezone,
         );
 
@@ -270,7 +270,7 @@ class RDB_WPCM_Venues {
         </tr>
         <tr class="form-field">
             <th scope="row" valign="top"><label for="term_meta[usar_timezone]"><?php esc_html_e( 'Timezone', 'rugby-database' ); ?></label></th>
-            <td><?php echo $timezone_picker::dropdown( $field, $t_id ); ?></td>
+            <td><?php echo $timezone_picker->dropdown( $field, $t_id ); ?></td>
         </tr>
         <tr class="form-field">
             <th scope="row" valign="top"><label for="term_meta[wpcm_capacity]"><?php esc_html_e( 'Venue Capacity', 'wp-club-manager' ); ?></label></th>

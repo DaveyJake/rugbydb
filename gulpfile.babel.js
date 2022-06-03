@@ -223,17 +223,6 @@ const UTIL = {
     },
 
     /**
-     * Copy CSS assets.
-     *
-     * @since 1.1.0
-     */
-    copyJs: function() {
-        return gulp.src( PATHS.assets.js )
-            .pipe( $.rename( UTIL.destination ) )
-            .pipe( gulp.dest( './' ) );
-    },
-
-    /**
      * Custom Destination Rules
      *
      * @since 1.0.0
@@ -249,39 +238,26 @@ const UTIL = {
 
         if ( '.php' === path.extname ) {
             dirname = 'inc/devicedetect/';
-        } else {
+        } else if ( path.extname.match( /\.(css|js|map)$/ ) ) {
             if ( path.basename.match( /(admin|widget|customizer)/ ) ) {
                 dirname = PATHS.admin;
-            }
-            else {
+            } else {
                 dirname = PATHS.dist;
             }
 
-            // Specify destination by file extension.
-            if ( '.map' === path.extname ) {
-                if ( path.basename.match( /\.css/ ) ) {
-                    if ( PRODUCTION ) {
-                        dirname += '/css';
-                    } else {
-                        dirname = PATHS.src + '/css';
+            if ( PATHS.admin !== dirname ) {
+                if ( '.map' === path.extname ) {
+                    if ( path.basename.match( /\.css/ ) ) {
+                        dirname += '/css/';
+                    } else if ( path.basename.match( /\.js/ ) ) {
+                        dirname += '/js/';
                     }
-                } else if ( path.basename.match( /\.js/ ) ) {
-                    dirname += '/js';
-                }
-            }
-            else if ( path.extname.match( /\.(js|css)$/ ) ) {
-                if ( '.css' === path.extname && DEV ) {
-                    dirname = PATHS.src + '/css';
                 } else {
                     dirname += '/' + path.extname.slice( 1 ) + '/';
                 }
             }
-            else if ( path.extname.match( /\.(eot|otf|svg|ttc|ttf|woff2?)$/ ) ) {
-                dirname += '/fonts/';
-            }
-            else {
-                dirname += '/' + path.dirname + '/';
-            }
+        } else if ( path.extname.match( /\.(eot|otf|svg|ttc|ttf|woff2?)$/ ) ) {
+            dirname = PATHS.dist + '/fonts/';
         }
 
         path.dirname = dirname;
@@ -443,10 +419,10 @@ const UTIL = {
         gulp.watch( PATHS.assets.all, UTIL.copy );
 
         // Stylesheets.
-        gulp.watch( 'theme.json', gulp.series( 'json2scss', 'lint:scss', 'sass:build', UTIL.copyCss ) )
+        gulp.watch( 'theme.json', gulp.series( 'json2scss', 'lint:scss', 'sass:build' ) )
             .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) + ' changed.' ) )
             .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) + ' was removed.' ) );
-        gulp.watch( PATHS.sass.watch, gulp.series( 'lint:scss', 'sass:build', UTIL.copyCss ) )
+        gulp.watch( PATHS.sass.watch, gulp.series( 'lint:scss', 'sass:build' ) )
             .on( 'change', path => log( 'File ' + colors.bold.magenta( path ) + ' changed.' ) )
             .on( 'unlink', path => log( 'File ' + colors.bold.magenta( path ) + ' was removed.' ) );
 
@@ -597,20 +573,20 @@ gulp.task( 'lint:js', async () => run( 'npm run lint:js' )() );
 gulp.task( 'lint:php', async () => run( 'composer run-script lint:php' )() );
 gulp.task( 'lint:wpcs', async () => run( 'composer run-script lint:wpcs' )() );
 
+// Task actions.
+const { clean, copy, images, reload, server, watch, webpack, cleanStyleSheets, cleanJavaScript, sass, copyCss, purgecss } = UTIL;
+
 // Stylesheets.
-gulp.task( 'sass:build', gulp.series( UTIL.cleanStyleSheets, UTIL.sass ) );
+gulp.task( 'sass:build', gulp.series( cleanStyleSheets, sass, gulp.parallel( copyCss, purgecss ) ) );
 
 // Webpack.
-gulp.task( 'webpack:build', gulp.series( UTIL.cleanJavaScript, UTIL.webpack.build ) );
-gulp.task( 'webpack:watch', UTIL.webpack.watch );
+gulp.task( 'webpack:build', gulp.series( cleanJavaScript, webpack.build ) );
+gulp.task( 'webpack:watch', webpack.watch );
 
 // Build task maintenance.
 const phpLint = ['lint:php', 'lint:wpcs'],
       staLint = ['lint:js', 'lint:scss'],
       stBuild = ['sass:build', 'webpack:build'];
-
-// Task actions.
-const { clean, copy, images, purgecss, reload } = UTIL;
 
 // Build the 'dist' folder by running all of the below tasks.
 gulp.task( 'build',
@@ -618,7 +594,7 @@ gulp.task( 'build',
 
 // Build the site, run the server, and watch for file changes
 gulp.task( 'default',
-    gulp.series( 'build', UTIL.server, gulp.parallel( 'webpack:watch', UTIL.watch ) ) );
+    gulp.series( 'build', server, gulp.parallel( 'webpack:watch', watch ) ) );
 
 // Package task
 gulp.task( 'package',

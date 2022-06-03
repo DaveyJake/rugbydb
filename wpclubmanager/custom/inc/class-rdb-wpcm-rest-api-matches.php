@@ -757,7 +757,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
                         $this->api['referee']['country'] = $meta[ $key ][0];
                         break;
                     case 'wr_id':
-                        if ( isset( $this->api['external']['world_rugby']['match'] ) ) {
+                        if ( ! empty( $meta[ $key ][0] ) && isset( $this->api['external']['world_rugby']['match'] ) ) {
                             $this->api['external']['world_rugby']['match'] = sprintf( 'https://www.world.rugby/match/%d', absint( $meta[ $key ][0] ) );
                         }
                         break;
@@ -770,7 +770,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
                             if ( isset( $this->api['external']['world_rugby']['team'] ) ) {
                                 $this->api['external']['world_rugby']['team'] = sprintf( 'https://www.world.rugby/sevens-series/teams/%s/%d', $team, $wr_team_id );
                             }
-                        } else {
+                        } elseif ( ! empty( $meta['wr_id'][0] ) ) {
                             $this->api['external']['world_rugby'] = sprintf( 'https://www.world.rugby/match/%d', absint( $meta['wr_id'][0] ) );
                         }
                         break;

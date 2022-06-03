@@ -84,12 +84,12 @@ class TaxWpcmVenue extends DTHelper {
                                 filter: match.competition.name
                             },
                             date: {
-                                display: DTHelper.formatDate( match.ID, match.date.GMT, match.links ),
+                                display: DTHelper.formatDate( match.ID, match.date.GMT, match.permalink ),
                                 filter: match.season
                             },
                             fixture: {
                                 display: DTHelper.logoResult( match ),
-                                filter: DTHelper.opponent( match.fixture )
+                                filter: DTHelper.opponent( match.description )
                             },
                             outcome: match.outcome,
                             friendly: match.friendly,

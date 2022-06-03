@@ -178,7 +178,7 @@ class RDBWPCMAdmin {
             inlineEditPost.revert();
 
             const postId            = $( this ).closest( 'tr' ).attr( 'id' ).replace( 'post-', '' ),
-                  $wpcm_inline_data = $( '#wpclubmanager_inline_' + postId ), // eslint-disable-line
+                  $wpcm_inline_data = $( `#wpclubmanager_inline_${ postId }` ), // eslint-disable-line
                   nname             = $wpcm_inline_data.find( '.nname' ).text(),
                   wrId              = $wpcm_inline_data.find( '.wr-id' ).text();
 

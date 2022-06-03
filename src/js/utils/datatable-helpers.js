@@ -67,8 +67,8 @@ class DTHelper {
      * @return {string}        Human-readable date string.
      */
     static formatDate( matchId, date, permalink ) {
-        const m = moment.utc( date ).tz( TIMEZONE ),
-            human = m.format( US_DATE );
+        const m     = moment.utc( date ).tz( TIMEZONE ),
+              human = m.format( US_DATE );
 
         return `<a id="${ rdb.template.replace( /\.php/, '' ) }-match-${ matchId }-date-link" class="wpcm-matches-list-link" href="${ permalink }" rel="bookmark">${ human }</a>`;
     }
@@ -84,13 +84,13 @@ class DTHelper {
      * @return {string} HTML output.
      */
     static logoResult( match ) {
-        const matchId = match.ID,
-            fixture = match.description,
-            result = `${ match.score.ft.home } - ${ match.score.ft.away }`,
-            homeLogo = match.competitor.home.logo,
-            awayLogo = match.competitor.away.logo,
-            permalink = match.permalink,
-            teams = fixture.split( /\sv\s/ );
+        const matchId   = match.ID,
+              fixture   = match.description,
+              result    = `${ match.score.ft.home } - ${ match.score.ft.away }`,
+              homeLogo  = match.competitor.home.logo,
+              awayLogo  = match.competitor.away.logo,
+              permalink = match.permalink,
+              teams     = fixture.split( /\sv\s/ );
 
         return [
             '<div class="fixture-result">',
@@ -163,8 +163,8 @@ class DTHelper {
      * @return {array} The country and flag.
      */
     static flag( schema ) {
-        let flag = '',
-            city = '',
+        let flag    = '',
+            city    = '',
             country = '';
 
         const en = ['brighton', 'camborne', 'cambridge', 'coventry', 'gloucester', 'guildford', 'henley-on-thames', 'hersham', 'leeds', 'london', 'melrose', 'newcastle-upon-tyne', 'northampton', 'otley', 'stockport', 'sunbury-on-thames', 'twickenham', 'walton-on-thames', 'worcester'],

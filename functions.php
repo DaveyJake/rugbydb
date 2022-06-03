@@ -9,8 +9,27 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Helper functions access on localhost.
+ */
 if ( wp_get_environment_type() === 'local' ) {
     require_once MUPLUGINDIR . '/rugby-database-helpers.php';
+}
+
+/**
+ * Make sure core plugin is loaded.
+ */
+if ( ! function_exists( 'is_plugin_active' ) ) {
+    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
+/**
+ * WP Club Manager custom functions.
+ */
+if ( is_plugin_active( 'wp-club-manager/wpclubmanager.php' )
+    || file_exists( get_template_directory() . '/wpclubmanager/custom/config.php' )
+) {
+    require_once get_template_directory() . '/wpclubmanager/custom/config.php';
 }
 
 /**
@@ -112,19 +131,3 @@ require_once get_template_directory() . '/inc/class-rdb-front-page-filters.php';
  * Customizer additions.
  */
 require_once get_template_directory() . '/inc/rdb-customizer.php';
-
-/**
- * Make sure core plugin is loaded.
- */
-if ( ! function_exists( 'is_plugin_active' ) ) {
-    include_once ABSPATH . 'wp-admin/includes/plugin.php';
-}
-
-/**
- * WP Club Manager custom functions.
- */
-if ( is_plugin_active( 'wp-club-manager/wpclubmanager.php' )
-    && file_exists( get_template_directory() . '/wpclubmanager/custom/config.php' )
-) {
-    require_once get_template_directory() . '/wpclubmanager/custom/config.php';
-}

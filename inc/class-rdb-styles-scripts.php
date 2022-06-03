@@ -67,6 +67,7 @@ class RDB_Styles_Scripts {
         $this->deps = array();
 
         // Inline styles.
+        add_action( 'admin_print_styles', array( $this, 'inline_admin_styles' ) );
         add_action( 'rdb_head_open', array( $this, 'inline_styles' ) );
 
         // Preload scripts.
@@ -88,11 +89,8 @@ class RDB_Styles_Scripts {
      * @since 1.0.0
      */
     public function admin() {
-        // Primary theme stylesheet.
-        wp_enqueue_style( 'rdb-admin-style', get_template_directory_uri() . '/admin/css/rdb-admin.css', false, rdb_file_version( 'admin/css/rdb-admin.css' ) );
-
         // Primary theme JavaScript.
-        wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . '/admin/js/rdb-admin.js', array( 'jquery' ), rdb_file_version( 'admin/js/rdb-admin.js' ), true );
+        wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . '/admin/rdb-admin.js', array( 'jquery' ), rdb_file_version( 'admin/rdb-admin.js' ), true );
     }
 
     /**
@@ -202,13 +200,6 @@ class RDB_Styles_Scripts {
         wp_enqueue_script( 'jquery', includes_url( 'js/jquery/jquery.js' ), false, '3.6.0', true );
 
         /**
-         * Request & retrieve the latest Moment.js libraries.
-         *
-         * @var array
-         */
-        $moment_scripts = $this->moment_cdn();
-
-        /**
          * Scripts to register.
          *
          * @var array
@@ -244,7 +235,12 @@ class RDB_Styles_Scripts {
                 'ver' => self::DT_VERSION,
                 'ftr' => true,
             ),
-            'moment-timezone'  => $moment_scripts['moment-timezone'],
+            'moment-timezone'  => array(
+                'src' => "https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data{$this->dev}.js",
+                'dep' => array( 'moment' ),
+                'ver' => '0.5.34',
+                'ftr' => true,
+            ),
             'underscore'       => array(
                 'src' => includes_url( "js/dist/vendor/lodash{$this->dev}.js" ),
                 'dep' => false,
@@ -263,9 +259,37 @@ class RDB_Styles_Scripts {
             );
         }
 
-        // Check if `moment-locale.js` was retrieved.
-        if ( ! empty( $moment_scripts['moment-locale'] ) ) {
-            $register_scripts['moment-locale'] = $moment_scripts['moment-locale'];
+        /**
+         * Conditionally retrieve locale scripts based on browser locale.
+         *
+         * @var string $user_locale Default 'en-us';
+         */
+        if ( ! empty( $_COOKIE['rdb'] ) ) {
+            $rdb_cookie = sanitize_text_field( wp_unslash( $_COOKIE['rdb'] ) );
+            $cookie     = json_decode( urldecode( $rdb_cookie ) );
+        }
+
+        /**
+         * Set local if found in cookie. Default 'en-us'.
+         *
+         * @since 1.0.0
+         *
+         * @var string
+         */
+        $user_locale = isset( $cookie->locale ) ? sanitize_title( $cookie->locale ) : 'en-us';
+
+        // Moment.js locale URL.
+        $moment_locale = 'en-us' !== $user_locale ? sprintf( 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/locale/%s.js', $user_locale ) : '';
+
+        // Check if moment.js locale is needed.
+        if ( wp_http_validate_url( $moment_locale ) ) {
+            $register_scripts['moment-locale'] = array(
+                'src' => $moment_locale,
+                'dep' => array( 'moment' ),
+                'ver' => '2.29.2',
+                'ftr' => true,
+                'scr' => sprintf( 'moment.locale( "%s" )', $user_locale ),
+            );
         }
 
         ksort( $register_scripts );
@@ -454,8 +478,21 @@ class RDB_Styles_Scripts {
      * @see 'wp_head'
      */
     public function inline_styles() {
-        echo '<style>';
+        echo '<style id="above-the-fold-css">';
             echo file_get_contents( get_template_directory() . '/dist/css/above-the-fold.css' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+        echo '</style>';
+    }
+
+    /**
+     * Inline styles above the fold.
+     *
+     * @since 1.0.0
+     *
+     * @see 'wp_head'
+     */
+    public function inline_admin_styles() {
+        echo '<style id="rdb-admin-css">';
+            echo file_get_contents( get_template_directory() . '/dist/css/rdb-admin.css' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
         echo '</style>';
     }
 
@@ -467,7 +504,7 @@ class RDB_Styles_Scripts {
      *
      * @see RDB_Styles_Scripts::scripts()
      *
-     * @return array    Moment-Locale and Moment-Timezone library scripts.
+     * @return array Moment-Locale and Moment-Timezone library scripts.
      */
     private function moment_cdn() {
         /**
@@ -476,7 +513,7 @@ class RDB_Styles_Scripts {
          * @var string $user_locale Default 'en-us';
          */
         if ( ! empty( $_COOKIE['rdb'] ) ) {
-            $rdb_cookie = wp_unslash( $_COOKIE['rdb'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $rdb_cookie = sanitize_text_field( wp_unslash( $_COOKIE['rdb'] ) );
             $cookie     = json_decode( urldecode( $rdb_cookie ) );
         }
 
@@ -487,7 +524,7 @@ class RDB_Styles_Scripts {
          *
          * @var string
          */
-        $user_locale = isset( $cookie->locale ) ? strtolower( $cookie->locale ) : 'en-us';
+        $user_locale = isset( $cookie->locale ) ? sanitize_title( $cookie->locale ) : 'en-us';
 
         // Moment.js file name.
         $moment = 'moment.js';

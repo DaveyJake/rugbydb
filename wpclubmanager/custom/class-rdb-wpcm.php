@@ -23,15 +23,15 @@ class RDB_WPCM {
      * @since RDB 1.0.0
      */
     public function includes() {
-        get_wpcm_directory( 'inc/class-rdb-wpcm', 'timezone-picker' );
-        get_wpcm_directory( 'inc/class-rdb-wpcm', 'post-types' );
-        get_wpcm_directory( 'inc/class-rdb-wpcm', 'settings' );
-        get_wpcm_directory( 'inc/class-rdb-wpcm', 'shortcodes' );
-        get_wpcm_directory( 'inc/class-rdb-wpcm', 'rest-api' );
+        require_once 'inc/class-rdb-wpcm-timezone-picker.php';
+        require_once 'inc/class-rdb-wpcm-post-types.php';
+        require_once 'inc/class-rdb-wpcm-settings.php';
+        require_once 'inc/class-rdb-wpcm-shortcodes.php';
+        require_once 'inc/class-rdb-wpcm-rest-api.php';
         require_once 'inc/interface-rest-api.php';
 
         foreach ( array( 'matches', 'players', 'rosters', 'staff', 'unions', 'venues' ) as $type ) {
-            get_wpcm_directory( 'inc/class-rdb-wpcm', sprintf( 'rest-api-%s', $type ) );
+            require_once sprintf( 'inc/class-rdb-wpcm-rest-api-%s.php', $type );
         }
     }
 }

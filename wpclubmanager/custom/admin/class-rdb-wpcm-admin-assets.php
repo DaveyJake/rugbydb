@@ -8,7 +8,7 @@
  * @since RDB 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
 
@@ -248,9 +248,7 @@ class RDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
 
         // Custom admin script.
         wp_enqueue_script( 'rdb-wpcm-admin', get_template_directory_uri() . '/wpclubmanager/custom/admin/assets/js/rdb-wpcm-admin.js', $this->deps, WPCM_VERSION, true );
-
     }
-
 }
 
 return new RDB_WPCM_Admin_Assets();

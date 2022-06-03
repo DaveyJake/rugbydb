@@ -34,6 +34,8 @@
         }
 
         #all-matches {
+            content-visibility: auto;
+            contain-intrinsic-size: 1px 5000px;
             font-size: 0.875em;
 
             thead,

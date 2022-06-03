@@ -38,7 +38,6 @@ class RDB_WPCM_Timezone_Picker {
      * Render timezone dropdown via {@see 'rdb_wpcm_wp_text_input'}.
      *
      * @since 1.0.0
-     * @static
      *
      * @see rdb_wpcm_wp_select()
      *
@@ -61,7 +60,7 @@ class RDB_WPCM_Timezone_Picker {
      *     @type mixed  $value         Current value of the field.
      * }
      */
-    public static function dropdown( $field, ...$args ) {
+    public function dropdown( $field, ...$args ) {
         global $pagenow, $taxnow;
 
         // Screens to run on.
@@ -78,7 +77,7 @@ class RDB_WPCM_Timezone_Picker {
             'id'          => 'usar_timezone',
             'class'       => 'rdb_chosen_select',
             'placeholder' => 'Timezone',
-            'options'     => self::list(),
+            'options'     => $this->list(),
             'value'       => '',
         );
 
@@ -114,27 +113,25 @@ class RDB_WPCM_Timezone_Picker {
      * Get the formatted GMT offset.
      *
      * @since 1.0.0
-     * @static
      *
      * @param int $offset Timezone offset.
      *
      * @return string Formated timezone offset.
      */
-    public static function formatted_offset( $offset ) {
-        return self::format_GMT_offset( $offset );
+    public function formatted_offset( $offset ) {
+        return $this->format_GMT_offset( $offset );
     }
 
     /**
      * Generate the timezone list.
      *
      * @since 1.0.0
-     * @static
      *
      * @param bool $with_offset Show timezone with offset. Default false.
      *
      * @return array Timezone list.
      */
-    public static function list( bool $with_offset = false ) {
+    public function list( bool $with_offset = false ) {
         static $timezones = null;
 
         if ( is_null( $timezones ) ) {
@@ -149,10 +146,10 @@ class RDB_WPCM_Timezone_Picker {
 
                 if ( false === $with_offset ) {
                     // Just time timezone label.
-                    $timezones[ $timezone ] = self::format_timezone_name( $timezone );
+                    $timezones[ $timezone ] = $this->format_timezone_name( $timezone );
                 } else {
                     // GMT offset.
-                    $gmt_offset = self::format_GMT_offset( $offset );
+                    $gmt_offset = $this->format_GMT_offset( $offset );
                     if ( preg_match( '/GMT0\d{2}\:/', $gmt_offset ) ) {
                         $gmt_offset = preg_replace( '/(GMT)0(\d{2}\:)/', '$1+$2', $gmt_offset );
                     }
@@ -161,7 +158,7 @@ class RDB_WPCM_Timezone_Picker {
                     }
 
                     // Timezone shown with offset.
-                    $timezones[ $timezone ] = '(' . $gmt_offset . ') ' . self::format_timezone_name( $timezone );
+                    $timezones[ $timezone ] = '(' . $gmt_offset . ') ' . $this->format_timezone_name( $timezone );
                 }
             }
 
@@ -176,13 +173,12 @@ class RDB_WPCM_Timezone_Picker {
      *
      * @since 1.0.0
      * @access private
-     * @static
      *
      * @param int $offset Timezone offset.
      *
      * @return string Formatted offset.
      */
-    private static function format_GMT_offset( $offset ) {
+    private function format_GMT_offset( $offset ) {
         $hours   = ( $offset / 3600 );
         $minutes = ( ( $offset % 3600 ) / 60 );
 
@@ -194,13 +190,12 @@ class RDB_WPCM_Timezone_Picker {
      *
      * @since 1.0.0
      * @access private
-     * @static
      *
      * @param string $name Timezone name.
      *
      * @return string Timezone name.
      */
-    private static function format_timezone_name( $name ) {
+    private function format_timezone_name( $name ) {
         $name = str_replace( '/', ', ', $name );
         $name = str_replace( '_', ' ', $name );
         $name = str_replace( 'St ', 'St. ', $name );

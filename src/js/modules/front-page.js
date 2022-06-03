@@ -350,7 +350,7 @@ class FrontPage extends DTHelper {
                             idStr: `match-${ match.ID }`,
                             competition: {
                                 display: DTHelper.competition( match ),
-                                filter: DTHelper.competition( match )
+                                filter: ! _.isEmpty( match.competition.label ) ? match.competition.label : match.competition.name
                             },
                             date: {
                                 matchID: match.ID,
@@ -370,7 +370,6 @@ class FrontPage extends DTHelper {
                             },
                             neutral: match.venue.neutral ? 'neutral' : '',
                             friendly: match.friendly ? 'friendly' : 'test',
-                            label: ! _.isEmpty( match.competition.label ) ? match.competition.label : match.competition.name,
                             team: match.team.name
                         };
 
@@ -409,7 +408,7 @@ class FrontPage extends DTHelper {
                 {
                     className: 'hide',
                     visible: false,
-                    targets: [5, 6, 7, 8] // neutral, friendly, comp-label, team
+                    targets: [5, 6, 7] // neutral, friendly, team
                 }
             ],
             columns: [
@@ -465,9 +464,6 @@ class FrontPage extends DTHelper {
                     data: 'friendly'
                 },
                 {
-                    data: 'label'
-                },
-                {
                     data: 'team'
                 }
             ],
@@ -483,6 +479,7 @@ class FrontPage extends DTHelper {
             order: [
                 [ 1, 'desc' ]
             ],
+            orderClasses: false,
             pageLength: 25,
             pagingType: 'full_numbers',
             scrollCollapse: true,
