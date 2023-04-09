@@ -74,9 +74,9 @@
     @include text(center);
 
     .entry-title {
-        font-size: 2em;
         padding: 0.25em;
         padding-left: 0.5em;
+        font-size: 2em;
         text-transform: uppercase;
 
         @include breakpoint(medium) {

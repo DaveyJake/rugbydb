@@ -25,6 +25,9 @@ class RDB_Theme_Setup {
 		// Load custom image sizes.
 		add_action( 'init', array( $this, 'rdb_reset_image_sizes' ), 10 );
 
+		// Allow SVG image uploads.
+		add_filter( 'upload_mimes', array( $this, 'add_file_types_to_uploads' ) );
+
 		// Set the content width.
 		add_action( 'after_setup_theme', array( $this, 'rdb_content_width' ), 0 );
 	}
@@ -116,6 +119,19 @@ class RDB_Theme_Setup {
 				'flex-height' => true,
 			)
 		);
+	}
+
+	/**
+	 * Add SVG+XML to list of allowed mime types and file extensions.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array $file_types Mime types keyed by the file extension regex corresponding to those types.
+	 */
+	public function add_file_types_to_uploads( $file_types ) {
+		$file_types['svg'] = 'image/svg+xml';
+
+		return $file_types;
 	}
 
 	/**

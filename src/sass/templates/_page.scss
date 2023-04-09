@@ -27,6 +27,13 @@ article {
 
         &-title {
             padding-left: 0.5rem;
+
+            @include breakpoint(medium) {
+                padding: {
+                    top: 0.5rme;
+                    left: 0.9375rem;
+                }
+            }
         }
 
         &-content {

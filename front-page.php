@@ -29,6 +29,6 @@ echo '<main id="primary" class="site-main">';
 
 echo '</main>';
 
-wp_nonce_field( 'get_matches', 'nonce' );
-wp_nonce_field( 'get_venues-dropdown', 'nonce2' );
+wp_nonce_field( 'matches', 'nonce' );
+wp_nonce_field( 'venues-dropdown', 'nonce2' );
 get_footer();

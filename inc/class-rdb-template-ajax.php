@@ -33,7 +33,7 @@ class RDB_Template_AJAX {
      *
      * @var bool
      */
-    public $collection;
+    public $collection = true;
 
     /**
      * The nonce to verify the request.
@@ -98,7 +98,7 @@ class RDB_Template_AJAX {
      *
      * @var int
      */
-    public $post_id;
+    public $post_id = 0;
 
     /**
      * Targeted team taxonomy.
@@ -143,14 +143,10 @@ class RDB_Template_AJAX {
             if ( wp_verify_nonce( $this->nonce, $this->action ) ) {
                 if ( isset( $_REQUEST['collection'] ) ) {
                     $this->collection = $this->sanitize( $_REQUEST['collection'] );
-                } else {
-                    $this->collection = true;
                 }
 
                 if ( isset( $_REQUEST['post_id'] ) ) {
                     $this->post_id = $this->sanitize( $_REQUEST['post_id'] );
-                } else {
-                    $this->post_id = 0;
                 }
 
                 if ( isset( $_REQUEST['post_name'] ) ) {
@@ -181,8 +177,8 @@ class RDB_Template_AJAX {
                     }
                 }
 
-                add_action( "wp_ajax_get_{$this->route}", array( $this, 'request' ) );
-                add_action( "wp_ajax_nopriv_get_{$this->route}", array( $this, 'request' ) );
+                add_action( "wp_ajax_{$this->route}", array( $this, 'request' ) );
+                add_action( "wp_ajax_nopriv_{$this->route}", array( $this, 'request' ) );
             }//end if
         }//end if
     }
@@ -206,7 +202,7 @@ class RDB_Template_AJAX {
                 $endpoint .= $this->post_name;
             }
 
-            if ( ! ( empty( $this->per_page ) && empty( $this->page ) ) ) {
+            if ( ! empty( $this->per_page ) && ! empty( $this->page ) ) {
                 $args = array(
                     'per_page' => $this->per_page,
                     'page'     => $this->page,
@@ -253,21 +249,21 @@ class RDB_Template_AJAX {
             delete_transient( $transient );
 
             $response    = wp_remote_get( $url );
-            $status_code = absint( wp_remote_retrieve_response_code( $response ) );
+            $status_code = wp_remote_retrieve_response_code( $response );
 
             if ( 200 !== $status_code ) {
                 if ( is_wp_error( $response ) ) {
                     return $response->get_error_message();
-                } else {
-                    return wp_remote_retrieve_response_message( $response );
                 }
+
+                return wp_remote_retrieve_response_message( $response );
             } else {
                 $data = wp_remote_retrieve_body( $response );
 
                 if ( is_wp_error( $data ) ) {
                     return $data->get_error_message();
                 } else {
-                    set_transient( $transient, $data, 3 * MONTH_IN_SECONDS );
+                    set_transient( $transient, $data, YEAR_IN_SECONDS );
                 }
             }
         }//end if

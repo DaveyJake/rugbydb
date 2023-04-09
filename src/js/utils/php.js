@@ -57,9 +57,7 @@ const empty = ( value ) => {
     conditions = _.map( conditions, _.toNumber );
 
     // Get the sum of the results.
-    const result = _.reduce( conditions, ( a, b ) => {
-        return a + b;
-    });
+    const result = _.sum( conditions );
 
     // If the result is greater than 0, we know it's empty.
     if ( result > 0 ) {

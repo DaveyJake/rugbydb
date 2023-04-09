@@ -11,4 +11,4 @@ defined( 'ABSPATH' ) || exit;
 
 the_content();
 
-wp_nonce_field( 'get_staff', 'nonce' );
+wp_nonce_field( 'staff', 'nonce' );

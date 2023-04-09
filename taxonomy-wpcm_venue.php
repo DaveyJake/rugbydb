@@ -42,6 +42,6 @@ get_header();
      */
     do_action( 'wpclubmanager_sidebar' );
 
-    wp_nonce_field( 'get_matches', 'nonce' );
+    wp_nonce_field( 'matches', 'nonce' );
 
 get_footer();

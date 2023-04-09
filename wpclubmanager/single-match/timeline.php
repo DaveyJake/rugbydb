@@ -17,4 +17,4 @@ if ( empty( $wr_id ) ) {
 
 echo '<div class="wpcm-column" id="rdb-match-timeline" data-tmpl="timeline" data-wr-id="' . esc_attr( $wr_id ) . '"></div>';
 
-wp_nonce_field( 'get_match_timeline', 'nonce' );
+wp_nonce_field( 'match_timeline', 'nonce' );

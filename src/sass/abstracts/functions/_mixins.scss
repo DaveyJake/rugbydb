@@ -102,15 +102,15 @@
 ///
 // Border radius.
 //
-// @param {string} $tb     Accepts 'top', 'bottom'.
-// @param {string} $lr     Accepts 'left', 'right'.
+// @param {string} $dir    Accepts 'top', 'bottom', 'left', 'right',
+//                         'horizontal', 'vertical', 'tb', 'lr'.
 // @param {number} $radius Number output in px.
 ///
 @mixin border-radius($dir: null, $radius: 0) {
-    @if ($dir == top or $dir == bottom) {
+    @if ($dir == top or $dir == bottom or $dir == vertical or $dir == tb) {
         border-#{$dir}-left-radius: $radius;
         border-#{$dir}-right-radius: $radius;
-    } @else if ($dir == left or $dir == right) {
+    } @else if ($dir == left or $dir == right or $dir == horizontal or $dir == lr) {
         border-top-#{$dir}-radius: $radius;
         border-bottom-#{$dir}-radius: $radius;
     } @else {

@@ -44,7 +44,7 @@ $wpcm-path: unquote('/wp-content/plugins/wp-club-manager');
 
     &-title,
     &-excerpt {
-        text-align: center;
+        @include text(center);
     }
 
     &-excerpt,

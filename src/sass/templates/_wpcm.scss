@@ -1,3 +1,19 @@
+///
+// WP Club Manager Globals
+//
+// @namespace wpcm
+///
+
+///
+// Half-unit of measure.
+//
+// @var {number} $half-em Default 0.5em.
+///
+$half-em: 0.5em;
+
+///
+// Begin namespace.
+///
 .wpcm {
     &-row {
         margin: auto;
@@ -9,6 +25,7 @@
         &:not(.flex):not(.relative):not(.pagination) {
             width: 100%;
             float: left;
+
             @include breakpoint(medium) {
                 width: 50%;
             }
@@ -39,7 +56,7 @@
             display: flex;
             align-items: center;
             margin: 0;
-            padding: 0.5em;
+            padding: $half-em;
         }
 
         .entry-title {
@@ -66,23 +83,18 @@
             thead,
             tfoot {
                 background: var(--background, $color__background-combo);
-
-                th {
-                    color: $white;
-                }
             }
 
-            tbody {
-                .wpcm-subs-rows {
-                    color: $white;
-                }
+            th,
+            .wpcm-subs-rows {
+                color: $white;
             }
         }
     }
 
     &_venue {
         h3 {
-            text-align: center;
+            @include text(center);
         }
     }
 
@@ -102,11 +114,11 @@
     }
 
     &-entry-content {
-        padding: 0 0.5em 0.5em;
+        padding: 0 $half-em $half-em;
 
         @include breakpoint(medium) {
             p {
-                text-align: justify;
+                @include text(justify);
             }
         }
 
@@ -126,10 +138,10 @@
 
             @include breakpoint(medium down) {
                 .featured-image {
-                    margin: 0 -0.5em 1em;
+                    margin: 0 -$half-em 1em;
 
                     &__photographer {
-                        padding-right: 0.5em;
+                        padding-right: $half-em;
                     }
                 }
             }

@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  *     Optional arguments to include.
  *
  *     @type string $team      Accepts 'mens-eagles', 'womens-eagles', 'mens-sevens',
- *                             'womens-sevens'. Default 'mens-eagles'.
+ *                             'womens-sevens'. Default ''.
  *     @type string $type      Aceepts 'players', 'match'. Default 'match'.
  *     @type string $directory Accepts 'summaries', 'timelines'. Default 'summaries'.
  * }
@@ -50,18 +50,16 @@ function rdb_get_WR( $args = '' ) {
  * Get World Rugby player data.
  *
  * @since 1.2.0
+ * @since 1.2.1 Removed $args parameter.
  *
  * @see rdb_get_WR()
  *
  * @param string       $team Accepts 'mens-eagles', 'womens-eagles', 'mens-sevens',
- *                           'womens-sevens'. Default ''.
- * @param array|string $args See {@see rdb_get_WR()} for parameters.
+ *                           'womens-sevens'. Default 'mens-eagles'.
  *
  * @return string WR path to summaries.
  */
-function rdb_get_players( $team = '', $args = '' ) {
-    $team = ! empty( $team ) ? $team : 'mens-eagles';
-
+function rdb_get_players( $team = 'mens-eagles' ) {
     $args = array(
         'team' => $team,
         'type' => 'players',
@@ -74,19 +72,17 @@ function rdb_get_players( $team = '', $args = '' ) {
  * Get World Rugby summaries.
  *
  * @since 1.2.0
+ * @since 1.2.1 Removed $args parameter.
  *
  * @see rdb_get_WR()
  *
  * @param string       $team Accepts 'mens-eagles', 'womens-eagles', 'mens-sevens',
  *                           'womens-sevens'. Default ''.
- * @param array|string $args See {@see rdb_get_WR()} for parameters.
  *
  * @return string WR path to summaries.
  */
-function rdb_get_summaries( $team = '', $args = '' ) {
-    if ( ! empty( $team ) ) {
-        $args['team'] = $team;
-    }
+function rdb_get_summaries( $team = '' ) {
+    $args = array( 'team' => $team );
 
     return rdb_get_WR( $args );
 }
@@ -95,21 +91,20 @@ function rdb_get_summaries( $team = '', $args = '' ) {
  * Get World Rugby timelines.
  *
  * @since 1.2.0
+ * @since 1.2.1 Removed $args parameter.
  *
  * @see rdb_get_WR()
  *
  * @param string       $team Accepts 'mens-eagles', 'womens-eagles', 'mens-sevens',
  *                           'womens-sevens'. Default ''.
- * @param array|string $args See {@see rdb_get_WR()} for parameters.
  *
  * @return string WR path to timelines.
  */
-function rdb_get_timelines( $team = '', $args = '' ) {
-    $args = array( 'directory' => 'timelines' );
-
-    if ( ! empty( $team ) ) {
-        $args['team'] = $team;
-    }
+function rdb_get_timelines( $team = '' ) {
+    $args = array(
+        'team'      => $team,
+        'directory' => 'timelines'
+    );
 
     return rdb_get_WR( $args );
 }
@@ -130,12 +125,14 @@ function rdb_get_timelines( $team = '', $args = '' ) {
 function rdb_taxonomy_template( $taxonomy = null ) {
     $slug = get_query_var( $taxonomy );
 
+    // This variable is only here in case `_rdb_taxonomy_template` returns an error.
     $tax = _rdb_taxonomy_template( $taxonomy, $slug );
 
     if ( is_wp_error( $tax ) ) {
         return $tax->get_error_message();
     }
 
+    // This is set by `_rdb_taxonomy_template`.
     global $rdb_tax_template;
 
     if ( ! empty( $rdb_tax_template ) ) {
@@ -1439,8 +1436,8 @@ function rdb_wpcm_match_timeline_data() {
 
     wp_die();
 }
-add_action( 'wp_ajax_get_match', 'rdb_wpcm_match_timeline_data', 10 );
-add_action( 'wp_ajax_nopriv_get_match', 'rdb_wpcm_match_timeline_data', 10 );
+add_action( 'wp_ajax_match', 'rdb_wpcm_match_timeline_data', 10 );
+add_action( 'wp_ajax_nopriv_match', 'rdb_wpcm_match_timeline_data', 10 );
 
 
 /** Admin-Use Functions *******************************************************/

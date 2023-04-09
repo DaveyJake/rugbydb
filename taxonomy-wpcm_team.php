@@ -42,7 +42,7 @@ get_header();
      */
     do_action( 'wpclubmanager_sidebar' );
 
-    wp_nonce_field( 'get_players', 'nonce' );
-    wp_nonce_field( 'get_matches', 'nonce2' );
+    wp_nonce_field( 'players', 'nonce' );
+    wp_nonce_field( 'matches', 'nonce2' );
 
 get_footer();

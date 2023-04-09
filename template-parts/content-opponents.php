@@ -23,4 +23,4 @@ echo '<article class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">';
 
 echo '</article>';
 
-wp_nonce_field( 'get_unions', 'nonce' );
+wp_nonce_field( 'unions', 'nonce' );

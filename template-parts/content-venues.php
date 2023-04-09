@@ -23,4 +23,4 @@ echo '<article class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">';
 
 echo '</article>';
 
-wp_nonce_field( 'get_venues', 'nonce' );
+wp_nonce_field( 'venues', 'nonce' );

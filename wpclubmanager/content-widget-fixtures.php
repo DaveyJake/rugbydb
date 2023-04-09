@@ -15,12 +15,12 @@ global $post;
 	<div class="fixture-meta">
 		<?php if ( $show_team ) : ?>
 			<div class="team">
-				<span><?php echo $team[0]; ?></span>
+				<span><?php echo esc_html( $team[0] ); ?></span>
 			</div>
 		<?php endif; ?>
 		<?php if ( $show_comp ) : ?>
 			<div class="competition">
-				<span><?php echo $comp[0]; ?>&nbsp;<?php echo $comp[2]; ?></span>
+				<span><?php echo esc_html( $comp[0] ); ?>&nbsp;<?php echo esc_html( $comp[2] ); ?></span>
 			</div>
 		<?php endif; ?>
 	</div>
@@ -46,7 +46,7 @@ global $post;
 		</div>
 		<?php if ( $show_countdown ) : ?>
 			<div class="wpcm-countdown">
-				<div class="wpcm-ticker-countdown" data-countdown="<?php echo $post->post_date; ?>"></div>
+				<div class="wpcm-ticker-countdown" data-countdown="<?php echo esc_attr( $post->post_date ); ?>"></div>
 			</div>
 		<?php endif; ?>
 	</div>

@@ -243,7 +243,7 @@ function rdb_player_meta_row( $option = '', $heading = '', $callback = null, $ar
 
                 if ( 'wpcm_player_profile_show_nationality' === $option ) {
 
-                    $html .= '<div class="flag-icon flag-icon-' . esc_html( $meta_value ) . '"></div>';
+                    $html .= '<div class="flag-icon flag-icon-' . esc_attr( $meta_value ) . '"></div>';
 
                 } else {
 
@@ -266,8 +266,6 @@ function rdb_player_meta_row( $option = '', $heading = '', $callback = null, $ar
  * @since 1.0.0
  *
  * @see rdb_get_term_template_class()
- *
- * @global string $rdb_tax_template Template's taxonomy slug.
  *
  * @param string       $tax   Targeted taxonomy.
  * @param array|string $class HTML classes to add to content container.
@@ -360,9 +358,9 @@ function rdb_wpcm_lineup_reserves( $players, $subs_not_used, $wpcm_player_stats_
             foreach ( $wpcm_player_stats_labels as $key => $val ) {
                 if ( ! in_array( $key, wpcm_exclude_keys() ) &&
                      'yes' === get_option( "wpcm_show_stats_{$key}" ) &&
-                     'yes' === get_option( "wpcm_match_show_stats_{$key}" ) ) {
-
-                    echo '<th class="' . $key . '">' . $val . '</th>';
+                     'yes' === get_option( "wpcm_match_show_stats_{$key}" )
+                ) {
+                    echo '<th class="' . esc_attr( $key ) . '">' . esc_html( $val ) . '</th>';
                 }
             }
 

@@ -157,6 +157,16 @@ function rdb_single_venue_title() {
 add_action( 'rdb_single_venue_header', 'rdb_single_venue_title', 5 );
 
 /**
+ * Load venue dropdown menu.
+ *
+ * @since 1.0.0
+ */
+function rdb_single_venue_dropdown() {
+    wpclubmanager_get_template( 'single-venue/dropdown.php' );
+}
+add_action( 'rdb_single_venue_header', 'rdb_single_venue_dropdown' );
+
+/**
  * Load venue weather.
  *
  * @since 1.2.0
@@ -175,16 +185,6 @@ function rdb_single_venue_description() {
     wpclubmanager_get_template( 'single-venue/description.php' );
 }
 add_action( 'rdb_single_venue_content', 'rdb_single_venue_description', 5 );
-
-/**
- * Load venue dropdown menu.
- *
- * @since 1.0.0
- */
-function rdb_single_venue_dropdown() {
-    wpclubmanager_get_template( 'single-venue/dropdown.php' );
-}
-add_action( 'rdb_single_venue_header', 'rdb_single_venue_dropdown' );
 
 /**
  * Load venue image.
