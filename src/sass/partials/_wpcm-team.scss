@@ -5,62 +5,62 @@
 // @param {number} $top        Default 0.5rem.
 ///
 @mixin wpcm-team-entry-content($grid-space: 2rem, $top: 0.5rem) {
-    padding: 0 0;
+  padding: 0 0;
 
-    #players {
-        .filters {
-            flex-direction: column;
-            @include text(center);
+  #players {
+    .filters {
+      flex-direction: column;
+      @include text(center);
 
-            @include breakpoint(medium) {
-                flex-direction: row;
-                justify-content: space-around;
-                padding-top: $top;
-            }
+      @include breakpoint(medium) {
+        flex-direction: row;
+        justify-content: space-around;
+        padding-top: $top;
+      }
 
-            &,
-            select,
-            .filter {
-                @include full-width;
-            }
+      &,
+      select,
+      .filter {
+        @include full-width;
+      }
 
-            select,
-            .filter {
-                padding-top: $top;
+      select,
+      .filter {
+        padding-top: $top;
 
-                @include breakpoint(medium) {
-                    padding-top: 0;
-                    @include equal-width(3);
-                }
-            }
+        @include breakpoint(medium) {
+          padding-top: 0;
+          @include equal-width(3);
         }
-
-        .grid {
-            margin-top: $grid-space;
-            padding-bottom: $grid-space;
-        }
+      }
     }
+
+    .grid {
+      margin-top: $grid-space;
+      padding-bottom: $grid-space;
+    }
+  }
 }
 
 ///
 // Team description.
 ///
 @mixin wpcm-team-description {
-    padding: 0.625rem;
+  padding: 0.625rem;
 
-    @include breakpoint(medium) {
-        padding: 0.9375rem;
-    }
+  @include breakpoint(medium) {
+    padding: 0.9375rem;
+  }
 
-    flex-direction: column;
+  flex-direction: column;
 
-    h3 {
-        padding-left: 0;
-    }
+  h3 {
+    padding-left: 0;
+  }
 
-    @include breakpoint(mobile down) {
-        justify-content: flex-start;
-    }
+  @include breakpoint(mobile down) {
+    justify-content: flex-start;
+  }
 }
 
 ///
@@ -69,29 +69,29 @@
 // @param {color} $color Defaults to global white.
 ///
 @mixin wpcm-team-entry-header($color: $color__white) {
-    background: #001830;
-    color: $color;
-    @include text(center);
+  background: #001830;
+  color: $color;
+  @include text(center);
 
-    .entry-title {
-        padding: 0.25em;
-        padding-left: 0.5em;
-        font-size: 2em;
-        text-transform: uppercase;
+  .entry-title {
+    padding: 0.25em;
+    padding-left: 0.5em;
+    font-size: 2em;
+    text-transform: uppercase;
 
-        @include breakpoint(medium) {
-            @include full-width;
-        }
-
-        @include breakpoint(medium down) {
-            padding-top: 0.25em;
-        }
-
-        @include breakpoint(wordpress) {
-            font-size: 4em;
-            line-height: 1.3;
-        }
+    @include breakpoint(medium) {
+      @include full-width;
     }
+
+    @include breakpoint(medium down) {
+      padding-top: 0.25em;
+    }
+
+    @include breakpoint(wordpress) {
+      font-size: 4em;
+      line-height: 1.3;
+    }
+  }
 }
 
 ///
@@ -100,18 +100,18 @@
 // @param {number} $space Defaults to global `$unit`.
 ///
 @mixin wpcm-team-select($space: $unit) {
-    width: 123px;
-    margin-right: 0.5rem;
+  width: 123px;
+  margin-right: 0.5rem;
 
-    @include breakpoint(medium) {
-        margin-right: $space;
-    }
+  @include breakpoint(medium) {
+    margin-right: $space;
+  }
 
-    @include breakpoint(1133px down) {
-        margin-bottom: $space;
-    }
+  @include breakpoint(1133px down) {
+    margin-bottom: $space;
+  }
 
-    #team {
-        @include full-width;
-    }
+  #team {
+    @include full-width;
+  }
 }

@@ -9,7 +9,10 @@
     "config": {
         "preferred-install": "dist",
         "platform": {
-            "php": "7.4.22"
+            "php": ">=7.4.22"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "homepage": "https://github.com/DaveyJake/rugbydb",

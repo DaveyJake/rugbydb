@@ -2,178 +2,180 @@ $meta-width: 58.333%;
 $image-width: calc(100% - #{$meta-width});
 
 .wpcm {
-    &_player {
-        th,
-        td {
-            white-space: nowrap;
-        }
+  &_player {
+
+    th,
+    td {
+      white-space: nowrap;
+    }
+  }
+
+  &-entry-header {
+    @include flex-column;
+
+    &.fade-in {
+      opacity: 0;
     }
 
-    &-entry-header {
-        @include flex-column;
+    .entry-title {
+      @include breakpoint(mobile down) {
+        padding-top: 0.5em;
+      }
+    }
+  }
 
-        &.fade-in {
-            opacity: 0;
-        }
+  &-profile {
+    @include flex-column;
 
-        .entry-title {
-            @include breakpoint(mobile down) {
-                padding-top: 0.5em;
-            }
-        }
+    @include breakpoint(medium) {
+      flex-direction: row;
+      justify-content: space-between;
     }
 
-    &-profile {
-        @include flex-column;
+    &__image {
+      background: {
+        size: cover;
+        repeat: no-repeat;
+        position: center 0;
+      }
 
-        @include breakpoint(medium) {
-            flex-direction: row;
-            justify-content: space-between;
+      &.dan-lyle {
+        background: {
+          size: 200%;
+          position-y: 19%;
+        }
+      }
+
+      @include breakpoint(medium) {
+        width: $image-width;
+      }
+
+      &[data-interchange*='placeholder'] {
+        background-size: cover;
+      }
+
+      &,
+      img {
+        @include breakpoint(small only) {
+          @include full-width;
         }
 
-        &__image {
-            background: {
-                size: cover;
-                repeat: no-repeat;
-                position: center 0;
-            }
-
-            &.dan-lyle {
-                background: {
-                    size: 200%;
-                    position-y: 19%;
-                }
-            }
-
-            @include breakpoint(medium) {
-                width: $image-width;
-            }
-
-            &[data-interchange*='placeholder'] {
-                background-size: cover;
-            }
-
-            &,
-            img {
-                @include breakpoint(small only) {
-                    @include full-width;
-                }
-
-                @include breakpoint(mobile) {
-                    max-width: 100%;
-                }
-            }
+        @include breakpoint(mobile) {
+          max-width: 100%;
         }
-
-        &__meta {
-            margin-bottom: 2em;
-            @include full-width;
-
-            @include breakpoint(medium) {
-                width: $meta-width;
-            }
-
-            th {
-                width: rem-calc(120px);
-                background: $color__blue;
-                color: $color__white;
-            }
-
-            #current-club {
-                a {
-                    display: flex;
-                    align-items: center;
-                }
-            }
-        }
-
-        &-bio {
-            p {
-                &:first-child {
-                    margin-block-start: 0;
-                }
-
-                &:last-of-type {
-                    margin-block-end: 0;
-                }
-            }
-        }
+      }
     }
 
-    // Player Appearances.
-    &-player-appearances {
-        h3 {
-            padding: 0 0.5em;
-            margin-bottom: 1.6em;
+    &__meta {
+      margin-bottom: 2em;
+      @include full-width;
+
+      @include breakpoint(medium) {
+        width: $meta-width;
+      }
+
+      th {
+        width: rem-calc(120px);
+        background: $color__blue;
+        color: $color__white;
+      }
+
+      #current-club {
+        a {
+          display: flex;
+          align-items: center;
         }
-
-        #wpcm-pa-season {
-            &-tabs {
-                border-bottom: 1px solid #ccc;
-                margin: 0;
-                padding-left: 6px;
-
-                li {
-                    background: #e4e4e4;
-                    display: inline-block;
-                    font-size: 15px;
-                    font-weight: 900;
-                    margin-bottom: -1px;
-                    position: relative;
-
-                    a {
-                        border: 1px solid #ccc;
-                        color: #555;
-                        display: inline-block;
-                        padding: 8px 12px;
-                        text-decoration: none;
-
-                        &:focus {
-                            outline: 0;
-                        }
-                    }
-
-                    &#current a {
-                        background: #fff;
-                        border-bottom: 1px solid #fff;
-                    }
-                }
-            }
-
-            &-content {
-                height: auto;
-                overflow: auto;
-                border-bottom: 1px solid #ccc;
-                padding: 1.6em 0;
-            }
-        }
+      }
     }
 
-    &-pa-table {
-        th,
-        td {
-            @include text(center);
+    &-bio {
+      p {
+        &:first-child {
+          margin-block-start: 0;
         }
+
+        &:last-of-type {
+          margin-block-end: 0;
+        }
+      }
     }
+  }
+
+  // Player Appearances.
+  &-player-appearances {
+    h3 {
+      padding: 0 0.5em;
+      margin-bottom: 1.6em;
+    }
+
+    #wpcm-pa-season {
+      &-tabs {
+        border-bottom: 1px solid #ccc;
+        margin: 0;
+        padding-left: 6px;
+
+        li {
+          background: #e4e4e4;
+          display: inline-block;
+          font-size: 15px;
+          font-weight: 900;
+          margin-bottom: -1px;
+          position: relative;
+
+          a {
+            border: 1px solid #ccc;
+            color: #555;
+            display: inline-block;
+            padding: 8px 12px;
+            text-decoration: none;
+
+            &:focus {
+              outline: 0;
+            }
+          }
+
+          &#current a {
+            background: #fff;
+            border-bottom: 1px solid #fff;
+          }
+        }
+      }
+
+      &-content {
+        height: auto;
+        overflow: auto;
+        border-bottom: 1px solid #ccc;
+        padding: 1.6em 0;
+      }
+    }
+  }
+
+  &-pa-table {
+
+    th,
+    td {
+      @include text(center);
+    }
+  }
 }
 
 .previous-club-url {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .flag-icon {
-    width: rem-calc(28px);
-    height: rem-calc(21px);
+  width: rem-calc(28px);
+  height: rem-calc(21px);
 }
 
 span.flag-icon {
-    margin-left: 7px;
+  margin-left: 7px;
 }
 
 .icon {
-    height: 22px;
+  height: 22px;
 }
 
 // Flex video.

@@ -31,12 +31,12 @@ defined( 'ABSPATH' ) || exit;
 
         echo '<a class="skip-link screen-reader-text" href="#primary">' . esc_html__( 'Skip to content', 'rugby-database' ) . '</a>';
 
-        echo '<header id="masthead" class="site-header Fixed" itemscope itemtype="http://schema.org/WPHeader">';
+        echo '<header id="masthead" class="site-header Fixed" itemscope itemtype="https://schema.org/WPHeader">';
 
             echo '<div class="wpcm-row">';
 
                 echo '<div class="main-navigation">';
-                    echo '<div class="site-branding" itemscope itemtype="http://schema.org/Brand">';
+                    echo '<div class="site-branding" itemscope itemtype="https://schema.org/Brand">';
                         echo '<a href="' . esc_url( home_url( '/' ) ) . '" rel="bookmark">' . wp_kses_post( rdb_site_logo() ) . '<sub>BETA</sub></a>';
                     echo '</div><!-- .site-branding -->';
 

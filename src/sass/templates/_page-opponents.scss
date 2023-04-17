@@ -3,25 +3,25 @@
 $unit: 0.9375rem;
 
 #primary {
-    padding-top: 0;
+  padding-top: 0;
 
-    .entry-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: $unit 0 0 $unit;
-    }
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $unit 0 0 $unit;
+  }
 
-    h1,
-    .opponent-filter {
-        padding: 0 $unit;
-    }
+  h1,
+  .opponent-filter {
+    padding: 0 $unit;
+  }
 
-    h1 {
-        margin: 0;
-    }
+  h1 {
+    margin: 0;
+  }
 
-    .opponent-filter {
-        width: 300px;
-    }
+  .opponent-filter {
+    width: 300px;
+  }
 }

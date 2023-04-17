@@ -17,9 +17,11 @@ echo '<main id="primary" class="site-main">';
 
 if ( have_posts() ) :
 	echo '<header class="page-header">';
+
 		the_archive_title( '<h1 class="page-title">', '</h1>' );
 
 		the_archive_description( '<div class="archive-description">', '</div>' );
+
 	echo '</header><!-- .page-header -->';
 
 	/* Start the Loop */

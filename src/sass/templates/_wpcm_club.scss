@@ -1,54 +1,54 @@
 @import '../components/content/wpcm-matches-list';
 
 .wpcm {
-    &_club {
-        .entry-title {
-            padding: 0.25em 0.5em;
-        }
-
-        table {
-            &.union-details {
-                th {
-                    white-space: nowrap;
-                    background-color: $color__blue;
-                    color: $color__white;
-                }
-            }
-        }
+  &_club {
+    .entry-title {
+      padding: 0.25em 0.5em;
     }
 
-    &-h2h-list {
-        margin-top: 0;
-
-        @include breakpoint(mobile down) {
-            border-spacing: 3px;
+    table {
+      &.union-details {
+        th {
+          white-space: nowrap;
+          background-color: $color__blue;
+          color: $color__white;
         }
-
-        td {
-            padding: 20px;
-            @include text(center);
-            background-color: var(--primary-color);
-            color: #fff;
-            text-shadow: 0 0 3px #000;
-        }
-
-        &-count,
-        &-desc {
-            display: block;
-            margin-top: 5px;
-            line-height: 1.5;
-            text-transform: uppercase;
-        }
-
-        &-count {
-            font: {
-                size: 2em;
-                weight: 600;
-            }
-        }
-
-        &-desc {
-            font-size: 0.75em;
-        }
+      }
     }
+  }
+
+  &-h2h-list {
+    margin-top: 0;
+
+    @include breakpoint(mobile down) {
+      border-spacing: 3px;
+    }
+
+    td {
+      padding: 20px;
+      @include text(center);
+      background-color: var(--primary-color);
+      color: #fff;
+      text-shadow: 0 0 3px #000;
+    }
+
+    &-count,
+    &-desc {
+      display: block;
+      margin-top: 5px;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    &-count {
+      font: {
+        size: 2em;
+        weight: 600;
+      }
+    }
+
+    &-desc {
+      font-size: 0.75em;
+    }
+  }
 }

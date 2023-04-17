@@ -13,23 +13,23 @@
  * @see wpmuDefenderGeoIPLookup
  */
 function geoIPLookup() {
-    $( document ).ajaxComplete( function() {
-        // const geoip = 'http://geoiplookup.net/ip/';
-        const whatis = 'https://whatismyipaddress.com/ip/';
+  $( document ).ajaxComplete( function() {
+    // const geoip = 'http://geoiplookup.net/ip/';
+    const whatis = 'https://whatismyipaddress.com/ip/';
 
-        $( '#iplockout-table .sui-accordion-item' ).on( 'click', 'td', function() {
-            const target = $( this ).parent().next().find( '.sui-box-body > .sui-row:nth-child(2) > .sui-col > p:last-child > a' ),
-                  ipAddr = target.text();
+    $( '#iplockout-table .sui-accordion-item' ).on( 'click', 'td', function() {
+      const target = $( this ).parent().next().find( '.sui-box-body > .sui-row:nth-child(2) > .sui-col > p:last-child > a' ),
+            ipAddr = target.text();
 
-            console.log( ipAddr );
+      console.log( ipAddr );
 
-            // @return {string} Re-linked URL to GEO IP website.
-            return target.attr({
-                href: whatis + ipAddr,
-                target: '_blank'
-            });
-        });
+      /** @return {string} Re-linked URL to GEO IP website. */
+      return target.attr({
+        href: whatis + ipAddr,
+        target: '_blank'
+      });
     });
+  });
 }
 
 /**
@@ -44,26 +44,28 @@ function geoIPLookup() {
  * @param {string} pagenow WordPress global variable defined in the DOM.
  */
 function wpmuDefenderGeoIPLookup( pagenow ) {
-    if ( 'defender-pro_page_wdf-ip-lockout' === pagenow ) {
-        const order   = false,
-              orderby = false;
+  if ( 'defender-pro_page_wdf-ip-lockout' !== pagenow ) {
+    return;
+  }
 
-        geoIPLookup();
+  geoIPLookup();
 
-        $( document.body ).on( 'click', '.lockout-nav', function( e ) {
-            e.preventDefault();
+  const order   = false,
+        orderby = false;
 
-            let query = WDIP.buildFilterQuery();
+  $( document.body ).on( 'click', '.lockout-nav', function( e ) {
+    e.preventDefault();
 
-            if ( order !== false && orderby !== false ) {
-                query += '&order=' + order + '&orderby=' + orderby;
-            }
+    let query = WDIP.buildFilterQuery();
 
-            query += '&paged=' + $( this ).data( 'paged' );
-
-            WDIP.ajaxPull( query, geoIPLookup );
-        });
+    if ( order !== false && orderby !== false ) {
+      query += '&order=' + order + '&orderby=' + orderby;
     }
+
+    query += '&paged=' + $( this ).data( 'paged' );
+
+    WDIP.ajaxPull( query, geoIPLookup );
+  });
 }
 
 /**
@@ -74,9 +76,9 @@ function wpmuDefenderGeoIPLookup( pagenow ) {
  * @param {jQuery} $ Main jQuery instance.
  */
 ( function( $ ) { // eslint-disable-line
-    // Included globals.
-    const pageNow = window.pagenow;
+  // Included globals.
+  const pageNow = window.pagenow;
 
-    // Defender
-    wpmuDefenderGeoIPLookup( pageNow );
+  // Defender
+  wpmuDefenderGeoIPLookup( pageNow );
 })( jQuery );

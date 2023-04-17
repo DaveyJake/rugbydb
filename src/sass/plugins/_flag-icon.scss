@@ -1,112 +1,117 @@
 $path: '../img/flags/';
 $flag: '#{$path}4x3/';
 $square: '#{$path}1x1/';
-$countries:(af ax al dz as ad ao ai aq ag ar am aw au at az bs bh bd bb by be bz bj bm bt bo ba bw bv br io bn bg bf bi
-kh cm ca cv ct ky cf td cl cn cx cc co km cg cd ck cr hr cu cy cz dk dj dm do ec eg sv en gq er ee et fk fo fj fi fr gf
-pf tf ga gm ge de gh gi gr gl gd gp gu gt gg gn gw gy ht hm va hn hk hu is in id ir iq ie im il it ci jm jp je jo kz ke
-ki ks kw kg la lv lb ls lr ly li lt lu mo mk mg mw my mv ml mt mh mq mr mu yt mx fm md mc mn ms me ma kp mz mm na nr np
-nl nc nz ni ne ng nu nf nd mp no om pk pw ps pa pg py pe ph pn pl pt pr qa re ro ru rw sh kn lc pm vc ws sm st sa sf sn
-rs sc sl sg sk si sb so za gs kr es lk sj sd sr sz se ch sy tw tj tz th tl tg tk to tt tn tr tm tc tv ug ua ae gb us uy
-um uz vu ve vn vg vi wl wf eh ye an zm zw);
-$england:(brighton camborne cambridge coventry gloucester guildford henly-on-thames hersham leeds london melrose
-northampton otley stockport sunbury-on-thames twickenham worcester);
-$ireland:(castlereagh);
-$scotland:(aberdeen edinburgh galashiels scotstoun);
-$wales:(brecon cardiff colwyn-bay crosskeys ebbw-vale neath newport pontypool pontypridd whitland);
+$countries: (
+  af ax al dz as ad ao ai aq ag ar am aw au at az bs bh bd bb by be bz bj bm bt bo ba bw bv br io bn bg bf bi kh cm ca cv ct ky cf td cl cn cx cc co km cg cd ck cr hr cu cy cz dk dj dm do ec eg sv en gq er ee et fk fo fj fi fr gf pf tf ga gm ge de gh gi gr gl gd gp gu gt gg gn gw gy ht hm va hn hk hu is in id ir iq ie im il it ci jm jp je jo kz ke ki ks kw kg la lv lb ls lr ly li lt lu mo mk mg mw my mv ml mt mh mq mr mu yt mx fm md mc mn ms me ma kp mz mm na nr np nl nc nz ni ne ng nu nf nd mp no om pk pw ps pa pg py pe ph pn pl pt pr qa re ro ru rw sh kn lc pm vc ws sm st sa sf sn rs sc sl sg sk si sb so za gs kr es lk sj sd sr sz se ch sy tw tj tz th tl tg tk to tt tn tr tm tc tv ug ua ae gb us uy um uz vu ve vn vg vi wl wf eh ye an zm zw
+);
+$england: (
+  brighton camborne cambridge coventry gloucester guildford henly-on-thames hersham leeds london melrose northampton otley stockport sunbury-on-thames twickenham worcester
+);
+$ireland: (
+  castlereagh
+);
+$scotland: (
+  aberdeen edinburgh galashiels scotstoun
+);
+$wales: (
+  brecon cardiff colwyn-bay crosskeys ebbw-vale neath newport pontypool pontypridd whitland
+);
 
 .flag-icon {
+  background: {
+    size: cover;
+    position: 50%;
+    repeat: no-repeat;
+  }
+
+  position: relative;
+  display: inline-block;
+  height: 0.75em;
+  width: 1em;
+  line-height: 1;
+  padding: 0.15em;
+  box-shadow: 0 0 1px;
+
+  &::before {
+    content: '\00a0';
+  }
+
+  &-background {
     background: {
-        size: cover;
-        position: 50%;
-        repeat: no-repeat;
+      size: cover;
+      position: 50%;
+      repeat: no-repeat;
     }
-    position: relative;
-    display: inline-block;
-    height: 0.75em;
-    width: 1em;
-    line-height: 1;
-    padding: 0.15em;
+
     box-shadow: 0 0 1px;
+    padding: 13px 17.3333px;
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+  }
 
-    &::before {
-        content: '\00a0';
-    }
-
-    &-background {
-        background: {
-            size: cover;
-            position: 50%;
-            repeat: no-repeat;
-        }
-        box-shadow: 0 0 1px;
-        padding: 13px 17.3333px;
-        margin: 0 auto;
-        width: 0;
-        height: 0;
-    }
-
-    &-squared {
-        width: 1em;
-        height: 1em;
-
-        @each $town in $england {
-            &-#{unquote($town)} {
-                background-image: url(#{$square}en.svg);
-            }
-        }
-
-        @each $town in $ireland {
-            &-#{unquote($town)} {
-                background-image: url(#{$flag}ie.svg);
-            }
-        }
-
-        @each $town in $scotland {
-            &-#{unquote($town)} {
-                background-image: url(#{$square}sf.svg);
-            }
-        }
-
-        @each $town in $wales {
-            &-#{unquote($town)} {
-                background-image: url(#{$square}wl.svg);
-            }
-        }
-
-        @each $country in $countries {
-            &-#{$country} {
-                background-image: url(#{$square}#{$country}.svg);
-            }
-        }
-    }
+  &-squared {
+    width: 1em;
+    height: 1em;
 
     @each $town in $england {
-        &-#{unquote($town)} {
-            background-image: url(#{$flag}en.svg);
-        }
+      &-#{unquote($town)} {
+        background-image: url(#{$square}en.svg);
+      }
     }
 
     @each $town in $ireland {
-        &-#{unquote($town)} {
-            background-image: url(#{$flag}ie.svg);
-        }
+      &-#{unquote($town)} {
+        background-image: url(#{$flag}ie.svg);
+      }
     }
 
     @each $town in $scotland {
-        &-#{unquote($town)} {
-            background-image: url(#{$flag}sf.svg);
-        }
+      &-#{unquote($town)} {
+        background-image: url(#{$square}sf.svg);
+      }
     }
 
     @each $town in $wales {
-        &-#{unquote($town)} {
-            background-image: url(#{$flag}wl.svg);
-        }
+      &-#{unquote($town)} {
+        background-image: url(#{$square}wl.svg);
+      }
     }
 
     @each $country in $countries {
-        &-#{$country} {
-            background-image: url(#{$flag}#{$country}.svg);
-        }
+      &-#{$country} {
+        background-image: url(#{$square}#{$country}.svg);
+      }
     }
+  }
+
+  @each $town in $england {
+    &-#{unquote($town)} {
+      background-image: url(#{$flag}en.svg);
+    }
+  }
+
+  @each $town in $ireland {
+    &-#{unquote($town)} {
+      background-image: url(#{$flag}ie.svg);
+    }
+  }
+
+  @each $town in $scotland {
+    &-#{unquote($town)} {
+      background-image: url(#{$flag}sf.svg);
+    }
+  }
+
+  @each $town in $wales {
+    &-#{unquote($town)} {
+      background-image: url(#{$flag}wl.svg);
+    }
+  }
+
+  @each $country in $countries {
+    &-#{$country} {
+      background-image: url(#{$flag}#{$country}.svg);
+    }
+  }
 }

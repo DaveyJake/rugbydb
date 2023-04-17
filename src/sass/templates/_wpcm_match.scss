@@ -1,570 +1,595 @@
 .wpcm {
-    &-match {
-        &-details table td.notes,
-        &-info,
-        &-meta,
-        &-meta-mobile,
-        &-referee,
-        &-venue a {
-            display: flex;
+  &-match {
+
+    &-details table td.notes,
+    &-info,
+    &-meta,
+    &-meta-mobile,
+    &-referee,
+    &-venue a {
+      display: flex;
+    }
+
+    &-away,
+    &-home {
+      &-club {
+        @include wpcm-match-club-block-style;
+      }
+    }
+
+    &-club-badge {
+      @include wpcm-match-club-badge-style;
+
+      &.home-logo {
+        @include wpcm-match-logo-position;
+
+        &[data-interchange*='black-ferns'] {
+          width: $badge-overflow-height;
+        }
+      }
+
+      &.away-logo {
+        @include wpcm-match-logo-position('away');
+
+        &[data-interchange*='black-ferns'] {
+          width: $badge-overflow-height;
+        }
+      }
+
+      @include breakpoint(wordpress) {
+        display: block;
+      }
+    }
+
+    &-comp {
+      @include wpcm-match-competition;
+    }
+
+    &-date {
+      @include wpcm-match-date;
+    }
+
+    &-details {
+      @include wpcm-match-details;
+    }
+
+    &-fixture {
+      border: {
+        top: $border;
+        bottom: $border;
+      }
+    }
+
+    &-head-coach {
+      @include wpcm-match-head-coach;
+    }
+
+    &-info {
+      @include wpcm-match-info;
+
+      &[data-away='asm-clermont-auvergne'] {
+        &::after {
+          background-position-y: -2.7rem;
+        }
+      }
+
+      &[data-away='australia'] {
+        &::after {
+          background-position-y: 0;
+          background-position-x: -8.5rem;
+
+          @include breakpoint(medium) {
+            background-position-x: -3.5rem;
+          }
+        }
+      }
+
+      &[data-home='australia-7s'] {
+        &::before {
+          background-position-x: 100%;
+        }
+      }
+
+      &[data-away='australia-7s'] {
+        &::after {
+          @include breakpoint(small only) {
+            background-position: 0 -6rem;
+          }
+        }
+      }
+
+      &[data-home*='england'] {
+        &::before {
+          background-position: 100% 15%;
+
+          @include breakpoint(large) {
+            background-position-x: -6rem;
+          }
+        }
+      }
+
+      &[data-away*='england'] {
+        &::after {
+          background-position-y: -1rem;
+
+          @include breakpoint(mobile) {
+            background-position-y: -4rem;
+          }
+        }
+      }
+
+      &[data-away*='harlequins'] {
+        @include breakpoint(large) {
+          &::after {
+            background-position-y: 10%;
+          }
+        }
+      }
+
+      &[data-home='france-xv'] {
+        &::before {
+          background-position-y: 8%;
+        }
+      }
+
+      &[data-home='france-7s'] {
+        &::before {
+          @include breakpoint(small only) {
+            background-position: -4rem -2rem;
+          }
+
+          @include breakpoint(mobile) {
+            background-position: -5rem -3rem;
+          }
+
+          @include breakpoint(medium) {
+            background-position-y: -4rem;
+          }
+
+          @include breakpoint(wordpress) {
+            background-position-y: -5rem;
+          }
+
+          @include breakpoint(large) {
+            background-position-x: -2rem;
+          }
+        }
+      }
+
+      &[data-home*='ireland'] {
+        &::before {
+          @include breakpoint(small only) {
+            background-position: -8rem -1.5rem;
+          }
+
+          @include breakpoint(mobile) {
+            background-position-x: -5.5rem;
+            background-position-y: -2.5rem;
+          }
+
+          @include breakpoint(medium) {
+            background-position-y: -4rem;
+          }
+
+          @include breakpoint(large) {
+            background-position: -1.5rem -6rem;
+          }
+        }
+      }
+
+      &[data-away*='japan'] {
+        &::after {
+          background-position-y: -8rem;
+        }
+      }
+
+      &[data-home*='new-zealand'] {
+        &::before {
+          background-position: -7rem -2rem;
+        }
+      }
+
+      &[data-away*='new-zealand'] {
+        &::after {
+          background-position-x: 12%;
+          background-position-y: center;
+
+          @include breakpoint(medium) {
+            background-position-y: 48%;
+          }
+        }
+      }
+
+      &[data-home*='queensland'] {
+        &::before {
+          background-position: -60px 35%;
+        }
+      }
+
+      &[data-away*='russia'] {
+        &::after {
+          background-position-x: -1rem;
+
+          @include breakpoint(mobile) {
+            background-position-y: -2rem;
+          }
+
+          @include breakpoint(wordpress) {
+            background-position: -3rem -5rem;
+          }
+        }
+      }
+
+      &[data-away*='samoa'] {
+        &::after {
+          background-position-y: -3rem;
+
+          @include breakpoint(mobile) {
+            background-position-y: -5rem;
+          }
+
+          @include breakpoint(wordpress) {
+            background-position-y: -8rem;
+          }
+        }
+      }
+
+      &[data-away*='scotland'] {
+        &::after {
+          background-position-x: 3rem;
+        }
+      }
+
+      &[data-home*='south-africa'] {
+        &::before {
+          background-position-x: 100%;
+
+          @include breakpoint(small only) {
+            background-position-y: -4rem;
+          }
+
+          @include breakpoint(mobile) {
+            background-position-y: -5rem;
+          }
+
+          @include breakpoint(wordpress) {
+            background-position: -9rem -6rem;
+          }
+        }
+      }
+
+      &[data-home='united-states'] {
+        &::before {
+          @include breakpoint(small only) {
+            background-position: -10rem -2rem;
+          }
+
+          @include breakpoint(mobile) {
+            background-position: -8rem -3.5rem;
+          }
+
+          @include breakpoint(medium) {
+            background-position-x: -5rem;
+          }
+
+          @include breakpoint(wordpress) {
+            background-position: -6rem -4rem;
+          }
+
+          @include breakpoint(large) {
+            background-position-x: -4rem;
+          }
+        }
+      }
+
+      &[data-away='united-states'] {
+        &::after {
+          @include breakpoint(small only) {
+            background-position-x: 1rem;
+            background-position-y: -2rem;
+          }
+
+          @include breakpoint(mobile) {
+            background-position-x: 1.5rem;
+            background-position-y: -1.75rem;
+          }
+
+          @include breakpoint(medium) {
+            background-position-y: -3rem;
+          }
+
+          @include breakpoint(wordpress) {
+            background-position-y: -4rem;
+          }
+
+          @include breakpoint(large) {
+            background-position-y: -5.5rem;
+          }
+        }
+      }
+
+      // Dynamic positioning.
+      @each $side,
+      $pos in $position {
+        &[data-#{$side}*='united-states'] {
+          &::#{$pos} {
+            @include breakpoint(small only) {
+              background-size: 330px;
+            }
+
+            @include breakpoint(mobile only) {
+              background-size: 140%;
+            }
+          }
         }
 
-        &-away,
-        &-home {
-            &-club {
-                @include wpcm-match-club-block-style;
-            }
-        }
-
-        &-club-badge {
-            @include wpcm-match-club-badge-style;
-
-            &.home-logo {
-                @include wpcm-match-logo-position;
-
-                &[data-interchange*='black-ferns'] {
-                    width: $badge-overflow-height;
-                }
-            }
-
-            &.away-logo {
-                @include wpcm-match-logo-position('away');
-
-                &[data-interchange*='black-ferns'] {
-                    width: $badge-overflow-height;
-                }
-            }
-
-            @include breakpoint(wordpress) {
-                display: block;
-            }
-        }
-
-        &-comp {
-            @include wpcm-match-competition;
-        }
-
-        &-date {
-            @include wpcm-match-date;
-        }
-
-        &-details {
-            @include wpcm-match-details;
-        }
-
-        &-fixture {
-            border: {
-                top: $border;
-                bottom: $border;
-            }
-        }
-
-        &-head-coach {
-            @include wpcm-match-head-coach;
-        }
-
-        &-info {
-            @include wpcm-match-info;
-
-            &[data-away='asm-clermont-auvergne'] {
-                &::after {
-                    background-position-y: -2.7rem;
-                }
-            }
-
-            &[data-away='australia'] {
-                &::after {
-                    background-position-y: 0;
-                    background-position-x: -8.5rem;
-
-                    @include breakpoint(medium) {
-                        background-position-x: -3.5rem;
-                    }
-                }
-            }
-
-            &[data-home='australia-7s'] {
-                &::before {
-                    background-position-x: 100%;
-                }
-            }
-
-            &[data-away='australia-7s'] {
-                &::after {
-                    @include breakpoint(small only) {
-                        background-position: 0 -6rem;
-                    }
-                }
-            }
-
-            &[data-home*='england'] {
-                &::before {
-                    background-position: 100% 15%;
-
-                    @include breakpoint(large) {
-                        background-position-x: -6rem;
-                    }
-                }
-            }
-
-            &[data-away*='england'] {
-                &::after {
-                    background-position-y: -1rem;
-
-                    @include breakpoint(mobile) {
-                        background-position-y: -4rem;
-                    }
-                }
-            }
-
-            &[data-away*='harlequins'] {
-                @include breakpoint(large) {
-                    &::after {
-                        background-position-y: 10%;
-                    }
-                }
-            }
-
-            &[data-home='france-xv'] {
-                &::before {
-                    background-position-y: 8%;
-                }
-            }
-
-            &[data-home='france-7s'] {
-                &::before {
-                    @include breakpoint(small only) {
-                        background-position: -4rem -2rem;
-                    }
-                    @include breakpoint(mobile) {
-                        background-position: -5rem -3rem;
-                    }
-                    @include breakpoint(medium) {
-                        background-position-y: -4rem;
-                    }
-                    @include breakpoint(wordpress) {
-                        background-position-y: -5rem;
-                    }
-                    @include breakpoint(large) {
-                        background-position-x: -2rem;
-                    }
-                }
-            }
-
-            &[data-home*='ireland'] {
-                &::before {
-                    @include breakpoint(small only) {
-                        background-position: -8rem -1.5rem;
-                    }
-                    @include breakpoint(mobile) {
-                        background-position-x: -5.5rem;
-                        background-position-y: -2.5rem;
-                    }
-                    @include breakpoint(medium) {
-                        background-position-y: -4rem;
-                    }
-                    @include breakpoint(large) {
-                        background-position: -1.5rem -6rem;
-                    }
-                }
-            }
-
-            &[data-away*='japan'] {
-                &::after {
-                    background-position-y: -8rem;
-                }
-            }
-
-            &[data-home*='new-zealand'] {
-                &::before {
-                    background-position: -7rem -2rem;
-                }
-            }
-
-            &[data-away*='new-zealand'] {
-                &::after {
-                    background-position-x: 12%;
-                    background-position-y: center;
-
-                    @include breakpoint(medium) {
-                        background-position-y: 48%;
-                    }
-                }
-            }
-
-            &[data-home*='queensland'] {
-                &::before {
-                    background-position: -60px 35%;
-                }
-            }
-
-            &[data-away*='russia'] {
-                &::after {
-                    background-position-x: -1rem;
-                    @include breakpoint(mobile) {
-                        background-position-y: -2rem;
-                    }
-                    @include breakpoint(wordpress) {
-                        background-position: -3rem -5rem;
-                    }
-                }
-            }
-
-            &[data-away*='samoa'] {
-                &::after {
-                    background-position-y: -3rem;
-
-                    @include breakpoint(mobile) {
-                        background-position-y: -5rem;
-                    }
-
-                    @include breakpoint(wordpress) {
-                        background-position-y: -8rem;
-                    }
-                }
-            }
-
-            &[data-away*='scotland'] {
-                &::after {
-                    background-position-x: 3rem;
-                }
-            }
-
-            &[data-home*='south-africa'] {
-                &::before {
-                    background-position-x: 100%;
-                    @include breakpoint(small only) {
-                        background-position-y: -4rem;
-                    }
-                    @include breakpoint(mobile) {
-                        background-position-y: -5rem;
-                    }
-                    @include breakpoint(wordpress) {
-                        background-position: -9rem -6rem;
-                    }
-                }
-            }
-
-            &[data-home='united-states'] {
-                &::before {
-                    @include breakpoint(small only) {
-                        background-position: -10rem -2rem;
-                    }
-                    @include breakpoint(mobile) {
-                        background-position: -8rem -3.5rem;
-                    }
-                    @include breakpoint(medium) {
-                        background-position-x: -5rem;
-                    }
-                    @include breakpoint(wordpress) {
-                        background-position: -6rem -4rem;
-                    }
-                    @include breakpoint(large) {
-                        background-position-x: -4rem;
-                    }
-                }
-            }
-
-            &[data-away='united-states'] {
-                &::after {
-                    @include breakpoint(small only) {
-                        background-position-x: 1rem;
-                        background-position-y: -2rem;
-                    }
-                    @include breakpoint(mobile) {
-                        background-position-x: 1.5rem;
-                        background-position-y: -1.75rem;
-                    }
-                    @include breakpoint(medium) {
-                        background-position-y: -3rem;
-                    }
-                    @include breakpoint(wordpress) {
-                        background-position-y: -4rem;
-                    }
-                    @include breakpoint(large) {
-                        background-position-y: -5.5rem;
-                    }
-                }
-            }
-
-            // Dynamic positioning.
-            @each $side, $pos in $position {
-                &[data-#{$side}*='united-states'] {
-                    &::#{$pos} {
-                        @include breakpoint(small only) {
-                            background-size: 330px;
-                        }
-                        @include breakpoint(mobile only) {
-                            background-size: 140%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='canada'] {
-                    &::#{$pos} {
-                        background-position: map-get($offset--small, $pos);
-
-                        @include breakpoint(medium) {
-                            background-position: map-get($offset--medium, $pos);
-                        }
-
-                        @include breakpoint(large) {
-                            background-position: map-get($offset--large, $pos);
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='argentina'] {
-                    &::#{$pos} {
-                        background-position-y: 22%;
-                    }
-                }
-
-                &[data-#{$side}='australia'] {
-                    &::#{$pos} {
-                        @include breakpoint(small only) {
-                            background-size: 200%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}='australia-7s'] {
-                    &::#{$pos} {
-                        @include breakpoint(small only) {
-                            background-size: 246%;
-                        }
-
-                        @include breakpoint(mobile) {
-                            background-size: 160%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}='england'] {
-                    &::#{$pos} {
-                        @include breakpoint(large) {
-                            background-size: 120%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='fiji'] {
-                    @include breakpoint(large) {
-                        &::#{$pos} {
-                            background-position: 0 -10rem;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='ireland'] {
-                    &::#{$pos} {
-                        @include breakpoint(small only) {
-                            background-size: 160%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='new-zealand'] {
-                    &::#{$pos} {
-                        background-size: 333%;
-
-                        @include breakpoint(mobile) {
-                            background-size: 250%;
-                        }
-
-                        @include breakpoint(wordpress) {
-                            background-size: 180%;
-                        }
-
-                        @include breakpoint(large) {
-                            background-size: 150%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='russia'] {
-                    &::#{$pos} {
-                        @include breakpoint(small only) {
-                            background-size: 215%;
-                        }
-
-                        @include breakpoint(wordpress) {
-                            background-size: 130%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='samoa'] {
-                    &::#{$pos} {
-                        @include breakpoint(small only) {
-                            background-size: 175%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='scotland'] {
-                    &::#{$pos} {
-                        background-position-y: 27%;
-
-                        @include breakpoint(small only) {
-                            background-size: 160%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='south-africa'] {
-                    &::#{$pos} {
-                        @include breakpoint(small only) {
-                            background-size: 300%;
-                        }
-
-                        @include breakpoint(mobile) {
-                            background-size: 200%;
-                        }
-
-                        @include breakpoint(wordpress) {
-                            background-size: 125%;
-                        }
-                    }
-                }
-
-                &[data-#{$side}*='wales'] {
-                    &::#{$pos} {
-                        background-position-y: 15%;
-                    }
-                }
-            }
-        }
-
-        &-referee {
-            @include wpcm-match-referee;
-        }
-
-        &-report {
-            padding: $padding $padding 0 $padding;
-
-            @include breakpoint(wordpress) {
-                padding: 1em 1em 0 1em;
-            }
-        }
-
-        &-score {
-            @include wpcm-match-score;
-        }
-
-        &-stats {
-            @include wpcm-match-stats;
-        }
-
-        &-team {
-            padding-top: $padding;
-        }
-
-        @each $icon, $dir in $icons {
-            &-#{$icon} {
-                .icon {
-                    width: 17px;
-                    height: 13px;
-                    display: inline-block;
-                    padding: 0;
-                    margin: {
-                        bottom: -2px;
-                        #{$dir}: 0;
-                    }
-                }
-            }
-        }
-
-        &-venue {
-            a {
-                align-items: center;
-            }
-        }
-
-        &-video {
-            margin-top: -1.5em;
-            background: $color__black;
-        }
-
-        &-meta {
-            border: {
-                top: $border;
-                bottom: $border;
-            }
-
-            @include breakpoint(wordpress) {
-                padding-top: $padding;
-            }
-
-            @each $dir in $direction {
-                &-#{$dir} {
-                    @include full-width;
-                    font-size: 1em;
-                    float: none;
-                    text-align: center;
-
-                    @include breakpoint(medium) {
-                        width: 33.333%;
-                        text-align: $dir;
-                    }
-                }
-            }
+        &[data-#{$side}*='canada'] {
+          &::#{$pos} {
+            background-position: map-get($offset--small, $pos);
 
             @include breakpoint(medium) {
-                flex-direction: row;
+              background-position: map-get($offset--medium, $pos);
             }
 
-            &-mobile {
-                @include wpcm-match-meta-mobile;
+            @include breakpoint(large) {
+              background-position: map-get($offset--large, $pos);
             }
-
-            &-left,
-            &-right {
-                @include flex-column {
-                    justify-content: space-between;
-                    align-content: center;
-                }
-            }
-
-            &-left {
-                align-items: flex-start;
-            }
-
-            &-right {
-                align-items: flex-end;
-
-                .wpcm-match-team:first-child {
-                    padding-top: 0;
-                }
-            }
-        }
-    }
-
-    &-entry {
-        @include wpcm-entry;
-    }
-
-    &-lineup {
-        @include wpcm-lineup;
-    }
-
-    &_match {
-        // Attached to `.wpcm-match-video`.
-        @include foundation-responsive-embed;
-
-        .flex-video,
-        .responsive-embed {
-            margin-bottom: 0;
+          }
         }
 
-        table {
-            background: $color__text-inset;
-
-            thead,
-            .wpcm-subs-rows,
-            .wpcm-subs-rows:hover {
-                background-color: $color__blue !important;
-            }
+        &[data-#{$side}*='argentina'] {
+          &::#{$pos} {
+            background-position-y: 22%;
+          }
         }
+
+        &[data-#{$side}='australia'] {
+          &::#{$pos} {
+            @include breakpoint(small only) {
+              background-size: 200%;
+            }
+          }
+        }
+
+        &[data-#{$side}='australia-7s'] {
+          &::#{$pos} {
+            @include breakpoint(small only) {
+              background-size: 246%;
+            }
+
+            @include breakpoint(mobile) {
+              background-size: 160%;
+            }
+          }
+        }
+
+        &[data-#{$side}='england'] {
+          &::#{$pos} {
+            @include breakpoint(large) {
+              background-size: 120%;
+            }
+          }
+        }
+
+        &[data-#{$side}*='fiji'] {
+          @include breakpoint(large) {
+            &::#{$pos} {
+              background-position: 0 -10rem;
+            }
+          }
+        }
+
+        &[data-#{$side}*='ireland'] {
+          &::#{$pos} {
+            @include breakpoint(small only) {
+              background-size: 160%;
+            }
+          }
+        }
+
+        &[data-#{$side}*='new-zealand'] {
+          &::#{$pos} {
+            background-size: 333%;
+
+            @include breakpoint(mobile) {
+              background-size: 250%;
+            }
+
+            @include breakpoint(wordpress) {
+              background-size: 180%;
+            }
+
+            @include breakpoint(large) {
+              background-size: 150%;
+            }
+          }
+        }
+
+        &[data-#{$side}*='russia'] {
+          &::#{$pos} {
+            @include breakpoint(small only) {
+              background-size: 215%;
+            }
+
+            @include breakpoint(wordpress) {
+              background-size: 130%;
+            }
+          }
+        }
+
+        &[data-#{$side}*='samoa'] {
+          &::#{$pos} {
+            @include breakpoint(small only) {
+              background-size: 175%;
+            }
+          }
+        }
+
+        &[data-#{$side}*='scotland'] {
+          &::#{$pos} {
+            background-position-y: 27%;
+
+            @include breakpoint(small only) {
+              background-size: 160%;
+            }
+          }
+        }
+
+        &[data-#{$side}*='south-africa'] {
+          &::#{$pos} {
+            @include breakpoint(small only) {
+              background-size: 300%;
+            }
+
+            @include breakpoint(mobile) {
+              background-size: 200%;
+            }
+
+            @include breakpoint(wordpress) {
+              background-size: 125%;
+            }
+          }
+        }
+
+        &[data-#{$side}*='wales'] {
+          &::#{$pos} {
+            background-position-y: 15%;
+          }
+        }
+      }
     }
+
+    &-referee {
+      @include wpcm-match-referee;
+    }
+
+    &-report {
+      padding: $padding $padding 0 $padding;
+
+      @include breakpoint(wordpress) {
+        padding: 1em 1em 0 1em;
+      }
+    }
+
+    &-score {
+      @include wpcm-match-score;
+    }
+
+    &-stats {
+      @include wpcm-match-stats;
+    }
+
+    &-team {
+      padding-top: $padding;
+    }
+
+    @each $icon,
+    $dir in $icons {
+      &-#{$icon} {
+        .icon {
+          width: 17px;
+          height: 13px;
+          display: inline-block;
+          padding: 0;
+
+          margin: {
+            bottom: -2px;
+            #{$dir}: 0;
+          }
+        }
+      }
+    }
+
+    &-venue {
+      a {
+        align-items: center;
+      }
+    }
+
+    &-video {
+      margin-top: -1.5em;
+      background: $color__black;
+    }
+
+    &-meta {
+      border: {
+        top: $border;
+        bottom: $border;
+      }
+
+      @include breakpoint(wordpress) {
+        padding-top: $padding;
+      }
+
+      @each $dir in $direction {
+        &-#{$dir} {
+          @include full-width;
+          font-size: 1em;
+          float: none;
+          text-align: center;
+
+          @include breakpoint(medium) {
+            width: 33.333%;
+            text-align: $dir;
+          }
+        }
+      }
+
+      @include breakpoint(medium) {
+        flex-direction: row;
+      }
+
+      &-mobile {
+        @include wpcm-match-meta-mobile;
+      }
+
+      &-left,
+      &-right {
+        @include flex-column {
+          justify-content: space-between;
+          align-content: center;
+        }
+      }
+
+      &-left {
+        align-items: flex-start;
+      }
+
+      &-right {
+        align-items: flex-end;
+
+        .wpcm-match-team:first-child {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+  &-entry {
+    @include wpcm-entry;
+  }
+
+  &-lineup {
+    @include wpcm-lineup;
+  }
+
+  &_match {
+    // Attached to `.wpcm-match-video`.
+    @include foundation-responsive-embed;
+
+    .flex-video,
+    .responsive-embed {
+      margin-bottom: 0;
+    }
+
+    table {
+      background: $color__text-inset;
+
+      thead,
+      .wpcm-subs-rows,
+      .wpcm-subs-rows:hover {
+        background-color: $color__blue !important;
+      }
+    }
+  }
 }

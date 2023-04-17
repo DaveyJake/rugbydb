@@ -43,12 +43,12 @@
 	<exclude-pattern>inc/rdb-custom-header*</exclude-pattern>
 	<exclude-pattern>node_modules/*</exclude-pattern>
 	<exclude-pattern>src/img/*</exclude-pattern>
-    <exclude-pattern>vendor/*</exclude-pattern>
-    <exclude-pattern>wpclubmanager/*</exclude-pattern>
-    <exclude-pattern>WR/*</exclude-pattern>
+  <exclude-pattern>./vendor/*</exclude-pattern>
+  <exclude-pattern>wpclubmanager/*</exclude-pattern>
+  <exclude-pattern>WR/*</exclude-pattern>
 	<exclude-pattern>.niu/*</exclude-pattern>
 	<exclude-pattern>_wpclubmanager/*</exclude-pattern>
-    <exclude-pattern>wpcs/*</exclude-pattern>
+  <exclude-pattern>wpcs/*</exclude-pattern>
 
 
 	<!--

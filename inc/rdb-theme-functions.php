@@ -186,26 +186,27 @@ function rdb_remove_class_method( ...$args ) {
     global $wp_filter;
 
     // Only target the specified hooks with filters and priority.
-    if ( ! isset( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
+    if ( empty( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
         return false;
     }
 
     // Loop only on registered filters.
-    foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
+    foreach ( $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
 
         // Always check if filter is an array.
         if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
+            $filter_array_function = $filter_array['function'];
 
             // Conditions.
             $conditions = array(
-                is_object( $filter_array['function'][0] ),
-                ! empty( get_class( $filter_array['function'][0] ) ),
-                ( $filter_array['function'][1] === $method_name ),
+                is_object( $filter_array_function[0] ),
+                ! empty( get_class( $filter_array_function[0] ) ),
+                ( $filter_array_function[1] === $method_name ),
             );
 
             // Check if class is not attached to a global variable.
             if ( ! empty( $args['class_name'] ) ) {
-                $conditions[] = ( get_class( $filter_array['function'][0] ) === $args['class_name'] );
+                $conditions[] = ( get_class( $filter_array_function[0] ) === $args['class_name'] );
             }
 
             // Check if `$conditions` are all true.

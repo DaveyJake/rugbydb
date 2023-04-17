@@ -1,63 +1,64 @@
 {
-    "compact": false,
-    "env": {
-        "production": {
-            "compact": true,
-            "comments": false,
-            "minified": true
-        }
-    },
-    "only": ["src/js"],
-    "assumptions": {
-        "arrayLikeIsIterable": true,
-        "constantReexports": true,
-        "constantSuper": true,
-        "enumerableModuleMeta": true,
-        "ignoreFunctionLength": true,
-        "ignoreToPrimitiveHint": true,
-        "iterableIsArray": true,
-        "mutableTemplateObject": true,
-        "noClassCalls": true,
-        "noDocumentAll": true,
-        "noIncompleteNsImportDetection": true,
-        "noNewArrows": true,
-        "objectRestNoSymbols": true,
-        "privateFieldsAsProperties": true,
-        "pureGetters": true,
-        "setClassMethods": true,
-        "setComputedProperties": true,
-        "setPublicClassFields": true,
-        "setSpreadProperties": true,
-        "skipForOfIteratorClosing": true,
-        "superIsCallableConstructor": true
-    },
-    "presets": [
-        "@wordpress/babel-preset-default"
-    ],
-    "plugins": [
-        ["@babel/transform-runtime", { "corejs": 3 }],
-        "@babel/transform-modules-commonjs",
-        "@babel/syntax-dynamic-import",
-        "@babel/proposal-export-default-from",
-        "@babel/proposal-export-namespace-from",
-        "@babel/proposal-class-properties",
-        "@babel/proposal-class-static-block",
-        "@babel/proposal-private-methods",
-        "@babel/proposal-private-property-in-object"
-    ],
-    "parserOpts": {
-        "allowImportExportEverywhere": true,
-        "errorRecovery": true
-    },
-    "sourceMaps": true,
-    "sourceType": "unambiguous",
-    "targets": {
-        "node": "current",
-        "browsers": [
-            "last 2 versions",
-            "> 1%",
-            "ios >= 9"
-        ],
-        "esmodules": true
+  "compact": false,
+  "env": {
+    "production": {
+      "compact": true,
+      "comments": false,
+      "minified": true
     }
+  },
+  "assumptions": {
+    "arrayLikeIsIterable": true,
+    "constantReexports": true,
+    "constantSuper": true,
+    "enumerableModuleMeta": true,
+    "ignoreFunctionLength": true,
+    "ignoreToPrimitiveHint": true,
+    "iterableIsArray": true,
+    "mutableTemplateObject": true,
+    "noClassCalls": true,
+    "noDocumentAll": true,
+    "noIncompleteNsImportDetection": true,
+    "noNewArrows": true,
+    "objectRestNoSymbols": true,
+    "privateFieldsAsProperties": true,
+    "pureGetters": true,
+    "setClassMethods": true,
+    "setComputedProperties": true,
+    "setPublicClassFields": true,
+    "setSpreadProperties": true,
+    "skipForOfIteratorClosing": true,
+    "superIsCallableConstructor": true
+  },
+  "ignore": ["./src/js/_vendor", "./src/js/jquery.dataTables.yadcf.js", "./src/js/*.map"],
+  "presets": [
+    "@wordpress/babel-preset-default"
+  ],
+  "plugins": [
+    ["@babel/transform-runtime", { "corejs": 3 }],
+    "@babel/transform-modules-commonjs",
+    "@babel/syntax-dynamic-import",
+    "@babel/proposal-export-default-from",
+    "@babel/proposal-export-namespace-from",
+    "@babel/proposal-class-properties",
+    "@babel/proposal-class-static-block",
+    "@babel/proposal-private-methods",
+    "@babel/proposal-private-property-in-object"
+  ],
+  "parserOpts": {
+    "allowImportExportEverywhere": true,
+    "errorRecovery": true
+  },
+  "sourceMaps": true,
+  "sourceType": "unambiguous",
+  "targets": {
+    "node": "current",
+    "browsers": [
+      "last 2 versions",
+      "> 1%",
+      "ios >= 9"
+    ],
+    "esmodules": true
+  },
+  "test": ["./src/js"]
 }

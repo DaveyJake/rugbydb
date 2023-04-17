@@ -28,7 +28,7 @@ extends:
 parser: '@babel/eslint-parser'
 parserOptions:
   babelOptions:
-    configFile: ./.babelrc
+    babelrc: true
   ecmaFeatures:
     modules: true
     impliedStrict: true
@@ -59,7 +59,7 @@ rules:
   guard-for-in: error
   indent:
     - error
-    - 4
+    - 2
     - SwitchCase: 1
       VariableDeclarator: first
   jsdoc/check-types:

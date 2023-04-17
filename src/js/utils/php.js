@@ -8,6 +8,7 @@
  * @since 1.0.1 - Added empty()
  * @since 1.0.1 - Added ucwords()
  * @since 1.0.2 - Added inArray()
+ * @since 1.0.3 - Added check for 'NaN' in `empty`.
  */
 
 /**
@@ -37,7 +38,8 @@ const empty = ( value ) => {
      * Conditions we want to return as true.
      *
      * @since 1.0.0
-     * @since 1.1.1 Added checks for 'null' and 'undefined'.
+     * @since 1.0.1 Added checks for 'null' and 'undefined'.
+     * @since 1.0.3 Added checks for 'NaN'.
      */
     let conditions = [
         _.isEqual( value, 0 ),
@@ -47,6 +49,8 @@ const empty = ( value ) => {
         _.isEqual( value, '' ),
         _.isEqual( value, [] ),
         _.isEqual( value, {} ),
+        _.isEqual( _.isNaN( value ), true ),
+        _.isEqual( value, 'NaN' ),
         _.isEqual( _.isNull( value ), true ),
         _.isEqual( value, 'null' ),
         _.isEqual( _.isUndefined( value ), true ),

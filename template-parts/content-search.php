@@ -7,8 +7,6 @@
  * @package Rugby_Database
  */
 
-// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound,Generic.ControlStructures.InlineControlStructure.NotAllowed,Generic.WhiteSpace.ScopeIndent.IncorrectExact
-
 defined( 'ABSPATH' ) || exit;
 
 $rdb_post_class = apply_filters( 'post_class', get_post_class() );

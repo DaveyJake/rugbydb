@@ -25,7 +25,7 @@ import postcssSortMQ     from 'postcss-sort-media-queries';
 import postcssStrip      from 'postcss-strip-inline-comments';
 import postcssReporter   from 'postcss-reporter';
 import purgecssWP        from 'purgecss-with-wordpress';
-import rimraf            from 'rimraf';
+import { rimraf }        from 'rimraf'
 import yaml              from 'js-yaml';
 import ESLintPlugin      from 'eslint-webpack-plugin';
 import TerserPlugin      from 'terser-webpack-plugin';
@@ -134,9 +134,9 @@ const browser = browserSync.create();
 /**
  * Primary utility module.
  *
- * @module UTIL
+ * @namespace UTIL
  *
- * @type {Object}
+ * @type {object}
  */
 const UTIL = {
     /**
@@ -162,10 +162,12 @@ const UTIL = {
      * @param {Function} done Signal to Gulp that task is finished.
      */
     clean( done ) {
-        rimraf( PATHS.admin + '/css', done );
-        rimraf( PATHS.admin + '/js', done );
-        rimraf( PATHS.dist, done );
-        rimraf( PATHS.src + '/css', done );
+        rimraf.native( PATHS.admin + '/css' );
+        rimraf.native( PATHS.admin + '/js' );
+        rimraf.native( PATHS.dist );
+        rimraf.native( PATHS.src + '/css' );
+
+        done();
     },
 
     /**
@@ -176,7 +178,9 @@ const UTIL = {
      * @param {Function} done Signal to Gulp that task is finished.
      */
     cleanJavaScript( done ) {
-        rimraf( PATHS.dist + '/js', done );
+        rimraf.native( PATHS.dist + '/js' );
+
+        done();
     },
 
     /**
@@ -187,8 +191,10 @@ const UTIL = {
      * @param {Function} done Signal to Gulp that task is finished.
      */
     cleanStyleSheets( done ) {
-        rimraf( PATHS.dist + '/css', done );
-        rimraf( PATHS.src + '/css', done );
+        rimraf.native( PATHS.dist + '/css' );
+        rimraf.native( PATHS.src + '/css' );
+
+        done();
     },
 
     /**
@@ -590,7 +596,15 @@ const phpLint = ['lint:php', 'lint:wpcs'],
 
 // Build the 'dist' folder by running all of the below tasks.
 gulp.task( 'build',
-    gulp.series( clean, ...phpLint, gulp.parallel( copy, ...staLint ), gulp.parallel( ...stBuild, images, copy ), purgecss, reload ) );
+    gulp.series(
+        clean,
+        ...phpLint,
+        gulp.parallel( copy, ...staLint ),
+        gulp.parallel( ...stBuild, images, copy ),
+        purgecss,
+        reload
+    )
+);
 
 // Build the site, run the server, and watch for file changes
 gulp.task( 'default',

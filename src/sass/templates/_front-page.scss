@@ -2,150 +2,154 @@
 @import '../components/content/datatables';
 
 .front-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-    #page {
-        flex: 1 0 auto;
+  #page {
+    flex: 1 0 auto;
 
-        .team-filters {
-            justify-content: space-evenly;
-            margin: {
-                top: 0.5em;
-                bottom: 0.5em;
-            }
+    .team-filters {
+      justify-content: space-evenly;
 
-            @include breakpoint(medium) {
-                margin-top: 0;
-            }
+      margin: {
+        top: 0.5em;
+        bottom: 0.5em;
+      }
 
-            label {
-                span {
-                    opacity: 0.6;
-                }
+      @include breakpoint(medium) {
+        margin-top: 0;
+      }
 
-                &.active {
-                    span {
-                        opacity: 1;
-                    }
-                }
-            }
+      label {
+        span {
+          opacity: 0.6;
         }
 
-        #all-matches {
-            content-visibility: auto;
-            contain-intrinsic-size: 1px 5000px;
-            font-size: 0.875em;
+        &.active {
+          span {
+            opacity: 1;
+          }
+        }
+      }
+    }
 
-            thead,
-            tfoot {
-                th {
-                    height: rem-calc(36px);
-                    padding: 0;
+    #all-matches {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 5000px;
+      font-size: 0.875em;
 
-                    &.control {
-                        padding-right: 2rem;
-                    }
+      thead,
+      tfoot {
+        th {
+          height: rem-calc(36px);
+          padding: 0;
 
-                    &.date {
-                        width: 200px !important;
-                    }
+          &.control {
+            padding-right: 2rem;
+          }
 
-                    &.fixture {
-                        width: 60% !important;
-                    }
+          &.date {
+            width: 200px !important;
+          }
 
-                    &:not(.control) {
-                        @include breakpoint(medium) {
-                            width: 33.3333% !important;
-                        }
+          &.fixture {
+            width: 60% !important;
+          }
 
-                        @include breakpoint(wordpress) {
-                            width: 25% !important;
-                        }
-                    }
-                }
+          &:not(.control) {
+            @include breakpoint(medium) {
+              width: 33.3333% !important;
             }
 
-            tbody {
-                td {
-                    &.date {
-                        @include breakpoint(wordpress) {
-                            padding-left: 10px;
-                        }
-                    }
+            @include breakpoint(wordpress) {
+              width: 25% !important;
+            }
+          }
+        }
+      }
 
-                    &.venue {
-                        @include text(right);
-                    }
-                }
+      tbody {
+        td {
+          &.date {
+            @include breakpoint(wordpress) {
+              padding-left: 10px;
+            }
+          }
+
+          &.venue {
+            @include text(right);
+          }
+        }
+      }
+
+      @include breakpoint(medium) {
+        font-size: 0.9375em;
+      }
+
+      @include breakpoint(large) {
+        font-size: 1em;
+      }
+
+      .icon {
+        height: 28px;
+      }
+
+      [src*='argentina-xv'] {
+        width: 36px;
+      }
+
+      [src*='victoria-rugby'],
+      [src*='south-australia'] {
+        height: 18px;
+      }
+
+      &_wrapper {
+        .wpcm-row {
+          &:first-child {
+
+            // stylelint-disable
+            #all-matches_filter {
+              width: 100%;
+              margin-bottom: 0.5em;
             }
 
             @include breakpoint(medium) {
-                font-size: 0.9375em;
+              #all-matches_filter {
+                width: 75%;
+              }
             }
 
             @include breakpoint(large) {
-                font-size: 1em;
+              #all-matches_filter {
+                width: 45%;
+                padding-left: 0.55%;
+              }
+
+              #all-matches_paginate {
+                width: 56%;
+              }
             }
 
-            .icon {
-                height: 28px;
+            // stylelint-enable
+          }
+
+          &:last-child {
+            .paging_full_numbers {
+              // stylelint-disable-line
+              margin: auto;
             }
 
-            [src*='argentina-xv'] {
-                width: 36px;
+            .wpcm-column {
+              width: 100%;
             }
-
-            [src*='victoria-rugby'],
-            [src*='south-australia'] {
-                height: 18px;
-            }
-
-            &_wrapper {
-                .wpcm-row {
-                    &:first-child {
-                        // stylelint-disable
-                        #all-matches_filter {
-                            width: 100%;
-                            margin-bottom: 0.5em;
-                        }
-
-                        @include breakpoint(medium) {
-                            #all-matches_filter {
-                                width: 75%;
-                            }
-                        }
-
-                        @include breakpoint(large) {
-                            #all-matches_filter {
-                                width: 45%;
-                                padding-left: 0.55%;
-                            }
-
-                            #all-matches_paginate {
-                                width: 56%;
-                            }
-                        }
-                        // stylelint-enable
-                    }
-
-                    &:last-child {
-                        .paging_full_numbers { // stylelint-disable-line
-                            margin: auto;
-                        }
-
-                        .wpcm-column {
-                            width: 100%;
-                        }
-                    }
-                }
-
-                .dtr-title {
-                    min-width: 42px;
-                }
-            }
+          }
         }
+
+        .dtr-title {
+          min-width: 42px;
+        }
+      }
     }
+  }
 }
