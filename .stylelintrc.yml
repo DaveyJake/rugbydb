@@ -9,9 +9,8 @@ rules:
   at-rule-empty-line-before: null
   declaration-empty-line-before: null
   indentation:
-    - 4
-  max-empty-lines:
-    - 5
+    - 2
+  max-empty-lines: 5
   max-line-length:
     - 120
     - ignore: non-comments

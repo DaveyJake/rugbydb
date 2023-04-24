@@ -1,307 +1,307 @@
 .logo {
-    position: relative;
-    color: #fff;
-    font: {
-        family: $font__logo;
-        size: 2.375em;
+  position: relative;
+  color: #fff;
+  font: {
+    family: $font__logo;
+    size: 2.375em;
+  }
+
+  @include breakpoint(wordpress) {
+    top: -12%;
+    bottom: 50%;
+    font-size: 3.375em;
+  }
+
+  img {
+    @include breakpoint(medium down) {
+      height: 30px;
+      margin-left: -1.5rem;
+    }
+  }
+
+  span {
+    margin-top: 3px;
+    line-height: 1;
+    float: left;
+
+    &.word-rugby,
+    &.word-db {
+      -webkit-text-stroke: $text-stroke;
     }
 
-    @include breakpoint(wordpress) {
-        top: -12%;
-        bottom: 50%;
-        font-size: 3.375em;
-    }
+    &.word {
+      &-rugby {
+        color: $color__logo-red;
 
-    img {
-        @include breakpoint(medium down) {
-            height: 30px;
-            margin-left: -1.5rem;
+        span {
+          &.char {
+            // U -2.75px
+            &-U {
+              margin: {
+                left: 1.75px;
+                right: 2px;
+              }
+            }
+            // G -2.5px
+            &-G {
+              margin-left: 0.5px;
+            }
+            // B -3px --> -3.25px skewX(1deg)
+            &-B {
+              margin-left: 2px;
+              transform: skewX(1deg);
+            }
+            // Y -4.75px --> -1.75px skewX(-3deg)
+            &-Y {
+              margin-left: -1px;
+              transform: skewX(-3deg);
+            }
+          }
         }
-    }
+      }
 
-    span {
-        margin-top: 3px;
-        line-height: 1;
-        float: left;
+      &-db {
+        margin-left: 4px;
+        color: $color__logo-blue;
 
-        &.word-rugby,
-        &.word-db {
-            -webkit-text-stroke: $text-stroke;
-        }
-
-        &.word {
-            &-rugby {
-                color: $color__logo-red;
-
-                span {
-                    &.char {
-                        // U -2.75px
-                        &-U {
-                            margin: {
-                                left: 1.75px;
-                                right: 2px;
-                            }
-                        }
-                        // G -2.5px
-                        &-G {
-                            margin-left: 0.5px;
-                        }
-                        // B -3px --> -3.25px skewX(1deg)
-                        &-B {
-                            margin-left: 2px;
-                            transform: skewX(1deg);
-                        }
-                        // Y -4.75px --> -1.75px skewX(-3deg)
-                        &-Y {
-                            margin-left: -1px;
-                            transform: skewX(-3deg);
-                        }
-                    }
-                }
+        span {
+          &.char {
+            &-D {
+              transform: skewX(-1deg);
             }
 
-            &-db {
-                margin-left: 4px;
-                color: $color__logo-blue;
-
-                span {
-                    &.char {
-                        &-D {
-                            transform: skewX(-1deg);
-                        }
-
-                        &-B {
-                            margin-left: 1.5px;
-                        }
-                    }
-                }
+            &-B {
+              margin-left: 1.5px;
             }
+          }
         }
+      }
     }
+  }
 }
 
 // Site navigation.
 .main-navigation {
-    @include breakpoint(wordpress) {
-        display: block;
-        position: relative;
-        width: 100%;
-        height: inherit;
-        float: right;
+  @include breakpoint(wordpress) {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: inherit;
+    float: right;
 
-        .menu-main-menu-container {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            height: inherit;
+    .menu-main-menu-container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      height: inherit;
+    }
+
+    a {
+      display: block;
+      height: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 0;
+      // Toggled state.
+      @at-root .toggled#{&} {
+        display: block;
+      }
+
+      li {
+        position: relative;
+        text-align: center;
+        width: $menu-item-width;
+
+        &.toggler {
+          width: 43px;
+        }
+        //&:hover > a,
+        //&.focus > a {}
+
+        @include level-two-list;
+
+        &:hover,
+        &.focus {
+          > ul {
+            left: auto;
+          }
         }
 
         a {
-            display: block;
-            height: inherit;
-            text-decoration: none;
+          margin: auto;
+          width: 100%;
+          border-radius: 20px;
+          transition: $hover-transition;
+
+          &:hover {
+            @include menu-item-hover;
+          }
         }
 
-        ul {
-            list-style: none;
-            margin: 0;
-            padding-left: 0;
-            // Toggled state.
-            @at-root .toggled#{&} {
-                display: block;
-            }
-
-            li {
-                position: relative;
-                text-align: center;
-                width: $menu-item-width;
-
-                &.toggler {
-                    width: 43px;
-                }
-                //&:hover > a,
-                //&.focus > a {}
-
-                @include level-two-list;
-
-                &:hover,
-                &.focus {
-                    > ul {
-                        left: auto;
-                    }
-                }
-
-                a {
-                    margin: auto;
-                    width: 100%;
-                    border-radius: 20px;
-                    transition: $hover-transition;
-
-                    &:hover {
-                        @include menu-item-hover;
-                    }
-                }
-
-                &.current-menu-item {
-                    a {
-                        @include menu-item-hover;
-                    }
-                }
-
-                //:hover > a,
-                //.focus > a {}
-
-                //a:hover,
-                //a.focus {}
-            }
+        &.current-menu-item {
+          a {
+            @include menu-item-hover;
+          }
         }
 
-        //.current_page_item > a,
-        //.current-menu-item > a,
-        //.current_page_ancestor > a,
-        //.current-menu-ancestor > a {}
+        //:hover > a,
+        //.focus > a {}
+
+        //a:hover,
+        //a.focus {}
+      }
     }
+
+    //.current_page_item > a,
+    //.current-menu-item > a,
+    //.current_page_ancestor > a,
+    //.current-menu-ancestor > a {}
+  }
 }
 
 // Site menu.
 .menu {
-    height: inherit;
+  height: inherit;
 
-    &:not(.mm-listview) {
-        padding-right: 1rem;
+  &:not(.mm-listview) {
+    padding-right: 1rem;
 
-        @include breakpoint(wordpress) {
-            padding: 1rem;
+    @include breakpoint(wordpress) {
+      padding: 1rem;
+    }
+  }
+
+  &-main-menu-container {
+    ul {
+      list-style: none;
+
+      @include breakpoint(medium down) {
+        margin: 0;
+        float: right;
+
+        li {
+          &:not(.toggler) {
+            display: none;
+          }
+
+          @include vertical-center;
+          right: 1rem;
         }
+      }
+    }
+  }
+
+  &-item {
+    &:not(:first-child):not(:last-child) {
+      margin: 0 1px;
     }
 
-    &-main-menu-container {
-        ul {
-            list-style: none;
+    a:not(.mm-listitem__text):not(.mm-listitem__btn) { // stylelint-disable-line
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: $font__post-content;
+      color: #fff;
 
-            @include breakpoint(medium down) {
-                margin: 0;
-                float: right;
-
-                li {
-                    &:not(.toggler) {
-                        display: none;
-                    }
-
-                    @include vertical-center;
-                    right: 1rem;
-                }
-            }
-        }
+      &:hover {
+        @include menu-item-hover;
+      }
     }
-
-    &-item {
-        &:not(:first-child):not(:last-child) {
-            margin: 0 1px;
-        }
-
-        a:not(.mm-listitem__text):not(.mm-listitem__btn) { // stylelint-disable-line
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-            font-family: $font__post-content;
-            color: #fff;
-
-            &:hover {
-                @include menu-item-hover;
-            }
-        }
-    }
+  }
 }
 
 // Mobile App Menu
 .mm {
-    $border: 1px solid var(--wp--preset--color--white);
+  $border: 1px solid var(--wp--preset--color--white);
 
-    &-menu {
-        .admin-bar & {
-            margin-top: 2rem;
-        }
+  &-menu {
+    .admin-bar & {
+      margin-top: 2rem;
     }
+  }
 
-    &-menu,
-    &-listview {
-        background: theme-get(4);
-    }
+  &-menu,
+  &-listview {
+    background: theme-get(4);
+  }
 
-    &-btn--next::after,
-    &-btn--prev::before,
-    &-listitem,
-    &-navbar {
-        color: var(--wp--preset--color--white);
-    }
+  &-btn--next::after,
+  &-btn--prev::before,
+  &-listitem,
+  &-navbar {
+    color: var(--wp--preset--color--white);
+  }
 
-    &-btn--next::after,
-    &-btn--prev::before {
-        border: 2px solid var(--wp--preset--color--white);
-        border-bottom: none;
-        border-right: none;
-    }
+  &-btn--next::after,
+  &-btn--prev::before {
+    border: 2px solid var(--wp--preset--color--white);
+    border-bottom: none;
+    border-right: none;
+  }
 
-    &-searchfield__input input {
-        border: $border;
-    }
+  &-searchfield__input input {
+    border: $border;
+  }
 
-    &-listitem {
-        border-color: var(--wp--preset--color--white);
-    }
+  &-listitem {
+    border-color: var(--wp--preset--color--white);
+  }
 
-    &-listview {
-        border-top: $border;
-    }
+  &-listview {
+    border-top: $border;
+  }
 
-    &-navbar {
-        border-bottom: $border;
-    }
+  &-navbar {
+    border-bottom: $border;
+  }
 
-    &-navbars {
-        &--top {
-            border-bottom-color: var(--wp--preset--color--white);
-        }
+  &-navbars {
+    &--top {
+      border-bottom-color: var(--wp--preset--color--white);
     }
+  }
 }
 
 // Mobile screen width.
 @include breakpoint(37.5em) {
-    .main-navigation ul {
-        display: flex;
-    }
+  .main-navigation ul {
+    display: flex;
+  }
 }
 
 .comment,
 .posts,
 .post {
-    &-navigation {
-        .site-main & {
-            margin: 0 0 1.5em;
-        }
-
-        .nav {
-            &-links {
-                display: flex;
-            }
-
-            &-previous {
-                flex: 1 0 50%;
-            }
-
-            &-next {
-                text-align: end;
-                flex: 1 0 50%;
-            }
-        }
+  &-navigation {
+    .site-main & {
+      margin: 0 0 1.5em;
     }
+
+    .nav {
+      &-links {
+        display: flex;
+      }
+
+      &-previous {
+        flex: 1 0 50%;
+      }
+
+      &-next {
+        text-align: end;
+        flex: 1 0 50%;
+      }
+    }
+  }
 }
 
 // Hide WP Admin Bar.
 @include breakpoint(medium down) {
-    #wpadminbar {
-        display: none;
-    }
+  #wpadminbar {
+    display: none;
+  }
 }

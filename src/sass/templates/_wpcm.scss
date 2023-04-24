@@ -15,136 +15,136 @@ $half-em: 0.5em;
 // Begin namespace.
 ///
 .wpcm {
-    &-row {
-        margin: auto;
-        max-width: $size__site-main-width !important;
-        height: inherit;
+  &-row {
+    margin: auto;
+    max-width: $size__site-main-width !important;
+    height: inherit;
+  }
+
+  &-column {
+    &:not(.flex):not(.relative):not(.pagination) {
+      width: 100%;
+      float: left;
+
+      @include breakpoint(medium) {
+        width: 50%;
+      }
+
+      &:last-of-type {
+        float: right;
+      }
     }
 
-    &-column {
-        &:not(.flex):not(.relative):not(.pagination) {
-            width: 100%;
-            float: left;
+    &.relative {
+      position: relative;
+    }
+  }
 
-            @include breakpoint(medium) {
-                width: 50%;
-            }
+  &_club,
+  &_match,
+  &_player,
+  &_team,
+  &_venue {
+    padding: {
+      left: 0;
+      right: 0;
+    };
 
-            &:last-of-type {
-                float: right;
-            }
-        }
-
-        &.relative {
-            position: relative;
-        }
+    .entry-title,
+    h2,
+    h3 {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: $half-em;
     }
 
-    &_club,
-    &_match,
-    &_player,
-    &_team,
-    &_venue {
-        padding: {
-            left: 0;
-            right: 0;
-        };
+    .entry-title {
+      @include breakpoint(mobile down) {
+        font-size: 1.6em;
+      }
+      font-weight: 900;
 
-        .entry-title,
-        h2,
-        h3 {
-            display: flex;
-            align-items: center;
-            margin: 0;
-            padding: $half-em;
-        }
-
-        .entry-title {
-            @include breakpoint(mobile down) {
-                font-size: 1.6em;
-            }
-            font-weight: 900;
-
-            .wp-post-image {
-                margin-right: 0.9375rem;
-                vertical-align: middle;
-            }
-        }
-
-        h2 {
-            @include breakpoint(mobile down) {
-                font-size: 1.25em;
-            }
-        }
-
-        table {
-            margin-bottom: 0;
-
-            thead,
-            tfoot {
-                background: var(--background, $color__background-combo);
-            }
-
-            th,
-            .wpcm-subs-rows {
-                color: $white;
-            }
-        }
+      .wp-post-image {
+        margin-right: 0.9375rem;
+        vertical-align: middle;
+      }
     }
 
-    &_venue {
-        h3 {
-            @include text(center);
-        }
+    h2 {
+      @include breakpoint(mobile down) {
+        font-size: 1.25em;
+      }
     }
 
-    &-widget,
-    &-entry {
-        &-header,
-        &-content,
-        &-footer {
-            @include breakpoint(mobile down) {
-                font-size: 80%;
-            }
+    table {
+      margin-bottom: 0;
 
-            @include breakpoint(medium) {
-                font-size: 100%;
-            }
-        }
+      thead,
+      tfoot {
+        background: var(--background, $color__background-combo);
+      }
+
+      th,
+      .wpcm-subs-rows {
+        color: $white;
+      }
+    }
+  }
+
+  &_venue {
+    h3 {
+      @include text(center);
+    }
+  }
+
+  &-widget,
+  &-entry {
+    &-header,
+    &-content,
+    &-footer {
+      @include breakpoint(mobile down) {
+        font-size: 80%;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 100%;
+      }
+    }
+  }
+
+  &-entry-content {
+    padding: 0 $half-em $half-em;
+
+    @include breakpoint(medium) {
+      p {
+        @include text(justify);
+      }
     }
 
-    &-entry-content {
-        padding: 0 $half-em $half-em;
-
-        @include breakpoint(medium) {
-            p {
-                @include text(justify);
-            }
-        }
-
-        @include breakpoint(wordpress) {
-            padding: 0 0.9375em;
-        }
-
-        + hr + h3 {
-            margin-top: 0;
-        }
-
-        .wpcm-match-report & {
-            padding: {
-                left: 0;
-                right: 0;
-            }
-
-            @include breakpoint(medium down) {
-                .featured-image {
-                    margin: 0 -$half-em 1em;
-
-                    &__photographer {
-                        padding-right: $half-em;
-                    }
-                }
-            }
-        }
+    @include breakpoint(wordpress) {
+      padding: 0 0.9375em;
     }
+
+    + hr + h3 {
+      margin-top: 0;
+    }
+
+    .wpcm-match-report & {
+      padding: {
+        left: 0;
+        right: 0;
+      }
+
+      @include breakpoint(medium down) {
+        .featured-image {
+          margin: 0 -$half-em 1em;
+
+          &__photographer {
+            padding-right: $half-em;
+          }
+        }
+      }
+    }
+  }
 }

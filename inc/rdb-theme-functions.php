@@ -48,7 +48,7 @@ function rdb_file_version( $file ) {
  *
  * @since 1.0.0
  *
- * @param WP_Post|object $post Current post object. Defaults to global $post object.
+ * @param WP_Post|null $post Current post object. Defaults to global $post object.
  *
  * @return string Current post slug.
  */
@@ -108,7 +108,7 @@ function rdb_remote_get( $url, $assoc_array = false, $args = array() ) {
 
         $data = wp_remote_retrieve_body( $response );
 
-        if ( is_wp_error( $data ) ) {
+        if ( ! is_string( $data ) && is_wp_error( $data ) ) {
             return $data->get_error_message();
         }
 

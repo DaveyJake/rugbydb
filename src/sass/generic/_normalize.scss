@@ -61,10 +61,8 @@ hr {
  */
 
 pre {
-  font: {
-    family: monospace;
-    size: 1em;
-  }
+  font-family: monospace;
+  font-size: 1em;
 }
 
 // Text-level semantics
@@ -230,7 +228,7 @@ fieldset {
  * 1. Correct the text wrapping in Edge and IE.
  * 2. Correct the color inheritance from `fieldset` elements in IE.
  * 3. Remove the padding so developers are not caught out when they zero out
- *        `fieldset` elements in all browsers.
+ *    `fieldset` elements in all browsers.
  */
 
 legend {
@@ -342,10 +340,10 @@ template /* 1 */,
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
   }
 }
 
@@ -360,7 +358,7 @@ html {
   font-size: $global-font-size;
 
   &:focus-within {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
   }
 }
 
@@ -380,15 +378,15 @@ body {
   background: $body-background;
   color: $body-font-color;
   font: {
-    family: $body-font-family;
-    weight: $global-weight-normal;
+  family: $body-font-family;
+  weight: $global-weight-normal;
   }
   line-height: $font__line-height-body;
   text-rendering: optimizeSpeed;
 
   @if ( $body-antialiased ) {
-    -webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
-    -moz-osx-font-smoothing: grayscale; // sass-lint:disable-line no-vendor-prefixes
+  -webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
+  -moz-osx-font-smoothing: grayscale; // sass-lint:disable-line no-vendor-prefixes
   }
 }
 
@@ -425,7 +423,7 @@ select {
   img,
   embed,
   object {
-    max-width: none !important;
+  max-width: none !important;
   }
 }
 
@@ -458,6 +456,6 @@ pre {
 // Polymer 'paper' tag element shadow.
 [shadow] {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-        0 1px 5px 0 rgba(0, 0, 0, 0.12),
-        0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    0 1px 5px 0 rgba(0, 0, 0, 0.12),
+    0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }

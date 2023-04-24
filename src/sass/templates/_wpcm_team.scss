@@ -2,100 +2,100 @@ $unit: 1rem;
 
 #primary,
 .site-main {
-    min-height: inherit;
+  min-height: inherit;
 }
 
 .site-main {
-    .wpcm {
-        &-row:not(.site-info),
-        &-column {
-            display: flex;
-        }
-
-        &-row {
-            align-items: center;
-
-            &:not(.tabs-container) {
-                flex-direction: column;
-                justify-content: space-between;
-
-                @include breakpoint(medium) {
-                    flex-direction: row;
-                }
-            }
-        }
-
-        &-column {
-            flex-direction: column;
-        }
-
-        &_team {
-            .tabs {
-                &-container {
-                    margin-bottom: 0;
-                }
-
-                &-title {
-                    @include equal-width(2);
-                }
-            }
-        }
-
-        &-entry {
-            &-header {
-                @include wpcm-team-entry-header;
-            }
-
-            &-content {
-                @include wpcm-team-entry-content;
-            }
-
-            &-footer {
-                padding: 0;
-            }
-        }
-
-        &-team {
-            &-description {
-                @include wpcm-team-description;
-            }
-
-            &-select {
-                @include wpcm-team-select;
-            }
-        }
-
-        &-matches-list-info {
-            @include text(center);
-        }
+  .wpcm {
+    &-row:not(.site-info),
+    &-column {
+      display: flex;
     }
 
-    .dt {
-        &-foot,
-        &-head {
-            &-wpcm-row {
-                .dataTables_paginate { // stylelint-disable-line
-                    @include full-width;
-                }
-            }
+    &-row {
+      align-items: center;
+
+      &:not(.tabs-container) {
+        flex-direction: column;
+        justify-content: space-between;
+
+        @include breakpoint(medium) {
+          flex-direction: row;
         }
-
-        &-head-wpcm-row {
-            .dt-wpcm-column {
-                flex-direction: column;
-                padding: {
-                    top: 0.5rem;
-                    bottom: 0.25rem;
-                }
-
-                @include breakpoint(1128px) {
-                    flex-direction: row;
-                }
-
-                .dataTables_paginate { // stylelint-disable-line
-                    padding-top: 0.5rem;
-                }
-            }
-        }
+      }
     }
+
+    &-column {
+      flex-direction: column;
+    }
+
+    &_team {
+      .tabs {
+        &-container {
+          margin-bottom: 0;
+        }
+
+        &-title {
+          @include equal-width(2);
+        }
+      }
+    }
+
+    &-entry {
+      &-header {
+        @include wpcm-team-entry-header;
+      }
+
+      &-content {
+        @include wpcm-team-entry-content;
+      }
+
+      &-footer {
+        padding: 0;
+      }
+    }
+
+    &-team {
+      &-description {
+        @include wpcm-team-description;
+      }
+
+      &-select {
+        @include wpcm-team-select;
+      }
+    }
+
+    &-matches-list-info {
+      @include text(center);
+    }
+  }
+
+  .dt {
+    &-foot,
+    &-head {
+      &-wpcm-row {
+        .dataTables_paginate { // stylelint-disable-line
+          @include full-width;
+        }
+      }
+    }
+
+    &-head-wpcm-row {
+      .dt-wpcm-column {
+        flex-direction: column;
+        padding: {
+          top: 0.5rem;
+          bottom: 0.25rem;
+        }
+
+        @include breakpoint(1128px) {
+          flex-direction: row;
+        }
+
+        .dataTables_paginate { // stylelint-disable-line
+          padding-top: 0.5rem;
+        }
+      }
+    }
+  }
 }

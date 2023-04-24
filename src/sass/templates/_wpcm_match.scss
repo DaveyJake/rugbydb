@@ -1,6 +1,5 @@
 .wpcm {
   &-match {
-
     &-details table td.notes,
     &-info,
     &-meta,
@@ -309,8 +308,7 @@
       }
 
       // Dynamic positioning.
-      @each $side,
-      $pos in $position {
+      @each $side, $pos in $position {
         &[data-#{$side}*='united-states'] {
           &::#{$pos} {
             @include breakpoint(small only) {
@@ -483,8 +481,7 @@
       padding-top: $padding;
     }
 
-    @each $icon,
-    $dir in $icons {
+    @each $icon, $dir in $icons {
       &-#{$icon} {
         .icon {
           width: 17px;
@@ -492,10 +489,8 @@
           display: inline-block;
           padding: 0;
 
-          margin: {
-            bottom: -2px;
-            #{$dir}: 0;
-          }
+          margin-bottom: -2px;
+          margin-#{$dir}: 0;
         }
       }
     }

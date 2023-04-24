@@ -1,43 +1,43 @@
 .invisible {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .hide-for-mobile {
-    @include breakpoint(medium down) {
-        display: none !important;
-    }
+  @include breakpoint(medium down) {
+    display: none !important;
+  }
 }
 
 .show-for-mobile {
-    @include breakpoint(wordpress) {
-        display: none !important;
-    }
+  @include breakpoint(wordpress) {
+    display: none !important;
+  }
 }
 
 .hide-for-medium {
-    @include breakpoint(medium) {
-        display: none !important;
-    }
+  @include breakpoint(medium) {
+    display: none !important;
+  }
 }
 
 .show-for-medium {
-    @include breakpoint(mobile down) {
-        display: none !important;
-    }
+  @include breakpoint(mobile down) {
+    display: none !important;
+  }
 }
 
 .hide-for-large {
-    @include breakpoint(large) {
-        display: none !important;
-    }
+  @include breakpoint(large) {
+    display: none !important;
+  }
 }
 
 .show-for-large {
-    @include breakpoint(wordpress down) {
-        display: none !important;
-    }
+  @include breakpoint(wordpress down) {
+    display: none !important;
+  }
 }

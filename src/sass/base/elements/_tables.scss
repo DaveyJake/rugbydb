@@ -1,165 +1,165 @@
 $table-border: 1px solid $color__table-border;
 $table-padding: 0.5rem 0.625rem 0.625rem;
 $hover-background: (
-    thead: $color__thead-hover,
-    tbody: $color__tbody-hover,
-    tfoot: $color__tfoot-hover
+  thead: $color__thead-hover,
+  tbody: $color__tbody-hover,
+  tfoot: $color__tfoot-hover
 );
 
 table {
-    th,
-    td {
-        padding: $table-padding;
+  th,
+  td {
+    padding: $table-padding;
 
-        font-family: $font__post-title;
+    font-family: $font__post-title;
 
-        @include breakpoint(mobile down) {
-            font-size: 80%;
-        }
+    @include breakpoint(mobile down) {
+      font-size: 80%;
+    }
+  }
+
+  th {
+    font-weight: 600 !important;
+  }
+
+  td {
+    font-weight: 500;
+  }
+
+  thead,
+  tbody,
+  tfoot {
+    border: $table-border;
+  }
+
+  thead,
+  tfoot {
+    background: $color__blue;
+    color: $color__white;
+
+    tr {
+      background: transparent;
     }
 
     th {
-        font-weight: 600 !important;
+      font-weight: 600;
+      @include text(center);
     }
 
     td {
-        font-weight: 500;
+      text-align: left;
     }
+  }
+
+  tbody {
+    background-color: $color__table-background;
+
+    tr {
+      &:nth-child(even) {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  caption {
+    padding: $table-padding;
+    font-weight: 600;
+  }
+
+  &:not(.dataTable) { // stylelint-disable-line
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-bottom: 1rem;
 
     thead,
-    tbody,
     tfoot {
-        border: $table-border;
+      background-color: $color__table-background;
+      // background: $color__tbody;
+      color: $color__table-font;
     }
 
-    thead,
-    tfoot {
-        background: $color__blue;
-        color: $color__white;
-
-        tr {
-            background: transparent;
-        }
-
-        th {
-            font-weight: 600;
-            @include text(center);
-        }
-
-        td {
-            text-align: left;
-        }
+    &.scroll {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
     }
 
-    tbody {
-        background-color: $color__table-background;
-
-        tr {
-            &:nth-child(even) {
-                border-bottom: 0;
-            }
-        }
+    &.table-scroll {
+      overflow-x: auto;
     }
-
-    caption {
-        padding: $table-padding;
-        font-weight: 600;
-    }
-
-    &:not(.dataTable) { // stylelint-disable-line
-        border: 1px solid #ddd;
-        width: 100%;
-        margin-bottom: 1rem;
-
-        thead,
-        tfoot {
-            background-color: $color__table-background;
-            // background: $color__tbody;
-            color: $color__table-font;
-        }
-
-        &.scroll {
-            display: block;
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        &.table-scroll {
-            overflow-x: auto;
-        }
-        // stylelint-disable
-        &:not(.unstriped) {
-            tr {
-                &:nth-of-type(even) {
-                    &:hover {
-                        background-color: $color__tfoot-hover;
-                    }
-                }
-            }
-        }
-
-        &.unstriped {
-            tbody,
-            tbody tr {
-                background-color: $color__table-background;
-            }
-
-            tbody tr {
-                // border-bottom: 0;
-                border-bottom: $table-border;
-            }
-        }
-        // stylelint-enable
-    }
-
     // stylelint-disable
-    // &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
-    //     > .dtr-control:before {
-    //         line-height: 14px !important;
+    &:not(.unstriped) {
+      tr {
+        &:nth-of-type(even) {
+          &:hover {
+            background-color: $color__tfoot-hover;
+          }
+        }
+      }
+    }
 
-    //         @include breakpoint(large) {
-    //             line-height: 1rem !important;
-    //         }
-    //     }
-    // }
+    &.unstriped {
+      tbody,
+      tbody tr {
+        background-color: $color__table-background;
+      }
 
-    &.wpcm-subs-table {
-        // &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
-        //     > .dtr-control:before {
-        //         line-height: 18px !important;
-        //     }
-        // }
+      tbody tr {
+        // border-bottom: 0;
+        border-bottom: $table-border;
+      }
     }
     // stylelint-enable
+  }
+
+  // stylelint-disable
+  // &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
+  //   > .dtr-control:before {
+  //     line-height: 14px !important;
+
+  //     @include breakpoint(large) {
+  //       line-height: 1rem !important;
+  //     }
+  //   }
+  // }
+
+  &.wpcm-subs-table {
+    // &.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] {
+    //   > .dtr-control:before {
+    //     line-height: 18px !important;
+    //   }
+    // }
+  }
+  // stylelint-enable
 }
 
 // Table stack.
 @include breakpoint(wordpress down) {
-    table.stack {
-        thead,
-        tfoot {
-            display: none;
-        }
-
-        tr,
-        th,
-        td {
-            display: block;
-        }
-
-        tr {
-            &:not(.description) {
-                text-align: center;
-            }
-
-            th {
-                background: $color__blue;
-                color: $color__white;
-            }
-        }
-
-        td {
-            border-top: 0;
-        }
+  table.stack {
+    thead,
+    tfoot {
+      display: none;
     }
+
+    tr,
+    th,
+    td {
+      display: block;
+    }
+
+    tr {
+      &:not(.description) {
+        text-align: center;
+      }
+
+      th {
+        background: $color__blue;
+        color: $color__white;
+      }
+    }
+
+    td {
+      border-top: 0;
+    }
+  }
 }

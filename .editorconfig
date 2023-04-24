@@ -16,7 +16,7 @@ indent_style = space
 [*.{js,json,scss,yml}]
 indent_size = 2
 
-[*.php,*.xml.dist]
+[gulpfile.babel.js,*.php,*.xml.dist]
 indent_size = 4
 
 [*.xml.dist]

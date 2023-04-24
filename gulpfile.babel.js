@@ -10,8 +10,7 @@ import imagemin, {
     gifsicle,
     mozjpeg,
     optipng,
-    svgo
-}                        from 'gulp-imagemin';
+    svgo }               from 'gulp-imagemin';
 import run               from 'gulp-run-command/index.js';
 import autoprefixer      from 'autoprefixer';
 import browserSync       from 'browser-sync';
@@ -573,11 +572,11 @@ const UTIL = {
 };
 
 // JSON-to-SCSS & lint sass, javascript and PHP.
-gulp.task( 'json2scss', async () => run( 'npm run json2scss' )() );
-gulp.task( 'lint:scss', async () => run( 'npm run lint:scss' )() );
-gulp.task( 'lint:js', async () => run( 'npm run lint:js' )() );
-gulp.task( 'lint:php', async () => run( 'composer run-script lint:php' )() );
-gulp.task( 'lint:wpcs', async () => run( 'composer run-script lint:wpcs' )() );
+gulp.task( 'json2scss', async () => await run( 'npm run json2scss' )() );
+gulp.task( 'lint:scss', async () => await run( 'npm run lint:scss' )() );
+gulp.task( 'lint:js', async () => await run( 'npm run lint:js' )() );
+gulp.task( 'lint:php', async () => await run( 'composer run-script lint:php' )() );
+gulp.task( 'lint:wpcs', async () => await run( 'composer run-script lint:wpcs' )() );
 
 // Task actions.
 const { clean, copy, images, reload, server, watch, webpack, cleanStyleSheets, cleanJavaScript, sass, copyCss, purgecss } = UTIL;

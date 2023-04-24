@@ -5,8 +5,7 @@
     @include breakpoint(wordpress) {
       margin-top: $size__navbar-height--desktop;
 
-      .tax-wpcm_team & {
-        // stylelint-disable-line
+      .tax-wpcm_team & { // stylelint-disable-line
         margin-top: 0;
         padding-top: 0;
       }
@@ -21,7 +20,6 @@
 
 article {
   .entry {
-
     &-title,
     &-content {
       margin: 0;
@@ -32,7 +30,7 @@ article {
 
       @include breakpoint(medium) {
         padding: {
-          top: 0.5rme;
+          top: 0.5rem;
           left: 0.9375rem;
         }
       }

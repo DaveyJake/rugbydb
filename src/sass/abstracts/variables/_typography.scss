@@ -1,7 +1,7 @@
 $font__path: '/wp-content/themes/rugbydb/dist/fonts';
 @font-face {
-    font-family: USARugby; // stylelint-disable-line
-    src: url('#{$font__path}/AGLettericaCondL-BoldItalic.ttf') format('truetype');
+  font-family: USARugby; // stylelint-disable-line
+  src: url('#{$font__path}/AGLettericaCondL-BoldItalic.ttf') format('truetype');
 }
 
 $font__default: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif;

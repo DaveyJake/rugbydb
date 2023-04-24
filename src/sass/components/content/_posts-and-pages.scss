@@ -1,47 +1,47 @@
 .sticky {
-    display: block;
+  display: block;
 }
 
 .no-bullet {
-    &,
-    &s {
-        margin-left: 0;
-        list-style: none;
-    }
+  &,
+  &s {
+    margin-left: 0;
+    list-style: none;
+  }
 }
 
 .post,
 .page:not(.post-2145):not(.page-about):not(body) {
-    margin: 0 0 1.5em;
+  margin: 0 0 1.5em;
 }
 
 #post-3157 {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .updated:not(.published) {
-    display: none;
+  display: none;
 }
 
 .page-content,
 .entry-content,
 .entry-summary {
-    margin: 1.5em 0 0;
+  margin: 1.5em 0 0;
 }
 
 .page-links {
-    clear: both;
-    margin: 0 0 1.5em;
+  clear: both;
+  margin: 0 0 1.5em;
 }
 
 .dot {
-    line-height: 0.8;
-    font-size: 2em;
+  line-height: 0.8;
+  font-size: 2em;
 
-    &::before {
-        content: '\00B7';
-        font-family: $font__default;
-    }
+  &::before {
+    content: '\00B7';
+    font-family: $font__default;
+  }
 }
 
 // Foundation typography helpers.
@@ -52,33 +52,33 @@
 //   <h2>Subheading</h2>
 // </header>
 .subheader {
-    margin-top: $subheader-margin-top;
-    margin-bottom: $subheader-margin-bottom;
+  margin-top: $subheader-margin-top;
+  margin-bottom: $subheader-margin-bottom;
 
-    font-weight: $subheader-font-weight;
-    line-height: $subheader-lineheight;
-    color: $subheader-color;
+  font-weight: $subheader-font-weight;
+  line-height: $subheader-lineheight;
+  color: $subheader-color;
 }
 
 // Use to style an introductory lead, deck, blurb, etc.
 .lead {
-    font-size: $lead-font-size;
-    line-height: $lead-lineheight;
+  font-size: $lead-font-size;
+  line-height: $lead-lineheight;
 }
 
 // Use to style a large number to display a statistic
 .stat {
-    @include text(center);
-    line-height: 1;
-    font-size: 1em;
-    @include breakpoint(medium) {
-        font-size: 1.5em;
-    }
-    @include breakpoint(large) {
-        font-size: $stat-font-size;
-    }
+  @include text(center);
+  line-height: 1;
+  font-size: 1em;
+  @include breakpoint(medium) {
+    font-size: 1.5em;
+  }
+  @include breakpoint(large) {
+    font-size: $stat-font-size;
+  }
 
-    p + & {
-        margin-top: -1rem;
-    }
+  p + & {
+    margin-top: -1rem;
+  }
 }

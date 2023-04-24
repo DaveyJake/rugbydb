@@ -1,8 +1,8 @@
 .flex {
-    display: flex;
+  display: flex;
 
-    &-column {
-        @extend .flex;
-        flex-direction: column;
-    }
+  &-column {
+    @extend .flex;
+    flex-direction: column;
+  }
 }

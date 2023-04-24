@@ -38,7 +38,7 @@ if ( ! function_exists( 'rdb_body_open' ) ) :
      * @link https://core.trac.wordpress.org/ticket/12563
      */
     function rdb_body_open() {
-        do_action( 'rdb_body_open' );
+        do_action( 'wp_body_open' );
     }
 endif;
 

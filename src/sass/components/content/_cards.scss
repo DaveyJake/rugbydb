@@ -10,241 +10,241 @@ $meta-height: rem-calc(30px);
 $unit: rem-calc(10px);
 
 #primary {
-    @include breakpoint(wordpress) {
-        padding-top: rem-calc(8px);
-    }
+  @include breakpoint(wordpress) {
+    padding-top: rem-calc(8px);
+  }
 }
 
 #grid {
-    @include relative;
-    min-height: rem-calc(250px);
-    padding: 0;
+  @include relative;
+  min-height: rem-calc(250px);
+  padding: 0;
 
-    @include breakpoint(xxlarge) {
-        padding: $unit;
-    }
+  @include breakpoint(xxlarge) {
+    padding: $unit;
+  }
 }
 
 #scroll-status {
-    @include absolute-center;
+  @include absolute-center;
 
-    .page-load-status & {
-        @include absolute-top(1.25rem);
-    }
+  .page-load-status & {
+    @include absolute-top(1.25rem);
+  }
 
-    .absolute-bottom & {
-        @include absolute-bottom(-1.25rem);
-    }
+  .absolute-bottom & {
+    @include absolute-bottom(-1.25rem);
+  }
 }
 
 .card {
-    margin: $card-margin 0;
-    width: 100%;
-    max-height: $card-size;
-    filter: drop-shadow(0 1.5px 0 #fff);
+  margin: $card-margin 0;
+  width: 100%;
+  max-height: $card-size;
+  filter: drop-shadow(0 1.5px 0 #fff);
 
-    @include breakpoint(568px) {
-        width: 50%;
-    }
+  @include breakpoint(568px) {
+    width: 50%;
+  }
 
-    @include breakpoint(medium) {
-        width: 33%;
-    }
+  @include breakpoint(medium) {
+    width: 33%;
+  }
 
-    @include breakpoint(large) {
-        width: 25%;
-    }
+  @include breakpoint(large) {
+    width: 25%;
+  }
 
-    @include breakpoint(xlarge) {
-        width: 20%;
-    }
+  @include breakpoint(xlarge) {
+    width: 20%;
+  }
 
-    &__container {
-        position: relative;
-        width: $card-container-width;
-        height: inherit;
-        margin: auto;
-        background-color: $card-background;
+  &__container {
+    position: relative;
+    width: $card-container-width;
+    height: inherit;
+    margin: auto;
+    background-color: $card-background;
 
-        &__background {
-            position: absolute;
-            @include full;
-            overflow: hidden;
+    &__background {
+      position: absolute;
+      @include full;
+      overflow: hidden;
 
-            span {
-                @include absolute-center;
-                width: 100%;
-                height: 100%;
-                background: {
-                    position: center;
-                    repeat: no-repeat;
-                    size: cover;
-                }
-                filter: blur(25px);
-                z-index: 0;
-            }
-        }
-
-        &__title {
-            @include absolute-bottom;
-            padding: 0.25rem 0;
-            @include full-width;
-            background-color: $color__background-header;
-            @include text(center);
-
-            @each $card-type in $card-types {
-                @if venue == $card-type {
-                    font-size: 0.7em;
-                } @else if player == $card-type {
-                    font-size: 0.9em;
-                }
-            }
-
-            z-index: 2;
-        }
-    }
-
-    &__image,
-    &__meta {
-        @include full-width;
-    }
-
-    &__image {
-        @include relative;
-        display: block;
-        height: $image-height;
+      span {
+        @include absolute-center;
+        width: 100%;
+        height: 100%;
         background: {
-            repeat: no-repeat;
-            position: {
-                x: center;
-                y: -30px;
-            }
-            size: cover;
+          position: center;
+          repeat: no-repeat;
+          size: cover;
         }
-        z-index: 1;
-
-        &[style*='placeholder.png'] {
-            background-size: cover;
-        }
-
-        &[style*='ainuu'],
-        &[style*='al-jiboori'],
-        &[style*='augspurger'],
-        &[style*='audsley'],
-        &[style*='blaine-scully'],
-        &[style*='boyer'],
-        &[style*='brache'],
-        &[style*='brakeley'],
-        &[style*='cam-dolan'],
-        &[style*='campbell'],
-        &[style*='civetta'],
-        &[style*='cleaveland'],
-        &[style*='danny-barrett'],
-        &[style*='dink'],
-        &[style*='erwin-righter'],
-        &[style*='faanana-schultz'],
-        &[style*='fawsitt'],
-        &[style*='fish'],
-        &[style*='giessen'],
-        &[style*='hanco'],
-        &[style*='haas'],
-        &[style*='hilterbrand'],
-        &[style*='hooley'],
-        &[style*='Jack-Patrick'],
-        &[style*='kilifi'],
-        &[style*='kort-schubert'],
-        &[style*='lamositele'],
-        &[style*='landry'],
-        &[style*='lasike'],
-        &[style*='maclellan'],
-        &[style*='magie'],
-        &[style*='manoa'],
-        &[style*='maughan'],
-        &[style*='macginty'],
-        &[style*='mehan'],
-        &[style*='moore'],
-        &[style*='mullen'],
-        &[style*='paddy-ryan'],
-        &[style*='paul-emerick'],
-        &[style*='payne'],
-        &[style*='peterson'],
-        &[style*='phillip-clark'],
-        &[style*='pifeleti'],
-        &[style*='pinkelman'],
-        &[style*='quill'],
-        &[style*='shaun-davies'],
-        &[style*='tadhg-leader'],
-        &[style*='taufetee'],
-        &[style*='teo'],
-        &[style*='thretton-palamo'],
-        &[style*='tilden'],
-        &[style*='tony-lamborn'],
-        &[style*='wenglewski'],
-        &[style*='whippy'] {
-            background-position-y: 0;
-        }
-    }
-
-    &__meta {
-        height: $meta-height;
-        @include text(center);
-    }
-
-    &__spacer {
-        padding: 10px 10px 15px;
-        height: rem-calc(235px);
-
-        [data-order*='Thailand'] & {
-            background-color: #000334;
-        }
-
-        [data-order*='Association'] &,
-        [data-order*='Bond'] &,
-        [data-order*='Confed'] &,
-        [data-order*='Fed'] &,
-        [data-order*='Féd'] &,
-        [data-order*='Union'] &,
-        [data-order*='Unión'] &,
-        [data-order*='Verband'] & {
-            background-color: #bcbcbc;
-        }
+        filter: blur(25px);
+        z-index: 0;
+      }
     }
 
     &__title {
-        margin: 0;
-        color: $white;
+      @include absolute-bottom;
+      padding: 0.25rem 0;
+      @include full-width;
+      background-color: $color__background-header;
+      @include text(center);
+
+      @each $card-type in $card-types {
+        @if venue == $card-type {
+          font-size: 0.7em;
+        } @else if player == $card-type {
+          font-size: 0.9em;
+        }
+      }
+
+      z-index: 2;
+    }
+  }
+
+  &__image,
+  &__meta {
+    @include full-width;
+  }
+
+  &__image {
+    @include relative;
+    display: block;
+    height: $image-height;
+    background: {
+      repeat: no-repeat;
+      position: {
+        x: center;
+        y: -30px;
+      }
+      size: cover;
+    }
+    z-index: 1;
+
+    &[style*='placeholder.png'] {
+      background-size: cover;
     }
 
-    &.staff {
-        .card {
-            &__image {
-                background-size: cover;
-            }
-        }
-
-        // stylelint-disable
-        [title='Dennis Storer'] {
-            .card__image {
-                background-position-y: rem-calc(-17px);
-            }
-        }
-
-        [title="Eddie O'Sullivan"] {
-            .card__image {
-                background-position-y: 0;
-            }
-        }
-
-        [title='Mike Friday'] {
-            .card__image {
-                background-position-y: -$unit;
-            }
-        }
-
-        [title='Tom Billups'] {
-            .card__image {
-                background-position-y: 0;
-            }
-        }
+    &[style*='ainuu'],
+    &[style*='al-jiboori'],
+    &[style*='augspurger'],
+    &[style*='audsley'],
+    &[style*='blaine-scully'],
+    &[style*='boyer'],
+    &[style*='brache'],
+    &[style*='brakeley'],
+    &[style*='cam-dolan'],
+    &[style*='campbell'],
+    &[style*='civetta'],
+    &[style*='cleaveland'],
+    &[style*='danny-barrett'],
+    &[style*='dink'],
+    &[style*='erwin-righter'],
+    &[style*='faanana-schultz'],
+    &[style*='fawsitt'],
+    &[style*='fish'],
+    &[style*='giessen'],
+    &[style*='hanco'],
+    &[style*='haas'],
+    &[style*='hilterbrand'],
+    &[style*='hooley'],
+    &[style*='Jack-Patrick'],
+    &[style*='kilifi'],
+    &[style*='kort-schubert'],
+    &[style*='lamositele'],
+    &[style*='landry'],
+    &[style*='lasike'],
+    &[style*='maclellan'],
+    &[style*='magie'],
+    &[style*='manoa'],
+    &[style*='maughan'],
+    &[style*='macginty'],
+    &[style*='mehan'],
+    &[style*='moore'],
+    &[style*='mullen'],
+    &[style*='paddy-ryan'],
+    &[style*='paul-emerick'],
+    &[style*='payne'],
+    &[style*='peterson'],
+    &[style*='phillip-clark'],
+    &[style*='pifeleti'],
+    &[style*='pinkelman'],
+    &[style*='quill'],
+    &[style*='shaun-davies'],
+    &[style*='tadhg-leader'],
+    &[style*='taufetee'],
+    &[style*='teo'],
+    &[style*='thretton-palamo'],
+    &[style*='tilden'],
+    &[style*='tony-lamborn'],
+    &[style*='wenglewski'],
+    &[style*='whippy'] {
+      background-position-y: 0;
     }
+  }
+
+  &__meta {
+    height: $meta-height;
+    @include text(center);
+  }
+
+  &__spacer {
+    padding: 10px 10px 15px;
+    height: rem-calc(235px);
+
+    [data-order*='Thailand'] & {
+      background-color: #000334;
+    }
+
+    [data-order*='Association'] &,
+    [data-order*='Bond'] &,
+    [data-order*='Confed'] &,
+    [data-order*='Fed'] &,
+    [data-order*='Féd'] &,
+    [data-order*='Union'] &,
+    [data-order*='Unión'] &,
+    [data-order*='Verband'] & {
+      background-color: #bcbcbc;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    color: $white;
+  }
+
+  &.staff {
+    .card {
+      &__image {
+        background-size: cover;
+      }
+    }
+
+    // stylelint-disable
+    [title='Dennis Storer'] {
+      .card__image {
+        background-position-y: rem-calc(-17px);
+      }
+    }
+
+    [title="Eddie O'Sullivan"] {
+      .card__image {
+        background-position-y: 0;
+      }
+    }
+
+    [title='Mike Friday'] {
+      .card__image {
+        background-position-y: -$unit;
+      }
+    }
+
+    [title='Tom Billups'] {
+      .card__image {
+        background-position-y: 0;
+      }
+    }
+  }
 }

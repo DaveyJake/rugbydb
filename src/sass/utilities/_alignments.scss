@@ -1,47 +1,47 @@
 .alignleft {
-    @include breakpoint(medium) {
-        // rtl:ignore
-        float: left;
+  @include breakpoint(medium) {
+    // rtl:ignore
+    float: left;
 
-        // rtl:ignore
-        margin-right: 1.5em;
-        margin-bottom: 1.5em;
+    // rtl:ignore
+    margin-right: 1.5em;
+    margin-bottom: 1.5em;
 
-        width: 47%;
-    }
+    width: 47%;
+  }
 }
 
 .alignright {
-    @include breakpoint(medium) {
-        // rtl:ignore
-        float: right;
+  @include breakpoint(medium) {
+    // rtl:ignore
+    float: right;
 
-        // rtl:ignore
-        margin-left: 1.5em;
-        margin-bottom: 1.5em;
+    // rtl:ignore
+    margin-left: 1.5em;
+    margin-bottom: 1.5em;
 
-        width: 47%;
-    }
+    width: 47%;
+  }
 }
 
 .aligncenter {
-    clear: both;
+  clear: both;
 
-    @include center-block;
+  @include center-block;
 
-    margin-bottom: 1.5em;
+  margin-bottom: 1.5em;
 }
 
 $directions: left center right;
 @each $dir in $directions {
-    .text-#{$dir} {
-        text-align: $dir;
-    }
+  .text-#{$dir} {
+    text-align: $dir;
+  }
 }
 
 $positions: absolute relative fixed;
 @each $p in $positions {
-    .#{$p} {
-        position: $p;
-    }
+  .#{$p} {
+    position: $p;
+  }
 }

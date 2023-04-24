@@ -20,12 +20,12 @@
 // @return {bool} True if list. False if not.
 ///
 @function is-list($variable) {
-    // Just in case a list is surrounded by quotes.
-    @if type-of($variable) == string {
-        $variable: unquote($variable);
-    }
+  // Just in case a list is surrounded by quotes.
+  @if type-of($variable) == string {
+    $variable: unquote($variable);
+  }
 
-    @return type-of($variable) == list;
+  @return type-of($variable) == list;
 }
 
 ///
@@ -37,9 +37,9 @@
 // @return {mixed} The value from `theme.json` SCSS map.
 ///
 @function theme-get($nth: 1, $key: 'color') {
-    $palette: map-deep-get($theme, 'settings', 'color', 'palette');
+  $palette: map-deep-get($theme, 'settings', 'color', 'palette');
 
-    @return map-get(nth($palette, $nth), $key);
+  @return map-get(nth($palette, $nth), $key);
 }
 
 ///
@@ -48,9 +48,9 @@
 // @param number $opacity Default 0.5.
 ///
 @function transparent-white($opacity: 0.5) {
-    $str: 'rgba(255, 255, 255, #{$opacity})';
+  $str: 'rgba(255, 255, 255, #{$opacity})';
 
-    @return unquote($str);
+  @return unquote($str);
 }
 
 
@@ -63,59 +63,59 @@
 
 // Absolute bottom.
 @mixin absolute-bottom($bottom: 0) {
-    position: absolute;
-    top: auto;
-    bottom: $bottom;
-    @content;
+  position: absolute;
+  top: auto;
+  bottom: $bottom;
+  @content;
 }
 
 // Absolute top.
 @mixin absolute-top($top: 0) {
-    position: absolute;
-    top: $top;
-    bottom: auto;
-    @content;
+  position: absolute;
+  top: $top;
+  bottom: auto;
+  @content;
 }
 
 ///
 // Borders.
 //
 // @param string $direction Accepts 'all', 'vertical', 'horizontal'.
-// @param list   $args      Border style short-hand.
+// @param list   $args    Border style short-hand.
 ///
 @mixin border($direction: all, $style: '1px solid #000') {
-    @if $direction == vertical {
-        border: {
-            top: unquote($style);
-            bottom: unquote($style);
-        }
-    } @else if $direction == horizontal {
-        border: {
-            left: unquote($style);
-            right: unquote($style);
-        }
-    } @else {
-        border: unquote($style);
+  @if $direction == vertical {
+    border: {
+      top: unquote($style);
+      bottom: unquote($style);
     }
+  } @else if $direction == horizontal {
+    border: {
+      left: unquote($style);
+      right: unquote($style);
+    }
+  } @else {
+    border: unquote($style);
+  }
 }
 
 ///
 // Border radius.
 //
-// @param {string} $dir    Accepts 'top', 'bottom', 'left', 'right',
-//                         'horizontal', 'vertical', 'tb', 'lr'.
+// @param {string} $dir  Accepts 'top', 'bottom', 'left', 'right',
+//             'horizontal', 'vertical', 'tb', 'lr'.
 // @param {number} $radius Number output in px.
 ///
 @mixin border-radius($dir: null, $radius: 0) {
-    @if ($dir == top or $dir == bottom or $dir == vertical or $dir == tb) {
-        border-#{$dir}-left-radius: $radius;
-        border-#{$dir}-right-radius: $radius;
-    } @else if ($dir == left or $dir == right or $dir == horizontal or $dir == lr) {
-        border-top-#{$dir}-radius: $radius;
-        border-bottom-#{$dir}-radius: $radius;
-    } @else {
-        border-radius: $radius;
-    }
+  @if ($dir == top or $dir == bottom or $dir == vertical or $dir == tb) {
+    border-#{$dir}-left-radius: $radius;
+    border-#{$dir}-right-radius: $radius;
+  } @else if ($dir == left or $dir == right or $dir == horizontal or $dir == lr) {
+    border-top-#{$dir}-radius: $radius;
+    border-bottom-#{$dir}-radius: $radius;
+  } @else {
+    border-radius: $radius;
+  }
 }
 
 ///
@@ -125,18 +125,18 @@
 // @param string $expression Mathematical expression.
 ///
 @mixin calc($property, $expression) {
-    #{$property}: calc(#{$expression});
+  #{$property}: calc(#{$expression});
 }
 
 // Center block.
 @mixin center-block {
-    display: block;
-    margin: auto;
+  display: block;
+  margin: auto;
 }
 
 // Column width with margin.
 @mixin column-width($columns, $columns__margin, $numberColumns: 3) {
-    width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
+  width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
 }
 
 ///
@@ -145,12 +145,12 @@
 // @param string $url Path to image.
 ///
 @mixin element-background($url) {
-    background: {
-        image: url($url);
-        repeat: no-repeat;
-        position: center center;
-        size: contain;
-    }
+  background: {
+    image: url($url);
+    repeat: no-repeat;
+    position: center center;
+    size: contain;
+  }
 }
 
 ///
@@ -159,172 +159,172 @@
 // @param {number} $elements Total number of elements.
 ///
 @mixin equal-width($elements: 4) {
-    width: calc(100% / $elements);
+  width: calc(100% / $elements);
 }
 
 // Flexbox.
 @mixin flex($justify-content: center, $align-content: center, $align-items: flex-start) {
-    display: flex;
-    justify-content: $justify-content;
-    align: {
-        content: $align-content;
-        items: $align-items;
-    }
-    @content;
+  display: flex;
+  justify-content: $justify-content;
+  align: {
+    content: $align-content;
+    items: $align-items;
+  }
+  @content;
 }
 
 // Flex between.
 @mixin flex-between {
-    @include flex(space-between);
+  @include flex(space-between);
 }
 
 // Flex center.
 @mixin flex-center {
-    @include flex($align-items: center);
+  @include flex($align-items: center);
 }
 
 // Flex column.
 @mixin flex-column {
-    display: flex;
-    flex-direction: column;
-    @content;
+  display: flex;
+  flex-direction: column;
+  @content;
 }
 
 // Flex evenly.
 @mixin flex-evenly {
-    @include flex(space-evenly);
+  @include flex(space-evenly);
 }
 
 // Float element.
 @mixin float($dir) {
-    float: $dir;
+  float: $dir;
 }
 
 // Full
 @mixin full {
-    @include full-width;
-    @include full-height;
+  @include full-width;
+  @include full-height;
 }
 
 // Center element full-width.
 @mixin full-center-width {
-    margin: auto;
-    max-width: $size__site-main-width;
+  margin: auto;
+  max-width: $size__site-main-width;
 }
 
 // Full Height.
 @mixin full-height {
-    height: 100%;
+  height: 100%;
 }
 
 // Full Width.
 @mixin full-width {
-    width: 100%;
+  width: 100%;
 }
 
 // Half Width.
 @mixin half-width {
-    width: 50%;
+  width: 50%;
 }
 
 // Horizontal spacing.
 @mixin horizontal-space($type, $value) {
-    @include spacing($type, 'horizontal', $value);
+  @include spacing($type, 'horizontal', $value);
 }
 
 // Level 2 List.
 @mixin level-two-list {
-    ul {
-        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-        float: left;
-        position: absolute;
-        top: 100%;
+  ul {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+    float: left;
+    position: absolute;
+    top: 100%;
+    left: -999em;
+    z-index: 99999;
+
+    li {
+      ul {
         left: -999em;
-        z-index: 99999;
+        top: 0;
+      }
 
-        li {
-            ul {
-                left: -999em;
-                top: 0;
-            }
-
-            &:hover,
-            &.focus {
-                > ul {
-                    display: block;
-                    left: auto;
-                }
-            }
+      &:hover,
+      &.focus {
+        > ul {
+          display: block;
+          left: auto;
         }
+      }
     }
+  }
 }
 
 // Relative element.
 @mixin relative {
-    position: relative;
-    @content;
+  position: relative;
+  @content;
 }
 
 // Clearfix.
 @mixin rdb-clearfix {
-    &::before,
-    &::after {
-        display: table;
-        content: ' ';
-    }
+  &::before,
+  &::after {
+    display: table;
+    content: ' ';
+  }
 
-    &::after {
-        clear: both;
-    }
+  &::after {
+    clear: both;
+  }
 }
 
 ///
 // Directional spacing.
 //
-// @param {string}      $space-type Accepts 'margin' or 'padding'.
-// @param {string}      $direction  Accepts 'top', 'right', 'bottom', 'left',
-//                                  'horizontal' or 'vertical'.
-// @param {number|list} $values     Accepts a single number or a list of numbers.
+// @param {string}    $space-type Accepts 'margin' or 'padding'.
+// @param {string}    $direction  Accepts 'top', 'right', 'bottom', 'left',
+//                  'horizontal' or 'vertical'.
+// @param {number|list} $values   Accepts a single number or a list of numbers.
 ///
 @mixin spacing($space-type, $direction, $values) {
-    @if is-list($values) {
-        #{$space-type}: unquote($values);
-    } @else {
-        @if $direction == 'horizontal' {
-            #{$space-type}: {
-                left: $values;
-                right: $values;
-            }
-        } @else if $direction == 'vertical' {
-            #{$space-type}: {
-                top: $values;
-                bottom: $values;
-            }
-        }
+  @if is-list($values) {
+    #{$space-type}: unquote($values);
+  } @else {
+    @if $direction == 'horizontal' {
+      #{$space-type}: {
+        left: $values;
+        right: $values;
+      }
+    } @else if $direction == 'vertical' {
+      #{$space-type}: {
+        top: $values;
+        bottom: $values;
+      }
     }
+  }
 }
 
 ///
 // Text-align
 //
 // @param string $dir Accepts 'left', 'center', 'right'. Only use when need to
-//                    override third-party library.
+//          override third-party library.
 ///
 @mixin text($dir: left) {
-    text-align: $dir !important;
+  text-align: $dir !important;
 }
 
 // Typekit: Industry.
 @mixin typekit-industry {
-    font: {
-        family: industry, sans-serif;
-        style: normal;
-    }
+  font: {
+    family: industry, sans-serif;
+    style: normal;
+  }
 }
 
 // Vertical spacing.
 @mixin vertical-space($type, $value) {
-    @include spacing($type, 'vertical', $value);
+  @include spacing($type, 'vertical', $value);
 }
 
 
@@ -345,56 +345,56 @@
 // @return string Corrected color.
 ///
 @function club-colors($primary, $secondary) {
-    $fallback: $color__white;
+  $fallback: $color__white;
 
-    $lightness: (lightness(#{$primary}) - lightness(#{$secondary}));
+  $lightness: (lightness(#{$primary}) - lightness(#{$secondary}));
 
-    @if ($primary == $fallback) {
-        @return $secondary;
-    } @else if ($secondary == $fallback) {
-        @return $primary;
-    } @else if ($lightness > 0) {
-        @return $primary;
-    } @else {
-        @return $secondary;
-    }
+  @if ($primary == $fallback) {
+    @return $secondary;
+  } @else if ($secondary == $fallback) {
+    @return $primary;
+  } @else if ($lightness > 0) {
+    @return $primary;
+  } @else {
+    @return $secondary;
+  }
 }
 
 // Chosen dropdown filters.
 @mixin dropdown-spacing {
-    float: left;
-    margin: 0.5%;
+  float: left;
+  margin: 0.5%;
 }
 
 // Menu item hover.
 @mixin menu-item-hover {
-    background: $color__white;
-    color: darken($color__blue, 5%) !important;
-    transition: $hover-transition;
+  background: $color__white;
+  color: darken($color__blue, 5%) !important;
+  transition: $hover-transition;
 }
 
 // No wrap white-space.
 @mixin nowrap {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 // Score block.
 @mixin score-block {
-    position: relative;
-    width: 145px;
-    height: 120px;
-    line-height: 1.4;
+  position: relative;
+  width: 145px;
+  height: 120px;
+  line-height: 1.4;
 
-    background: $color__background-body;
-    color: $color__white;
-    font-size: 1.7em;
-    font: {
-        family: industry, sans-serif;
-        weight: 900;
-    }
+  background: $color__background-body;
+  color: $color__white;
+  font-size: 1.7em;
+  font: {
+    family: industry, sans-serif;
+    weight: 900;
+  }
 
-    @include breakpoint(medium) {
-        font-size: 1.5em;
-    }
-    z-index: 9;
+  @include breakpoint(medium) {
+    font-size: 1.5em;
+  }
+  z-index: 9;
 }

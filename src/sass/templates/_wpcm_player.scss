@@ -3,7 +3,6 @@ $image-width: calc(100% - #{$meta-width});
 
 .wpcm {
   &_player {
-
     th,
     td {
       white-space: nowrap;
@@ -151,7 +150,6 @@ $image-width: calc(100% - #{$meta-width});
   }
 
   &-pa-table {
-
     th,
     td {
       @include text(center);

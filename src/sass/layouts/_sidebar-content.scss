@@ -1,24 +1,24 @@
 .site {
-    display: grid;
-    grid-template-columns: ($size__site-sidebar) auto;
-    grid-template-areas: 'header header' 'sidebar main' 'footer footer';
+  display: grid;
+  grid-template-columns: ($size__site-sidebar) auto;
+  grid-template-areas: 'header header' 'sidebar main' 'footer footer';
 
-    &-header {
-        grid-area: header;
-    }
+  &-header {
+    grid-area: header;
+  }
 
-    &-main {
-        grid-area: main;
-        overflow: hidden; // Resolves issue with <pre> elements forcing full width.
-    }
+  &-main {
+    grid-area: main;
+    overflow: hidden; // Resolves issue with <pre> elements forcing full width.
+  }
 
-    &-footer {
-        grid-area: footer;
-    }
+  &-footer {
+    grid-area: footer;
+  }
 }
 
 .widget-area {
-    grid-area: sidebar;
+  grid-area: sidebar;
 }
 
 // No sidebar.

@@ -1,45 +1,45 @@
 .tabs {
-    @include flex(space-evenly);
-    margin-bottom: 0;
-    padding-left: 0;
-    width: $size__site-main-width;
-    background: $color__white;
+  @include flex(space-evenly);
+  margin-bottom: 0;
+  padding-left: 0;
+  width: $size__site-main-width;
+  background: $color__white;
 
-    &-container {
-        margin-bottom: 1.5em;
-        overflow-x: auto;
+  &-container {
+    margin-bottom: 1.5em;
+    overflow-x: auto;
+  }
+
+  &-title {
+    position: relative;
+    width: calc(100% / 6);
+    height: rem-calc(56px);
+    background: $color__red;
+    @include text(center);
+
+    a {
+      @include absolute-center;
+      padding: 1em 0;
+      @include full-width;
+      color: $color__white;
+      white-space: nowrap;
     }
 
-    &-title {
-        position: relative;
-        width: calc(100% / 6);
-        height: rem-calc(56px);
-        background: $color__red;
-        @include text(center);
+    &.is-active {
+      background: $color__background-main;
 
-        a {
-            @include absolute-center;
-            padding: 1em 0;
-            @include full-width;
-            color: $color__white;
-            white-space: nowrap;
-        }
-
-        &.is-active {
-            background: $color__background-main;
-
-            a {
-                color: $color__red;
-                font-weight: 700;
-            }
-        }
+      a {
+        color: $color__red;
+        font-weight: 700;
+      }
     }
+  }
 
-    &-panel {
-        display: none;
+  &-panel {
+    display: none;
 
-        &.is-active {
-            display: block;
-        }
+    &.is-active {
+      display: block;
     }
+  }
 }

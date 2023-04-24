@@ -1,168 +1,168 @@
 // stylelint-disable
 .dataTable {
-    &s {
-        &_wrapper,
-        &_paginate {
-            @include breakpoint(767px down) {
-                margin-top: 0 !important;
-            }
-        }
-
-        &_filter,
-        &_paginate {
-            font-size: 72.5%;
-
-            @include breakpoint(medium) {
-                font-size: 90%;
-            }
-
-            @include breakpoint(large) {
-                width: 50%;
-                font-size: 91%;
-            }
-        }
-
-        &_wrapper {
-            .flex {
-                align-items: center;
-
-                &:not([id^='front-page-match-']) {
-                    @include breakpoint(wordpress down) {
-                        flex-direction: column;
-                    }
-                }
-
-                @include breakpoint(large) {
-                    justify-content: center;
-                }
-            }
-        }
-
-        &_empty {
-            vertical-align: middle;
-
-            img {
-                height: 1rem;
-            }
-        }
-
-        &_filter {
-            margin-bottom: 0 !important;
-            @include text(center);
-
-            label {
-                @include full-width;
-            }
-
-            input {
-                margin: 0 !important;
-                width: calc(100% - 12px);
-
-                &:active,
-                &:focus {
-                    background: $color__white;
-                }
-
-                &:focus,
-                &:focus-visible {
-                    outline: none !important;
-                }
-
-                &:-moz-focus-inner {
-                    border: 0;
-                }
-            }
-        }
-
-        &_paginate {
-            float: none !important;
-            margin-top: 0;
-            padding-bottom: 0.25em;
-            @include text(center);
-        }
+  &s {
+    &_wrapper,
+    &_paginate {
+      @include breakpoint(767px down) {
+        margin-top: 0 !important;
+      }
     }
+
+    &_filter,
+    &_paginate {
+      font-size: 72.5%;
+
+      @include breakpoint(medium) {
+        font-size: 90%;
+      }
+
+      @include breakpoint(large) {
+        width: 50%;
+        font-size: 91%;
+      }
+    }
+
+    &_wrapper {
+      .flex {
+        align-items: center;
+
+        &:not([id^='front-page-match-']) {
+          @include breakpoint(wordpress down) {
+            flex-direction: column;
+          }
+        }
+
+        @include breakpoint(large) {
+          justify-content: center;
+        }
+      }
+    }
+
+    &_empty {
+      vertical-align: middle;
+
+      img {
+        height: 1rem;
+      }
+    }
+
+    &_filter {
+      margin-bottom: 0 !important;
+      @include text(center);
+
+      label {
+        @include full-width;
+      }
+
+      input {
+        margin: 0 !important;
+        width: calc(100% - 12px);
+
+        &:active,
+        &:focus {
+          background: $color__white;
+        }
+
+        &:focus,
+        &:focus-visible {
+          outline: none !important;
+        }
+
+        &:-moz-focus-inner {
+          border: 0;
+        }
+      }
+    }
+
+    &_paginate {
+      float: none !important;
+      margin-top: 0;
+      padding-bottom: 0.25em;
+      @include text(center);
+    }
+  }
 }
 
 table.dataTable {
-    width: 99.9%;
+  width: 99.9%;
 
-    .control {
-        &::before {
-            line-height: 0.845 !important;
+  .control {
+    &::before {
+      line-height: 0.845 !important;
+    }
+  }
+
+  th,
+  td {
+    white-space: nowrap !important;
+  }
+
+  &:not(#all-matches) {
+    th,
+    td {
+      &:not(.control) {
+        width: 50% !important;
+
+        @include breakpoint(medium) {
+          width: 33.3333% !important;
         }
+
+        @include breakpoint(large) {
+          width: 25% !important;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &.even {
+        background-color: $color__table-border;
+      }
+
+      &.child ul.dtr-details > li {
+        padding-top: 0.5em !important;
+      }
     }
 
     th,
     td {
-        white-space: nowrap !important;
+      padding: {
+        top: 0 !important;
+        bottom: 0 !important;
+      }
+      font-size: 87.5%;
     }
 
-    &:not(#all-matches) {
-        th,
-        td {
-            &:not(.control) {
-                width: 50% !important;
-
-                @include breakpoint(medium) {
-                    width: 33.3333% !important;
-                }
-
-                @include breakpoint(large) {
-                    width: 25% !important;
-                }
-            }
+    td:not(.control) {
+      .inline-cell {
+        @include relative {
+          width: 33%;
+          height: rem-calc(36px);
         }
+
+        .icon,
+        .result {
+          @include absolute-center;
+        }
+      }
     }
+  }
 
-    tbody {
-        tr {
-            &.even {
-                background-color: $color__table-border;
-            }
+  .fixture-result {
+    flex-direction: row !important;
+    justify-content: space-between;
 
-            &.child ul.dtr-details > li {
-                padding-top: 0.5em !important;
-            }
-        }
-
-        th,
-        td {
-            padding: {
-                top: 0 !important;
-                bottom: 0 !important;
-            }
-            font-size: 87.5%;
-        }
-
-        td:not(.control) {
-            .inline-cell {
-                @include relative {
-                    width: 33%;
-                    height: rem-calc(36px);
-                }
-
-                .icon,
-                .result {
-                    @include absolute-center;
-                }
-            }
-        }
+    @include breakpoint(medium) {
+      justify-content: space-evenly;
     }
+  }
 
-    .fixture-result {
-        flex-direction: row !important;
-        justify-content: space-between;
-
-        @include breakpoint(medium) {
-            justify-content: space-evenly;
-        }
+  &.no-footer {
+    .dataTables_empty {
+      img {
+        margin-bottom: 7px;
+      }
     }
-
-    &.no-footer {
-        .dataTables_empty {
-            img {
-                margin-bottom: 7px;
-            }
-        }
-    }
+  }
 }

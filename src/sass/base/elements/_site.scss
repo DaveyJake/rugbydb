@@ -2,110 +2,110 @@ $cards: opponents players staff;
 $cpts: player match venue;
 
 .site {
-    &-header {
-        background: $color__background-header;
-        border-bottom: 1px solid $color__border-header;
-        position: fixed;
-        top: 0;
-        @include full-width;
-        height: $size__navbar-height;
-        z-index: 5;
+  &-header {
+    background: $color__background-header;
+    border-bottom: 1px solid $color__border-header;
+    position: fixed;
+    top: 0;
+    @include full-width;
+    height: $size__navbar-height;
+    z-index: 5;
+
+    @include breakpoint(wordpress) {
+      height: $size__navbar-height--desktop;
+
+      .admin-bar & {
+        top: $size__adminbar;
+      }
+    }
+
+    &.mh {
+      &-unpinned {
+        top: -$size__navbar-height;
 
         @include breakpoint(wordpress) {
-            height: $size__navbar-height--desktop;
-
-            .admin-bar & {
-                top: $size__adminbar;
-            }
+          top: -$size__navbar-height--desktop;
         }
 
-        &.mh {
-            &-unpinned {
-                top: -$size__navbar-height;
+        will-change: transform, top;
+        transition: transform $nav-ease, top $nav-transition;
+      }
 
-                @include breakpoint(wordpress) {
-                    top: -$size__navbar-height--desktop;
-                }
+      &-pinned {
+        will-change: transform, top;
+        transition: transform $nav-ease, top $nav-transition;
+      }
+    }
+  }
 
-                will-change: transform, top;
-                transition: transform $nav-ease, top $nav-transition;
-            }
+  &-branding {
+    position: absolute;
+    top: 41%;
+    transform: translateY(-50%);
+    width: auto;
+    height: inherit;
+    margin-left: 10px;
 
-            &-pinned {
-                will-change: transform, top;
-                transition: transform $nav-ease, top $nav-transition;
-            }
-        }
+    @include breakpoint(wordpress) {
+      top: 50%;
     }
 
-    &-branding {
-        position: absolute;
-        top: 41%;
-        transform: translateY(-50%);
-        width: auto;
-        height: inherit;
-        margin-left: 10px;
-
-        @include breakpoint(wordpress) {
-            top: 50%;
-        }
-
-        @include breakpoint(1280px) {
-            margin-left: 2px;
-        }
-
-        sub {
-            color: $color__white;
-
-            @include breakpoint(medium down) {
-                margin-left: -1rem;
-            }
-        }
+    @include breakpoint(1280px) {
+      margin-left: 2px;
     }
 
-    &-main {
-        margin-top: 0;
-        @include breakpoint(wordpress) {
-            margin-top: $size__navbar-height--desktop;
-        }
-        @include full-center-width;
-        min-height: inherit;
-        background-color: $color__background-main;
-        box-shadow: 0 3px 20px rgba(0, 0, 0, 0.65), 0 0 7px rgba(0, 0, 0, 0.1) inset;
+    sub {
+      color: $color__white;
 
-        @each $page in $cards {
-            .page-#{$page} & {
-                background-color: $color__white;
-            }
-        }
+      @include breakpoint(medium down) {
+        margin-left: -1rem;
+      }
+    }
+  }
+
+  &-main {
+    margin-top: 0;
+    @include breakpoint(wordpress) {
+      margin-top: $size__navbar-height--desktop;
+    }
+    @include full-center-width;
+    min-height: inherit;
+    background-color: $color__background-main;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.65), 0 0 7px rgba(0, 0, 0, 0.1) inset;
+
+    @each $page in $cards {
+      .page-#{$page} & {
+        background-color: $color__white;
+      }
+    }
+  }
+
+  &-menu {
+    @include vertical-center;
+    right: 10px;
+
+    .toggle {
+      color: $color__background-main;
     }
 
-    &-menu {
-        @include vertical-center;
-        right: 10px;
-
-        .toggle {
-            color: $color__background-main;
-        }
-
-        @include breakpoint(wordpress) {
-            display: none;
-        }
+    @include breakpoint(wordpress) {
+      display: none;
     }
+  }
 
-    &-footer {
-        border-top: 1px solid $color__border-header;
-        @extend .text-center;
-        color: $color__background-main;
-        background: $color__background-header;
-        z-index: 3;
+  &-footer {
+    border-top: 1px solid $color__border-header;
+    @extend .text-center;
+    color: $color__background-main;
+    background: $color__background-header;
+    z-index: 3;
 
-        .site-info {
-            font-size: 0.8em;
+    .site-info {
+      font-size: 0.8em;
 
-            @include breakpoint(medium) {
-                font-size: 1em;
-            }
-        }
+      @include breakpoint(medium) {
+        font-size: 1em;
+      }
     }
+  }
 }
