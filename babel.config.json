@@ -10,7 +10,7 @@
           "proposals": true
         },
         "debug": true,
-        "exclude": ["plugin-transform-regenerator"],
+        "exclude": [],
         "forceAllTransforms": true,
         "targets": {
           "esmodules": true

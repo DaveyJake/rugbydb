@@ -5,20 +5,26 @@
  * @memberof utils
  *
  * @since 1.0.0
+ * @since 1.0.1 Removed global lodash import; replaced with individual functions.
  */
 
 import jQueryBridget from 'jquery-bridget';
 import Isotope from 'isotope-layout';
 import 'isotope-packery';
 import InfiniteScroll from 'infinite-scroll';
-import { _, $, rdb, wp } from './globals';
-import { helpers } from './helpers';
+import each from 'lodash/each';
+import includes from 'lodash/includes';
+import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
+import { $, rdb, wp } from './globals';
+import { Helpers } from './helpers';
+import { empty } from './php';
 
 InfiniteScroll.imagesLoaded = window.imagesLoaded;
 jQueryBridget( 'isotope', Isotope, $ );
 jQueryBridget( 'infiniteScroll', InfiniteScroll, $ );
 
-const { adminUrl, parseArgs } = helpers;
+const { adminUrl, parseArgs } = Helpers;
 
 /**
  * Begin Rugby class.
@@ -26,298 +32,306 @@ const { adminUrl, parseArgs } = helpers;
  * @since 1.0.0
  */
 class Rugby {
-    /**
-     * Primary constructor.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} route           Slug of requested post type.
-     * @param {object} args            Class arguments.
-     * @param {string} args.nonce      Generated nonce key.
-     * @param {bool}   args.collection Is the request for multiple items? Default true.
-     * @param {number} args.postId     Post ID of requested item.
-     * @param {string} args.postName   Post slug of the requested item.
-     * @param {string} args.venue      The venue slug.
-     * @param {string} args.grid       The grid attribute selector.
-     * @param {string} args.per_page   The items per page to retrieve.
-     * @param {string} args.page       The page number to retrieve.
-     *
-     * @return {Rugby} JSON response from API.
-     */
-    constructor( route = '', args = '' ) {
-        this.defaults = {
-            nonce: '',
-            collection: true,
-            postId: 0,
-            postName: '',
-            venue: '',
-            grid: '#grid',
-            per_page: '',
-            page: ''
-        };
+  /**
+   * @memberof Rugby
+   *
+   * @type {RugbyRequest} Request
+   */
+  Request = {
+    route: '',
+    nonce: '',
+    collection: true,
+    grid: '#grid',
+    page: 0,
+    perPage: 0,
+    postId: 0,
+    postName: '',
+    venue: '',
+  };
 
-        args = parseArgs( args, this.defaults );
+  /**
+   * Primary constructor.
+   *
+   * @since 1.0.0
+   * @since 1.0.1 Renamed `per_page` to `perPage`.
+   *
+   * @param {RugbyRequest} props Class arguments.
+   *
+   * @return {Rugby} JSON response from API.
+   */
+  constructor( props = {} ) {
+    props = parseArgs( props, this.Request );
 
-        this.route = route.match( /\// ) ? route.split( '/' ) : route;
-        this.team = route.match( /\// ) ? this.route[1] : '';
-        this.route = route.match( /\// ) ? this.route[0] : this.route; // eslint-disable-line
+    this.route = props.route.match( /\// ) ? props.route.split( '/' ) : props.route;
+    this.team = props.route.match( /\// ) ? this.route[1] : '';
+    this.route = props.route.match( /\// ) ? this.route[0] : this.route; // eslint-disable-line
 
-        this.nonce = ! _.isEmpty( args.nonce ) ? args.nonce : $( '#nonce' ).val();
-        this.venue = args.venue;
-        this.collection = args.collection;
-        this.postId = args.postId;
-        this.postName = args.postName;
-        this.grid = args.grid;
-        this.perPage = args.per_page;
-        this.page = args.page;
+    this.nonce = ! empty( props.nonce ) ? props.nonce : $( '#nonce' ).val();
+    this.collection = props.collection;
+    this.grid = props.grid;
+    this.page = props.page;
+    this.perPage = props.perPage;
+    this.postId = props.postId;
+    this.postName = props.postName;
+    this.venue = props.venue;
 
-        this.endpoint = Rugby._endpointMap( this.route );
+    this.endpoint = Rugby._endpointMap( this.route );
 
-        this._ajax();
+    this._ajax();
+  }
+
+  /**
+   * Make an AJAX request.
+   *
+   * @since 1.0.0
+   * @access private
+   *
+   * @todo Paginate player profile requests. Limit response to 20.
+   */
+  _ajax() {
+    const props = {
+      action: `get_${ this.endpoint }`,
+      route: this.route,
+      collection: this.collection,
+      nonce: this.nonce
+    };
+
+    if ( ! empty( this.team ) ) {
+      props.team = this.team;
     }
 
-    /**
-     * Make an AJAX request.
-     *
-     * @since 1.0.0
-     * @access private
-     *
-     * @todo Paginate player profile requests. Limit response to 20.
-     */
-    _ajax() {
-        const args = {
-            action: `get_${ this.endpoint }`,
-            route: this.route,
-            collection: this.collection,
-            nonce: this.nonce
-        };
-
-        if ( ! _.isEmpty( this.team ) ) {
-            args.team = this.team;
-        }
-
-        if ( ! _.isEmpty( this.venue ) ) {
-            args.venue = this.venue;
-        }
-
-        if ( ! _.isEmpty( this.postName ) ) {
-            args.post_name = this.postName;
-        }
-
-        if ( this.postId > 0 ) {
-            args.post_id = this.postId;
-        }
-
-        if ( ! _.isEmpty( this.perPage ) ) {
-            args.per_page = this.perPage;
-        }
-
-        if ( ! _.isEmpty( this.page ) ) {
-            args.page = this.page;
-        }
-
-        $.ajax({
-            url: adminUrl( 'admin-ajax.php' ),
-            data: args,
-            dataType: 'json',
-        })
-            .done( ( response ) => {
-                const isoTmpls = ['mens-eagles', 'womens-eagles', 'mens-sevens', 'womens-sevens', 'team-usa-men', 'team-usa-women', 'staff', 'venues', 'opponents']; // eslint-disable-line
-
-                if ( _.includes( isoTmpls, rdb.post_name ) || _.includes( isoTmpls, rdb.term_slug ) ) {
-                    return this._isoTmpls( response );
-                } else if ( 'match' === self.route && self.postId > 0 ) {
-                    return this._timelineTmpl( response.data );
-                }
-
-                return response.data;
-            })
-            .fail( ( xhr, textStatus, errorThrown ) => {
-                console.dir( xhr ); // eslint-disable-line
-                console.log( textStatus );
-                console.log( errorThrown );
-            })
-            .always( () => {
-                $( '#scroll-status' ).remove();
-            });
+    if ( ! empty( this.venue ) ) {
+      props.venue = this.venue;
     }
 
-    /**
-     * Parse JS templates.
-     *
-     * @since 1.0.0
-     * @access private
-     *
-     * @param {object} response AJAX API response data.
-     */
-    _isoTmpls( response ) {
-        const $selector = $( this.grid ).imagesLoaded( function() {
-            $selector.isotope({
-                itemSelector: '.card',
-                percentPosition: true,
-                getSortData: {
-                    order: '[data-order]'
-                },
-                sortBy: 'order',
-                layoutMode: 'packery',
-                packery: {
-                    columnWidth: '.card',
-                    gutter: 0
-                }
-            });
+    if ( ! empty( this.postName ) ) {
+      props.post_name = this.postName;
+    }
 
-            const tmpl     = $selector.data( 'tmpl' ),
-                  template = wp.template( tmpl );
+    if ( this.postId > 0 ) {
+      props.post_id = this.postId;
+    }
 
-            _.each( response.data, function( player ) {
-                const card = $( template( player ) );
+    if ( ! empty( this.perPage ) ) {
+      props.perPage = this.perPage;
+    }
 
-                $selector.append( card ).isotope( 'appended', card ).isotope();
-            });
-        });
+    if ( ! empty( this.page ) ) {
+      props.page = this.page;
+    }
 
-        const obj = [
-            {
-                postName: 'venues',
-                attrName: 'country'
-            },
-            {
-                postName: 'opponents',
-                attrName: 'group'
-            },
-            {
-                postName: 'players',
-                attrName: 'name'
-            }
+    $.ajax({
+      url: adminUrl( 'admin-ajax.php' ),
+      data: props,
+      dataType: 'json',
+    })
+      .done( ( response ) => {
+        const isoTmpls = [
+          'mens-eagles',
+          'womens-eagles',
+          'mens-sevens',
+          'womens-sevens',
+          'team-usa-men',
+          'team-usa-women',
+          'staff',
+          'venues',
+          'opponents'
         ];
 
-        _.each( obj, function( data ) {
-            return Rugby._filterTmpl( data, $selector );
-        });
-    }
-
-    /**
-     * Parse JS templates.
-     *
-     * @since 1.0.0
-     * @access private
-     *
-     * @param {JSON} data AJAX API response data.
-     */
-    _timelineTmpl( data ) {
-        if ( _.isString( data ) ) {
-            return;
+        if ( includes( isoTmpls, rdb.post_name ) || includes( isoTmpls, rdb.term_slug ) ) {
+          return this._isoTmpls( response );
+        } else if ( 'match' === props.route && props.postId > 0 ) {
+          return this._timelineTmpl( response.data );
         }
 
-        const $selector = $( '#rdb-match-timeline' ),
-              template  = wp.template( $selector.data( 'tmpl' ) ),
-              result    = template( data );
+        return response.data;
+      })
+      .fail( ( xhr, textStatus, errorThrown ) => {
+        console.dir( xhr ); // eslint-disable-line
+        console.log( textStatus );
+        console.log( errorThrown );
+      })
+      .always( () => {
+        $( '#scroll-status' ).remove();
+      });
+  }
 
-        return $selector.append( result );
+  /**
+   * Parse JS templates.
+   *
+   * @since 1.0.0
+   * @access private
+   *
+   * @param {Object<string, any>} response AJAX API response data.
+   */
+  _isoTmpls( response ) {
+    const $selector = $( this.grid ).imagesLoaded( function() {
+      $selector.isotope( {
+        itemSelector: '.card',
+        percentPosition: true,
+        getSortData: {
+          order: '[data-order]'
+        },
+        sortBy: 'order',
+        layoutMode: 'packery',
+        packery: {
+          columnWidth: '.card',
+          gutter: 0
+        }
+      });
+
+      const tmpl     = $selector.data( 'tmpl' ),
+            template = wp.template( tmpl );
+
+      each( response.data, function( player ) {
+        const card = $( template( player ) );
+
+        $selector.append( card ).isotope( 'appended', card ).isotope();
+      });
+    });
+
+    const obj = [
+      {
+        postName: 'venues',
+        attrName: 'country'
+      },
+      {
+        postName: 'opponents',
+        attrName: 'group'
+      },
+      {
+        postName: 'players',
+        attrName: 'name'
+      }
+    ];
+
+    each( obj, function( data ) {
+      return Rugby._filterTmpl( data, $selector );
+    });
+  }
+
+  /**
+   * Parse JS templates.
+   *
+   * @since 1.0.0
+   * @access private
+   *
+   * @param {JSON} data AJAX API response data.
+   */
+  _timelineTmpl( data ) {
+    if ( isString( data ) ) {
+      return;
     }
 
-    /**
-     * Map request to proper endpoint.
-     *
-     * @since 1.0.0
-     * @access private
-     * @static
-     *
-     * @param {string} request Rugby slug.
-     *
-     * @return {string} Correct slug.
-     */
-    static _endpointMap( request ) {
-        const term = {
-            club: 'union',
-            match: 'match',
-            staff: 'staff',
-            player: 'player',
-            opponent: 'union',
-            venue: 'venue',
-            wpcm_club: 'union',
-            wpcm_match: 'match',
-            wpcm_staff: 'staff',
-            wpcm_player: 'player',
-            wpcm_venue: 'venue'
-        };
+    const $selector = $( '#rdb-match-timeline' ),
+          template  = wp.template( $selector.data( 'tmpl' ) ),
+          result    = template( data );
 
-        const terms = {
-            club: 'unions',
-            match: 'matches',
-            staff: 'staff',
-            player: 'players',
-            opponent: 'unions',
-            venue: 'venues',
-            wpcm_club: 'unions',
-            wpcm_staff: 'staff',
-            wpcm_match: 'matches',
-            wpcm_player: 'players',
-            wpcm_venue: 'venues'
-        };
+    return $selector.append( result );
+  }
 
-        if ( this.collection && ! _.isUndefined( terms[ request ] ) ) {
-            return terms[ request ];
-        } else if ( ! _.isUndefined( term[ request ] ) ) {
-            return term[ request ];
-        }
+  /**
+   * Map request to proper endpoint.
+   *
+   * @since 1.0.0
+   * @access private
+   * @static
+   *
+   * @param {string} request Rugby slug.
+   *
+   * @return {string} Correct slug.
+   */
+  static _endpointMap( request ) {
+    const term = {
+      club: 'union',
+      match: 'match',
+      staff: 'staff',
+      player: 'player',
+      opponent: 'union',
+      venue: 'venue',
+      wpcm_club: 'union',
+      wpcm_match: 'match',
+      wpcm_staff: 'staff',
+      wpcm_player: 'player',
+      wpcm_venue: 'venue'
+    };
 
-        return request;
+    const terms = {
+      club: 'unions',
+      match: 'matches',
+      staff: 'staff',
+      player: 'players',
+      opponent: 'unions',
+      venue: 'venues',
+      wpcm_club: 'unions',
+      wpcm_staff: 'staff',
+      wpcm_match: 'matches',
+      wpcm_player: 'players',
+      wpcm_venue: 'venues'
+    };
+
+    if ( this.collection && false === isUndefined( terms[ request ] ) ) {
+      return terms[ request ];
+    } else if ( false === isUndefined( term[ request ] ) ) {
+      return term[ request ];
     }
 
-    /**
-     * Parse JS filters.
-     *
-     * @since 1.0.0
-     * @access private
-     * @static
-     *
-     * @param {object} data      Key-value pair.
-     * @param {jQuery} $selector The 'select' tag.
-     */
-    static _filterTmpl( data, $selector ) {
-        const isPage  = ( data.postName === rdb.post_name && `page-${ data.postName }.php` === rdb.template ),
-              isVenue = ( data.postName === rdb.term_name && 'taxonomy-wpcm_venue.php' === rdb.template );
+    return request;
+  }
 
-        if ( ! ( isPage || isVenue ) ) {
-            return;
-        }
+  /**
+   * Parse JS filters.
+   *
+   * @since 1.0.0
+   * @access private
+   * @static
+   *
+   * @param {Object<string, any>} data      Key-value pair.
+   * @param {jQuery}              $selector The 'select' tag.
+   */
+  static _filterTmpl( data, $selector ) {
+    const isPage  = ( data.postName === rdb.post_name && `page-${ data.postName }.php` === rdb.template ),
+          isVenue = ( data.postName === rdb.term_name && 'taxonomy-wpcm_venue.php' === rdb.template );
 
-        if ( rdb.is_mobile ) {
-            $( '.chosen_select' ).on( 'change', function() {
-                return Rugby.__filterTmpl( this.value, $selector, data );
-            });
-        } else {
-            $( '.chosen_select' ).on( 'change', function( e, params ) {
-                if ( _.isUndefined( params ) ) {
-                    return Rugby.__filterTmpl( e.target.value, $selector, data );
-                }
-
-                return Rugby.__filterTmpl( params.selected, $selector, data );
-            });
-        }
+    if ( ( isPage || isVenue ) === false ) {
+      return;
     }
 
-    /**
-     * Parse filter value.
-     *
-     * @since 1.0.0
-     * @access private
-     * @static
-     *
-     * @param {number|string} filterValue The selected value.
-     * @param {jQuery}        $selector   The 'select' tag.
-     * @param {object}        data        Object-literal containing values.
-     */
-    static __filterTmpl( filterValue, $selector, data ) {
-        if ( '*' === filterValue ) {
-            $selector.isotope({ filter: '*' });
-        } else {
-            const optNode = $( `option[value="${ filterValue }"]` ).text();
-
-            $selector.isotope({ filter: `[data-${ data.attrName }="${ filterValue }"], [data-order="${ optNode }"]` });
+    if ( rdb.is_mobile ) {
+      $( '.chosen_select' ).on( 'change', function() {
+        return Rugby.__filterTmpl( this.value, $selector, data );
+      });
+    } else {
+      $( '.chosen_select' ).on( 'change', function( e, params ) {
+        if ( isUndefined( params ) ) {
+          return Rugby.__filterTmpl( e.target.value, $selector, data );
         }
+
+        return Rugby.__filterTmpl( params.selected, $selector, data );
+      });
     }
+  }
+
+  /**
+   * Parse filter value.
+   *
+   * @since 1.0.0
+   * @access private
+   * @static
+   *
+   * @param {number|string}       filterValue The selected value.
+   * @param {jQuery}              $selector   The 'select' tag.
+   * @param {Object<string, any>} data        Object-literal containing values.
+   */
+  static __filterTmpl( filterValue, $selector, data ) {
+    if ( '*' === filterValue ) {
+      $selector.isotope( { filter: '*' });
+    } else {
+      const optNode = $( `option[value="${ filterValue }"]` ).text();
+
+      $selector.isotope( { filter: `[data-${ data.attrName }="${ filterValue }"], [data-order="${ optNode }"]` });
+    }
+  }
 }
 
 module.exports = { Rugby };

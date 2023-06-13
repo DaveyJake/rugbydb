@@ -200,7 +200,7 @@ function rdb_remove_class_method( ...$args ) {
             // Conditions.
             $conditions = array(
                 is_object( $filter_array_function[0] ),
-                ! empty( get_class( $filter_array_function[0] ) ),
+                ! empty( get_class( call_user_func( $filter_array_function[0] ) ) ),
                 ( $filter_array_function[1] === $method_name ),
             );
 

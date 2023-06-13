@@ -6,15 +6,15 @@ import 'Vendor/lettering';
  * @since 1.0.0
  */
 const logoLettering = function() {
-    $( '.logo > span' ).each( function() {
-        $( this ).lettering( 'words' ).children( 'span' ).lettering();
-    });
+  $( '.logo > span' ).each( function() {
+    $( this ).lettering( 'words' ).children( 'span' ).lettering();
+  });
 
-    $( '.logo > span > span span' ).each( function() {
-        const charClass = $( this ).text();
+  $( '.logo > span > span span' ).each( function() {
+    const charClass = $( this ).text();
 
-        $( this ).addClass( 'char-' + charClass );
-    });
+    $( this ).addClass( 'char-' + charClass );
+  });
 };
 
 module.exports = { logoLettering };

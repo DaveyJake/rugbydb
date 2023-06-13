@@ -4,7 +4,7 @@
  * @since 1.0.0
  */
 
-import { _ } from 'Utils';
+import { empty } from 'Utils';
 
 /**
  * Programmatically reveal images as they become available.
@@ -16,51 +16,51 @@ import { _ } from 'Utils';
  * @param {bool}          background Load as a background value.
  */
 const isotopeImagesReveal = function( $items, sortValue, background ) {
-    // Isotope instance
-    const iso = this.data( 'isotope' );
+  // Isotope instance
+  const iso = this.data( 'isotope' );
 
-    // `childNode` targets
-    const itemSelector = iso.options.itemSelector;
+  // `childNode` targets
+  const itemSelector = iso.options.itemSelector;
 
-    // hide by default
-    $items.hide();
+  // hide by default
+  $items.hide();
 
-    // append to container
-    this.append( $items );
+  // append to container
+  this.append( $items );
 
-    // For background images?
-    if ( ! _.isEmpty( background ) ) {
-        const element = background;
-        background = { background: element };
-    } else {
-        background = '';
+  // For background images?
+  if ( ! empty( background ) ) {
+    const element = background;
+    background = { background: element };
+  } else {
+    background = '';
+  }
+
+  // show progress load
+  $items.imagesLoaded( background ).progress( function( imgLoad, image ) {
+    // get item
+    // image is imagesLoaded class, not <img>, <img> is image.img
+    const $item = ! image.img ? itemSelector : $( image.img ).parents( itemSelector );
+
+    // un-hide item
+    $item.show();
+
+    // isotope does its thing
+    iso.appended( $item );
+
+    // sortBy
+    if ( ! empty( sortValue ) ) {
+      iso.arrange( { sortBy: sortValue } );
     }
 
-    // show progress load
-    $items.imagesLoaded( background ).progress( function( imgLoad, image ) {
-        // get item
-        // image is imagesLoaded class, not <img>, <img> is image.img
-        const $item = ! image.img ? itemSelector : $( image.img ).parents( itemSelector );
+    // Selector `class` for visible `$item`
+    $item.is( ':visible' ) ? $item.addClass( 'item' ) : $item.show(); // eslint-disable-line
 
-        // un-hide item
-        $item.show();
+    // BUGFIX: Prevent Vertical-Line Load
+    iso.layout();
+  } );
 
-        // isotope does its thing
-        iso.appended( $item );
-
-        // sortBy
-        if ( ! _.isEmpty( sortValue ) ) {
-            iso.arrange({ sortBy: sortValue });
-        }
-
-        // Selector `class` for visible `$item`
-        $item.is( ':visible' ) ? $item.addClass( 'item' ) : $item.show(); // eslint-disable-line
-
-        // BUGFIX: Prevent Vertical-Line Load
-        iso.layout();
-    });
-
-    return this;
+  return this;
 };
 
 module.exports = { isotopeImagesReveal };

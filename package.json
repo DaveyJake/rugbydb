@@ -19,9 +19,6 @@
     "Theme"
   ],
   "browser": {},
-  "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
-  },
   "dependencies": {
     "foundation-sites": "^6.7.4",
     "infinite-scroll": "^4.0.1",
@@ -35,13 +32,10 @@
     "yadcf": "^0.9.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
     "@babel/plugin-proposal-export-default-from": "^7.14.5",
-    "@babel/preset-env": "^7.15.6",
     "@babel/register": "^7.15.3",
     "@wordpress/scripts": "^17.1.0",
-    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "browser-sync": "^2.27.5",
     "chai": "^4.3.4",
@@ -76,6 +70,9 @@
     "webpack-stream": "^6.1.2"
   },
   "peerDependencies": {
+    "@babel/cli": "*",
+    "@babel/core": "*",
+    "@babel/preset-env": "*",
     "ansi-colors": "*",
     "autoprefixer": "*",
     "cssnano": "*",
@@ -96,7 +93,7 @@
     "json2scss": "json-to-scss ./theme.json ./src/sass/abstracts/_theme.scss --tt='    ' --p='$theme: ' --es='sq' --k='sq' --sk='family,font-family,fontfamily,stack,font-stack,fontstack,face,font-face,fontface,fontHeading,fontMenu'",
     "lint:scss": "wp-scripts lint-style './src/sass/**/*.scss'",
     "lint:js": "wp-scripts lint-js './src/js/**/*.js'",
-    "bundle": "dir-archiver --src . --dest ../_s.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist src style.css.map"
+    "bundle": "dir-archiver --src . --dest ../_s.zip --exclude .DS_Store .babelrc .editorconfig .eslintignore .eslintrc .git .gitattributes .github .gitignore .stylelintignore .stylelintrc.json .stylelintrc.yml .vscode README.md babel.config.json composer.json composer.lock config.yml gulpfile.babel.js node_modules vendor package-lock.json package.json rugbydb.sublime-project rugbydb.sublime-workspace rdb-config.sublime-workspace webpack.config.js .travis.yml phpcs.xml.dist src style.css.map"
   },
   "resolutions": {
     "uglify-es": "npm:terser"

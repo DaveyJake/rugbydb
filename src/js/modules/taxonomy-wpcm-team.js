@@ -1,5 +1,5 @@
 import { Foundation } from 'Vendor';
-import { _, $, rdb, helpers, wp, BREAKPOINTS, DT_LOADING, DTHelper } from 'Utils';
+import { _, $, rdb, Helpers, wp, BREAKPOINTS, DT_LOADING, DTHelpers } from 'Utils';
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -8,7 +8,7 @@ import { _, $, rdb, helpers, wp, BREAKPOINTS, DT_LOADING, DTHelper } from 'Utils
  *
  * @type {Function}
  */
-const { adminUrl, sanitizeTitle } = helpers;
+const { adminUrl, sanitizeTitle } = Helpers;
 window.sanitizeTitle = sanitizeTitle;
 
 /**
@@ -19,7 +19,7 @@ window.sanitizeTitle = sanitizeTitle;
 
 /* eslint-disable no-unused-vars, computed-property-spacing, new-cap, object-shorthand */
 
-class TaxWpcmTeam extends DTHelper {
+class TaxWpcmTeam extends DTHelpers {
     /**
      * Primary constructor.
      *
@@ -174,7 +174,7 @@ class TaxWpcmTeam extends DTHelper {
                 },
                 dataSrc: ( response ) => {
                     if ( ! response.success ) {
-                        return DTHelper.dtErrorHandler( this.$table );
+                        return DTHelpers.dtErrorHandler( this.$table );
                     }
 
                     let oldData = sessionStorage.allMatches;
@@ -197,19 +197,19 @@ class TaxWpcmTeam extends DTHelper {
                             ID: match.ID,
                             idStr: `match-${ match.ID }`,
                             competition: {
-                                display: DTHelper.competition( match ),
-                                filter: DTHelper.competition( match )
+                                display: DTHelpers.competition( match ),
+                                filter: DTHelpers.competition( match )
                             },
                             date: {
-                                display: DTHelper.formatDate( match.ID, match.date.GMT, match.links ),
+                                display: DTHelpers.formatDate( match.ID, match.date.GMT, match.links ),
                                 filter: match.season
                             },
                             fixture: {
-                                display: DTHelper.logoResult( match ),
-                                filter: DTHelper.opponent( match.fixture )
+                                display: DTHelpers.logoResult( match ),
+                                filter: DTHelpers.opponent( match.fixture )
                             },
                             venue: {
-                                display: DTHelper.venueLink( match.venue ),
+                                display: DTHelpers.venueLink( match.venue ),
                                 filter: match.venue.name
                             },
                             friendly: match.friendly ? 'friendly' : 'test',

@@ -7,19 +7,19 @@ import { rdb, $ } from 'Utils';
  * @since 1.0.0
  */
 const common = function() {
-    mmenu();
+  mmenu();
 
-    if ( ! rdb.is_front_page ) {
-        $( document ).foundation();
-    }
+  if ( ! rdb.is_front_page ) {
+    $( document ).foundation();
+  }
 
-    $.ajaxSetup({ cache: true });
+  $.ajaxSetup( { cache: true } );
 
-    if ( $.fn.DataTable || $.fn.dataTable ) {
-        $.extend( $.fn.dataTable.defaults, { lengthChange: false });
-    }
+  if ( $.fn.DataTable || $.fn.dataTable ) {
+    $.extend( $.fn.dataTable.defaults, { lengthChange: false } );
+  }
 
-    logoLettering();
+  logoLettering();
 };
 
 module.exports = { common };

@@ -1,4 +1,4 @@
-import { _, $, rdb, helpers, BREAKPOINTS, DT_LOADING, DTHelper } from 'Utils';
+import { _, $, rdb, Helpers, BREAKPOINTS, DT_LOADING, DTHelpers } from 'Utils';
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -7,7 +7,7 @@ import { _, $, rdb, helpers, BREAKPOINTS, DT_LOADING, DTHelper } from 'Utils';
  *
  * @type {Function}
  */
-const { adminUrl } = helpers;
+const { adminUrl } = Helpers;
 
 /**
  * Venue template.
@@ -17,7 +17,7 @@ const { adminUrl } = helpers;
 
 /* eslint-disable no-unused-vars, computed-property-spacing, new-cap, object-shorthand */
 
-class TaxWpcmVenue extends DTHelper {
+class TaxWpcmVenue extends DTHelpers {
     /**
      * Primary constructor.
      *
@@ -61,7 +61,7 @@ class TaxWpcmVenue extends DTHelper {
                 },
                 dataSrc: ( response ) => {
                     if ( ! response.success ) {
-                        return DTHelper.dtErrorHandler( this.$table );
+                        return DTHelpers.dtErrorHandler( this.$table );
                     }
 
                     const oldData = sessionStorage.allMatches,
@@ -80,16 +80,16 @@ class TaxWpcmVenue extends DTHelper {
                             ID: match.ID,
                             idStr: `match-${ match.ID }`,
                             competition: {
-                                display: DTHelper.competition( match ),
+                                display: DTHelpers.competition( match ),
                                 filter: match.competition.name
                             },
                             date: {
-                                display: DTHelper.formatDate( match.ID, match.date.GMT, match.permalink ),
+                                display: DTHelpers.formatDate( match.ID, match.date.GMT, match.permalink ),
                                 filter: match.season
                             },
                             fixture: {
-                                display: DTHelper.logoResult( match ),
-                                filter: DTHelper.opponent( match.description )
+                                display: DTHelpers.logoResult( match ),
+                                filter: DTHelpers.opponent( match.description )
                             },
                             outcome: match.outcome,
                             friendly: match.friendly,

@@ -13,6 +13,8 @@ globals:
   jQuery: true
   lodash: true
   Modernizr: readonly
+  Primitives: true
+  RugbyRequest: true
   wp: readonly
   tinymce: readonly
   _wpUtilSettings: readonly
@@ -32,8 +34,8 @@ parserOptions:
   ecmaFeatures:
     modules: true
     impliedStrict: true
-  ecmaVersion: 2020
-  requireConfigFile: false
+  ecmaVersion: latest
+  requireConfigFile: true
   sourceType: module
 rules:
   array-bracket-spacing: 0
@@ -69,10 +71,13 @@ rules:
         types: true
       - tag: return
         types: true
+  jsdoc/newline-after-description: 0
+  jsdoc/require-returns-check: 0
   jsdoc/tag-lines:
     - warn
     - any
-    - endLines: null
+    - startLines: 1
+      endLines: 0
       tags:
         param:
           lines: any
@@ -140,10 +145,14 @@ settings:
         - - '@'
           - ./src/js
   jsdoc:
+    definedTypes:
+      - RugbyRequest
     ignorePrivate: true
     preferredTypes:
       Array: array
-      boolean: bool
+      Boolean: booleam
+      Object: object
+      String: string
     tagNamePreference:
       virtual: abstract
       extends: augments

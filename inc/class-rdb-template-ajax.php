@@ -11,6 +11,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
 /**
  * Begin AJAX class template.
  *
@@ -134,13 +136,13 @@ class RDB_Template_AJAX {
      * @since 1.0.0
      */
     public function __construct() {
-        // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         if ( isset( $_REQUEST['nonce'] ) && isset( $_REQUEST['action'] ) ) {
-            $this->nonce  = $this->sanitize( $_REQUEST['nonce'] ); // phpcs:ignore
-            $this->action = $this->sanitize( $_REQUEST['action'] ); // phpcs:ignore
+            $this->action = $this->sanitize( $_REQUEST['action'] );
             $this->route  = preg_match( '/_/', $this->action ) ? preg_split( '/_/', $this->action )[1] : 'posts';
 
-            if ( wp_verify_nonce( $this->nonce, $this->action ) ) {
+            if ( wp_verify_nonce( $this->sanitize( $_REQUEST['nonce'] ), preg_split( '/_/', $this->action )[1] ) ) {
+                $this->nonce = $this->sanitize( $_REQUEST['nonce'] );
+
                 if ( isset( $_REQUEST['collection'] ) ) {
                     $this->collection = $this->sanitize( $_REQUEST['collection'] );
                 }
@@ -260,7 +262,7 @@ class RDB_Template_AJAX {
             } else {
                 $data = wp_remote_retrieve_body( $response );
 
-                if ( is_wp_error( $data ) ) {
+                if ( ! is_string( $data ) && is_wp_error( $data ) ) {
                     return $data->get_error_message();
                 } else {
                     set_transient( $transient, $data, YEAR_IN_SECONDS );
@@ -295,7 +297,7 @@ class RDB_Template_AJAX {
      * @param WP_REST_Response $data API response data sent to client.
      */
     private function check( $data ) {
-        return ( ! ( empty( $data ) || is_string( $data ) ) );
+        return ( false === ( empty( $data ) || is_string( $data ) ) );
     }
 
     /**

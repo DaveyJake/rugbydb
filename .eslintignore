@@ -1,5 +1,7 @@
 # System Files
 .DS_Store
+.vscode
+.niu
 
 # Files
 *.cjs
@@ -23,9 +25,8 @@ jquery.dataTables.yadcf.js
 .tailwindcssrc.*
 
 # Theme Dependency Files
-**/dev/**
-**/dist/**
-**/node_modules/**
-**/vendor/**
-**/_vendor/**
-
+dev
+dist
+node_modules
+vendor
+_vendor

@@ -7,8 +7,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-// phpcs:disable WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd,Squiz.Commenting.BlockComment.WrongEnd,Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace,Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose,Squiz.WhiteSpace.ControlStructureSpacing.LineAfterClose
-
 /**
  * Set the short initialization when AJAX requesting custom endpoints.
  *
@@ -399,6 +397,10 @@ function rdb_purge_term_transient( $term_id, $tt_id, $update ) {
 
     $endpoint = 'wp/v2/venues';
 
+    if ( $update ) {
+        $endpoint .= sprintf( '/%d', $term_id );
+    }
+
     $url       = rest_url( $endpoint );
     $transient = sanitize_title( $endpoint );
 
@@ -652,16 +654,16 @@ function rdb_schema_sports_event( $data = null ) {
             '@type'     => 'Place',
             'name'      => $venue_name,
             'address'   => $address,
-            'latitude'  => (float) $venue_meta['wpcm_latitude'][0],
-            'longitude' => (float) $venue_meta['wpcm_longitude'][0],
+            'latitude'  => $venue_meta['wpcm_latitude'][0],
+            'longitude' => $venue_meta['wpcm_longitude'][0],
         );
 
         // Venue capacity.
-        $data['maximumAttendeeCapacity'] = absint( $venue_cap );
+        $data['maximumAttendeeCapacity'] = $venue_cap;
 
         // Match attendance.
         if ( $is_played && $attendance > 0 ) {
-            $data['remainingAttendeeCapacity'] = absint( $venue_cap - $attendance );
+            $data['remainingAttendeeCapacity'] = ( $venue_cap - $attendance );
         }
 
         echo wp_kses_post( sprintf( '<script type="application/ld+json"> %s </script>', wp_json_encode( $data ) ) );
@@ -709,11 +711,11 @@ function rdb_schema_sports_event( $data = null ) {
         );
 
         // Venue capacity.
-        $data['maximumAttendeeCapacity'] = absint( $venue_cap );
+        $data['maximumAttendeeCapacity'] = $venue_cap;
 
         // Match attendance.
         if ( $is_played && $attendance > 0 ) {
-            $data['remainingAttendeeCapacity'] = absint( $venue_cap - $attendance );
+            $data['remainingAttendeeCapacity'] = ( $venue_cap - $attendance );
         }
 
         return $data;

@@ -15,10 +15,11 @@ src/css
 !WR/match/womens-sevens/*
 !WR/match/wr-utilities.php
 .DS_Store
+.niu
+.vscode
 *.bak
 *.sublime-*
 *.zip
-.niu
 *.coffee
 *.gif
 *.jpg

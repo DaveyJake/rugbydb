@@ -9,9 +9,9 @@
  * @since 1.0.0
  */
 
-// phpcs:disable Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace, Squiz.Commenting.LongConditionClosingComment.Missing, Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound, WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found
-
 defined( 'ABSPATH' ) || exit;
+
+/* phpcs:disable WPThemeReview.CoreFunctionality.NoDeregisterCoreScript.Found */
 
 /**
  * Begin RDB_Styles_Scripts class.
@@ -89,7 +89,6 @@ class RDB_Styles_Scripts {
      * @since 1.0.0
      */
     public function admin() {
-        // Primary theme JavaScript.
         wp_enqueue_script( 'rdb-admin-script', get_template_directory_uri() . '/admin/rdb-admin.js', array( 'jquery' ), rdb_file_version( 'admin/rdb-admin.js' ), true );
     }
 

@@ -7,8 +7,8 @@ import { sniper } from 'Utils';
  *
  * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
  *
- * @param {object} win Window object.
- * @param {jQuery} $   jQuery instance.
+ * @param {Object<string, any>} win Window object.
+ * @param {jQuery}              $   jQuery instance.
  */
 ( function( win, $ ) {
   const scope = {

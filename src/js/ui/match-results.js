@@ -7,13 +7,13 @@
  * @param {jQuery} $ jQuery instance.
  */
 ( function( $ ) {
-    const settings = {
-        destroy: true,
-        stateSave: false,
-        autoWidth: false,
-    };
+  const settings = {
+    destroy: true,
+    stateSave: false,
+    autoWidth: false,
+  };
 
-    if ( $.fn.DataTable ) {
-        $( '#match-results' ).DataTable( settings );
-    }
+  if ( $.fn.DataTable ) {
+    $( '#match-results' ).DataTable( settings );
+  }
 })( jQuery );
