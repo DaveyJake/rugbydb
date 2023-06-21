@@ -34,6 +34,8 @@ rules:
         - layer
         - tailwind
   scss/at-mixin-parentheses-space-before: never
+  scss/comment-no-empty: false
+  scss/no-global-function-names: false
   string-quotes: single
   unit-allowed-list:
     - px

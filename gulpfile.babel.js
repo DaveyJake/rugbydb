@@ -7,16 +7,15 @@ import { fileURLToPath } from 'url';
 import gulp              from 'gulp';
 import plugins           from 'gulp-load-plugins';
 import imagemin, {
-    gifsicle,
-    mozjpeg,
-    optipng,
-    svgo }               from 'gulp-imagemin';
+  gifsicle,
+  mozjpeg,
+  optipng,
+  svgo }                 from 'gulp-imagemin';
 import run               from 'gulp-run-command/index.js';
 import autoprefixer      from 'autoprefixer';
 import browserSync       from 'browser-sync';
 import colors            from 'ansi-colors';
 import cssnano           from 'cssnano';
-import dartSass          from 'sass';
 import log               from 'fancy-log';
 import named             from 'vinyl-named';
 import postcssImport     from 'postcss-easy-import';
@@ -110,12 +109,7 @@ const loadConfig = () => {
 
 // Load all Gulp plugins into one variable.
 const $ = plugins({
-    config: __dirname + '/package.json',
-    postRequireTransforms: {
-        sass: function( sass ) {
-            return sass( dartSass );
-        }
-    }
+    config: __dirname + '/package.json'
 });
 
 // Check for --production flag.

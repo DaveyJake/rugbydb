@@ -1,3 +1,6 @@
+// No sidebar.
+@import 'no-sidebar';
+
 .site {
   display: grid;
   grid-template-columns: ($size__site-sidebar) auto;
@@ -20,6 +23,3 @@
 .widget-area {
   grid-area: sidebar;
 }
-
-// No sidebar.
-@import 'no-sidebar';

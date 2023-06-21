@@ -1,18 +1,18 @@
+////
+/// WP Club Manager Globals
 ///
-// WP Club Manager Globals
-//
-// @namespace wpcm
-///
+/// @namespace wpcm
+////
 
 ///
-// Half-unit of measure.
-//
-// @var {number} $half-em Default 0.5em.
+/// Half-unit of measure.
+///
+/// @var {number} $half-em Default 0.5em.
 ///
 $half-em: 0.5em;
 
 ///
-// Begin namespace.
+/// Begin namespace.
 ///
 .wpcm {
   &-row {
