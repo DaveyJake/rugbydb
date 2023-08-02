@@ -502,7 +502,7 @@ class FrontPage extends DTHelpers {
         const api = this.api();
 
         const $teamFilters = $( '.team-filters' ),
-              $matchType = $teamFilters.find( '.match-type' );
+              $matchType   = $teamFilters.find( '.match-type' );
 
         $teamFilters.on( 'change', 'input[ name="wpcm_team" ]', function( e ) {
           $( `#${ e.currentTarget.value }` ).toggleClass( 'active' );
@@ -544,7 +544,7 @@ class FrontPage extends DTHelpers {
    * @since 1.0.0
    * @access private
    *
-   * @param {Object[  ]} responseData REST API response data.
+   * @param {Array.<Object>} responseData REST API response data.
    *
    * @return {string}  HTML sting of grouped options.
    */
