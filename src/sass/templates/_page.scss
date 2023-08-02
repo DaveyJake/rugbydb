@@ -3,7 +3,7 @@
 
   #primary {
     @include breakpoint(wordpress) {
-      margin-top: $size__navbar-height--desktop;
+      margin-top: $size-navbar-height--desktop;
 
       .tax-wpcm_team & { // stylelint-disable-line
         margin-top: 0;
@@ -13,7 +13,7 @@
 
     .ua-mobile &,
     .ua-tablet & {
-      margin-top: $size__navbar-height;
+      margin-top: $size-navbar-height;
     }
   }
 }

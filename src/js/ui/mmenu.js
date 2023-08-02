@@ -2,7 +2,6 @@
  * Mobile menu.
  *
  * @namespace mmenu
- * @memberof ui
  *
  * @since 1.0.0
  */

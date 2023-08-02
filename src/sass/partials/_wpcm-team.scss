@@ -1,9 +1,9 @@
+////
+/// Team players.
 ///
-// Team players.
-//
-// @param {number} $grid-space Default 2rem.
-// @param {number} $top        Default 0.5rem.
-///
+/// @param {number} $grid-space Default 2rem.
+/// @param {number} $top        Default 0.5rem.
+////
 @mixin wpcm-team-entry-content($grid-space: 2rem, $top: 0.5rem) {
   padding: 0 0;
 
@@ -42,9 +42,9 @@
   }
 }
 
-///
-// Team description.
-///
+////
+/// Team description.
+////
 @mixin wpcm-team-description {
   padding: 0.625rem;
 
@@ -63,12 +63,12 @@
   }
 }
 
+////
+/// Team entry header.
 ///
-// Team entry header.
-//
-// @param {color} $color Defaults to global white.
-///
-@mixin wpcm-team-entry-header($color: $color__white) {
+/// @param {color} $color Defaults to global white.
+////
+@mixin wpcm-team-entry-header($color: $color-white) {
   background: #001830;
   color: $color;
   @include text(center);
@@ -94,11 +94,11 @@
   }
 }
 
+////
+/// Team selector.
 ///
-// Team selector.
-//
-// @param {number} $space Defaults to global `$unit`.
-///
+/// @param {number} $space Defaults to global `$unit`.
+////
 @mixin wpcm-team-select($space: $unit) {
   width: 123px;
   margin-right: 0.5rem;

@@ -1,4 +1,4 @@
-// Text meant only for screen readers.
+/// Text meant only for screen readers.
 .screen-reader-text {
   border: 0;
   clip: rect(1px, 1px, 1px, 1px);
@@ -12,12 +12,12 @@
   word-wrap: normal !important; // Many screen reader/browser combinations announce broken words visually.
 
   &:focus {
-    background-color: $color__background-screen;
+    background-color: $color-background-screen;
     border-radius: 3px;
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
     clip: auto !important;
     clip-path: none;
-    color: $color__text-screen;
+    color: $color-text-screen;
     display: block;
     font-size: 0.875rem;
     font-weight: 700;
@@ -32,7 +32,7 @@
   }
 }
 
-// Do not show the outline on the skip link target.
+/// Do not show the outline on the skip link target.
 #primary[tabindex='-1']:focus {
   outline: 0;
 }

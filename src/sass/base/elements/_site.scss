@@ -3,37 +3,35 @@ $cpts: player match venue;
 
 .site {
   &-header {
-    background: $color__background-header;
-    border-bottom: 1px solid $color__border-header;
     position: fixed;
     top: 0;
+    height: $size-navbar-height;
     @include full-width;
-    height: $size__navbar-height;
+    border-bottom: 1px solid $color-border-header;
+    background: $color-background-header;
     z-index: 5;
 
     @include breakpoint(wordpress) {
-      height: $size__navbar-height--desktop;
+      height: $size-navbar-height--desktop;
 
       .admin-bar & {
-        top: $size__adminbar;
+        top: $size-adminbar;
       }
     }
 
     &.mh {
-      &-unpinned {
-        top: -$size__navbar-height;
-
-        @include breakpoint(wordpress) {
-          top: -$size__navbar-height--desktop;
-        }
-
+      &-unpinned,
+      &-pinned {
         will-change: transform, top;
         transition: transform $nav-ease, top $nav-transition;
       }
 
-      &-pinned {
-        will-change: transform, top;
-        transition: transform $nav-ease, top $nav-transition;
+      &-unpinned {
+        top: -$size-navbar-height;
+
+        @include breakpoint(wordpress) {
+          top: -$size-navbar-height--desktop;
+        }
       }
     }
   }
@@ -55,7 +53,7 @@ $cpts: player match venue;
     }
 
     sub {
-      color: $color__white;
+      color: $color-white;
 
       @include breakpoint(medium down) {
         margin-left: -1rem;
@@ -66,16 +64,16 @@ $cpts: player match venue;
   &-main {
     margin-top: 0;
     @include breakpoint(wordpress) {
-      margin-top: $size__navbar-height--desktop;
+      margin-top: $size-navbar-height--desktop;
     }
     @include full-center-width;
     min-height: inherit;
-    background-color: $color__background-main;
+    background-color: $color-background-main;
     box-shadow: 0 3px 20px rgba(0, 0, 0, 0.65), 0 0 7px rgba(0, 0, 0, 0.1) inset;
 
     @each $page in $cards {
       .page-#{$page} & {
-        background-color: $color__white;
+        background-color: $color-white;
       }
     }
   }
@@ -85,7 +83,7 @@ $cpts: player match venue;
     right: 10px;
 
     .toggle {
-      color: $color__background-main;
+      color: $color-background-main;
     }
 
     @include breakpoint(wordpress) {
@@ -94,10 +92,10 @@ $cpts: player match venue;
   }
 
   &-footer {
-    border-top: 1px solid $color__border-header;
-    @extend .text-center;
-    color: $color__background-main;
-    background: $color__background-header;
+    border-top: 1px solid $color-border-header;
+    background: $color-background-header;
+    color: $color-background-main;
+    @include text(center);
     z-index: 3;
 
     .site-info {

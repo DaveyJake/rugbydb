@@ -13,7 +13,7 @@ import { empty } from 'Utils';
  *
  * @param {jQuery}        $items     Array of elements.
  * @param {string|number} sortValue  Sort value.
- * @param {bool}          background Load as a background value.
+ * @param {boolean}       background Load as a background value.
  */
 const isotopeImagesReveal = function( $items, sortValue, background ) {
   // Isotope instance

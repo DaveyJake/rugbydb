@@ -1,23 +1,23 @@
+/// Heading and copied items.
+@import 'headings';
+@import 'copy';
+
 body,
 button,
 input,
 select,
 optgroup,
 textarea {
-  color: $color__text-main;
-  font-family: $font__main;
-  font-size: $size__site-main;
-  line-height: $font__line-height-body;
+  color: $color-text-main;
+  font-family: $font-main;
+  font-size: $size-site-main;
+  line-height: $font-line-height-body;
 }
 
-// Quotes.
+/// Quotes.
 blockquote {
   cite {
     display: inherit;
     @include text(right);
   }
 }
-
-// Heading and copied items.
-@import 'headings';
-@import 'copy';

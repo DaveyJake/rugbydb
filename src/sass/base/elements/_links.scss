@@ -1,18 +1,18 @@
 a {
-  color: $color__link;
+  color: $color-link;
 
   text-decoration: none;
   text-decoration-skip-ink: auto;
 
   &:visited {
-    color: $color__link-visited;
+    color: $color-link-visited;
   }
 
   .current-menu-item &,
   &:hover,
   &:focus,
   &:active {
-    color: $color__link-hover;
+    color: $color-link-hover;
   }
 
   &:focus {

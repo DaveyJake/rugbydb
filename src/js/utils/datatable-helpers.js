@@ -2,7 +2,6 @@
  * DataTables Helpers Functions.
  *
  * @namespace DTHelpers
- * @memberof utils
  *
  * @since 1.0.0
  */

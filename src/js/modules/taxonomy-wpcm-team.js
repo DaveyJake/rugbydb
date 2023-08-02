@@ -1,5 +1,9 @@
+import each from 'lodash/each';
+import isUndefined from 'lodash/isUndefined';
+import throttle from 'lodash/throttle';
+import unset from 'lodash/unset';
 import { Foundation } from 'Vendor';
-import { _, $, rdb, Helpers, wp, BREAKPOINTS, DT_LOADING, DTHelpers } from 'Utils';
+import { $, rdb, Helpers, wp, BREAKPOINTS, DT_LOADING, DTHelpers } from 'Utils';
 
 /**
  * JS version of WP's `admin_url` and `sanitize_title` PHP functions.
@@ -20,412 +24,408 @@ window.sanitizeTitle = sanitizeTitle;
 /* eslint-disable no-unused-vars, computed-property-spacing, new-cap, object-shorthand */
 
 class TaxWpcmTeam extends DTHelpers {
-    /**
-     * Primary constructor.
-     *
-     * @since 1.0.0
-     */
-    constructor() {
-        super();
+  /**
+   * Primary constructor.
+   *
+   * @since 1.0.0
+   */
+  constructor() {
+    super();
 
-        if ( 'taxonomy-wpcm_team.php' !== rdb.template ) {
-            return;
+    if ( 'taxonomy-wpcm_team.php' !== rdb.template ) {
+      return;
+    }
+
+    this.isoOps = {
+      itemSelector: '.card',
+      percentPosition: true,
+      getSortData: {
+        order: '[data-order]'
+      },
+      sortBy: 'order',
+      layoutMode: 'packery',
+      packery: {
+        columnWidth: '.card',
+        gutter: 0
+      }
+    };
+
+    this.$doc = $( document );
+
+    this.tabs = new Foundation.Tabs( $( `#${ rdb.term_slug }` ), {});
+
+    this.endpoint = 'players';
+    this.collection = true;
+    this.perPage = '25';
+
+    this.nonce = $( '#nonce' ).val();
+    this.nonce2 = $( '#nonce2' ).val();
+
+    this.$table = $( '.wpcm-matches-list' );
+
+    this.dropdown();
+    this._init();
+  }
+
+  /**
+   * Initialize class.
+   *
+   * @since 1.0.0
+   * @access private
+   */
+  _init() {
+    $( `#${ rdb.term_slug }` ).on( 'change.zf.tabs', ( e, context ) => {
+      this.players( context[0].childNodes[0].hash );
+      this.dataTable( context[0].childNodes[0].hash );
+    });
+  }
+
+  /**
+   * Team dropdown menu.
+   *
+   * @since 1.0.0
+   */
+  dropdown() {
+    // Dropdown team options.
+    const $select = $( '#team.chosen_select' );
+
+    if ( false === rdb.is_mobile ) {
+      // Chosen.js
+      $select.chosen({ disable_search: true, width: '123px' });
+
+      $select.on( 'change', function( e, param ) {
+        e.preventDefault();
+
+        window.location = `${ location.origin }/team/${ param.selected }`;
+      }).trigger( 'chosen:updated' );
+    } else {
+      $select.on( 'change', function( e ) {
+        e.preventDefault();
+
+        window.location = `${ location.origin }/team/${ this.value }`;
+      }).trigger( 'chosen:updated' );
+    }
+  }
+
+  /**
+   * Players tab.
+   *
+   * @since 1.0.0
+   *
+   * @param {string} hash The tab hash.
+   */
+  players( hash ) {
+    if ( '#players' !== hash ) {
+      return;
+    }
+
+    const $container = $( `${ hash } > .grid` ).isotope( this.isoOps );
+    const $filter    = $( '.filter .chosen_select' );
+    const filters    = {};
+
+    this._infScroll( $container );
+
+    $filter.chosen( { width: '96%', include_group_label_in_selected: true });
+
+    $( '.filters' ).on( 'change', ( evt, param ) => {
+      const group = $( evt.target ).parent().data( 'filter-group' );
+
+      filters[group] = param.selected;
+
+      if ( '*' === param.selected ) {
+        unset( filters, `${ group }` );
+      }
+
+      const filterValue = this._concatValues( filters );
+
+      $container.isotope( { filter: filterValue });
+    }).trigger( 'chosen:updated' );
+  }
+
+  /**
+   * DataTables configuration.
+   *
+   * @since 1.0.0
+   *
+   * @param {string} hash The tab hash.
+   */
+  dataTable( hash ) {
+    if ( '#matches' !== hash ) {
+      return;
+    }
+
+    // DOM instance.
+    const self = this;
+
+    // Column width.
+    const colWidth = '25%';
+
+    // No more error alerts.
+    $.fn.dataTable.ext.errMode = 'throw';
+
+    // DataTable initializer.
+    const table = this.$table.DataTable({ // eslint-disable-line
+      destroy: true,
+      autoWidth: false,
+      deferRender: true,
+      ajax: {
+        url: adminUrl( 'admin-ajax.php' ),
+        data: {
+          action: 'get_matches',
+          nonce: this.nonce2,
+          team: rdb.term_slug
+        },
+        dataSrc: ( response ) => {
+          if ( ! response.success ) {
+            return DTHelpers.dtErrorHandler( this.$table );
+          }
+
+          let oldData = sessionStorage.allMatches;
+
+          const newData = JSON.stringify( response.data );
+
+          if ( newData !== oldData ) {
+            sessionStorage.removeItem( 'allMatches' );
+            sessionStorage.setItem( 'allMatches', newData );
+
+            oldData = newData;
+          }
+
+          const responseData = JSON.parse( oldData );
+          const final        = [];
+
+          // Parse response.
+          each( responseData, ( match ) => {
+            const api = {
+              ID: match.ID,
+              idStr: `match-${ match.ID }`,
+              competition: {
+                display: DTHelpers.competition( match ),
+                filter: DTHelpers.competition( match )
+              },
+              date: {
+                display: DTHelpers.formatDate( match.ID, match.date.GMT, match.links ),
+                filter: match.season
+              },
+              fixture: {
+                display: DTHelpers.logoResult( match ),
+                filter: DTHelpers.opponent( match.fixture )
+              },
+              venue: {
+                display: DTHelpers.venueLink( match.venue ),
+                filter: match.venue.name
+              },
+              friendly: match.friendly ? 'friendly' : 'test',
+              label: match.competition.label,
+              neutral: match.venue.neutral,
+              sort: match.date.timestamp,
+              links: match.links
+            };
+
+            final.push( api );
+          });
+
+          return final;
         }
-
-        this.isoOps = {
-            itemSelector: '.card',
-            percentPosition: true,
-            getSortData: {
-                order: '[data-order]'
-            },
-            sortBy: 'order',
-            layoutMode: 'packery',
-            packery: {
-                columnWidth: '.card',
-                gutter: 0
-            }
-        };
-
-        this.$doc = $( document );
-
-        this.tabs = new Foundation.Tabs( $( `#${ rdb.term_slug }` ), {} );
-
-        this.endpoint = 'players';
-        this.collection = true;
-        this.perPage = '25';
-
-        this.nonce = $( '#nonce' ).val();
-        this.nonce2 = $( '#nonce2' ).val();
-
-        this.$table = $( '.wpcm-matches-list' );
-
-        this.dropdown();
-        this._init();
-    }
-
-    /**
-     * Initialize class.
-     *
-     * @since 1.0.0
-     * @access private
-     */
-    _init() {
-        $( `#${ rdb.term_slug }` ).on( 'change.zf.tabs', ( e, context ) => {
-            this.players( context[0].childNodes[0].hash );
-            this.dataTable( context[0].childNodes[0].hash );
-        });
-    }
-
-    /**
-     * Team dropdown menu.
-     *
-     * @since 1.0.0
-     */
-    dropdown() {
-        // Dropdown team options.
-        const $select = $( '#team.chosen_select' ),
-              prefix  = location.origin;
-
-        if ( ! rdb.is_mobile ) {
-            // Chosen.js
-            $select.chosen({ disable_search: true, width: '123px' });
-
-            $select.on( 'change', function( e, param ) {
-                e.preventDefault();
-
-                window.location = prefix + '/team/' + param.selected;
-            }).trigger( 'chosen:updated' );
-        } else {
-            $select.on( 'change', function( e ) {
-                e.preventDefault();
-
-                window.location = prefix + '/team/' + this.value;
-            }).trigger( 'chosen:updated' );
+      },
+      columnDefs: [
+        {
+          className: 'control match-id sorting_disabled',
+          orderable: false,
+          targets: 0
+        },
+        {
+          className: 'date',
+          targets: 1
+        },
+        {
+          className: 'fixture-result',
+          targets: 2
+        },
+        {
+          className: 'competition min-medium',
+          targets: 3
+        },
+        {
+          className: 'venue min-wordpress',
+          targets: 4
+        },
+        {
+          className: 'comp-label hide',
+          visible: false,
+          targets: 5
+        },
+        {
+          className: 'timestamp hide',
+          visible: false,
+          targets: 6
+        },
+        {
+          className: 'friendly hide',
+          visible: false,
+          targets: 7
         }
-    }
-
-    /**
-     * Players tab.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} hash The tab hash.
-     */
-    players( hash ) {
-        if ( '#players' !== hash ) {
-            return;
+      ],
+      columns: [
+        {
+          data: 'ID',
+          render: ( data ) => {
+            return `<span class="hide">${ data }</span>`;
+          }
+        },
+        {
+          data: 'date',
+          title: 'Date',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          },
+          orderData: 6,
+          responsivePriority: 2
+        },
+        {
+          data: 'fixture',
+          title: 'Fixture',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          },
+          responsivePriority: 1
+        },
+        {
+          data: 'competition',
+          title: 'Event',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          }
+        },
+        {
+          data: 'venue',
+          title: 'Venue',
+          render: {
+            _: 'display',
+            display: 'display',
+            filter: 'filter'
+          }
+        },
+        {
+          data: 'label'
+        },
+        {
+          data: 'sort'
+        },
+        {
+          data: 'friendly'
         }
-
-        const $container = $( `${ hash } > .grid` ).isotope( this.isoOps ),
-              $filter    = $( '.filter .chosen_select' ),
-              filters    = {};
-
-        this._infScroll( $container );
-
-        $filter.chosen({ width: '96%', include_group_label_in_selected: true });
-
-        $( '.filters' ).on( 'change', ( evt, param ) => {
-            const group = $( evt.target ).parent().data( 'filter-group' );
-
-            filters[ group ] = param.selected;
-
-            if ( '*' === param.selected ) {
-                _.unset( filters, `${ group }` );
-            }
-
-            const filterValue = this._concatValues( filters );
-
-            $container.isotope({ filter: filterValue });
-        }).trigger( 'chosen:updated' );
-    }
-
-    /**
-     * DataTables configuration.
-     *
-     * @since 1.0.0
-     *
-     * @param {string} hash The tab hash.
-     */
-    dataTable( hash ) {
-        if ( '#matches' !== hash ) {
-            return;
+      ],
+      buttons: false,
+      dom: '<"dt-head-wpcm-row clearfix"<"dt-wpcm-column flex"fp>> + t + <"dt-foot-wpcm-row clearfix"<"dt-wpcm-column pagination"p>>',
+      language: {
+        loadingRecords: DT_LOADING,
+        search: '',
+        searchPlaceholder: 'Search Matches (Hint: Can be a country, "friendly" or even "rwc")'
+      },
+      order: [
+        [6, 'desc']
+      ],
+      pageLength: 25,
+      pagingType: 'full_numbers',
+      scrollCollapse: true,
+      searching: true,
+      rowId: 'idStr',
+      responsive: {
+        breakpoints: BREAKPOINTS,
+        details: {
+          type: 'column',
+          target: 0
         }
+      },
+      initComplete() {
+        const api = this.api();
 
-        // DOM instance.
-        const self = this;
+        self.$doc.on( 'resize orientationchange', throttle( () => api.draw(), 300 ) );
 
-        // Column width.
-        const colWidth = '25%';
+        api.columns.adjust();
+      }
+    });
+  }
 
-        // No more error alerts.
-        $.fn.dataTable.ext.errMode = 'throw';
+  /**
+   * InfiniteScroll configuation.
+   *
+   * @since 1.0.0
+   * @access private
+   *
+   * @param {jQuery} $container Content container.
+   */
+  _infScroll( $container ) {
+    const self = this;
+    const iso = $container.data( 'isotope' );
 
-        // DataTable initializer.
-        const table = this.$table.DataTable({ // eslint-disable-line
-            destroy: true,
-            autoWidth: false,
-            deferRender: true,
-            ajax: {
-                url: adminUrl( 'admin-ajax.php' ),
-                data: {
-                    action: 'get_matches',
-                    nonce: this.nonce2,
-                    team: rdb.term_slug
-                },
-                dataSrc: ( response ) => {
-                    if ( ! response.success ) {
-                        return DTHelpers.dtErrorHandler( this.$table );
-                    }
+    $container.infiniteScroll( {
+      path: function() {
+        return `${ adminUrl( 'admin-ajax.php' ) }?action=get_${ self.endpoint }&nonce=${ self.nonce }&collection=${ self.collection }&team=${ rdb.term_slug }&per_page=${ self.perPage }&page=${ this.loadCount + 1 }`;
+      },
+      responseBody: 'json',
+      history: false,
+      outlayer: iso,
+      status: '.page-load-status',
+      debug: true
+    }).infiniteScroll( 'loadNextPage' );
 
-                    let oldData = sessionStorage.allMatches;
+    const $loader = $( '.page-load-status' );
 
-                    const newData = JSON.stringify( response.data );
+    $container.on( 'load.infiniteScroll', ( e, body ) => {
+      const tmpl     = $container.data( 'tmpl' );
+      const template = wp.template( tmpl );
 
-                    if ( newData !== oldData ) {
-                        sessionStorage.removeItem( 'allMatches' );
-                        sessionStorage.setItem( 'allMatches', newData );
+      each( body.data, ( player ) => {
+        const result = $( template( player ) );
 
-                        oldData = newData;
-                    }
+        $container.append( result ).isotope( 'appended', result ).isotope();
+      });
 
-                    const responseData = JSON.parse( oldData ),
-                          final        = [];
+      $container.append( $loader );
+      $loader.addClass( 'absolute-bottom' );
+    });
 
-                    // Parse response.
-                    _.each( responseData, ( match ) => {
-                        const api = {
-                            ID: match.ID,
-                            idStr: `match-${ match.ID }`,
-                            competition: {
-                                display: DTHelpers.competition( match ),
-                                filter: DTHelpers.competition( match )
-                            },
-                            date: {
-                                display: DTHelpers.formatDate( match.ID, match.date.GMT, match.links ),
-                                filter: match.season
-                            },
-                            fixture: {
-                                display: DTHelpers.logoResult( match ),
-                                filter: DTHelpers.opponent( match.fixture )
-                            },
-                            venue: {
-                                display: DTHelpers.venueLink( match.venue ),
-                                filter: match.venue.name
-                            },
-                            friendly: match.friendly ? 'friendly' : 'test',
-                            label: match.competition.label,
-                            neutral: match.venue.neutral,
-                            sort: match.date.timestamp,
-                            links: match.links
-                        };
+    // Google Analytics tracking.
+    if ( ! isUndefined( window.ga ) ) {
+      const link = document.createElement( 'a' );
 
-                        final.push( api );
-                    });
+      $container.on( 'append.infiniteScroll', ( event, response, path ) => {
+        link.href = path;
+        window.ga( 'set', 'page', link.pathname );
+        window.ga( 'send', 'pageview' );
+      });
+    }
+  }
 
-                    return final;
-                }
-            },
-            columnDefs: [
-                {
-                    className: 'control match-id sorting_disabled',
-                    orderable: false,
-                    targets: 0
-                },
-                {
-                    className: 'date',
-                    targets: 1
-                },
-                {
-                    className: 'fixture-result',
-                    targets: 2
-                },
-                {
-                    className: 'competition min-medium',
-                    targets: 3
-                },
-                {
-                    className: 'venue min-wordpress',
-                    targets: 4
-                },
-                {
-                    className: 'comp-label hide',
-                    visible: false,
-                    targets: 5
-                },
-                {
-                    className: 'timestamp hide',
-                    visible: false,
-                    targets: 6
-                },
-                {
-                    className: 'friendly hide',
-                    visible: false,
-                    targets: 7
-                }
-            ],
-            columns: [
-                {
-                    data: 'ID',
-                    render: ( data ) => {
-                        return `<span class="hide">${ data }</span>`;
-                    }
-                },
-                {
-                    data: 'date',
-                    title: 'Date',
-                    render: {
-                        _: 'display',
-                        display: 'display',
-                        filter: 'filter'
-                    },
-                    orderData: 6,
-                    responsivePriority: 2
-                },
-                {
-                    data: 'fixture',
-                    title: 'Fixture',
-                    render: {
-                        _: 'display',
-                        display: 'display',
-                        filter: 'filter'
-                    },
-                    responsivePriority: 1
-                },
-                {
-                    data: 'competition',
-                    title: 'Event',
-                    render: {
-                        _: 'display',
-                        display: 'display',
-                        filter: 'filter'
-                    }
-                },
-                {
-                    data: 'venue',
-                    title: 'Venue',
-                    render: {
-                        _: 'display',
-                        display: 'display',
-                        filter: 'filter'
-                    }
-                },
-                {
-                    data: 'label'
-                },
-                {
-                    data: 'sort'
-                },
-                {
-                    data: 'friendly'
-                }
-            ],
-            buttons: false,
-            dom: '<"dt-head-wpcm-row clearfix"<"dt-wpcm-column flex"fp>> + t + <"dt-foot-wpcm-row clearfix"<"dt-wpcm-column pagination"p>>',
-            language: {
-                loadingRecords: DT_LOADING,
-                search: '',
-                searchPlaceholder: 'Search Matches (Hint: Can be a country, "friendly" or even "rwc")'
-            },
-            order: [
-                [ 6, 'desc' ]
-            ],
-            pageLength: 25,
-            pagingType: 'full_numbers',
-            scrollCollapse: true,
-            searching: true,
-            rowId: 'idStr',
-            responsive: {
-                breakpoints: BREAKPOINTS,
-                details: {
-                    type: 'column',
-                    target: 0
-                }
-            },
-            initComplete: function() {
-                const api = this.api();
+  /**
+   * Flatten filter values into string.
+   *
+   * @since 1.0.0
+   * @access private
+   *
+   * @param {Object} obj Filter object values.
+   *
+   * @return {string}    Queryable class.
+   */
+  _concatValues( obj ) {
+    let value = '';
 
-                self.$doc.on( 'resize orientationchange', _.throttle( function() {
-                    api.draw();
-                }, 300 ) );
-
-                api.columns.adjust();
-            }
-        });
+    for ( const prop in obj ) {
+      if ( obj[prop] ) {
+        value += obj[prop];
+      }
     }
 
-    /**
-     * InfiniteScroll configuation.
-     *
-     * @since 1.0.0
-     * @access private
-     *
-     * @param {jQuery} $container Content container.
-     */
-    _infScroll( $container ) {
-        const self = this,
-              iso  = $container.data( 'isotope' );
-
-        $container.infiniteScroll({
-            path: function() {
-                return adminUrl( 'admin-ajax.php' ) + `?action=get_${ self.endpoint }&nonce=${ self.nonce }&collection=${ self.collection }&team=${ rdb.term_slug }&per_page=${ self.perPage }&page=${ this.loadCount + 1 }`;
-            },
-            responseBody: 'json',
-            history: false,
-            outlayer: iso,
-            status: '.page-load-status',
-            debug: true
-        }).infiniteScroll( 'loadNextPage' );
-
-        const $loader = $( '.page-load-status' );
-
-        $container.on( 'load.infiniteScroll', ( e, body ) => {
-            const tmpl     = $container.data( 'tmpl' ),
-                  template = wp.template( tmpl ),
-                  cards    = [];
-
-            _.each( body.data, function( player) {
-                const result = $( template( player ) );
-
-                $container.append( result ).isotope( 'appended', result ).isotope();
-            });
-
-            $container.append( $loader );
-            $loader.addClass( 'absolute-bottom' );
-        });
-
-        // Google Analytics tracking.
-        if ( ! _.isUndefined( window.ga ) ) {
-            const link = document.createElement( 'a' );
-
-            $container.on( 'append.infiniteScroll', function( event, response, path ) {
-                link.href = path;
-                window.ga( 'set', 'page', link.pathname );
-                window.ga( 'send', 'pageview' );
-            });
-        }
-    }
-
-    /**
-     * Flatten filter values into string.
-     *
-     * @since 1.0.0
-     * @access private
-     *
-     * @param {Object} obj Filter object values.
-     *
-     * @return {string}    Queryable class.
-     */
-    _concatValues( obj ) {
-        let value = '';
-
-        for ( const prop in obj ) {
-            if ( obj[ prop ] ) {
-                value += obj[ prop ];
-            }
-        }
-
-        return value;
-    }
+    return value;
+  }
 }
 
 module.exports = { TaxWpcmTeam };

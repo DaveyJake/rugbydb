@@ -75,8 +75,8 @@ $image-width: calc(100% - #{$meta-width});
 
       th {
         width: rem-calc(120px);
-        background: $color__blue;
-        color: $color__white;
+        background: $color-blue;
+        color: $color-white;
       }
 
       #current-club {
@@ -176,5 +176,5 @@ span.flag-icon {
   height: 22px;
 }
 
-// Flex video.
+/// Flex video.
 @include foundation-responsive-embed;

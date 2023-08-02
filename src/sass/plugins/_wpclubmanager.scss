@@ -200,7 +200,7 @@ $wpcm-font-size: 0.913em;
       width: 1rem;
       height: 1rem;
       border-radius: 10px;
-      color: $color__white;
+      color: $color-white;
       float: right;
       }
 
@@ -720,7 +720,7 @@ $wpcm-font-size: 0.913em;
       &-multi {
       margin: 0;
       padding-left: 6px;
-      border-bottom: 1px solid $color__border-input;
+      border-bottom: 1px solid $color-border-input;
       }
 
       li,
@@ -728,8 +728,8 @@ $wpcm-font-size: 0.913em;
       display: inline-block;
       position: relative;
       margin-bottom: -1px;
-      border: 1px solid $color__border-input;
-      background: $color__background-button;
+      border: 1px solid $color-border-input;
+      background: $color-background-button;
 
       font: {
         weight: 700;
@@ -739,7 +739,7 @@ $wpcm-font-size: 0.913em;
       a {
         display: inline-block;
         padding: 8px 12px;
-        color: $color__text-input;
+        color: $color-text-input;
         text-decoration: none;
       }
 
@@ -747,8 +747,8 @@ $wpcm-font-size: 0.913em;
 
         &,
         &-multi {
-        border-bottom: 1px solid $color__white;
-        background: $color__white;
+        border-bottom: 1px solid $color-white;
+        background: $color-white;
         }
       }
       }

@@ -2,7 +2,6 @@
  * Helpers functions.
  *
  * @namespace Helpers
- * @memberof utils
  *
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ const Helpers = {
    *
    * @param {jQuery} chosenContainer The chosen instance.
    *
-   * @return {bool}  True if value is greater than viewport height. False if not.
+   * @return {boolean}  True if value is greater than viewport height. False if not.
    */
   dropdownExceedsBottomViewport( chosenContainer ) {
     const html           = document.documentElement,

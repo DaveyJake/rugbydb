@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "Modules": ["js/modules/index.js"],
+      "Modules/*": ["js/modules/*"],
+      "UI": ["js/ui/index.js"],
+      "UI/*": ["js/ui/*"],
+      "Utils": ["js/utils/index.js"],
+      "Utils/*": ["js/utils/*"],
+      "Vendor": ["js/_vendor/index.js"],
+      "Vendor/*": ["js/_vendor/*"]
+    }
+  }
+}

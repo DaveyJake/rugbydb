@@ -60,7 +60,7 @@
 
         &:active,
         &:focus {
-          background: $color__white;
+          background: $color-white;
         }
 
         &:focus,
@@ -86,17 +86,6 @@
 table.dataTable {
   width: 99.9%;
 
-  .control {
-    &::before {
-      line-height: 0.845 !important;
-    }
-  }
-
-  th,
-  td {
-    white-space: nowrap !important;
-  }
-
   &:not(#all-matches) {
     th,
     td {
@@ -114,10 +103,21 @@ table.dataTable {
     }
   }
 
+  .control {
+    &::before {
+      line-height: 0.845 !important;
+    }
+  }
+
+  th,
+  td {
+    white-space: nowrap !important;
+  }
+
   tbody {
     tr {
       &.even {
-        background-color: $color__table-border;
+        background-color: $color-table-border;
       }
 
       &.child ul.dtr-details > li {
@@ -127,10 +127,8 @@ table.dataTable {
 
     th,
     td {
-      padding: {
-        top: 0 !important;
-        bottom: 0 !important;
-      }
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
       font-size: 87.5%;
     }
 

@@ -1,7 +1,6 @@
 /**
  * PHP functions for JavaScript.
  *
- * @memberof utils
  * @namespace php
  *
  * @since 1.0.0

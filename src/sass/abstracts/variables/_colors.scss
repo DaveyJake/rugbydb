@@ -1,47 +1,47 @@
 $palette: map-get(map-get(map-get($theme, 'settings'), 'color'), 'palette');
 
-$color__blue: map-get(nth($palette, 3), 'color');
-$color__red: map-get(nth($palette, 1), 'color');
-$color__black: map-get(nth($palette, 5), 'color');
-$color__white: map-get(nth($palette, 2), 'color');
+$color-blue: map-get(nth($palette, 3), 'color');
+$color-red: map-get(nth($palette, 1), 'color');
+$color-black: map-get(nth($palette, 5), 'color');
+$color-white: map-get(nth($palette, 2), 'color');
 
-$color__background-body: $color__blue;
-$color__background-header: rgba(16, 33, 63, 0.85);
-$color__background-combo: #102342;
-$color__background-main: #efefef;
-$color__background-screen: $color__background-main;
-$color__background-hr: #e0e0e0;
-$color__background-button: #e6e6e6;
-$color__background-pre: #eee;
-$color__background-ins: #fff9c0;
-$color__background-th: $color__blue;
+$color-background-body: $color-blue;
+$color-background-header: rgba(16, 33, 63, 0.85);
+$color-background-combo: #102342;
+$color-background-main: #efefef;
+$color-background-screen: $color-background-main;
+$color-background-hr: #e0e0e0;
+$color-background-button: #e6e6e6;
+$color-background-pre: #eee;
+$color-background-ins: #fff9c0;
+$color-background-th: $color-blue;
 
-$color__border-button: #ccc #ccc #bbb;
-$color__border-button-hover: #ccc #bbb #aaa;
-$color__border-button-focus: #aaa #bbb #bbb;
-$color__border-header: rgba(255, 255, 255, 0.4);
-$color__border-input: #ccc;
-$color__border-abbr: #777;
+$color-border-button: #ccc #ccc #bbb;
+$color-border-button-hover: #ccc #bbb #aaa;
+$color-border-button-focus: #aaa #bbb #bbb;
+$color-border-header: rgba(255, 255, 255, 0.4);
+$color-border-input: #ccc;
+$color-border-abbr: #777;
 
-$color__link: $color__red;
-$color__link-visited: $color__link;
-$color__link-hover: $color__blue;
+$color-link: $color-red;
+$color-link-visited: $color-link;
+$color-link-hover: $color-blue;
 
-$color__logo-blue: #06355e;
-$color__logo-red: $color__link;
-$color__logo-text: $color__background-main;
+$color-logo-blue: #06355e;
+$color-logo-red: $color-link;
+$color-logo-text: $color-background-main;
 
-$color__table-background: #fefefe;
-$color__table-border: $color__background-screen;
-$color__table-font: #0a0a0a;
-$color__thead-hover: #f3f3f3;
-$color__tbody: #f8f8f8;
-$color__tbody-hover: #f9f9f9;
-$color__tfoot-hover: #ececec;
+$color-table-background: #fefefe;
+$color-table-border: $color-background-screen;
+$color-table-font: #0a0a0a;
+$color-thead-hover: #f3f3f3;
+$color-tbody: #f8f8f8;
+$color-tbody-hover: #f9f9f9;
+$color-tfoot-hover: #ececec;
 
-$color__text-main: #404040;
-$color__text-screen: #21759b;
-$color__text-input: #555;
-$color__text-input-focus: #111;
-$color__text-inset: $color__white;
-$color__text-shadow: $color__black;
+$color-text-main: #404040;
+$color-text-screen: #21759b;
+$color-text-input: #555;
+$color-text-input-focus: #111;
+$color-text-inset: $color-white;
+$color-text-shadow: $color-black;

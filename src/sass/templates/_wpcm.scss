@@ -1,23 +1,23 @@
 ////
 /// WP Club Manager Globals
-///
+////
 /// @namespace wpcm
 ////
 
-///
+////
 /// Half-unit of measure.
-///
+////
 /// @var {number} $half-em Default 0.5em.
-///
+////
 $half-em: 0.5em;
 
-///
+////
 /// Begin namespace.
-///
+////
 .wpcm {
   &-row {
     margin: auto;
-    max-width: $size__site-main-width !important;
+    max-width: $size-site-main-width !important;
     height: inherit;
   }
 
@@ -82,7 +82,7 @@ $half-em: 0.5em;
 
       thead,
       tfoot {
-        background: var(--background, $color__background-combo);
+        background: var(--background, $color-background-combo);
       }
 
       th,
@@ -138,7 +138,7 @@ $half-em: 0.5em;
 
       @include breakpoint(medium down) {
         .featured-image {
-          margin: 0 -$half-em 1em;
+          margin: 0 -#{$half-em} 1em;
 
           &__photographer {
             padding-right: $half-em;

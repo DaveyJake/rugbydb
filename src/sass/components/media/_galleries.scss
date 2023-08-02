@@ -14,7 +14,7 @@
   }
 }
 
-// Column spacing.
+/// Column spacing.
 @for $i from 2 through 9 {
   .gallery-columns-#{$i} {
     grid-template-columns: repeat($i, 1fr);

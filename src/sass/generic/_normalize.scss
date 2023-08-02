@@ -1,6 +1,6 @@
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
-// Document
+/// Document
 
 /**
  * 1. Correct the line height in all browsers.
@@ -12,7 +12,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-// Sections
+/// Sections
 
 /**
  * Remove the margin in all browsers.
@@ -42,7 +42,7 @@ h1 {
   margin: 0.67em 0;
 }
 
-// Grouping content
+/// Grouping content
 
 /**
  * 1. Add the correct box sizing in Firefox.
@@ -69,7 +69,7 @@ pre {
   @extend %pre;
 }
 
-// Text-level semantics
+/// Text-level semantics
 
 /**
  * Remove the gray background on active links in IE 10.
@@ -139,7 +139,7 @@ sup {
   top: -0.5em;
 }
 
-// Embedded content
+/// Embedded content
 
 /**
  * Remove the border on images inside links in IE 10.
@@ -149,7 +149,7 @@ img {
   border-style: none;
 }
 
-// Forms
+/// Forms
 
 /**
  * 1. Change the font styles in all browsers.
@@ -308,7 +308,7 @@ textarea {
   font: inherit;
 }
 
-// Interactive
+/// Interactive
 
 /**
  * Add the correct display in Edge, IE 10+, and Firefox.
@@ -326,7 +326,7 @@ summary {
   display: list-item;
 }
 
-// Misc
+/// Misc
 
 /* stylelint-disable */
 
@@ -351,11 +351,11 @@ template /* 1 */,
   }
 }
 
-// =============================================================================
-//
-// Foundation Normalize Styles.
-//
-// =============================================================================
+/// =============================================================================
+///
+/// Foundation Normalize Styles.
+///
+/// =============================================================================
 
 html {
   box-sizing: $global-box-sizing;
@@ -366,15 +366,15 @@ html {
   }
 }
 
-// Inherit box-sizing to more easily change it's value on a component level.
-// @link https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+/// Inherit box-sizing to more easily change it's value on a component level.
+/// @link https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
 *,
 *::before,
 *::after {
   box-sizing: inherit;
 }
 
-// Default body styles
+/// Default body styles
 body {
   min-height: 100vh;
   padding: 0;
@@ -385,7 +385,7 @@ body {
   family: $body-font-family;
   weight: $global-weight-normal;
   }
-  line-height: $font__line-height-body;
+  line-height: $font-line-height-body;
   text-rendering: optimizeSpeed;
 
   @if ( $body-antialiased ) {
@@ -405,22 +405,22 @@ img {
   -ms-interpolation-mode: bicubic;
 }
 
-// Make sure textarea takes on height automatically
+/// Make sure textarea takes on height automatically
 textarea {
   height: auto;
   min-height: 50px;
   border-radius: $global-radius;
 }
 
-// Make select elements are 100% width by default
+/// Make select elements are 100% width by default
 select {
   box-sizing: $global-box-sizing;
   width: 100%;
   border-radius: $global-radius;
 }
 
-// Styles Google Maps and MapQuest embeds properly
-// sass-lint:disable-line no-ids
+/// Styles Google Maps and MapQuest embeds properly
+/// sass-lint:disable-line no-ids
 .map_canvas,
 .mqa-display {
 
@@ -431,7 +431,7 @@ select {
   }
 }
 
-// Reset <button> styles created by most browsers
+/// Reset <button> styles created by most browsers
 button {
   @include disable-mouse-outline;
   padding: 0;
@@ -443,12 +443,12 @@ button {
   cursor: $global-button-cursor;
 }
 
-// Prevent text overflow on pre
+/// Prevent text overflow on pre
 pre {
   overflow: auto;
 }
 
-// Internal classes to show/hide elements in JavaScript
+/// Internal classes to show/hide elements in JavaScript
 .is-visible {
   display: block !important;
 }
@@ -457,7 +457,7 @@ pre {
   display: none !important;
 }
 
-// Polymer 'paper' tag element shadow.
+/// Polymer 'paper' tag element shadow.
 [shadow] {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12),

@@ -1,9 +1,9 @@
-$table-border: 1px solid $color__table-border;
+$table-border: 1px solid $color-table-border;
 $table-padding: 0.5rem 0.625rem 0.625rem;
 $hover-background: (
-  thead: $color__thead-hover,
-  tbody: $color__tbody-hover,
-  tfoot: $color__tfoot-hover
+  thead: $color-thead-hover,
+  tbody: $color-tbody-hover,
+  tfoot: $color-tfoot-hover
 );
 
 table {
@@ -11,7 +11,7 @@ table {
   td {
     padding: $table-padding;
 
-    font-family: $font__post-title;
+    font-family: $font-post-title;
 
     @include breakpoint(mobile down) {
       font-size: 80%;
@@ -34,8 +34,8 @@ table {
 
   thead,
   tfoot {
-    background: $color__blue;
-    color: $color__white;
+    background: $color-blue;
+    color: $color-white;
 
     tr {
       background: transparent;
@@ -52,7 +52,7 @@ table {
   }
 
   tbody {
-    background-color: $color__table-background;
+    background-color: $color-table-background;
 
     tr {
       &:nth-child(even) {
@@ -73,9 +73,9 @@ table {
 
     thead,
     tfoot {
-      background-color: $color__table-background;
-      // background: $color__tbody;
-      color: $color__table-font;
+      background-color: $color-table-background;
+      // background: $color-tbody;
+      color: $color-table-font;
     }
 
     &.scroll {
@@ -92,7 +92,7 @@ table {
       tr {
         &:nth-of-type(even) {
           &:hover {
-            background-color: $color__tfoot-hover;
+            background-color: $color-tfoot-hover;
           }
         }
       }
@@ -101,7 +101,7 @@ table {
     &.unstriped {
       tbody,
       tbody tr {
-        background-color: $color__table-background;
+        background-color: $color-table-background;
       }
 
       tbody tr {
@@ -133,7 +133,7 @@ table {
   // stylelint-enable
 }
 
-// Table stack.
+/// Table stack.
 @include breakpoint(wordpress down) {
   table.stack {
     thead,
@@ -153,8 +153,8 @@ table {
       }
 
       th {
-        background: $color__blue;
-        color: $color__white;
+        background: $color-blue;
+        color: $color-white;
       }
     }
 

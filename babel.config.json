@@ -9,7 +9,7 @@
           "version": "3.18",
           "proposals": true
         },
-        "debug": true,
+        "debug": false,
         "exclude": [],
         "forceAllTransforms": true,
         "targets": {

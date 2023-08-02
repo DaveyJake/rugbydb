@@ -1,8 +1,8 @@
+////
+/// Theme Functions & Mixins
 ///
-// Theme Functions & Mixins
-//
-// @since 1.0.0
-///
+/// @since 1.0.0
+////
 
 
 
@@ -12,41 +12,41 @@
 
 
 
+////
+/// Check if variable is a list.
 ///
-// Check if variable is a list.
-//
-// @param {mixed} $variable Anything to check.
-//
-// @return {bool} True if list. False if not.
+/// @param {unknown} $variable Anything to check.
 ///
+/// @return True if list. False if not.
+////
 @function is-list($variable) {
   // Just in case a list is surrounded by quotes.
   @if type-of($variable) == string {
-    $variable: unquote($variable);
+    $variable: unquote($variable); /* stylelint-disable-line */
   }
 
   @return type-of($variable) == list;
 }
 
+////
+/// Get value from `theme.json` SCSS map.
 ///
-// Get value from `theme.json` SCSS map.
-//
-// @param {number} $nth Nth child index from list.
-// @param {string} $key Key from map to retrieve.
-//
-// @return {mixed} The value from `theme.json` SCSS map.
+/// @param {number} $nth Nth child index from list.
+/// @param {string} $key Key from map to retrieve.
 ///
+/// @return {mixed} The value from `theme.json` SCSS map.
+////
 @function theme-get($nth: 1, $key: 'color') {
   $palette: map-deep-get($theme, 'settings', 'color', 'palette');
 
   @return map-get(nth($palette, $nth), $key);
 }
 
+////
+/// Transparent white.
 ///
-// Transparent white.
-//
-// @param number $opacity Default 0.5.
-///
+/// @param {number} $opacity Default 0.5.
+////
 @function transparent-white($opacity: 0.5) {
   $str: 'rgba(255, 255, 255, #{$opacity})';
 
@@ -61,7 +61,7 @@
 
 
 
-// Absolute bottom.
+/// Absolute bottom.
 @mixin absolute-bottom($bottom: 0) {
   position: absolute;
   top: auto;
@@ -69,7 +69,7 @@
   @content;
 }
 
-// Absolute top.
+/// Absolute top.
 @mixin absolute-top($top: 0) {
   position: absolute;
   top: $top;
@@ -77,12 +77,12 @@
   @content;
 }
 
+////
+/// Borders.
 ///
-// Borders.
-//
-// @param string $direction Accepts 'all', 'vertical', 'horizontal'.
-// @param list   $args    Border style short-hand.
-///
+/// @param {string} $direction Accepts 'all', 'vertical', 'horizontal'.
+/// @param {list}   $style     Border style short-hand.
+////
 @mixin border($direction: all, $style: '1px solid #000') {
   @if $direction == vertical {
     border: {
@@ -99,13 +99,12 @@
   }
 }
 
+////
+/// Border radius.
 ///
-// Border radius.
-//
-// @param {string} $dir  Accepts 'top', 'bottom', 'left', 'right',
-//             'horizontal', 'vertical', 'tb', 'lr'.
-// @param {number} $radius Number output in px.
-///
+/// @param {string} $dir    Accepts 'top', 'bottom', 'left', 'right', 'horizontal', 'vertical', 'tb', 'lr'.
+/// @param {number} $radius Number output in px.
+////
 @mixin border-radius($dir: null, $radius: 0) {
   @if ($dir == top or $dir == bottom or $dir == vertical or $dir == tb) {
     border-#{$dir}-left-radius: $radius;
@@ -118,32 +117,36 @@
   }
 }
 
+////
+/// CSS calculator written for SCSS.
 ///
-// CSS calculator written for SCSS.
-//
-// @param string $property   CSS property.
-// @param string $expression Mathematical expression.
-///
+/// @param {string} $property   CSS property.
+/// @param {string} $expression Mathematical expression.
+////
 @mixin calc($property, $expression) {
   #{$property}: calc(#{$expression});
 }
 
-// Center block.
+/// Center block.
 @mixin center-block {
   display: block;
   margin: auto;
 }
 
-// Column width with margin.
-@mixin column-width($columns, $columns__margin, $numberColumns: 3) {
-  width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
+/// Column width with margin.
+///
+/// @param {map}    $columns
+/// @param {number} $columns-margin
+/// @param {number} $number-columns
+@mixin column-width($columns, $columns-margin, $number-columns: 3) {
+  width: map-get($columns, $number-columns) - ( ( $columns-margin * ( $number-columns - 1 ) ) / $number-columns );
 }
 
+////
+/// Background image.
 ///
-// Background image.
-//
-// @param string $url Path to image.
-///
+/// @param {string} $url Path to image.
+////
 @mixin element-background($url) {
   background: {
     image: url($url);
@@ -153,16 +156,16 @@
   }
 }
 
+////
+/// Equal width amongst child elemnts.
 ///
-// Equal width amongst child elemnts.
-//
-// @param {number} $elements Total number of elements.
-///
+/// @param {number} $elements Total number of elements.
+////
 @mixin equal-width($elements: 4) {
   width: calc(100% / $elements);
 }
 
-// Flexbox.
+/// Flexbox.
 @mixin flex($justify-content: center, $align-content: center, $align-items: flex-start) {
   display: flex;
   justify-content: $justify-content;
@@ -173,66 +176,68 @@
   @content;
 }
 
-// Flex between.
+/// Flex between.
 @mixin flex-between {
   @include flex(space-between);
 }
 
-// Flex center.
+/// Flex center.
 @mixin flex-center {
   @include flex($align-items: center);
 }
 
-// Flex column.
+/// Flex column.
 @mixin flex-column {
   display: flex;
   flex-direction: column;
   @content;
 }
 
-// Flex evenly.
+/// Flex evenly.
 @mixin flex-evenly {
   @include flex(space-evenly);
 }
 
-// Float element.
+/// Float element.
+///
+/// @param {string} $dir Accepts 'left' or 'right'.
 @mixin float($dir) {
   float: $dir;
 }
 
-// Full
+/// Full
 @mixin full {
   @include full-width;
   @include full-height;
 }
 
-// Center element full-width.
+/// Center element full-width.
 @mixin full-center-width {
   margin: auto;
-  max-width: $size__site-main-width;
+  max-width: $size-site-main-width;
 }
 
-// Full Height.
+/// Full Height.
 @mixin full-height {
   height: 100%;
 }
 
-// Full Width.
+/// Full Width.
 @mixin full-width {
   width: 100%;
 }
 
-// Half Width.
+/// Half Width.
 @mixin half-width {
   width: 50%;
 }
 
-// Horizontal spacing.
+/// Horizontal spacing.
 @mixin horizontal-space($type, $value) {
   @include spacing($type, 'horizontal', $value);
 }
 
-// Level 2 List.
+/// Level 2 List.
 @mixin level-two-list {
   ul {
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
@@ -259,13 +264,13 @@
   }
 }
 
-// Relative element.
+/// Relative element.
 @mixin relative {
   position: relative;
   @content;
 }
 
-// Clearfix.
+/// Clearfix.
 @mixin rdb-clearfix {
   &::before,
   &::after {
@@ -278,14 +283,14 @@
   }
 }
 
+////
+/// Directional spacing.
 ///
-// Directional spacing.
-//
-// @param {string}    $space-type Accepts 'margin' or 'padding'.
-// @param {string}    $direction  Accepts 'top', 'right', 'bottom', 'left',
-//                  'horizontal' or 'vertical'.
-// @param {number|list} $values   Accepts a single number or a list of numbers.
-///
+/// @param {string}      $space-type Accepts 'margin' or 'padding'.
+/// @param {string}      $direction  Accepts 'top', 'right', 'bottom', 'left',
+///                                  'horizontal' or 'vertical'.
+/// @param {number|list} $values     Accepts a single number or a list of numbers.
+////
 @mixin spacing($space-type, $direction, $values) {
   @if is-list($values) {
     #{$space-type}: unquote($values);
@@ -304,17 +309,17 @@
   }
 }
 
+////
+/// Text-align
 ///
-// Text-align
-//
-// @param string $dir Accepts 'left', 'center', 'right'. Only use when need to
-//          override third-party library.
-///
+/// @param {string} $dir Accepts 'left', 'center', 'right'. Only use when need to
+///                      override third-party library.
+////
 @mixin text($dir: left) {
   text-align: $dir !important;
 }
 
-// Typekit: Industry.
+/// Typekit: Industry.
 @mixin typekit-industry {
   font: {
     family: industry, sans-serif;
@@ -322,7 +327,7 @@
   }
 }
 
-// Vertical spacing.
+/// Vertical spacing.
 @mixin vertical-space($type, $value) {
   @include spacing($type, 'vertical', $value);
 }
@@ -336,16 +341,16 @@
 
 
 
+////
+/// Offset for club colors..
 ///
-// Offset for club colors..
-//
-// @param string $primary   Club's primary color.
-// @param string $secondary Club's secondary color.
-//
-// @return string Corrected color.
+/// @param {string} $primary   Club's primary color.
+/// @param {string} $secondary Club's secondary color.
 ///
+/// @return {string} Corrected color.
+////
 @function club-colors($primary, $secondary) {
-  $fallback: $color__white;
+  $fallback: $color-white;
 
   $lightness: (lightness(#{$primary}) - lightness(#{$secondary}));
 
@@ -360,33 +365,33 @@
   }
 }
 
-// Chosen dropdown filters.
+/// Chosen dropdown filters.
 @mixin dropdown-spacing {
   float: left;
   margin: 0.5%;
 }
 
-// Menu item hover.
+/// Menu item hover.
 @mixin menu-item-hover {
-  background: $color__white;
-  color: darken($color__blue, 5%) !important;
+  background: $color-white;
+  color: darken($color-blue, 5%) !important;
   transition: $hover-transition;
 }
 
-// No wrap white-space.
+/// No wrap white-space.
 @mixin nowrap {
   white-space: nowrap;
 }
 
-// Score block.
+/// Score block.
 @mixin score-block {
   position: relative;
   width: 145px;
   height: 120px;
   line-height: 1.4;
 
-  background: $color__background-body;
-  color: $color__white;
+  background: $color-background-body;
+  color: $color-white;
   font-size: 1.7em;
   font: {
     family: industry, sans-serif;

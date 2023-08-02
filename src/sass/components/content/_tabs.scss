@@ -2,8 +2,8 @@
   @include flex(space-evenly);
   margin-bottom: 0;
   padding-left: 0;
-  width: $size__site-main-width;
-  background: $color__white;
+  width: $size-site-main-width;
+  background: $color-white;
 
   &-container {
     margin-bottom: 1.5em;
@@ -14,22 +14,22 @@
     position: relative;
     width: calc(100% / 6);
     height: rem-calc(56px);
-    background: $color__red;
+    background: $color-red;
     @include text(center);
 
     a {
       @include absolute-center;
       padding: 1em 0;
       @include full-width;
-      color: $color__white;
+      color: $color-white;
       white-space: nowrap;
     }
 
     &.is-active {
-      background: $color__background-main;
+      background: $color-background-main;
 
       a {
-        color: $color__red;
+        color: $color-red;
         font-weight: 700;
       }
     }

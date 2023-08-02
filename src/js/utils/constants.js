@@ -262,7 +262,7 @@ const COUNTRIES = {
   UZ: 'Uzbekistan',
   VU: 'Vanuatu',
   VE: 'Venezuela',
-  VN: 'Viet Nam',
+  VN: 'Vietnam',
   VG: 'Virgin Islands, British',
   VI: 'Virgin Islands, U.S.',
   WL: 'Wales',

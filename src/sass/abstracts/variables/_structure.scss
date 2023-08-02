@@ -1,4 +1,4 @@
-// Foundation breakpoints.
+/// Foundation breakpoints.
 $breakpoints: (
   small: 0,
   mobile: 480px,
@@ -9,35 +9,35 @@ $breakpoints: (
   xxlarge: 1440px,
 ) !default;
 
-// Foundation globals.
+/// Foundation globals.
 $global-left: left;
 
-// Underscores.me defaults.
-$size__site-main: 100%;
-$size__site-sidebar: 25%;
-$size__logo-width: 346px;
-$size__adminbar: 32px;
-$size__icon-height: 22px;
-$size__navbar-height: 46px;
-$size__navbar-height--desktop: 75px;
+/// Underscores.me defaults.
+$size-site-main: 100%;
+$size-site-sidebar: 25%;
+$size-logo-width: 346px;
+$size-adminbar: 32px;
+$size-icon-height: 22px;
+$size-navbar-height: 46px;
+$size-navbar-height--desktop: 75px;
 
-// Content column.
-$size__site-main-width: rem-calc(1280px);
+/// Content column.
+$size-site-main-width: rem-calc(1280px);
 
-// Font.
-$size__post-title: 2em;
-$size__post-excerpt: 1.2em;
+/// Font.
+$size-post-title: 2em;
+$size-post-excerpt: 1.2em;
 
-// File paths.
-$file__img: '../img/';
+/// File paths.
+$file-img: '../img/';
 
-// Sitewide.
+/// Sitewide.
 $hover-duration-timing: 0.15s ease-in-out;
 $hover-transition: background $hover-duration-timing, color $hover-duration-timing;
 $logo-bottom: 5px;
-$logo-width: 4.7em;
 $logo-height: 1em;
+$logo-width: 4.7em;
 $menu-item-width: 89px;
-$text-stroke: 1.5px #fff;
-$nav-transition: 0.4s linear;
 $nav-ease: 0.4s ease;
+$nav-transition: 0.4s linear;
+$text-stroke: 1.5px #fff;

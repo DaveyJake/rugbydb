@@ -66,6 +66,8 @@ function rdb_get_slug( $post = null ) {
  *
  * @since 1.0.0
  *
+ * @see rdb_is_assoc_array()
+ *
  * @param array $args     Custom function arguments collected from spreader.
  * @param array $defaults Default function arguments.
  *
@@ -73,7 +75,7 @@ function rdb_get_slug( $post = null ) {
  */
 function rdb_parse_args( $args, $defaults ) {
     $def_values = array_values( $defaults );
-    $arg_values = array_values( $args );
+    $arg_values = rdb_is_assoc_array( $args ) ? array_values( $args ) : $args;
 
     $keys   = array_keys( $defaults );
     $values = array_replace( $def_values, $arg_values );
@@ -129,9 +131,9 @@ function rdb_remote_get( $url, $assoc_array = false, $args = array() ) {
  * @param array|string ...$args {
  *     The essential arguments needed to remove a class method.
  *
- *     @type string $hook_name   The hook handle.
- *     @type string $method_name The method name.
- *     @type int    $priority    The priority order. Default: 10.
+ *     @type string $hook     The hook handle.
+ *     @type string $method   The method name.
+ *     @type int    $priority The priority order. Default: 10.
  * }
  *
  * @return void|bool Returns nothing if successful. False if not.
@@ -151,75 +153,60 @@ function rdb_remove_method( ...$args ) {
  *
  * @global WP_Filter $wp_filter List of functions attached to an action.
  *
- * @param array|string ...$args {
- *     The essential arguments needed to remove a class method.
- *
- *     @type string $hook_name    The hook handle.
- *     @type string [$class_name] The class name.
- *     @type string $method_name  The method name.
- *     @type int    $priority     The priority order. Default: 10.
- * }
+ * @param string $hook       The hook handle.
+ * @param string $class_name The class name.
+ * @param string $method     The method name.
+ * @param int    [$priority] The priority order. Default: 10.
  *
  * @return void|bool Returns nothing if successful. False if not.
  */
-function rdb_remove_class_method( ...$args ) {
-    $defaults = array(
-        'hook_name'   => '',
-        'class_name'  => '',
-        'method_name' => '',
-        'priority'    => 10,
-    );
-
-    // Unset `class_name` if there's 3 args or less.
-    if ( count( $args ) < 4 ) {
-        unset( $defaults['class_name'] );
-    }
-
-    // Are the `$args` an associative array or comma-separated?
-    $args = rdb_is_assoc_array( $args ) ? wp_parse_args( $args, $defaults ) : rdb_parse_args( $args, $defaults );
-
-    // Arguments map.
-    $hook_name   = $args['hook_name'];
-    $method_name = $args['method_name'];
-    $priority    = $args['priority'];
-
+function rdb_remove_class_method( $hook, $class_name, $method, $priority = 10 ) {
     global $wp_filter;
 
     // Only target the specified hooks with filters and priority.
-    if ( empty( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
+    if ( empty( $wp_filter[ $hook ][ $priority ] ) || ! is_array( $wp_filter[ $hook ][ $priority ] ) ) {
         return false;
     }
 
+    // Method name string length.
+    $len = strlen( $method );
+
     // Loop only on registered filters.
-    foreach ( $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
+    foreach ( $wp_filter[ $hook ] as $_priority => $actions ) {
+        // If there are `$actions`...
+        if ( $actions ) {
+            // Actions are a `$unique_id` and `$data`.
+            foreach ( $actions as $unique_id => $data ) {
+                // Are we looking at the right method?
+                if ( substr( $unique_id, -$len ) === $method ) {
+                    // Do we have a class name?
+                    if ( ! empty( $class_name ) ) {
+                        $_class    = '';
+                        $fn_target = $data['function'][0];
 
-        // Always check if filter is an array.
-        if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
-            $filter_array_function = $filter_array['function'];
+                        if ( is_string( $fn_target ) ) {
+                            $_class = $fn_target;
+                        } elseif ( is_object( $fn_target ) ) {
+                            $_class = get_class( $fn_target );
+                        } else {
+                            return false;
+                        }
 
-            // Conditions.
-            $conditions = array(
-                is_object( $filter_array_function[0] ),
-                ! empty( get_class( call_user_func( $filter_array_function[0] ) ) ),
-                ( $filter_array_function[1] === $method_name ),
-            );
+                        // Do we have the correct parent class?
+                        if ( ! empty( $_class ) && $_class === $class_name ) {
+                            if ( is_numeric( $priority ) && $_priority === $priority ) {
+                                return $wp_filter[ $hook ]->remove_filter( $hook, $unique_id, $_priority );
+                            }
 
-            // Check if class is not attached to a global variable.
-            if ( ! empty( $args['class_name'] ) ) {
-                $conditions[] = ( get_class( $filter_array_function[0] ) === $args['class_name'] );
-            }
+                            return $wp_filter[ $hook ]->remove_filter( $hook, $unique_id, $_priority );
+                        }
+                    } else {
+                        if ( is_numeric( $priority ) && $_priority === $priority ) {
+                            return $wp_filter[ $hook ]->remove_filter( $hook, $unique_id, $_priority );
+                        }
 
-            // Check if `$conditions` are all true.
-            if ( (bool) array_product( $conditions ) ) {
-                // phpcs:disable
-                // Test for WordPress 4.7+ WP_Hook class {@link https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/}.
-                if ( is_a( $wp_filter[ $hook_name ], 'WP_Hook' ) )
-                {
-                    unset( $wp_filter[ $hook_name ]->callbacks[ $priority ][ $unique_id ] );
-                }
-                else
-                {
-                    unset( $wp_filter[ $hook_name ][ $priority ][ $unique_id ] );
+                        return $wp_filter[ $hook ]->remove_filter( $hook, $unique_id, $_priority );
+                    }
                 }
             }
         }
@@ -268,7 +255,7 @@ function _rdb_array_attrs( array $attributes, bool $make_them_data = false ) {
 
     foreach ( $attributes as $name => $value ) {
         if ( $make_them_data ) {
-            $name = 'data-' . $name;
+            $name = sprintf( 'data-%s', $name );
         }
 
         $name  = htmlentities( $name, ENT_QUOTES, 'UTF-8' );

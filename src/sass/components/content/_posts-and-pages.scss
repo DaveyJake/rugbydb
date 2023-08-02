@@ -40,17 +40,17 @@
 
   &::before {
     content: '\00B7';
-    font-family: $font__default;
+    font-family: $font-default;
   }
 }
 
-// Foundation typography helpers.
-// Use to create a subheading under a main header
-// Make sure you pair the two elements in a <header> element, like this:
-// <header>
-//   <h1>Heading</h1>
-//   <h2>Subheading</h2>
-// </header>
+/// Foundation typography helpers.
+/// Use to create a subheading under a main header
+/// Make sure you pair the two elements in a <header> element, like this:
+/// <header>
+///   <h1>Heading</h1>
+///   <h2>Subheading</h2>
+/// </header>
 .subheader {
   margin-top: $subheader-margin-top;
   margin-bottom: $subheader-margin-bottom;
@@ -60,13 +60,13 @@
   color: $subheader-color;
 }
 
-// Use to style an introductory lead, deck, blurb, etc.
+/// Use to style an introductory lead, deck, blurb, etc.
 .lead {
   font-size: $lead-font-size;
   line-height: $lead-lineheight;
 }
 
-// Use to style a large number to display a statistic
+/// Use to style a large number to display a statistic
 .stat {
   @include text(center);
   line-height: 1;

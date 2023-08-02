@@ -22,32 +22,40 @@ class RDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
     private $deps;
 
     /**
-    * Primary constructor.
-    *
-    * @return RDB_WPCM_Admin_Assets
-    */
+     * Primary constructor.
+     *
+     * @since RDB 1.0.0
+     * @since RDB 1.5.0 Hooked `unset_wpcm_admin_scripts` to `plugins_loaded`.
+     *                  Hooked `admin_scripts` to `admin_enqueue_scripts`.
+     *
+     * @return RDB_WPCM_Admin_Assets
+     */
     public function __construct() {
         $this->deps[] = 'jquery';
         $this->deps[] = 'jquery-tiptip';
 
-        add_action( 'before_wpcm_init', array( $this, 'unset_reset_wpcm_admin_scripts' ) );
-    }
-
-    /**
-     * Unset and reset WPCM admin scripts.
-     */
-    public function unset_reset_wpcm_admin_scripts() {
-        rdb_remove_class_method( 'admin_enqueue_scripts', 'WPCM_Admin_Assets', 'admin_scripts', 10 );
+        add_action( 'plugins_loaded', array( $this, 'unset_wpcm_admin_scripts' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
     }
 
     /**
-    * Loads the scripts for the backend.
-    *
-    * @since WPCM 1.1
-    *
-    * @return void
-    */
+     * Unset and reset WPCM admin scripts.
+     *
+     * @since RDB 1.0.0
+     * @since RDB 1.5.0 Removed `admin_enqueue_scripts` hook for `admin_scripts`.
+     *                  Renamed `unset_reset_wpcm_admin_scripts` to `unset_wpcm_admin_scripts`.
+     */
+    public function unset_wpcm_admin_scripts() {
+        rdb_remove_class_method( 'admin_enqueue_scripts', 'WPCM_Admin_Assets', 'admin_scripts' );
+    }
+
+    /**
+     * Loads the scripts for the backend.
+     *
+     * @since WPCM 1.1.0
+     *
+     * @return void
+     */
     public function admin_scripts( $hook ) {
         global $wp_query, $post;
 
@@ -196,7 +204,7 @@ class RDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
             $this->deps[] = 'wpclubmanager-admin-locationpicker';
         }
 
-        // WPlubManager admin pages.
+        // WPClubManager admin pages.
         if ( in_array( $screen_id, wpcm_get_screen_ids() ) ) {
             wp_enqueue_style( 'rdb-wpcm-admin' );
             wp_enqueue_script( 'jquery' );

@@ -11,12 +11,12 @@
   }
 }
 
-// Make sure logo link wraps around logo image.
+/// Make sure logo link wraps around logo image.
 .custom-logo-link {
   display: inline-block;
 }
 
-// Styles Google Maps and embeds properly.
+/// Styles Google Maps and embeds properly.
 .map_canvas { // stylelint-disable-line
   img,
   iframe,
@@ -26,12 +26,12 @@
   }
 }
 
-// Icon images.
+/// Icon images.
 .icon {
-  height: $size__icon-height + 2px;
+  height: $size-icon-height + 2px;
 }
 
-// Featured images.
+/// Featured images.
 .featured-image {
   img {
     width: 100%;

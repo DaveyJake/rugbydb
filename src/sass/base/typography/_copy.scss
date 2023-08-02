@@ -12,7 +12,7 @@ i {
 blockquote {
   margin: 0 1.5em;
   padding-left: 1rem;
-  border-left: 3px solid $color__border-abbr;
+  border-left: 3px solid $color-border-abbr;
   font-style: italic;
 }
 
@@ -21,9 +21,9 @@ address {
 }
 
 pre {
-  background: $color__background-pre;
-  font-family: $font__pre;
-  line-height: $font__line-height-pre;
+  background: $color-background-pre;
+  font-family: $font-pre;
+  line-height: $font-line-height-pre;
   margin-bottom: 1.6em;
   max-width: 100%;
   overflow: auto;
@@ -34,18 +34,18 @@ code,
 kbd,
 tt,
 var {
-  font-family: $font__code;
+  font-family: $font-code;
 }
 
 abbr,
 acronym {
-  border-bottom: 1px dotted $color__border-abbr;
+  border-bottom: 1px dotted $color-border-abbr;
   cursor: help;
 }
 
 mark,
 ins {
-  background: $color__background-ins;
+  background: $color-background-ins;
   text-decoration: none;
 }
 

@@ -2,7 +2,7 @@
   position: relative;
   color: #fff;
   font: {
-    family: $font__logo;
+    family: $font-logo;
     size: 2.375em;
   }
 
@@ -31,7 +31,7 @@
 
     &.word {
       &-rugby {
-        color: $color__logo-red;
+        color: $color-logo-red;
 
         span {
           &.char {
@@ -62,7 +62,7 @@
 
       &-db {
         margin-left: 4px;
-        color: $color__logo-blue;
+        color: $color-logo-blue;
 
         span {
           &.char {
@@ -80,7 +80,7 @@
   }
 }
 
-// Site navigation.
+/// Site navigation.
 .main-navigation {
   @include breakpoint(wordpress) {
     display: block;
@@ -164,7 +164,7 @@
   }
 }
 
-// Site menu.
+/// Site menu.
 .menu {
   height: inherit;
 
@@ -205,7 +205,7 @@
       position: relative;
       top: 50%;
       transform: translateY(-50%);
-      font-family: $font__post-content;
+      font-family: $font-post-content;
       color: #fff;
 
       &:hover {
@@ -215,7 +215,7 @@
   }
 }
 
-// Mobile App Menu
+/// Mobile App Menu
 .mm {
   $border: 1px solid var(--wp--preset--color--white);
 
@@ -267,7 +267,7 @@
   }
 }
 
-// Mobile screen width.
+/// Mobile screen width.
 @include breakpoint(37.5em) {
   .main-navigation ul {
     display: flex;
@@ -299,7 +299,7 @@
   }
 }
 
-// Hide WP Admin Bar.
+/// Hide WP Admin Bar.
 @include breakpoint(medium down) {
   #wpadminbar {
     display: none;

@@ -1,0 +1,48 @@
+{
+	"folders": [
+		{
+			"name": "RugbyDB",
+			"path": "."
+		},
+		{
+			"name": "RDB MU-Plugins",
+			"path": "../../mu-plugins"
+		},
+		{
+			"name": "RDB Plugins",
+			"path": "../../plugins"
+		},
+		{
+			"name": "WP Env Plugins",
+			"path": "../../../../../../plugins"
+		},
+		{
+			"name": "WP Configs",
+			"path": "../../../../../../../../bin"
+		},
+		{
+			"name": "WP Includes",
+			"path": "../../../../../../../wp-includes"
+		},
+		{
+			"name": "WP Admin",
+			"path": "../../../../../../../wp-admin"
+		},
+		{
+			"name": "VSCode",
+			"path": "../../../../../../../../.vscode"
+		},
+		{
+			"name": "Root",
+			"path": "../../../../../../../.."
+		}
+	],
+	"settings": {
+    // NATIVE
+		"[scss]": {
+			"editor.defaultFormatter": "vscode.css-language-features"
+		},
+    // EXTENSIONS
+    "eslint.runtime": "./node_modules/.bin/eslint"
+	}
+}

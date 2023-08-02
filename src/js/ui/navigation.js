@@ -32,7 +32,7 @@
   }
 
   // Toggle the .toggled class and the aria-expanded value each time the button is clicked.
-  button.addEventListener( 'click', function() {
+  button.addEventListener( 'click', () => {
     siteNavigation.classList.toggle( 'toggled' );
 
     if ( button.getAttribute( 'aria-expanded' ) === 'true' ) {
@@ -43,7 +43,7 @@
   });
 
   // Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
-  document.addEventListener( 'click', function( event ) {
+  document.addEventListener( 'click', ( event ) => {
     const isClickInside = siteNavigation.contains( event.target );
 
     if ( ! isClickInside ) {
@@ -76,7 +76,6 @@
    *
    * @listens focus
    * @listens blur
-   * @listens touchstart
    *
    * @param {Event} event Event to listen for.
    */
@@ -92,15 +91,20 @@
       }
     }
 
-    if ( event.type === 'touchstart' ) {
-      const menuItem = this.parentNode;
-      event.preventDefault();
-      for ( const link of menuItem.parentNode.children ) {
-        if ( menuItem !== link ) {
-          link.classList.remove( 'focus' );
-        }
-      }
-      menuItem.classList.toggle( 'focus' );
+    if ( event.type !== 'touchstart' ) {
+      return;
     }
+
+    const menuItem = this.parentNode;
+
+    event.preventDefault();
+
+    for ( const link of menuItem.parentNode.children ) {
+      if ( menuItem !== link ) {
+        link.classList.remove( 'focus' );
+      }
+    }
+
+    menuItem.classList.toggle( 'focus' );
   }
 })();

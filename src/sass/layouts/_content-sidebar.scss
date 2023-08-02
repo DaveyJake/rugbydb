@@ -1,9 +1,9 @@
-// No sidebar.
+/// No sidebar.
 @import 'no-sidebar';
 
 .site {
   display: grid;
-  grid-template-columns: auto $size__site-sidebar;
+  grid-template-columns: auto $size-site-sidebar;
   grid-template-areas: 'header header' 'main sidebar' 'footer footer';
 
   &-header {

@@ -1,30 +1,30 @@
 /* stylelint-disable */
 
-$font__path: '/wp-content/themes/rugbydb/dist/fonts';
+$font-path: '/wp-content/themes/rugbydb/dist/fonts';
 
 @font-face {
   font-family: RugbyFont;
   font-style: normal;
-  src: url('#{$font__path}/rugby-icomoon.eot?tdx82d') format('embedded-opentype'),
-     url('#{$font__path}/rugby-icomoon.eot?tdx82d#iefix') format('embedded-opentype'),
-     url('#{$font__path}/rugby-icomoon.ttf?tdx82d') format('truetype'),
-     url('#{$font__path}/rugby-icomoon.woff?tdx82d') format('woff'),
-     url('#{$font__path}/rugby-icomoon.svg?tdx82d#icomoon') format('svg');
+  src: url('#{$font-path}/rugby-icomoon.eot?tdx82d') format('embedded-opentype'),
+     url('#{$font-path}/rugby-icomoon.eot?tdx82d#iefix') format('embedded-opentype'),
+     url('#{$font-path}/rugby-icomoon.ttf?tdx82d') format('truetype'),
+     url('#{$font-path}/rugby-icomoon.woff?tdx82d') format('woff'),
+     url('#{$font-path}/rugby-icomoon.svg?tdx82d#icomoon') format('svg');
 }
 
-// Unnecessary button.
+/// Unnecessary button.
 select[name='wpcm_season'] {
   + #match {
     display: none !important;
   }
 }
 
-// Slug box.
+/// Slug box.
 .post-php #post_name {
   width: 100%;
 }
 
-// Player thumbnail images.
+/// Player thumbnail images.
 .post-type-wpcm_player {
   .attachment-player_thumbnail {
     height: auto !important;

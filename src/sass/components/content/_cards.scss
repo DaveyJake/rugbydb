@@ -89,7 +89,7 @@ $unit: rem-calc(10px);
       @include absolute-bottom;
       padding: 0.25rem 0;
       @include full-width;
-      background-color: $color__background-header;
+      background-color: $color-background-header;
       @include text(center);
 
       @each $card-type in $card-types {

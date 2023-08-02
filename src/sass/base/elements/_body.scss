@@ -1,16 +1,16 @@
-// These styles are applied to a <meta> tag, which is read by the Foundation JavaScript
+/// These styles are applied to a <meta> tag, which is read by the Foundation JavaScript
 .foundation-mq {
   font-family: '#{-zf-bp-serialize($breakpoints)}';
 }
 
 body {
-  background: $color__background-body;
+  background: $color-background-body;
   min-height: rem-calc(400px);
 
   &.logged-in {
     @include breakpoint(wordpress) {
       .mm-navbars_top { // stylelint-disable-line
-        margin-top: $size__adminbar;
+        margin-top: $size-adminbar;
       }
     }
   }

@@ -1,18 +1,18 @@
-$font__path: '/wp-content/themes/rugbydb/dist/fonts';
+$font-path: '/wp-content/themes/rugbydb/dist/fonts';
 @font-face {
   font-family: USARugby; // stylelint-disable-line
-  src: url('#{$font__path}/AGLettericaCondL-BoldItalic.ttf') format('truetype');
+  src: url('#{$font-path}/AGLettericaCondL-BoldItalic.ttf') format('truetype');
 }
 
-$font__default: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif;
-$font__main: titillium-web, $font__default;
-$font__code: monaco, consolas, 'andale mono', 'DejaVu Sans Mono', monospace;
-$font__pre: 'Courier 10 Pitch', courier, monospace;
+$font-default: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif;
+$font-main: titillium-web, $font-default;
+$font-code: monaco, consolas, 'andale mono', 'DejaVu Sans Mono', monospace;
+$font-pre: 'Courier 10 Pitch', courier, monospace;
 
-$font__line-height-body: 1.5;
-$font__line-height-pre: 1.6;
+$font-line-height-body: 1.5;
+$font-line-height-pre: 1.6;
 
-$font__logo: USARugby, titillium-web, sans-serif; // stylelint-disable-line
+$font-logo: USARugby, titillium-web, sans-serif; // stylelint-disable-line
 
-$font__post-title: industry, titillium-web, sans-serif;
-$font__post-content: $font__main;
+$font-post-title: industry, titillium-web, sans-serif;
+$font-post-content: $font-main;

@@ -2,7 +2,6 @@
  * Make AJAX request to REST API.
  *
  * @namespace Rugby
- * @memberof utils
  *
  * @since 1.0.0
  * @since 1.0.1 Removed global lodash import; replaced with individual functions.
@@ -165,7 +164,7 @@ class Rugby {
    * @param {Object<string, any>} response AJAX API response data.
    */
   _isoTmpls( response ) {
-    const $selector = $( this.grid ).imagesLoaded( function() {
+    const $selector = $( this.grid ).imagesLoaded( () => {
       $selector.isotope( {
         itemSelector: '.card',
         percentPosition: true,
@@ -180,10 +179,10 @@ class Rugby {
         }
       });
 
-      const tmpl     = $selector.data( 'tmpl' ),
-            template = wp.template( tmpl );
+      const tmpl     = $selector.data( 'tmpl' );
+      const template = wp.template( tmpl );
 
-      each( response.data, function( player ) {
+      each( response.data, ( player ) => {
         const card = $( template( player ) );
 
         $selector.append( card ).isotope( 'appended', card ).isotope();
@@ -205,9 +204,7 @@ class Rugby {
       }
     ];
 
-    each( obj, function( data ) {
-      return Rugby._filterTmpl( data, $selector );
-    });
+    each( obj, ( data ) => Rugby._filterTmpl( data, $selector ) );
   }
 
   /**
@@ -223,9 +220,9 @@ class Rugby {
       return;
     }
 
-    const $selector = $( '#rdb-match-timeline' ),
-          template  = wp.template( $selector.data( 'tmpl' ) ),
-          result    = template( data );
+    const $selector = $( '#rdb-match-timeline' );
+    const template  = wp.template( $selector.data( 'tmpl' ) );
+    const result    = template( data );
 
     return $selector.append( result );
   }
@@ -290,8 +287,8 @@ class Rugby {
    * @param {jQuery}              $selector The 'select' tag.
    */
   static _filterTmpl( data, $selector ) {
-    const isPage  = ( data.postName === rdb.post_name && `page-${ data.postName }.php` === rdb.template ),
-          isVenue = ( data.postName === rdb.term_name && 'taxonomy-wpcm_venue.php' === rdb.template );
+    const isPage  = ( data.postName === rdb.post_name && `page-${ data.postName }.php` === rdb.template );
+    const isVenue = ( data.postName === rdb.term_name && 'taxonomy-wpcm_venue.php' === rdb.template );
 
     if ( ( isPage || isVenue ) === false ) {
       return;

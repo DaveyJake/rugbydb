@@ -503,7 +503,7 @@
 
     &-video {
       margin-top: -1.5em;
-      background: $color__black;
+      background: $color-black;
     }
 
     &-meta {
@@ -578,12 +578,12 @@
     }
 
     table {
-      background: $color__text-inset;
+      background: $color-text-inset;
 
       thead,
       .wpcm-subs-rows,
       .wpcm-subs-rows:hover {
-        background-color: $color__blue !important;
+        background-color: $color-blue !important;
       }
     }
   }

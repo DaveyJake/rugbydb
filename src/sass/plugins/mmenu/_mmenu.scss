@@ -9,14 +9,14 @@
  * http://creativecommons.org/licenses/by-nc/4.0/
  */
 
-// There's a bug in the CSS polyfill that'll override the :root vars with the .mm-menu_theme-* vars
-// Therefore we'll import the themes file first.
+/// There's a bug in the CSS polyfill that'll override the :root vars with the .mm-menu_theme-* vars
+/// Therefore we'll import the themes file first.
 @import '../../../../node_modules/mmenu-js/src/core/theme/mmenu.theme.scss';
-// Core.
+/// Core.
 @import '../../../../node_modules/mmenu-js/src/core/oncanvas/mmenu.oncanvas.scss';
-// Core add-ons.
+/// Core add-ons.
 @import '../../../../node_modules/mmenu-js/src/core/offcanvas/mmenu.offcanvas.scss';
-// Add-ons.
+/// Add-ons.
 @import '../../../../node_modules/mmenu-js/src/addons/navbars/mmenu.navbars.scss';
 @import '../../../../node_modules/mmenu-js/src/addons/searchfield/mmenu.searchfield.scss';
 @import '../../../../node_modules/mmenu-js/src/addons/setselected/mmenu.setselected.scss';
