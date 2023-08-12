@@ -510,33 +510,28 @@ class RDB_WPCM_REST_API {
             if ( 'match' === $this->item ) {
                 $venue = term_exists( $slug, 'wpcm_venue' );
 
+                $tax_array_array = array(
+                    'taxonomy' => '',
+                    'field'    => 'slug',
+                    'terms'    => $slug,
+                );
+
                 if ( ! empty( $venue ) ) {
-                    $this->args['tax_query'][] = array(
-                        'taxonomy' => 'wpcm_venue',
-                        'field'    => 'slug',
-                        'terms'    => $slug,
-                    );
+                    $tax_array_array['taxonomy'] = 'wpcm_venue';
                 }
                 elseif ( ! empty( $competition ) ) {
-                    $this->args['tax_query'][] = array(
-                        'taxonomy' => 'wpcm_comp',
-                        'field'    => 'slug',
-                        'terms'    => $slug,
-                    );
+                    $tax_array_array['taxonomy'] = 'wpcm_comp';
                 }
                 elseif ( ! empty( $season ) ) {
-                    $this->args['tax_query'][] = array(
-                        'taxonomy' => 'wpcm_season',
-                        'field'    => 'slug',
-                        'terms'    => $slug,
-                    );
+                    $tax_array_array['taxonomy'] = 'wpcm_season';
                 }
                 elseif ( ! empty( $team ) ) {
-                    $this->args['tax_query'][] = array(
-                        'taxonomy' => 'wpcm_team',
-                        'field'    => 'slug',
-                        'terms'    => $slug,
-                    );
+                    $tax_array_array['taxonomy'] = 'wpcm_team';
+                }
+
+                // Do we have a taxonomy for our slug?
+                if ( ! empty( $tax_array_array['taxonomy'] ) ) {
+                    $this->args['tax_query'][] = $tax_array_array;
                 }
                 else {
                     unset( $this->args['tax_query'] );
