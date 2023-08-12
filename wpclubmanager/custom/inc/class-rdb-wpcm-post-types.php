@@ -50,7 +50,7 @@ class RDB_WPCM_Post_Types {
     public function __construct() {
         add_filter( 'wpclubmanager_taxonomy_objects_wpcm_venue', array( $this, 'venue_taxonomy_objects' ) );
 
-        foreach ( self::$taxes as $tax => $path ) {
+        foreach ( array_keys( self::$taxes ) as $tax ) {
             add_filter( "wpclubmanager_taxonomy_args_wpcm_{$tax}", array( $this, "wpcm_rest_api_args_{$tax}" ), 5 );
         }
 
