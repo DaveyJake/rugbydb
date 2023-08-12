@@ -13,7 +13,7 @@ if ( ! class_exists( 'WR_Utilities' ) ) :
     get_template_part( 'WR/wr', 'utilities' );
 endif;
 
-global $post;
+global $post, $WR;
 
 echo '<div class="wpcm-profile__meta">';
 
@@ -75,7 +75,7 @@ echo '<div class="wpcm-profile__meta">';
                         echo '<th>';
                             esc_html_e( 'Height', 'wp-club-manager' );
                         echo '</th>';
-                        echo '<td>' . esc_html( WR_Utilities::cm2ft( $height ) ) . '</td>';
+                        echo '<td>' . esc_html( $WR->cm2ft( $height ) ) . '</td>';
                     echo '</tr>';
                 endif;
             endif;
@@ -88,7 +88,7 @@ echo '<div class="wpcm-profile__meta">';
                         echo '<th>';
                             esc_html_e( 'Weight', 'wp-club-manager' );
                         echo '</th>';
-                        echo '<td>' . esc_html( WR_Utilities::kg2lb( $weight ) ) . '</td>';
+                        echo '<td>' . esc_html( $WR->kg2lb( $weight ) ) . '</td>';
                     echo '</tr>';
                 endif;
             endif;

@@ -186,11 +186,11 @@ class FrontPage extends DTHelpers {
     // Filter by team checkbox.
     $.fn.dataTable.ext.search.push(
       function( settings, searchData, index, rowData, counter ) {
-        const teams = $( 'input[ name="wpcm_team" ]:checked' ).map( function() {
+        const teams = $( 'input[name="wpcm_team"]:checked' ).map( function() {
           return this.value;
         }).get();
 
-        const friendlies = $( 'input[ name="wpcm_friendly" ]:checked' ).map( function() {
+        const friendlies = $( 'input[name="wpcm_friendly"]:checked' ).map( function() {
           return this.value;
         }).get();
 
@@ -198,11 +198,11 @@ class FrontPage extends DTHelpers {
           return true;
         }
 
-        if ( ! includes( [ 'mens-eagles', 'womens-eagles' ], searchData[ 7 ] ) ) {
-          friendlies[ 0 ] = '*';
+        if ( ! includes( ['mens-eagles', 'womens-eagles'], searchData[7] ) ) {
+          friendlies[0] = '*';
         }
 
-        if ( teams.indexOf( searchData[ 7 ] ) !== -1 && ( '*' === friendlies[ 0 ] || friendlies.indexOf( searchData[ 8 ] ) !== -1 ) ) {
+        if ( teams.indexOf( searchData[7] ) !== -1 && ( '*' === friendlies[0] || friendlies.indexOf( searchData[8] ) !== -1 ) ) {
           return true;
         }
 

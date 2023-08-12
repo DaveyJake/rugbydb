@@ -193,7 +193,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
 
         // Remaining API data.
         if ( ! isset( $terms[0][0]->term_id ) ) {
-            $this->error_reporter( $request['id'], "Match {$request['id']}", 'competition or term' );
+            $this->error_reporter( $request['id'], sprintf( "Match %s", $request['id'] ), 'competition or term' );
         }
         $this->data( $request['id'], $terms );
 
@@ -503,7 +503,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
                         'type'        => 'string',
                         'format'      => 'uri',
                     ),
-                    'schemaOrg' => array(
+                    'schema' => array(
                         'streetAddress'  => array(
                             'description' => esc_html__( 'The number and street of the venue.', $this->domain ),
                             'type'        => 'string',
@@ -585,7 +585,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
             ),
         );
 
-        $this->schema_template;
+        return $this->schema_template;
     }
 
     /**
@@ -708,13 +708,21 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
                 switch( $key ) {
                     case 'usar_scrum_id':
                         if ( ! empty( $meta[ $key ][0] ) ) {
-                            $this->api['external']['espn_scrum'] = sprintf( 'http://en.espn.co.uk/other/rugby/match/%d.html', absint( $meta[ $key ][0] ) );
+                            if ( absint( $meta[ $key ][0] ) <= 301336 ) {
+                                $this->api['external']['espn_scrum'] = sprintf( 'http://en.espn.co.uk/other/rugby/match/%d.html', absint( $meta[ $key ][0] ) );
+                            } elseif( preg_match( '/,/', $meta[ $key ][0] ) ) {
+                                $parts = array_map( 'trim', preg_split( '/,/', $meta[ $key ][0] ) );
+                                $this->api['external']['espn_scrum'] = sprintf( 'https://www.espn.co.uk/rugby/match?gameId=%1$s&league=%2$s', $parts[0], $parts[1] );
+                            } else {
+                                unset( $this->api['external']['espn_scrum'] );
+                            }
                         } else {
                             unset( $this->api['external']['espn_scrum'] );
                         }
                         break;
                     case 'wpcm_attendance':
                         $this->api['attendance'] = absint( $meta[ $key ][0] );
+                        break;
                     case 'wpcm_comp_status':
                         $this->api['competition']['status'] = $meta[ $key ][0];
                         break;
