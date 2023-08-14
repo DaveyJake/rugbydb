@@ -8,29 +8,40 @@
 
 // phpcs:disable
 require_once '../../../../../../wp-load.php';
-require_once get_template_directory() . '/WR/wr-utilities.php';
+
 if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
     require_once '../../../../../../wp-admin/includes/image.php';
 }
+
+require_once get_template_directory() . '/WR/wr-utilities.php';
 
 /**
  * Set player images.
  *
  * @since 1.0.0
  *
+ * @global WR_Utilities $WR World Rugby utilties instance.
+ *
  * @param string $team Team slug.
  */
 function rdb_set_player_images( $team = 'mens-eagles' ) {
+    global $WR;
+
     // Player badge numbers.
     $player_badges = array();
+
     // Player images.
     $player_images = array();
+
     // Players with image.
     $players_with_image = array();
+
     // Player image posts.
     $player_image_posts = array();
+
     // Player images.
-    $images = WR_Utilities::get_files( __DIR__ . "/{$team}" );
+    $images = $WR->get_files( __DIR__ . "/{$team}" );
+
     // Player post objects.
     $args = array(
         'post_type'      => 'wpcm_player',
@@ -44,25 +55,30 @@ function rdb_set_player_images( $team = 'mens-eagles' ) {
             ),
         ),
     );
+
     // Player posts.
     $players = get_posts( $args );
 
     foreach ( $players as $player ) {
         // Badge number.
         $badge = get_post_meta( $player->ID, 'wpcm_number', true );
+
         // Player name.
         $first_name = get_post_meta( $player->ID, '_wpcm_firstname', true );
         $nickname   = get_post_meta( $player->ID, '_usar_nickname', true );
         $last_name  = get_post_meta( $player->ID, '_wpcm_lastname', true );
+
         // Player modified name.
         $parts     = preg_split( '/-/', $player->post_name );
         $post_name = sprintf( '%s-%s', $parts[1], $parts[0] );
+
         // Check for renamed images.
         $first_name = sanitize_title( $first_name );
         $nickname   = sanitize_title( $nickname );
         $last_name  = sanitize_title( $last_name );
         $name       = sprintf( '%s-%s', $first_name, $last_name );
         $lf_name    = sprintf( '%s-%s', $last_name, $first_name );
+
         if ( ! empty( $nickname ) ) {
             $nname      = sprintf( '%s-%s', $nickname, $last_name );
             $lf_nname   = sprintf( '%s-%s', $last_name, $nickname );
@@ -70,9 +86,11 @@ function rdb_set_player_images( $team = 'mens-eagles' ) {
             $nname    = $name;
             $lf_nname = $lf_name;
         }
+
         // Only return capped players.
         if ( $badge > 0 ) {
             $player_badges[] = $badge;
+
             // Iterate.
             foreach ( $images as $image ) {
                 if ( preg_match( '/\b' . $player->post_name . '\b/', $image ) ) {
@@ -80,78 +98,84 @@ function rdb_set_player_images( $team = 'mens-eagles' ) {
                         'player_post_id' => $player->ID,
                         'player_name'    => $player->post_title,
                         'player_slug'    => $player->post_name,
-                        'img_file_path'  => __DIR__ . "/{$team}/{$image}",
+                        'img_file_path'  => sprintf( '%1$s/%2$s/%3$s', __DIR__, $team, $image ),
                     );
 
                     $player_images[]              = $image;
                     $player_image_posts[ $badge ] = $player_img_object;
                     $players_with_image[]         = $badge;
                 }
+
                 // Reverse post name check.
                 if ( preg_match( '/\b' . $post_name . '\b/', $image ) ) {
                     $player_img_object = array(
                         'player_post_id' => $player->ID,
                         'player_name'    => $player->post_title,
                         'player_slug'    => $player->post_name,
-                        'img_file_path'  => __DIR__ . "/{$team}/{$image}",
+                        'img_file_path'  => sprintf( '%1$s/%2$s/%3$s', __DIR__, $team, $image ),
                     );
 
                     $player_images[]              = $image;
                     $player_image_posts[ $badge ] = $player_img_object;
                     $players_with_image[]         = $badge;
                 }
+
                 // Formal name.
                 if ( preg_match( '/\b' . $name . '\b/', $image ) ) {
                     $player_img_object = array(
                         'player_post_id' => $player->ID,
                         'player_name'    => $player->post_title,
                         'player_slug'    => $player->post_name,
-                        'img_file_path'  => __DIR__ . "/{$team}/{$image}",
+                        'img_file_path'  => sprintf( '%1$s/%2$s/%3$s', __DIR__, $team, $image ),
                     );
 
                     $player_images[]              = $image;
                     $player_image_posts[ $badge ] = $player_img_object;
                     $players_with_image[]         = $badge;
                 }
+
                 // Check for last_first named images.
                 if ( preg_match( '/\b' . $lf_name . '\b/', $image ) ) {
                     $player_img_object = array(
                         'player_post_id' => $player->ID,
                         'player_name'    => $player->post_title,
                         'player_slug'    => $player->post_name,
-                        'img_file_path'  => __DIR__ . "/{$team}/{$image}",
+                        'img_file_path'  => sprintf( '%1$s/%2$s/%3$s', __DIR__, $team, $image ),
                     );
 
                     $player_images[]              = $image;
                     $player_image_posts[ $badge ] = $player_img_object;
                     $players_with_image[]         = $badge;
                 }
+
                 // Nickname.
                 if ( preg_match( '/\b' . $nname . '\b/', $image ) ) {
                     $player_img_object = array(
                         'player_post_id' => $player->ID,
                         'player_name'    => $player->post_title,
                         'player_slug'    => $player->post_name,
-                        'img_file_path'  => __DIR__ . "/{$team}/{$image}",
+                        'img_file_path'  => sprintf( '%1$s/%2$s/%3$s', __DIR__, $team, $image ),
                     );
 
                     $player_images[]              = $image;
                     $player_image_posts[ $badge ] = $player_img_object;
                     $players_with_image[]         = $badge;
                 }
+
                 // Last_First Nickname.
                 if ( preg_match( '/\b' . $lf_nname . '\b/', $image ) ) {
                     $player_img_object = array(
                         'player_post_id' => $player->ID,
                         'player_name'    => $player->post_title,
                         'player_slug'    => $player->post_name,
-                        'img_file_path'  => __DIR__ . "/{$team}/{$image}",
+                        'img_file_path'  => sprintf( '%1$s/%2$s/%3$s', __DIR__, $team, $image ),
                     );
 
                     $player_images[]              = $image;
                     $player_image_posts[ $badge ] = $player_img_object;
                     $players_with_image[]         = $badge;
                 }
+
                 // // Check for other images.
                 // $ext         = pathinfo( $image, PATHINFO_EXTENSION );
                 // $_name       = preg_replace( '/(\d{2}-|-eagle-)/', '', basename( $image, $ext ) );
@@ -234,13 +258,13 @@ function rdb_set_player_images( $team = 'mens-eagles' ) {
                     // Associate attachment ID to post ID.
                     set_post_thumbnail( $post_id, $attachment_id );
                     // Done message.
-                    $message = $post_id . ' => Image: ' . $attachment_id . '<br/ >';
+                    $message = sprintf( '%1$d %1$s: %2$d\\n', $post_id, '=> Image', $attachment_id );
                 }
             }
         }
 
         if ( ! empty( $message ) ) {
-            echo $message;
+            error_log( $message );
         }
     }
 }

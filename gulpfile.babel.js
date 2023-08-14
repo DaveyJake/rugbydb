@@ -4,7 +4,6 @@
 import fs                from 'fs';
 import path              from 'path';
 import { fileURLToPath } from 'url';
-import { createRequire } from 'node:module';
 import gulp              from 'gulp';
 import plugins           from 'gulp-load-plugins';
 import imagemin, {
@@ -18,6 +17,7 @@ import autoprefixer      from 'autoprefixer';
 import browserSync       from 'browser-sync';
 import colors            from 'ansi-colors';
 import cssnano           from 'cssnano';
+import * as dartSass     from 'sass';
 import extend            from 'lodash/extend.js';
 import log               from 'fancy-log';
 import named             from 'vinyl-named';
@@ -36,8 +36,6 @@ import webpackConfig     from './webpack.config.js';
 
 // Node legacy variables.
 const __dirname = path.dirname( fileURLToPath( import.meta.url ) );
-const require   = createRequire( import.meta.url );
-const dartSass  = require( 'sass' );
 
 /**
  * Check for CLI flags.
@@ -116,7 +114,7 @@ const loadConfig = () => {
 const $ = plugins({
   config: `${ __dirname }/package.json`,
   postRequireTransforms: {
-    sass( sass ) {
+    sass: function( sass ) {
       return sass( dartSass );
     }
   }

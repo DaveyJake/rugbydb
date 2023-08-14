@@ -64,6 +64,8 @@
     "postcss-strip-inline-comments": "^0.1.5",
     "purgecss-with-wordpress": "^4.1.0",
     "sass": "^1.42.1",
+    "stylelint": "^15.10.2",
+    "stylelint-stylistic": "^0.4.3",
     "vinyl-named": "^1.1.0",
     "vinyl-source-stream": "^2.0.0",
     "webpack": "^4.8.3",
@@ -81,7 +83,8 @@
     "fancy-log": "^1",
     "js-yaml": "^3",
     "json-sass": "*",
-    "rimraf": "*"
+    "rimraf": "*",
+    "stylelint-scss": "*"
   },
   "browserslist": [
     "extends @wordpress/browserslist-config"

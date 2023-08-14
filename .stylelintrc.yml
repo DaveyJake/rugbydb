@@ -5,13 +5,14 @@ cacheLocation: /tmp/.stylelintcache
 ignorePath: ./.stylelintignore
 plugins:
   - stylelint-scss
+  - stylelint-stylistic
 rules:
   at-rule-empty-line-before: null
   declaration-empty-line-before: null
-  indentation:
-    - 2
-  max-empty-lines: 5
-  max-line-length:
+  stylistic/indentation: tab
+  stylistic/string-quotes: single
+  stylistic/max-empty-lines: 5
+  stylistic/max-line-length:
     - 120
     - ignore: non-comments
       ignorePattern:
@@ -31,12 +32,14 @@ rules:
     - ignoreAtRules:
         - apply
         - extend
+        - function
+        - include
         - layer
+        - mixin
         - tailwind
   scss/at-mixin-parentheses-space-before: never
   scss/comment-no-empty: null
   scss/no-global-function-names: null
-  string-quotes: single
   unit-allowed-list:
     - px
     - em

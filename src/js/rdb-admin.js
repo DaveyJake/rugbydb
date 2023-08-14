@@ -6,31 +6,19 @@
  */
 
 /**
- * Clicking on an IP will open a new to a Geo IP Lookup website.
+ * Initialize Admin Dashboard Modifications
  *
  * @since 1.0.1
  *
- * @see wpmuDefenderGeoIPLookup
+ * @param {jQuery} $ Main jQuery instance.
  */
-function geoIPLookup() {
-  $( document ).ajaxComplete( function() {
-    // const geoip = 'http://geoiplookup.net/ip/';
-    const whatis = 'https://whatismyipaddress.com/ip/';
+( function( $ ) { // eslint-disable-line
+  // Included globals.
+  const pageNow = window.pagenow;
 
-    $( '#iplockout-table .sui-accordion-item' ).on( 'click', 'td', function() {
-      const target = $( this ).parent().next().find( '.sui-box-body > .sui-row:nth-child(2) > .sui-col > p:last-child > a' ),
-            ipAddr = target.text();
-
-      console.log( ipAddr );
-
-      /** @return {string} Re-linked URL to GEO IP website. */
-      return target.attr({
-        href: whatis + ipAddr,
-        target: '_blank'
-      });
-    });
-  });
-}
+  // Defender
+  wpmuDefenderGeoIPLookup( pageNow );
+})( jQuery );
 
 /**
  * Slight modification for WPMUDev Defender plugin.
@@ -69,16 +57,28 @@ function wpmuDefenderGeoIPLookup( pagenow ) {
 }
 
 /**
- * Initialize Admin Dashboard Modifications
+ * Clicking on an IP will open a new to a Geo IP Lookup website.
  *
  * @since 1.0.1
  *
- * @param {jQuery} $ Main jQuery instance.
+ * @see wpmuDefenderGeoIPLookup
  */
-( function( $ ) { // eslint-disable-line
-  // Included globals.
-  const pageNow = window.pagenow;
+function geoIPLookup() {
+  $( document ).ajaxComplete( function() {
+    // const geoip = 'http://geoiplookup.net/ip/';
+    const whatis = 'https://whatismyipaddress.com/ip/';
 
-  // Defender
-  wpmuDefenderGeoIPLookup( pageNow );
-})( jQuery );
+    $( '#iplockout-table .sui-accordion-item' ).on( 'click', 'td', function() {
+      const target = $( this ).parent().next().find( '.sui-box-body > .sui-row:nth-child(2) > .sui-col > p:last-child > a' ),
+            ipAddr = target.text();
+
+      console.log( ipAddr );
+
+      /** @return {string} Re-linked URL to GEO IP website. */
+      return target.attr({
+        href: whatis + ipAddr,
+        target: '_blank'
+      });
+    });
+  });
+}
