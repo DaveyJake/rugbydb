@@ -1,0 +1,286 @@
+// .wpcm-match
+&-match {
+  // .wpcm-matches
+  &es {
+    /* Fixtures & results widgets */
+    &-widget {
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          list-style: none !important;
+          clear: both;
+        }
+      }
+
+      .fixture-meta {
+        margin-bottom: 1em;
+        font-size: $wpcm-font-size;
+
+        .competition,
+        .team {
+          padding: $half-em;
+          text-transform: uppercase;
+        }
+
+        .team {
+          float: right;
+        }
+      }
+
+      .clubs {
+        a {
+          display: block;
+        }
+
+        .home,
+        .away {
+          &-clubs {
+            display: block;
+            margin: 0;
+            padding: 0 2%;
+            width: 96%;
+            line-height: 36px;
+            font-size: 1.15em;
+          }
+
+          &-logo {
+            margin-right: 1em;
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+        .score {
+          float: right;
+          font-size: 1.4em;
+          font-weight: bold;
+        }
+      }
+
+      .cricket-score {
+        font-weight: bold;
+      }
+
+      .wpcm-date {
+        margin-top: 1em;
+      }
+
+      .kickoff {
+        padding: $half-em;
+      }
+    }
+  }
+
+  /*
+  *******************************************************
+  ****** Single Match
+  *******************************************************
+  */
+
+  &-comp,
+  &-date {
+    font-size: $wpcm-font-size;
+    text-transform: uppercase;
+  }
+
+  &-info,
+  &-fixture,
+  &-home-club,
+  &-away-club,
+  &-score {
+    text-align: center;
+  }
+
+  &-meta,
+  &-status {
+    padding: $half-em 0;
+  }
+
+  &-team,
+  &-referee,
+  &-attendance {
+    font-size: $wpcm-font-size;
+  }
+
+  &-team,
+  &-referee {
+    padding-right: $half-em;
+    text-align: right;
+  }
+
+  &-referee,
+  &-attendance,
+  &-home-club,
+  &-away-club {
+    padding-top: $half-em;
+  }
+
+  &-attendance,
+  &-venue {
+    padding-left: $half-em;
+    text-align: left;
+  }
+
+  &-home,
+  &-away {
+    &-club {
+      width: 37%;
+      @include wpcm-font(1.4em, 600);
+    }
+  }
+
+  &-info {
+    padding: $half-em 0;
+  }
+
+  &-date {
+    padding-top: 0.4em;
+  }
+
+  &-comp {
+    padding-top: 0.8em;
+  }
+
+  &-fixture {
+    padding: 1.5em 0 2em;
+  }
+
+  &-home-club-badge {
+    padding-left: $half-em;
+  }
+
+  &-away-club {
+    &,
+    &-badge {
+      float: right;
+    }
+
+    &-badge {
+      padding-right: $half-em;
+    }
+  }
+
+  &-score {
+    display: inline-block;
+    width: 24%;
+    font-size: 2.4em;
+
+    &,
+    &-delimeter {
+      font-weight: 600;
+    }
+
+    &-delimiter {
+      line-height: 1em;
+      font-size: 1em;
+    }
+  }
+
+  &-overtime {
+    margin-right: 1em;
+  }
+
+  &-meta {
+    &-left,
+    &-right {
+      width: 50%;
+    }
+
+    &-right {
+      float: right;
+    }
+  }
+
+  &-report {
+    padding: 0 0 3em;
+  }
+
+  &-details {
+    padding: 2em 0;
+
+    table:not(.dataTable) {
+      th.name {
+        width: 50%;
+
+        .sub {
+          padding-left: 1em;
+
+          font: {
+            size: $wpcm-font-size;
+            style: italic;
+            weight: normal;
+          }
+        }
+
+        span.mvp {
+          margin-left: 1em;
+          color: #e5c100;
+        }
+      }
+
+      td {
+        &.goals,
+        &.assists,
+        &.rating {
+          width: 9%;
+        }
+
+        &.notes {
+          width: auto;
+
+          .yellowcard,
+          .redcard {
+            display: inline-block;
+            margin-left: 8px;
+            height: 18px;
+            width: 12px;
+            background: url('/wp-content/plugins/wp-club-manager/assets/images/notes@2x.png') no-repeat;
+            overflow: hidden;
+            text-indent: -100px;
+          }
+
+          .yellowcard {
+            background-position: 0 0;
+          }
+
+          .redcard {
+            background-position: -12px 0;
+          }
+        }
+      }
+    }
+  }
+
+  &-stats {
+    &-start,
+    &-subs {
+      img.wp-post-image {
+        vertical-align: middle;
+      }
+    }
+
+    &-subs {
+      padding-top: 1.4em;
+    }
+  }
+
+  &-venue {
+    font-size: $wpcm-font-size;
+
+    &-info .wpcm_map_canvas {
+      max-width: 100%;
+    }
+
+    &-address {
+      margin-top: 1em;
+      padding: 1em $half-em;
+      clear: both;
+    }
+  }
+
+  &-map-canvas img {
+    max-width: none;
+  }
+}

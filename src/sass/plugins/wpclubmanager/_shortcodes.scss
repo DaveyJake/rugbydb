@@ -1,0 +1,93 @@
+/*
+*******************************************************
+****** Shortcodes
+*******************************************************
+*/
+
+// Staff
+&-staff {
+  &-bio,
+  &-image,
+  &-info {
+    margin-bottom: 2em;
+  }
+
+  &-image {
+    width: 40%;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &-info {
+    float: right;
+    width: 50%;
+
+    h1 {
+      margin: 0 0 1.4em;
+      @include wpcm-font;
+    }
+  }
+
+  &-meta table th {
+    font-weight: bold;
+  }
+
+  &-bio h3 {
+    margin-bottom: 1em;
+  }
+}
+
+// Players
+&-players-shortcode table:not(.dataTable) th.number {
+  width: auto;
+}
+&-sub-appearances {
+  font-size: 85%;
+}
+
+// Standings
+&-standings-shortcode tr.highlighted {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+// Matches
+&-fixtures-shortcode {
+  td {
+    span {
+      &.win,
+      &.draw,
+      &.loss,
+      &.postponed {
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 10px;
+        color: $color-white;
+        float: right;
+      }
+
+      &.win {
+        background: #269e0b;
+      }
+
+      &.draw {
+        background: #808080;
+      }
+
+      &.loss {
+        background: #9e0b2a;
+      }
+
+      &.postponed {
+        background: #363636;
+      }
+    }
+  }
+}
+
+// Sponsors
+&-sponsor-widget ul {
+  list-style: none !important;
+}

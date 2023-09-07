@@ -1,0 +1,131 @@
+/*
+*******************************************************
+****** GLOBALLY SHARED STYLES
+*******************************************************
+*/
+&-row,
+&-staff-bio,
+&-staff-meta table,
+&-profile-meta table,
+&-birthdays-widget li,
+&-birthdays-widget li .birthday-post,
+&-birthdays-widget li .birthday-meta h4,
+&-matches-widget .clubs,
+&-matches-widget .cricket-score,
+&-matches-widget .fixture-meta,
+&-matches-widget .wpcm-date,
+&-match-details table:not(.dataTable),
+&-fixtures-shortcode table:not(.dataTable),
+&-players-shortcode table:not(.dataTable),
+&-standings-shortcode table:not(.dataTable) {
+  width: 100%;
+}
+
+&-profile-image,
+&-sponsor-image,
+&-staff-image,
+&-match-meta-left,
+&-match-home-club,
+&-match-home-club-badge,
+&-birthdays-widget p.birthdate,
+&-birthdays-widget li,
+&-birthdays-widget li .birthday-post .birthday-image,
+&-single-sponsors .wpcm-sponsor-details,
+&-matches-widget .clubs,
+&-matches-widget .cricket-score,
+&-matches-widget .fixture-meta,
+&-matches-widget .wpcm-date,
+&-matches-widget .clubs .home-clubs,
+&-matches-widget .clubs .home-logo,
+&-matches-widget .clubs .away-clubs,
+&-matches-widget .clubs .away-logo,
+&-matches-widget ul li {
+  float: left;
+}
+
+&-match-details,
+&-fixtures-shortcode,
+&-players-shortcode,
+&-standings-shortcode {
+  table:not(.dataTable) {
+    &,
+    th,
+    td {
+      text-align: center;
+    }
+
+    thead,
+    tbody {
+      .club,
+      .name,
+      .position {
+        text-align: left;
+      }
+    }
+  }
+}
+
+&-club-map,
+&-club-details table:not(.dataTable),
+&-match-details h3,
+&-profile-stats h4,
+&-profile-stats-block,
+&-birthdays-widget li,
+&-matches-widget ul li {
+  margin-bottom: 1.5em;
+}
+
+&-archive-sponsors .wpcm-entry-title,
+&-single-sponsors .wpcm-entry-title,
+&-club-details h2,
+&-sponsor-details h2 {
+  margin: 0 0 1em;
+  font-size: 1.6em;
+  font-weight: normal;
+}
+
+&_map_canvas img {
+  max-width: none !important;
+}
+
+// .wpcm-row
+&-row {
+  margin: 0 auto;
+
+  @include wpcm-clear-table;
+
+  & & {
+    width: auto;
+    max-width: none;
+
+    margin-top: 0;
+    margin-bottom: 0;
+
+    @include wpcm-clear-table;
+  }
+}
+
+// .wpcm-fixtures-shortcode tbody tr:hover
+&-fixtures-shortcode tbody tr:hover {
+  cursor: pointer;
+}
+
+// .wpcm-view-link
+&-view-link,
+// .wpcm-entry-content
+&-entry-content {
+  display: block;
+}
+
+// .wpcm-view-link
+&-view-link {
+  margin: 1.5em 0 0;
+  float: right;
+}
+
+// .wpcm-entry-content
+&-entry-content,
+&-staff-bio,
+&-staff-shortcode {
+  clear: both;
+}

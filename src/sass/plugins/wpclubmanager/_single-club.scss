@@ -1,0 +1,105 @@
+/*
+*******************************************************
+****** Single Club
+*******************************************************
+*/
+
+&-club-details {
+  h2 {
+    img {
+      margin-right: 0.9375rem;
+      vertical-align: middle;
+    }
+  }
+
+  table:not(.dataTable) th {
+    min-width: 100px;
+    font-weight: 600;
+  }
+}
+
+&-h2h-list,
+&-h2h-list li {
+  list-style: none;
+}
+
+&-h2h-list {
+  display: table;
+  margin: 10px auto;
+  border-collapse: separate;
+  border-spacing: 10px;
+
+  li {
+    display: table-cell;
+    padding: 20px;
+    background: #f9f9f9;
+    text-align: center;
+
+    span {
+      &.wpcm-h2h-list {
+        &-count {
+          font-size: 2em;
+          font-weight: 600;
+        }
+
+        &-desc {
+          display: block;
+          margin-top: 5px;
+          font-size: 0.75em;
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    // &.p,
+    // &.w,
+    // &.d,
+    // &.l {}
+  }
+}
+
+// High Res images
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2 / 1),
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+  &-match-details {
+    table:not(.dataTable) {
+      td.notes {
+        .yellowcard,
+        .redcard {
+          display: inline-block;
+          width: rem-calc(12px);
+          height: rem-calc(18px);
+          margin-left: 0.5rem;
+          overflow: hidden;
+          background: url('/wp-content/plugins/wp-club-manager/assets/images/notes@2x.png') no-repeat;
+          background-size: 48px 18px;
+          text-indent: -100px;
+        }
+
+        .yellowcard {
+          background-position: 0 0;
+        }
+
+        .redcard {
+          background-position: -24px 0;
+        }
+      }
+
+      th.name span.mvp {
+        margin-left: 1rem;
+        color: #e5c100;
+      }
+    }
+  }
+}
+
+&-players,
+&-staff {
+  &-gallery-li h4 a {
+    display: block;
+  }
+}

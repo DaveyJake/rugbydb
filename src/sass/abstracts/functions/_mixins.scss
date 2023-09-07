@@ -1,3 +1,4 @@
+/* stylelint-disable CssSyntaxError */
 ////
 /// Theme Functions & Mixins
 ///
@@ -5,20 +6,16 @@
 ////
 
 
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////// FUNCTIONS //////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// FUNCTIONS ///////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 
-////
 /// Check if variable is a list.
 ///
-/// @param {unknown} $variable Anything to check.
+/// @param {number | string} $variable Anything to check.
 ///
 /// @return True if list. False if not.
-////
 @function is-list($variable) {
   // Just in case a list is surrounded by quotes.
   @if type-of($variable) == string {
@@ -28,25 +25,21 @@
   @return type-of($variable) == list;
 }
 
-////
 /// Get value from `theme.json` SCSS map.
 ///
 /// @param {number} $nth Nth child index from list.
 /// @param {string} $key Key from map to retrieve.
 ///
 /// @return {mixed} The value from `theme.json` SCSS map.
-////
 @function theme-get($nth: 1, $key: 'color') {
   $palette: map-deep-get($theme, 'settings', 'color', 'palette');
 
   @return map-get(nth($palette, $nth), $key);
 }
 
-////
 /// Transparent white.
 ///
 /// @param {number} $opacity Default 0.5.
-////
 @function transparent-white($opacity: 0.5) {
   $str: 'rgba(255, 255, 255, #{$opacity})';
 
@@ -54,11 +47,9 @@
 }
 
 
-
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////// MIXINS ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
 
 
 /// Absolute bottom.
@@ -77,12 +68,10 @@
   @content;
 }
 
-////
 /// Borders.
 ///
 /// @param {string} $direction Accepts 'all', 'vertical', 'horizontal'.
 /// @param {list}   $style     Border style short-hand.
-////
 @mixin border($direction: all, $style: '1px solid #000') {
   @if $direction == vertical {
     border: {
@@ -99,12 +88,10 @@
   }
 }
 
-////
 /// Border radius.
 ///
 /// @param {string} $dir    Accepts 'top', 'bottom', 'left', 'right', 'horizontal', 'vertical', 'tb', 'lr'.
 /// @param {number} $radius Number output in px.
-////
 @mixin border-radius($dir: null, $radius: 0) {
   @if ($dir == top or $dir == bottom or $dir == vertical or $dir == tb) {
     border-#{$dir}-left-radius: $radius;
@@ -117,12 +104,10 @@
   }
 }
 
-////
 /// CSS calculator written for SCSS.
 ///
 /// @param {string} $property   CSS property.
 /// @param {string} $expression Mathematical expression.
-////
 @mixin calc($property, $expression) {
   #{$property}: calc(#{$expression});
 }
@@ -142,11 +127,9 @@
   width: map-get($columns, $number-columns) - ( ( $columns-margin * ( $number-columns - 1 ) ) / $number-columns );
 }
 
-////
 /// Background image.
 ///
 /// @param {string} $url Path to image.
-////
 @mixin element-background($url) {
   background: {
     image: url($url);
@@ -156,11 +139,9 @@
   }
 }
 
-////
 /// Equal width amongst child elemnts.
 ///
 /// @param {number} $elements Total number of elements.
-////
 @mixin equal-width($elements: 4) {
   width: calc(100% / $elements);
 }
@@ -283,14 +264,12 @@
   }
 }
 
-////
 /// Directional spacing.
 ///
 /// @param {string}      $space-type Accepts 'margin' or 'padding'.
 /// @param {string}      $direction  Accepts 'top', 'right', 'bottom', 'left',
 ///                                  'horizontal' or 'vertical'.
 /// @param {number|list} $values     Accepts a single number or a list of numbers.
-////
 @mixin spacing($space-type, $direction, $values) {
   @if is-list($values) {
     #{$space-type}: unquote($values);
@@ -309,12 +288,10 @@
   }
 }
 
-////
 /// Text-align
 ///
 /// @param {string} $dir Accepts 'left', 'center', 'right'. Only use when need to
 ///                      override third-party library.
-////
 @mixin text($dir: left) {
   text-align: $dir !important;
 }
@@ -333,22 +310,17 @@
 }
 
 
-
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// BEGIN WPCM SPECIFIC MIXINS //////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-////
 /// Offset for club colors..
 ///
 /// @param {string} $primary   Club's primary color.
 /// @param {string} $secondary Club's secondary color.
 ///
 /// @return {string} Corrected color.
-////
 @function club-colors($primary, $secondary) {
   $fallback: $color-white;
 

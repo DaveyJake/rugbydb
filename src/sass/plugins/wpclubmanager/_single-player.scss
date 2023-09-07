@@ -1,0 +1,86 @@
+/*
+*******************************************************
+****** Single Players
+*******************************************************
+*/
+
+&-profile {
+  &-image,
+  &-meta,
+  &-stats,
+  &-bio {
+    margin-bottom: 2em;
+  }
+
+  &-image {
+    width: 33.333%;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &-meta {
+    float: right;
+    width: 58.333%;
+
+    h1 {
+      margin: 0 0 1.4em;
+      @include wpcm-font;
+    }
+
+    table th {
+      font-weight: bold;
+    }
+  }
+
+  &-stats {
+    .stats-tabs {
+      &,
+      &-multi {
+        margin: 0;
+        padding-left: 6px;
+        border-bottom: 1px solid $color-border-input;
+      }
+
+      li,
+      &-multi li {
+        display: inline-block;
+        position: relative;
+        margin-bottom: -1px;
+        border: 1px solid $color-border-input;
+        background: $color-background-button;
+        font-weight: 700;
+        font-size: 0.9375em;
+
+        a {
+          display: inline-block;
+          padding: 8px 12px;
+          color: $color-text-input;
+          text-decoration: none;
+        }
+
+        &.tabs {
+          &,
+          &-multi {
+            border-bottom: 1px solid $color-white;
+            background: $color-white;
+          }
+        }
+      }
+    }
+
+    .tabs-panel {
+      &,
+      &-multi {
+        margin-top: 1.4em;
+        height: auto;
+        overflow: auto;
+
+        table td {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

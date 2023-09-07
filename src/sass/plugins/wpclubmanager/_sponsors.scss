@@ -1,0 +1,45 @@
+/*
+*******************************************************
+****** Sponsors Archive
+*******************************************************
+*/
+
+&-archive-sponsors .wpcm-sponsor-details,
+&-sponsor-thumbnail {
+  float: right;
+}
+
+&-single-sponsors .wpcm-sponsor-details,
+&-sponsor-thumbnail {
+  margin-bottom: 2em;
+}
+
+&-archive-sponsors .wpcm-sponsor-details {
+  width: 55%;
+}
+
+&-single-sponsors .wpcm-sponsor-details {
+  width: 65%;
+}
+
+&-sponsor {
+  &-post {
+    padding-bottom: 2.5em;
+  }
+
+  &-image {
+    width: 40%;
+  }
+
+  &-thumbnail {
+    width: 25%;
+  }
+
+  &-meta {
+    margin-bottom: 1em;
+  }
+
+  &-details a.more-link {
+    display: block;
+  }
+}

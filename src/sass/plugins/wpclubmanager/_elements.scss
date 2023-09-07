@@ -1,0 +1,120 @@
+table {
+  margin-bottom: 1.25rem;
+  border: solid 1px #ddd;
+
+  thead,
+  tfoot {
+    tr {
+      th,
+      td {
+        padding: 0.5rem 0.625rem;
+        font-weight: bold;
+        text-align: left;
+      }
+    }
+  }
+
+  tr {
+    th,
+    td {
+      padding: 0.5625rem 0.625rem;
+    }
+  }
+
+  thead,
+  tbody,
+  tfoot {
+    tr {
+      .stat {
+        span {
+          line-height: 1;
+        }
+      }
+
+      th,
+      td {
+        display: table-cell;
+        line-height: 1.125rem;
+      }
+    }
+  }
+}
+
+/*
+*******************************************************
+****** Widgets
+*******************************************************
+*/
+.widget {
+  &-players,
+  &-standings {
+    h3.wpcm-sc-title {
+      display: none;
+    }
+  }
+
+  &-area & p.birthdate {
+    float: left;
+    font-size: $wpcm-font-size;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+[class*="block-grid-"] {
+  padding: 0;
+  margin: 0 -0.625rem;
+
+  &,
+  > li,
+  img {
+    display: block;
+  }
+
+  > li {
+    box-sizing: border-box;
+    height: auto;
+    float: left;
+    padding: 0 0.625rem 1.25rem;
+    margin-left: 0 !important;
+
+    img {
+      max-width: 100%;
+    }
+
+    &:before,
+    &:after {
+      box-sizing: border-box;
+    }
+  }
+
+  &:before {
+    content: " ";
+    display: table;
+  }
+
+  &:after {
+    content: " ";
+    display: table;
+    clear: both;
+  }
+}
+
+.small-block-grid-2 > li {
+  width: 50%;
+  list-style: none;
+
+  &:nth-of-type(1n) {
+    clear: none;
+  }
+
+  &:nth-of-type(2n + 1) {
+    clear: both;
+  }
+}
+
+@include wpcm-block-grid($breakpoint: medium);
+
+.leaflet-marker-icon {
+  box-shadow: none !important;
+}

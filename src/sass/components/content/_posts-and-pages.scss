@@ -11,7 +11,7 @@
 }
 
 .post,
-.page:not(.post-2145):not(.page-about):not(body) {
+.page:not(.post-2145, .page-about, body) {
   margin: 0 0 1.5em;
 }
 

@@ -1,0 +1,82 @@
+/*
+*******************************************************
+****** Widgets
+*******************************************************
+*/
+
+&-countdown {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+  text-align: center;
+}
+
+&-ticker-countdown {
+  vertical-align: middle;
+
+  div {
+    display: inline-block;
+    margin-left: 4px;
+    text-align: center;
+    color: #444;
+    font-size: 0.9em;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+
+    span {
+      display: block;
+      width: 2em;
+      height: 2em;
+      line-height: 2em;
+      background: #eee;
+
+      font: {
+        size: 1.5em;
+        weight: 600;
+      }
+    }
+  }
+}
+
+&-birthdays-widget {
+  li {
+    h3.happy-birthday {
+      margin: 0;
+      padding: 0;
+    }
+
+    .birthday {
+      &-post,
+      &-meta {
+        overflow: hidden;
+        _overflow: visible;
+        zoom: 1;
+      }
+
+      &-meta h4 {
+        margin: 0;
+        padding: 0;
+
+        span {
+          float: right;
+        }
+      }
+
+      &-post .birthday-image {
+        margin: 3px 10px 0 0;
+
+        img {
+          display: block;
+        }
+      }
+    }
+  }
+
+  p.birthdate {
+    margin: 0;
+    padding: 0;
+    font-size: $wpcm-font-size;
+  }
+}
