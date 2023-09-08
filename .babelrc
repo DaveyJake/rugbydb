@@ -1,6 +1,11 @@
 {
   "compact": false,
   "env": {
+    "development": {
+      "compact": false,
+      "comments": true,
+      "minified": false
+    },
     "production": {
       "compact": true,
       "comments": false,
@@ -54,6 +59,5 @@
       "ios >= 9"
     ],
     "esmodules": true
-  },
-  "test": ["./src/js"]
+  }
 }

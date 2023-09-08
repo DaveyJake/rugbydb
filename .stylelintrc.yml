@@ -1,5 +1,6 @@
 ---
-extends: '@wordpress/scripts/config/.stylelintrc.json'
+extends:
+  - '@wordpress/scripts/config/.stylelintrc.json'
 cache: true
 cacheLocation: /tmp/.stylelintcache
 ignorePath: ./.stylelintignore

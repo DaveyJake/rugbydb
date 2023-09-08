@@ -17,9 +17,9 @@
 
 /// Block grid generator.
 ///
-/// @param {number} $min        Minimum number of blocks.
-/// @param {number} $max        Maximum number of blocks.
-/// @param {string} $breakpoint Accepts `medium` or `large`.
+/// @param $min        Minimum number of blocks.
+/// @param $max        Maximum number of blocks.
+/// @param $breakpoint Accepts `medium` or `large`.
 @mixin wpcm-block-grid($min: 2, $max: 6, $breakpoint: medium) {
 	@for $i from $min through $max {
 		.#{$breakpoint}-block-grid {

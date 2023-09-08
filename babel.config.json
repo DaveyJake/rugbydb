@@ -1,5 +1,7 @@
 {
   "babelrcRoots": ["."],
+  "include": ["./src/js/**/*"],
+  "exclude": ["./src/js/**/*.map", "./src/js/**/*.min.js"],
   "presets": [
     [
       "@babel/preset-env",

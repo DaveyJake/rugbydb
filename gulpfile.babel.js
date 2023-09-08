@@ -91,10 +91,10 @@ const loadConfig = () => {
 
   let fileName = '';
 
-  if ( fileExists( 'config.yml' ) ) {
-    fileName = 'config.yml';
-  } else if ( fileExists( 'config-default.yml' ) ) {
-    fileName = 'config-default.yml';
+  if ( fileExists( './config.yml' ) ) {
+    fileName = './config.yml';
+  } else if ( fileExists( './config-default.yml' ) ) {
+    fileName = './config-default.yml';
   } else {
     // Exit if config.yml & config-default.yml do not exist
     log( 'Exiting process, no config file exists.' );
@@ -372,14 +372,14 @@ const UTIL = {
       .pipe( $.sourcemaps.init() )
       .pipe( $.sass({ includePaths: PATHS.sass.include }).on( 'error', $.sass.logError ) )
       .pipe(
-        $.postcss( [
+        $.postcss([
           postcssImport,
           postcssSortMQ({ sort: 'mobile-first' }),
           postcssStrip,
           postcssReporter({ clearReportedMessages: true }),
           autoprefixer({ overrideBrowserslist: COMPATIBILITY }),
           cssnano({ autoprefixer: false })
-        ] )
+        ])
       )
       .pipe( $.if( PRODUCTION, $.cleanCss({ compatibility: 'edge' }) ) )
       .pipe( $.if( DEV, $.sourcemaps.write( '.' ) ) )
@@ -440,7 +440,7 @@ const UTIL = {
       output: {
         devtoolNamespace: 'rugby-db',
         filename: '[name].js',
-        path: path.resolve( __dirname, 'dist/js/' ),
+        path: path.resolve( __dirname, `${ PATHS.dist }/js` ),
         publicPath: 'https://www.rugbydb.com/wp-content/themes/rugbydb/dist/js'
       },
       plugins: [
@@ -478,6 +478,7 @@ const UTIL = {
       }
     }),
     changeHandler( err, stats ) {
+      log( '[webpack]', err );
       log( '[webpack]', stats.toString({ colors: true }) );
 
       browser.reload();
@@ -585,7 +586,7 @@ gulp.task( 'build',
   gulp.series(
     clean,
     ...phpLint,
-    gulp.parallel( copy, ...staLint ),
+    gulp.parallel( ...staLint ),
     gulp.parallel( ...stBuild, images, copy ),
     purgecss,
     reload

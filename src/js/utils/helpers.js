@@ -147,7 +147,7 @@ const Helpers = {
    * @param {Object<string, any>} args     Custom arguments & values.
    * @param {Object<string, any>} defaults Default arguments & values.
    *
-   * @return {object}    Arguments to be used instead of defaults.
+   * @return {object} Arguments to be used instead of defaults.
   */
   parseArgs( args, defaults ) {
     if ( typeof args !== 'object' ) {
