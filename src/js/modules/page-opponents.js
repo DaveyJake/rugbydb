@@ -12,5 +12,5 @@ const pageOpponents = function() {
   });
 };
 
-module.exports = { pageOpponents };
+export { pageOpponents };
 

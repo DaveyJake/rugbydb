@@ -9,4 +9,4 @@ const pageStaff = function() {
   cards( 'page-staff.php', 'staff' );
 };
 
-module.exports = { pageStaff };
+export { pageStaff };

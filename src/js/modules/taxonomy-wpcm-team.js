@@ -428,4 +428,4 @@ class TaxWpcmTeam extends DTHelpers {
   }
 }
 
-module.exports = { TaxWpcmTeam };
+export { TaxWpcmTeam };

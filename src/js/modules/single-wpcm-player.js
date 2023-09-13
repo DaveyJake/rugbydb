@@ -78,4 +78,4 @@ const singleWpcmPlayer = function() {
   } );
 };
 
-module.exports = { singleWpcmPlayer };
+export { singleWpcmPlayer };

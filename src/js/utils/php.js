@@ -166,4 +166,4 @@ const ucwords = ( string ) => {
   return map( string.split( /\s/ ), ucfirst ).join( ' ' );
 };
 
-module.exports = { empty, inArray, ksort, ucfirst, ucwords };
+export { empty, inArray, ksort, ucfirst, ucwords };

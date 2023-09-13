@@ -48,4 +48,4 @@ window.Mmenu = Mmenu;
 window.Mhead = Mhead;
 
 // Export module
-module.exports = { Mmenu, Mhead };
+export { Mmenu, Mhead };

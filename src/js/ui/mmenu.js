@@ -74,4 +74,4 @@ const mmenu = ( function() {
   };
 })();
 
-module.exports = { mmenu };
+export { mmenu };

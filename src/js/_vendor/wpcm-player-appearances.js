@@ -31,4 +31,4 @@ const wpcmPA = function() {
     });
 };
 
-module.exports = { wpcmPA };
+export { wpcmPA };

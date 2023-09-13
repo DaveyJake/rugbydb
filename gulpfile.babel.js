@@ -1,41 +1,37 @@
 // @ts-nocheck
 'use strict';
 
-import fs                from 'fs';
-import path              from 'path';
-import { fileURLToPath } from 'url';
-import gulp              from 'gulp';
-import plugins           from 'gulp-load-plugins';
+import fs              from 'fs';
+import path            from 'path';
+import gulp            from 'gulp';
+import plugins         from 'gulp-load-plugins';
 import imagemin, {
   gifsicle,
   mozjpeg,
   optipng,
   svgo
-}                        from 'gulp-imagemin';
-import run               from 'gulp-run-command/index.js';
-import autoprefixer      from 'autoprefixer';
-import browserSync       from 'browser-sync';
-import colors            from 'ansi-colors';
-import cssnano           from 'cssnano';
-import * as dartSass     from 'sass';
-import extend            from 'lodash/extend.js';
-import log               from 'fancy-log';
-import named             from 'vinyl-named';
-import postcssImport     from 'postcss-easy-import';
-import postcssSortMQ     from 'postcss-sort-media-queries';
-import postcssStrip      from 'postcss-strip-inline-comments';
-import postcssReporter   from 'postcss-reporter';
-import purgecssWP        from 'purgecss-with-wordpress';
-import { rimraf }        from 'rimraf';
-import yaml              from 'js-yaml';
-import ESLintPlugin      from 'eslint-webpack-plugin';
-import TerserPlugin      from 'terser-webpack-plugin';
-import webpackStream     from 'webpack-stream';
-import webpack2          from 'webpack';
-import webpackConfig     from './webpack.config.js';
-
-// Node legacy variables.
-const __dirname = path.dirname( fileURLToPath( import.meta.url ) );
+}                      from 'gulp-imagemin';
+import run             from 'gulp-run-command/index.js';
+import autoprefixer    from 'autoprefixer';
+import browserSync     from 'browser-sync';
+import colors          from 'ansi-colors';
+import cssnano         from 'cssnano';
+import * as dartSass   from 'sass';
+import extend          from 'lodash/extend.js';
+import log             from 'fancy-log';
+import named           from 'vinyl-named';
+import postcssImport   from 'postcss-easy-import';
+import postcssSortMQ   from 'postcss-sort-media-queries';
+import postcssStrip    from 'postcss-strip-inline-comments';
+import postcssReporter from 'postcss-reporter';
+import purgecssWP      from 'purgecss-with-wordpress';
+import { rimraf }      from 'rimraf';
+import yaml            from 'js-yaml';
+import ESLintPlugin    from 'eslint-webpack-plugin';
+import TerserPlugin    from 'terser-webpack-plugin';
+import webpackStream   from 'webpack-stream';
+import webpack2        from 'webpack';
+import webpackConfig   from './webpack.config.js';
 
 /**
  * Check for CLI flags.
@@ -114,7 +110,7 @@ const loadConfig = () => {
 const $ = plugins({
   config: `${ __dirname }/package.json`,
   postRequireTransforms: {
-    sass: function( sass ) {
+    sass( sass ) {
       return sass( dartSass );
     }
   }
@@ -450,9 +446,7 @@ const UTIL = {
           files: PATHS.js.entries
         }),
         new TerserPlugin({
-          cache: true,
           parallel: true,
-          sourceMap: true,
           terserOptions: {
             output: {
               comments: /translators:/i,

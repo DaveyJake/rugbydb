@@ -17,4 +17,4 @@ const logoLettering = function() {
   });
 };
 
-module.exports = { logoLettering };
+export { logoLettering };

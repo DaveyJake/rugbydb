@@ -80,7 +80,7 @@ Foundation.plugin(Tabs, 'Tabs');
 // Foundation.plugin(Tooltip, 'Tooltip');
 // Foundation.plugin(ResponsiveAccordionTabs, 'ResponsiveAccordionTabs');
 
-module.exports = {
+export {
   Foundation,
   CoreUtils,
   Box,
@@ -113,6 +113,6 @@ module.exports = {
   // Toggler,
   // Tooltip,
   // ResponsiveAccordionTabs
-};
+}
 
 export default Foundation;

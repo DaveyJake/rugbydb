@@ -28,6 +28,9 @@ const webpackConfig = {
     moment: 'moment',
     DataTable: 'DataTable',
     yadcf: 'yadcf'
+  },
+  output: {
+    hashFunction: 'sha256'
   }
 };
 

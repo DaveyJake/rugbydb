@@ -244,4 +244,4 @@ class TaxWpcmVenue extends DTHelpers {
   }
 }
 
-module.exports = { TaxWpcmVenue };
+export { TaxWpcmVenue };

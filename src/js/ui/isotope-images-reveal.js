@@ -63,4 +63,4 @@ const isotopeImagesReveal = function( $items, sortValue, background ) {
   return this;
 };
 
-module.exports = { isotopeImagesReveal };
+export { isotopeImagesReveal };

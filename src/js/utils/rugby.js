@@ -331,4 +331,4 @@ class Rugby {
   }
 }
 
-module.exports = { Rugby };
+export { Rugby };

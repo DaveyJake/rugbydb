@@ -16,7 +16,7 @@ export { Rugby } from './rugby';
  *
  * @return {object} Object-literal.
  */
-export const sniper = ( function() {
+export const sniper = ( () => {
   return {
     /**
      * Main firing trigger.
@@ -51,4 +51,4 @@ export const sniper = ( function() {
       });
     }
   };
-})();
+});

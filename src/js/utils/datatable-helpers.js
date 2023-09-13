@@ -226,4 +226,4 @@ class DTHelpers {
   }
 }
 
-module.exports = { DTHelpers };
+export { DTHelpers };

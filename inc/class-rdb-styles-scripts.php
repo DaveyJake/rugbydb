@@ -249,9 +249,9 @@ class RDB_Styles_Scripts {
         );
 
         // WP Club Manager JS assets.
-        if ( function_exists( 'WPCM' ) ) {
+        if ( defined( 'WPCM_URL' ) ) {
             $register_scripts['chosen'] = array(
-                'src' => WPCM()->plugin_url() . "/assets/js/jquery-chosen/chosen.jquery{$this->dev}.js",
+                'src' => sprintf( '%1$s/assets/js/jquery-chosen/chosen.jquery%2$s.js', WPCM_URL, $this->dev ),
                 'dep' => array( 'jquery' ),
                 'ver' => '1.8.2',
                 'ftr' => true,
@@ -627,6 +627,7 @@ class RDB_Styles_Scripts {
         if ( ! wp_is_mobile() ) {
             wp_enqueue_style( 'chosen' );
             wp_enqueue_script( 'chosen' );
+            $deps[] = 'chosen';
         }
 
         // Moment.js library.

@@ -2,6 +2,7 @@ config.yml
 dev
 dist
 jquery.adaptive-backgrounds
+jsconfig.json
 node_modules
 packaged
 vendor

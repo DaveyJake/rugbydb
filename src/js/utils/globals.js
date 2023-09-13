@@ -25,4 +25,4 @@ const wp = window.wp;
 // Yet another dataTables custom filter.
 const yadcf = window.yadcf;
 
-module.exports = { _, $, moment, rdb, ux, wp, yadcf };
+export { _, $, moment, rdb, ux, wp, yadcf };
