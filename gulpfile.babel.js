@@ -227,11 +227,7 @@ const UTIL = {
     if ( '.php' === path.extname ) {
       dirname = 'inc/devicedetect/';
     } else if ( path.extname.match( /\.(css|js|map)$/ ) ) {
-      if ( path.basename.match( /(admin|widget|customizer)/ ) ) {
-        dirname = PATHS.admin;
-      } else {
-        dirname = PATHS.dist;
-      }
+      dirname = path.basename.match( /(admin|widget|customizer)/ ) ? PATHS.admin : PATHS.dist;
 
       if ( PATHS.admin !== dirname ) {
         if ( '.map' === path.extname ) {
