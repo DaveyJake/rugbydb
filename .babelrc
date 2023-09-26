@@ -35,7 +35,12 @@
     "skipForOfIteratorClosing": true,
     "superIsCallableConstructor": true
   },
-  "ignore": ["./src/js/_vendor", "./src/js/jquery.dataTables.yadcf.js", "./src/js/*.map"],
+  "configFile": "./babel.config.json",
+  "ignore": [
+    "./src/js/_vendor",
+    "./src/js/jquery.dataTables.yadcf.js",
+    "./src/js/*.map"
+  ],
   "presets": [
     "@wordpress/babel-preset-default"
   ],

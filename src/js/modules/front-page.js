@@ -343,6 +343,8 @@ class FrontPage extends DTHelpers {
           nonce: this.nonce
         },
         dataSrc: ( json ) => {
+          console.log( json.data );
+
           // Parsed data container.
           const final = [];
 
