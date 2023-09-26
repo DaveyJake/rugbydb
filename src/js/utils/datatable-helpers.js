@@ -19,6 +19,7 @@ const { sanitizeTitle } = Helpers;
 /**
  * Begin `DTHelpers` class of static methods.
  *
+ * @class
  * @since 1.0.0
  */
 class DTHelpers {
@@ -226,4 +227,4 @@ class DTHelpers {
   }
 }
 
-export { DTHelpers };
+module.exports = { DTHelpers };

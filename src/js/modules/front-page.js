@@ -664,4 +664,4 @@ class FrontPage extends DTHelpers {
   }
 }
 
-export { FrontPage };
+module.exports = { FrontPage };

@@ -27,7 +27,7 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
  * WP Club Manager custom functions.
  */
 if ( is_plugin_active( 'wp-club-manager/wpclubmanager.php' )
-    || file_exists( get_template_directory() . '/wpclubmanager/custom/config.php' )
+    && file_exists( get_template_directory() . '/wpclubmanager/custom/config.php' )
 ) {
     require_once get_template_directory() . '/wpclubmanager/custom/config.php';
 }

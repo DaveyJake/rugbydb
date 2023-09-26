@@ -7,4 +7,4 @@ const textNode = function() {
   return 3 === this.nodeType;
 };
 
-export { textNode };
+module.exports = { textNode };

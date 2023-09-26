@@ -91,4 +91,4 @@ const singleWpcmMatch = function() {
   }
 };
 
-export { singleWpcmMatch };
+module.exports = { singleWpcmMatch };

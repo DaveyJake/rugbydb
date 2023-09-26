@@ -63,4 +63,4 @@ const ukCountry = function( addressLocality, addressCountry ) {
   return abbr;
 };
 
-export { cards, ukCountry };
+module.exports = { cards, ukCountry };

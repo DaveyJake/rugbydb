@@ -80,7 +80,7 @@ Foundation.plugin(Tabs, 'Tabs');
 // Foundation.plugin(Tooltip, 'Tooltip');
 // Foundation.plugin(ResponsiveAccordionTabs, 'ResponsiveAccordionTabs');
 
-export {
+module.exports = {
   Foundation,
   CoreUtils,
   Box,

@@ -19,7 +19,7 @@ class RDB_WPCM_Admin_Assets extends WPCM_Admin_Assets {
      *
      * @var array
      */
-    private $deps;
+    private $deps = array();
 
     /**
      * Primary constructor.

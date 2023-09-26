@@ -276,7 +276,7 @@ const COUNTRIES = {
 /**
  * DataTables breakpoints.
  *
- * @type {Object[]}
+ * @type {Array<{ name: string, width: number }>}
  */
 const BREAKPOINTS = [
   { name: 'desktop', width: Infinity },
@@ -408,4 +408,4 @@ const UTC = 'Etc/UTC';
   }
 })();
 
-export { BREAKPOINTS, COUNTRIES, FIFTEEN_MINUTES, DT_LOADING, ISO_DATE, ISO_TIME, LOCALE, TIMEZONE, US_DATE, US_TIME, UTC };
+module.exports = { BREAKPOINTS, COUNTRIES, FIFTEEN_MINUTES, DT_LOADING, ISO_DATE, ISO_TIME, LOCALE, TIMEZONE, US_DATE, US_TIME, UTC };

@@ -16,4 +16,4 @@ const pageVenues = () => {
   });
 };
 
-export { pageVenues };
+module.exports = { pageVenues };

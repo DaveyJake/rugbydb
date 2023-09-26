@@ -73,6 +73,9 @@ class RDB_Styles_Scripts {
         // Preload scripts.
         add_filter( 'style_loader_tag', array( $this, 'preload_styles' ), 10, 4 );
 
+        // Type module script.
+        add_filter( 'script_loader_tag', array( $this, 'script_type_module' ), 10, 2 );
+
         // Remove WPCM Player Appearances assets.
         remove_action( 'wp_enqueue_scripts', 'wpcm_pa_load_scripts' );
 
@@ -436,6 +439,22 @@ class RDB_Styles_Scripts {
 
         // Dergister jQuery to move it to footer.
         wp_deregister_script( 'jquery' );
+    }
+
+    /**
+     * Add `type="module"` to select script tags.
+     *
+     * @since 1.5.0
+     *
+     * @param string $tag    The script tag HTML.
+     * @param string $handle The name of the registered script.
+     */
+    public function script_type_module( $tag, $handle ) {
+        if ( 'rdb-script' !== $handle ) {
+            return $tag;
+        }
+
+        return str_replace( ' src=', ' type="module" src=', $tag );
     }
 
     /**

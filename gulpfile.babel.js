@@ -1,37 +1,33 @@
 // @ts-nocheck
 'use strict';
 
-import fs              from 'fs';
-import path            from 'path';
-import gulp            from 'gulp';
-import plugins         from 'gulp-load-plugins';
-import imagemin, {
-  gifsicle,
-  mozjpeg,
-  optipng,
-  svgo
-}                      from 'gulp-imagemin';
-import run             from 'gulp-run-command/index.js';
-import autoprefixer    from 'autoprefixer';
-import browserSync     from 'browser-sync';
-import colors          from 'ansi-colors';
-import cssnano         from 'cssnano';
-import * as dartSass   from 'sass';
-import extend          from 'lodash/extend.js';
-import log             from 'fancy-log';
-import named           from 'vinyl-named';
-import postcssImport   from 'postcss-easy-import';
-import postcssSortMQ   from 'postcss-sort-media-queries';
-import postcssStrip    from 'postcss-strip-inline-comments';
-import postcssReporter from 'postcss-reporter';
-import purgecssWP      from 'purgecss-with-wordpress';
-import { rimraf }      from 'rimraf';
-import yaml            from 'js-yaml';
-import ESLintPlugin    from 'eslint-webpack-plugin';
-import TerserPlugin    from 'terser-webpack-plugin';
-import webpackStream   from 'webpack-stream';
-import webpack2        from 'webpack';
-import webpackConfig   from './webpack.config.js';
+const fs                = require( 'node:fs' );
+const path              = require( 'node:path' );
+const gulp              = require( 'gulp' );
+const plugins           = require( 'gulp-load-plugins' );
+const imagemin          = import( 'gulp-imagemin' );
+const run               = require( 'gulp-run-command' ).default;
+const autoprefixer      = require( 'autoprefixer' );
+const browserSync       = require( 'browser-sync' );
+const colors            = require( 'ansi-colors' );
+const cssnano           = require( 'cssnano' );
+const dartSass          = require( 'sass' );
+const extend            = require( 'lodash/extend.js' );
+const log               = require( 'fancy-log' );
+const named             = require( 'vinyl-named' );
+const postcssImport     = require( 'postcss-easy-import' );
+const postcssSortMQ     = require( 'postcss-sort-media-queries' );
+const postcssStrip      = require( 'postcss-strip-inline-comments' );
+const postcssReporter   = require( 'postcss-reporter' );
+const purgecssWP        = require( 'purgecss-with-wordpress' );
+const { rimraf }        = require( 'rimraf' );
+const yaml              = require( 'js-yaml' );
+const ESLintPlugin      = require( 'eslint-webpack-plugin' );
+const webpackStream     = require( 'webpack-stream' );
+const webpack2          = require( 'webpack' );
+const webpackConfig     = require( './webpack.config.js' );
+
+console.log( imagemin );
 
 /**
  * Check for CLI flags.
@@ -123,7 +119,7 @@ const PRODUCTION = !!( getFlag( 'production' ) );
 const DEV = !!( getFlag( 'development' ) );
 
 // Load settings from the config[-default].yml file.
-const { PROJECT, STATUS, BROWSERSYNC, COMPATIBILITY, REVISIONING, PATHS } = loadConfig();
+const { PROJECT, BROWSERSYNC, COMPATIBILITY, REVISIONING, PATHS } = loadConfig();
 
 // Create BrowserSync instance.
 const browser = browserSync.create();
@@ -217,36 +213,37 @@ const UTIL = {
    *
    * @memberof gulp-rename()
    *
-   * @param {object} path File path.
+   * @param {object} filepath File path.
    *
    * @return {string} Corrected file path.
    */
-  destination( path ) {
+  destination( filepath ) {
     let dirname;
 
-    if ( '.php' === path.extname ) {
+    // Begin.
+    if ( '.php' === filepath.extname ) {
       dirname = 'inc/devicedetect/';
-    } else if ( path.extname.match( /\.(css|js|map)$/ ) ) {
-      dirname = path.basename.match( /(admin|widget|customizer)/ ) ? PATHS.admin : PATHS.dist;
+    } else if ( filepath.extname.match( /\.(css|js|map)$/ ) ) {
+      dirname = filepath.basename.match( /(admin|widget|customizer)/ ) ? PATHS.admin : PATHS.dist;
 
       if ( PATHS.admin !== dirname ) {
-        if ( '.map' === path.extname ) {
-          if ( path.basename.match( /\.css/ ) ) {
+        if ( '.map' === filepath.extname ) {
+          if ( filepath.basename.match( /\.css/ ) ) {
             dirname += '/css/';
-          } else if ( path.basename.match( /\.js/ ) ) {
+          } else if ( filepath.basename.match( /\.js/ ) ) {
             dirname += '/js/';
           }
         } else {
-          dirname += `/${ path.extname.slice( 1 ) }/`;
+          dirname += `/${ filepath.extname.slice( 1 ) }/`;
         }
       }
-    } else if ( path.extname.match( /\.(eot|otf|svg|ttc|ttf|woff2?)$/ ) ) {
+    } else if ( filepath.extname.match( /\.(eot|otf|svg|ttc|ttf|woff2?)$/ ) ) {
       dirname = `${ PATHS.dist }/fonts/`;
     }
 
-    path.dirname = dirname;
+    filepath.dirname = dirname;
 
-    return path;
+    return filepath;
   },
 
   /**
@@ -277,20 +274,20 @@ const UTIL = {
     };
 
     return gulp.src( PATHS.images )
-      .pipe(
+      .pipe( async () => {
         $.if(
           PRODUCTION,
           // Production.
-          imagemin([
-            mozjpeg({ progressive: true }),
-            optipng({ optimizationLevel: 5 }),
-            gifsicle({ interlaced: true }),
-            svgo( svgOpts )
+          await imagemin([
+            imagemin.mozjpeg({ progressive: true }),
+            imagemin.optipng({ optimizationLevel: 5 }),
+            imagemin.gifsicle({ interlaced: true }),
+            imagemin.svgo( svgOpts )
           ]),
           // Development.
-          imagemin( [svgo( svgOpts )] )
+          await imagemin([ imagemin.svgo( svgOpts ) ])
         )
-      )
+      })
       .pipe( gulp.dest( `${ PATHS.dist }/img` ) );
   },
 
@@ -428,10 +425,24 @@ const UTIL = {
    */
   webpack: {
     config: extend( webpackConfig, {
-      mode: STATUS,
+      mode: 'development',
+      target: 'web',
+      stats: 'errors-warnings',
+      externals: {
+        jquery: 'jQuery',
+        lodash: {
+          commonjs: 'lodash',
+          amd: 'lodash',
+          root: '_'
+        },
+        moment: 'moment',
+        DataTable: 'DataTable',
+        yadcf: 'yadcf'
+      },
       output: {
-        devtoolNamespace: 'rugby-db',
+        devtoolNamespace: 'rugbydb',
         filename: '[name].js',
+        hashFunction: 'sha256',
         path: path.resolve( __dirname, `${ PATHS.dist }/js` ),
         publicPath: 'https://www.rugbydb.com/wp-content/themes/rugbydb/dist/js'
       },
@@ -440,21 +451,6 @@ const UTIL = {
           context: `${ PATHS.src }/js`,
           exclude: '_vendor',
           files: PATHS.js.entries
-        }),
-        new TerserPlugin({
-          parallel: true,
-          terserOptions: {
-            output: {
-              comments: /translators:/i,
-            },
-            compress: {
-              passes: 2
-            },
-            mangle: {
-              reserved: ['__', '_n', '_nx', '_x']
-            }
-          },
-          extractComments: false
         })
       ],
       resolve: {
@@ -577,7 +573,7 @@ gulp.task( 'build',
     clean,
     ...phpLint,
     gulp.parallel( ...staLint ),
-    gulp.parallel( ...stBuild, images, copy ),
+    gulp.parallel( ...stBuild, copy ),
     purgecss,
     reload
   )

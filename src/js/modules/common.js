@@ -22,4 +22,4 @@ const common = function() {
   logoLettering();
 };
 
-export { common };
+module.exports = { common };

@@ -12,8 +12,6 @@ export { Rugby } from './rugby';
  *
  * @since 1.0.0
  *
- * @param {jQuery} $ jQuery instance.
- *
  * @return {object} Object-literal.
  */
 export const sniper = ( () => {

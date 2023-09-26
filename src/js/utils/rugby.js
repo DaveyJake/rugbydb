@@ -26,15 +26,26 @@ jQueryBridget( 'infiniteScroll', InfiniteScroll, $ );
 const { adminUrl, parseArgs } = Helpers;
 
 /**
- * Begin Rugby class.
+ * This class handles all requests to the custom `RDB` namespace RESTful API.
  *
+ * @class
  * @since 1.0.0
  */
 class Rugby {
   /**
    * @memberof Rugby
    *
-   * @type {RugbyRequest} Request
+   * @type {RugbyRequest}
+   *
+   * @property {Object<string, Primitives>} Request            — The RESTful API request parameters.
+   * @property {string}                     Request.route      — Default ''.
+   * @property {boolean}                    Request.collection — Type of data being retrieved. Default `true`.
+   * @property {string}                     Request.grid       — Element selector. Default `#grid`.
+   * @property {number}                     Request.page       — Page number for indexed results. Default `0`.
+   * @property {number}                     Request.perPage    — Results per indexed page. Default `0`.
+   * @property {number}                     Request.postId     — Post ID to be retrieved. Default `0`.
+   * @property {string}                     Request.postName   — Post URL slug. Default ''.
+   * @property {string}                     Request.venue      — Venue URL slug. Default ''.
    */
   Request = {
     route: '',
@@ -331,4 +342,4 @@ class Rugby {
   }
 }
 
-export { Rugby };
+module.exports = { Rugby };

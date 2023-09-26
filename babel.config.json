@@ -2,6 +2,12 @@
   "babelrcRoots": ["."],
   "include": ["./src/js/**/*"],
   "exclude": ["./src/js/**/*.map", "./src/js/**/*.min.js"],
+  "plugins": [
+    ["@babel/transform-runtime", { "corejs": 3 }],
+    "@babel/transform-modules-commonjs",
+    "@babel/syntax-dynamic-import",
+    "@babel/proposal-export-default-from"
+  ],
   "presets": [
     [
       "@babel/preset-env",
@@ -14,9 +20,6 @@
         "debug": false,
         "exclude": [],
         "forceAllTransforms": true,
-        "targets": {
-          "esmodules": true
-        },
         "useBuiltIns": "usage"
       }
     ]

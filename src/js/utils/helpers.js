@@ -196,4 +196,4 @@ const Helpers = {
   }
 };
 
-export { Helpers };
+module.exports = { Helpers };

@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* global WDIP */
 /**
  * Main customizer file.
@@ -12,7 +13,7 @@
  *
  * @param {jQuery} $ Main jQuery instance.
  */
-( function( $ ) { // eslint-disable-line
+( function( $ ) {
   // Included globals.
   const pageNow = window.pagenow;
 

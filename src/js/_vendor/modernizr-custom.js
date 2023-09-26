@@ -148,29 +148,6 @@
 
     /*!
     {
-        "name": "XDomainRugby",
-        "property": "xdomainrequest",
-        "tags": ["cors", "xdomainrequest", "ie9", "ie8"],
-        "authors": ["Ivan Pan (@hypotenuse)"],
-        "notes": [
-        {
-            "name": "MDN documentation",
-            "href": "https://developer.mozilla.org/en-US/docs/Web/API/XDomainRugby"
-        },
-        {
-            "name": "MSDN documentation",
-            "href": "https://msdn.microsoft.com/library/ie/cc288060.aspx/"
-        }]
-    }
-    !*/
-    /* DOC
-    Detects support for XDomainRugby in IE9 & IE8
-    */
-
-    Modernizr.addTest('xdomainrequest', 'XDomainRugby' in window);
-
-    /*!
-    {
         "name": "Orientation and Motion Events",
         "property": ["devicemotion", "deviceorientation"],
         "caniuse": "deviceorientation",
@@ -401,7 +378,6 @@
      * });
      * ```
      */
-
     ModernizrProto.on = function(feature, cb) {
         // Create the list of listeners if it doesn't exist
         if (!this._l[feature]) {
@@ -1523,7 +1499,7 @@
      * ```js
      * var rAFProp = prefixed('requestAnimationFrame', window, false);
      *
-     * rafProp === 'WebkitRugbyAnimationFrame' // in older webkit
+     * rafProp === 'WebkitRequestAnimationFrame' // in older webkit
      * ```
      *
      * One common use case for prefixed is if you're trying to determine which transition
@@ -1553,7 +1529,7 @@
         if (!obj) {
             return testPropsAll(prop, 'pfx');
         } else {
-            // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRugbyAnimationFrame'
+            // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
             return testPropsAll(prop, obj, elem);
         }
     };
@@ -1581,10 +1557,9 @@
     /**
      * Modernizr test for retina / high resolution / high pixel density
      *
-     * @author Joao Cunha - joao@joaocunha.net
+     * @author Joao Cunha <joao@joaocunha.net>
      * @license MIT
      */
-
     Modernizr.addTest( 'retina', function() {
         // Default value for modern browsers.
         const dpr = window.devicePixelRatio ||
@@ -1593,7 +1568,7 @@
             // Default value.
             1;
 
-        return !! ( dpr > 1 );
+        return !!( dpr > 1 );
     });
 
     // Run each test

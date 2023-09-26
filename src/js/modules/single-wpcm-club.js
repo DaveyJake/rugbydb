@@ -141,4 +141,4 @@ const singleWpcmClub = function() {
   $( '.wpcm-matches-list' ).DataTable( options ); // eslint-disable-line
 };
 
-export { singleWpcmClub };
+module.exports = { singleWpcmClub };
