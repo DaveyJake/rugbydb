@@ -508,7 +508,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
          *
          * @since 1.0.0
          *
-         * @var array|int[]
+         * @var string
          */
         $wr_match_list = get_post_meta( $player->ID, 'wr_match_list', true );
         $wr_match_ids  = explode( '|', $wr_match_list );
@@ -518,7 +518,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
          *
          * @since 1.0.0
          *
-         * @var array|int[]
+         * @var string
          */
         $wr_match_list_sevens = get_post_meta( $player->ID, 'wr_match_list_sevens', true );
         $wr_match_ids_sevens  = explode( '|', $wr_match_list_sevens );
@@ -622,6 +622,9 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
 
         // Date of debut match.
         $debut_date = get_post_meta( $player->ID, '_usar_date_first_test', true );
+        // Date of last match played.
+        $final_date = get_post_meta( $player->ID, '_usar_date_last_test', true );
+
         // If debut date is unknown...
         if ( empty( $debut_date ) || '1970-01-01' === $final_date ) {
             $match_timestamps = $this->match_timestamps( $xv_matches );
@@ -632,8 +635,6 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
             $debut_date = $match_timestamps[ $first_match ];
         }
 
-        // Date of last match played.
-        $final_date = get_post_meta( $player->ID, '_usar_date_last_test', true );
         // If last match date is unknown...
         if ( empty( $final_date ) || '1970-01-01' === $final_date ) {
             $match_timestamps = $this->match_timestamps( $xv_matches );

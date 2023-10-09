@@ -127,6 +127,24 @@ class RDB_WPCM_REST_API {
     public $items;
 
     /**
+     * The name of the single item to retrieve.
+     *
+     * @since 1.0.0
+     *
+     * @var callback|array
+     */
+    public $item_method;
+
+    /**
+     * The name of the collection of items to retrieve.
+     *
+     * @since 1.0.0
+     *
+     * @var callback|array
+     */
+    public $items_method;
+
+    /**
      * Venue meta key regex.
      *
      * @since 1.0.0
@@ -315,10 +333,10 @@ class RDB_WPCM_REST_API {
      *     Arguments provided by the child class.
      *
      *     @type string         $items        Name of collction to retrive.
-     *     @type callback|array $items_method Collection callback.
+     *     @type array|callback $items_method Collection callback.
      *     @type string         $item         Name of a single item to retrieve.
-     *     @type callback|array $item_method  Single item callback.
-     *     @type array|callable $schema       Single item schema definition.
+     *     @type array|callback $item_method  Single item callback.
+     *     @type array|callback $schema       Single item schema definition.
      * }
      */
     protected function rest_routes( WP_REST_Server $server, $args = '' ) {
@@ -395,66 +413,58 @@ class RDB_WPCM_REST_API {
             // Route for an entire collection.
             register_rest_route(
                 $this->namespace,
-                '/' . $this->items,
+                sprintf( '/%s', $this->items ),
                 array(
-                    array(
-                        'methods'             => $server::READABLE,
-                        'callback'            => $this->items_method,
-                        'permission_callback' => '__return_true',
-                    ),
-                )
+                    'methods'             => $server::READABLE,
+                    'callback'            => $this->items_method,
+                    'permission_callback' => '__return_true',
+                ),
             );
 
             // Route for a collection based on the slug.
             register_rest_route(
                 $this->namespace,
-                '/' . $this->items . '/(?P<slug>[a-z0-9-]+)',
+                sprintf( '/%s/(?P<slug>[a-z0-9-]+)', $this->items ),
                 array(
-                    array(
-                        'methods'             => $server::READABLE,
-                        'callback'            => $this->items_method,
-                        'permission_callback' => '__return_true',
-                        'args' => array(
-                            'context' => $arg_context,
-                            'slug'    => $arg_slug,
-                        ),
+                    'methods'             => $server::READABLE,
+                    'callback'            => $this->items_method,
+                    'permission_callback' => '__return_true',
+                    'args' => array(
+                        'context' => $arg_context,
+                        'slug'    => $arg_slug,
                     ),
-                )
+                ),
             );
 
             // Route for a collection based on the season.
             register_rest_route(
                 $this->namespace,
-                '/' . $this->items . '/(?P<season>[0-9-]+)',
+                sprintf( '/%s/(?P<season>[0-9-]+)', $this->items ),
                 array(
-                    array(
-                        'methods'             => $server::READABLE,
-                        'callback'            => $this->items_method,
-                        'permission_callback' => '__return_true',
-                        'args' => array(
-                            'context' => $arg_context,
-                            'season'  => $arg_season,
-                        ),
+                    'methods'             => $server::READABLE,
+                    'callback'            => $this->items_method,
+                    'permission_callback' => '__return_true',
+                    'args' => array(
+                        'context' => $arg_context,
+                        'season'  => $arg_season,
                     ),
-                )
+                ),
             );
 
             // Route for a collection based on the slug and season.
             register_rest_route(
                 $this->namespace,
-                '/' . $this->items . '/(?P<slug>[a-z-]+)/(?P<season>[0-9-]+)',
+                sprintf( '/%s/(?P<slug>[a-z-]+)/(?P<season>[0-9-]+)', $this->items ),
                 array(
-                    array(
-                        'methods'             => $server::READABLE,
-                        'callback'            => $this->items_method,
-                        'permission_callback' => '__return_true',
-                        'args' => array(
-                            'context' => $arg_context,
-                            'slug'    => $arg_slug,
-                            'season'  => $arg_season,
-                        ),
+                    'methods'             => $server::READABLE,
+                    'callback'            => $this->items_method,
+                    'permission_callback' => '__return_true',
+                    'args' => array(
+                        'context' => $arg_context,
+                        'slug'    => $arg_slug,
+                        'season'  => $arg_season,
                     ),
-                )
+                ),
             );
         }
 
@@ -482,8 +492,8 @@ class RDB_WPCM_REST_API {
                 'schema' => $schema,
             );
 
-            register_rest_route( $this->namespace, '/' . $this->item . '/(?P<id>[\d]+)', array( $arg_ids ) );
-            register_rest_route( $this->namespace, '/' . $this->item . '/(?P<slug>[a-z-]+)', array( $arg_slugs ) );
+            register_rest_route( $this->namespace, '/' . $this->item . '/(?P<id>[\d]+)', $arg_ids );
+            register_rest_route( $this->namespace, '/' . $this->item . '/(?P<slug>[a-z-]+)', $arg_slugs );
         }
     }
 
@@ -672,7 +682,7 @@ class RDB_WPCM_REST_API {
      */
     public function production_domain( $link ) {
         if ( wp_get_environment_type() === 'local' ) {
-            return str_replace( 'http://stats.test', 'https://www.rugbydb.com', $link );
+            return str_replace( 'http://stats.wp.epiq', 'https://www.rugbydb.com', $link );
         }
 
         return $link;

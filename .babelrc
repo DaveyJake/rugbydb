@@ -35,7 +35,6 @@
     "skipForOfIteratorClosing": true,
     "superIsCallableConstructor": true
   },
-  "configFile": "./babel.config.json",
   "ignore": [
     "./src/js/_vendor",
     "./src/js/jquery.dataTables.yadcf.js",

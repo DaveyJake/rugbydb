@@ -36,5 +36,25 @@
 			"name": "Root",
 			"path": "../../../../../../../.."
 		}
-	]
+	],
+  "settings": {
+    "path-intellisense.mappings": {
+      "@": "../rugbydb",
+      "@/*": "../rugbydb/*",
+      "@admin": "../rugbydb/admin",
+      "@admin/*": "../rugbydb/admin/*",
+      "@dev": "../rugbydb/dev",
+      "@dev/*": "../rugbydb/dev/*",
+      "@inc": "../rugbydb/inc",
+      "@inc/*": "../rugbydb/inc/*",
+      "@parts": "../rugbydb/template-parts",
+      "@parts/*": "../rugbydb/template-parts/*",
+      "@vendor": "../rugbydb/vendor",
+      "@vendor/*": "../rugbydb/vendor/*",
+      "@wpcm": "../rugbydb/wpclubmanager",
+      "@wpcm/*": "../rugbydb/wpclubmanager/*",
+      "@wr": "../rugbydb/WR",
+      "@wr/*": "../rugbydb/WR/*"
+    }
+  }
 }
