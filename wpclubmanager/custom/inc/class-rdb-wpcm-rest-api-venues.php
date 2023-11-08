@@ -118,7 +118,7 @@ class RDB_WPCM_REST_API_Venues extends RDB_WPCM_REST_API implements REST_API {
 
         // Begin primary response container.
         $data = array(
-            '_id'         => sprintf( 'v%s', $venue->term_id ),
+            '_id'         => sprintf( 'venue_%s', $venue->term_id ),
             'id'          => absint( $venue->term_id ),
             'name'        => $venue->name,
             'image'       => $image[0],

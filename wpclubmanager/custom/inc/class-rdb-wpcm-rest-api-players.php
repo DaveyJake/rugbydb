@@ -684,7 +684,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
          * @property array
          */
         $data = array(
-            '_id'          => sprintf( 'p%s', $player->ID ),
+            '_id'          => sprintf( 'player_%s', $player->ID ),
             'ID'           => $player->ID,
             'name'         => array(
                 'official' => sprintf( '%1$s %2$s', $player_first_name, $player_last_name ),

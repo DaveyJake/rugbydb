@@ -183,7 +183,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
         }
 
         // Final container.
-        $this->api['_id']               = sprintf( 'm%s', $request['id'] );
+        $this->api['_id']               = sprintf( 'match_%s', $request['id'] );
         $this->api['ID']                = absint( $request['id'] );
         $this->api['date']['website']   = $match->post_date;
         $this->api['date']['GMT']       = $match->post_date_gmt;

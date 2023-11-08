@@ -109,7 +109,7 @@ class RDB_WPCM_REST_API_Unions extends RDB_WPCM_REST_API implements REST_API {
         }
 
         $api = array(
-            '_id'             => sprintf( 'u%s', $request['id'] ),
+            '_id'             => sprintf( 'union_%s', $request['id'] ),
             'ID'              => absint( $request['id'] ),
             'name'            => $union->post_title,
             'abbr'            => '',

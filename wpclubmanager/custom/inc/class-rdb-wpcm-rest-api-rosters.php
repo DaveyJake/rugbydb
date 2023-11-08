@@ -114,7 +114,7 @@ class RDB_WPCM_REST_API_Rosters extends RDB_WPCM_REST_API implements REST_API {
         }
 
         $data = array(
-            '_id'  => sprintf( 'r%s', $roster->ID ),
+            '_id'  => sprintf( 'roster_%s', $roster->ID ),
             'ID'   => absint( $roster->ID ),
             'team' => array(
                 '_id'  => sprintf( 't%d', $team->term_id ),
