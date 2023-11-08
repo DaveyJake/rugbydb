@@ -103,7 +103,7 @@ class RDB_WPCM_REST_API_Rosters extends RDB_WPCM_REST_API implements REST_API {
             }
 
             $player = array(
-                '_id'       => sprintf( 'p%s', $_player ),
+                '_id'       => sprintf( 'player_%s', $_player ),
                 'id'        => absint( $_player ),
                 'name'      => $post->post_title,
                 'positions' => $positions,
@@ -117,12 +117,12 @@ class RDB_WPCM_REST_API_Rosters extends RDB_WPCM_REST_API implements REST_API {
             '_id'  => sprintf( 'roster_%s', $roster->ID ),
             'ID'   => absint( $roster->ID ),
             'team' => array(
-                '_id'  => sprintf( 't%d', $team->term_id ),
+                '_id'  => sprintf( 'team_%d', $team->term_id ),
                 'id'   => absint( $team->term_id ),
                 'name' => $team->name,
             ),
             'season' => array(
-                '_id'  => sprintf( 's%d', $season->term_id ),
+                '_id'  => sprintf( 'season_%d', $season->term_id ),
                 'id'   => absint( $season->term_id ),
                 'name' => $season->name,
             ),

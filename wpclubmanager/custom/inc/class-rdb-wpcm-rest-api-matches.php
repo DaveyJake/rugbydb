@@ -735,7 +735,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
                         }
 
                         $this->api['competitor'][ $alt_key ] = array(
-                            '_id'     => sprintf( 'u%d', $team->ID ),
+                            '_id'     => sprintf( 'union_%d', $team->ID ),
                             'id'      => $team->ID,
                             'country' => $team->post_title,
                             'logo'    => esc_url( $logo ),
@@ -817,7 +817,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
 
         // Match team name.
         $team = rdb_wpcm_get_match_team( $post_id );
-        $this->api['team']['_id']  = sprintf( 't%d', $team[0] );
+        $this->api['team']['_id']  = sprintf( 'team_%d', $team[0] );
         $this->api['team']['id']   = $team[0];
         $this->api['team']['name'] = $team[1];
 
@@ -828,7 +828,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
         if ( ! empty( $this->api['team']['captain']['id'] ) ) {
             $captain = get_post( $this->api['team']['captain']['id'] );
             $this->api['team']['captain'] = array(
-                '_id'  => sprintf( 'p%d', $captain->ID ),
+                '_id'  => sprintf( 'player_%d', $captain->ID ),
                 'id'   => $captain->ID,
                 'name' => $captain->post_title,
             );
@@ -854,7 +854,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
                     }
 
                     $players[ $roster ][ $jersey ] = array(
-                        '_id'  => sprintf( 'p%s', $player_id ),
+                        '_id'  => sprintf( 'player_%s', $player_id ),
                         'id'   => absint( $player_id ),
                         'name' => get_the_title( $player_id ),
                     );
@@ -897,7 +897,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
         $venue_meta = get_term_meta( $venue->term_id );
 
         $this->api['venue'] = array(
-            '_id'     => sprintf( 'v%s', $venue->term_id ),
+            '_id'     => sprintf( 'venue_%s', $venue->term_id ),
             'id'      => $venue->term_id,
             'name'    => $venue->name,
             'address' => $venue_meta['wpcm_address'][0],

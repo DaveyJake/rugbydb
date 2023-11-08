@@ -381,7 +381,7 @@ function rdb_wpcm_get_head_coach( $post_id ) {
             wp_reset_postdata();
 
             return array(
-                '_id'  => sprintf( 'c%s', $staff_id[0] ),
+                '_id'  => sprintf( 'coach_%s', $staff_id[0] ),
                 'id'   => $staff_id[0],
                 'name' => $coach,
             );

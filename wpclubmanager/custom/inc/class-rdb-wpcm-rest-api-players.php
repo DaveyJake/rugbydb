@@ -604,7 +604,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
         if ( ! empty( $teams ) ) {
             foreach ( $teams as $team ) {
                 $played_for[] = array(
-                    '_id'  => sprintf( 't%s', $team->term_id ),
+                    '_id'  => sprintf( 'team_%s', $team->term_id ),
                     'name' => $team->name,
                 );
             }
