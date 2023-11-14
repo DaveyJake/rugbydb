@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { Foundation } from 'foundation-sites/js/foundation.core';
 import * as CoreUtils from 'foundation-sites/js/foundation.core.utils';
 import { Box } from 'foundation-sites/js/foundation.util.box'
@@ -30,8 +31,6 @@ import { Tabs } from 'foundation-sites/js/foundation.tabs';
 // import { Toggler } from 'foundation-sites/js/foundation.toggler';
 // import { Tooltip } from 'foundation-sites/js/foundation.tooltip';
 // import { ResponsiveAccordionTabs } from 'foundation-sites/js/foundation.responsiveAccordionTabs';
-
-const $ = jQuery;
 
 Foundation.addToJquery($);
 

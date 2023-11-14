@@ -3,7 +3,7 @@ import 'Vendor/modernizr-custom';
 import { FrontPage, TaxWpcmVenue, TaxWpcmTeam, common, pageOpponents, pageStaff, pageVenues, singleWpcmClub, singleWpcmPlayer, singleWpcmMatch } from 'Modules';
 import { sniper } from 'Utils';
 
-( function() {
+( function( $ ) {
   /**
    * Main JavaScript file.
    *
@@ -42,5 +42,5 @@ import { sniper } from 'Utils';
     }
   };
 
-  jQuery( window ).on( 'load', sniper.rifle( scope ) );
-})();
+  $( window ).on( 'load', sniper.rifle( scope ) );
+})( window.jQuery );

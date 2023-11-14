@@ -81,7 +81,7 @@ module.exports = {
     layers: true,
     lazyCompilation: {
       imports: false,
-      entries: true,
+      entries: false
     },
     outputModule: true,
     syncWebAssembly: true,
@@ -107,7 +107,7 @@ module.exports = {
     ]
   },
   optimization: {
-    minimize: true,
+    minimize: false,
     minimizer: [
       ( compiler ) => {
         const TerserPlugin = require( 'terser-webpack-plugin' );
@@ -131,6 +131,7 @@ module.exports = {
           extractComments: false
         }).apply( compiler );
       }
-    ]
+    ],
+    runtimeChunk: 'single'
   }
 };

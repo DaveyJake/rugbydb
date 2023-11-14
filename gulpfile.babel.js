@@ -444,7 +444,11 @@ const UTIL = {
         filename: '[name].js',
         hashFunction: 'sha256',
         path: path.resolve( __dirname, `${ PATHS.dist }/js` ),
-        publicPath: 'https://www.rugbydb.com/wp-content/themes/rugbydb/dist/js'
+        publicPath: 'https://www.rugbydb.com/wp-content/themes/rugbydb/dist/js',
+        environment: {
+          dynamicImport: true,
+          module: true
+        }
       },
       plugins: [
         new ESLintPlugin({

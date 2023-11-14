@@ -1,6 +1,94 @@
-var e={"e":/*!*******************************************************************************************************************!*\
-  !*** ./node_modules/webpack/hot/lazy-compilation-web.js?http%3A%2F%2Flocalhost%3A63228%2Flazy-compilation-using- ***!
-  \*******************************************************************************************************************/(e,o)=>{var t="?http%3A%2F%2Flocalhost%3A63228%2Flazy-compilation-using-";if(typeof EventSource!=="function"){throw new Error("Environment doesn't support lazy compilation (requires EventSource)")}var r=decodeURIComponent(t.slice(1));var n;var s=new Map;var a=new Set;var i=function e(){if(n)n.close();if(s.size){n=new EventSource(r+Array.from(s.keys()).join("@"));n.onerror=function(e){a.forEach(function(o){o(new Error("Problem communicating active modules to the server: "+e.message+" "+e.filename+":"+e.lineno+":"+e.colno+" "+e.error))})}}else{n=undefined}};o.o=function(e){var o=e.data;var t=e.t;var r=e.active;var n=e.r;a.add(t);var l=s.get(o)||0;s.set(o,l+1);if(l===0){i()}if(!r&&!n.n){console.log("Hot Module Replacement is not enabled. Waiting for process restart...")}return function(){a.delete(t);setTimeout(function(){var e=s.get(o);if(e===1){s.delete(o);i()}else{s.set(o,e-1)}},1e3)}}},"s":/*!****************************************************!*\
-  !*** lazy-compilation-proxy ./src/js/rdb-admin.js ***!
-  \****************************************************/(e,o,t)=>{var r=t(/*! ./node_modules/webpack/hot/lazy-compilation-web.js?http%3A%2F%2Flocalhost%3A63228%2Flazy-compilation-using- */"./node_modules/webpack/hot/lazy-compilation-web.js?http%3A%2F%2Flocalhost%3A63228%2Flazy-compilation-using-");var n="/Users/daveyjacobson/Developer/wp/srv/wp-content/themes/stats/html/wp-content/themes/rugbydb/node_modules/babel-loader/lib/index.js%3F%3FruleSet%5B1%5D.rules%5B0%5D.use!/Users/daveyjacobson/Developer/wp/srv/wp-content/themes/stats/html/wp-content/themes/rugbydb/node_modules/source-map-loader/dist/cjs.js!/Users/daveyjacobson/Developer/wp/srv/wp-content/themes/stats/html/wp-content/themes/rugbydb/src/js/rdb-admin.js";var s,a;e.exports=new Promise(function(e,o){s=e;a=o});if(e.n){e.n.accept();if(e.n.data&&e.n.data.a)e.n.data.a(e.exports);e.n.i(function(e){e.a=s;i(e)})}var i=r.o({data:n,active:false,r:e,t:a})}};var o={};function t(r){var n=o[r];if(n!==undefined){return n.exports}var s=o[r]={exports:{}};e[r](s,s.exports,t);return s.exports}var r=t("./src/js/rdb-admin.js!lazy-compilation-proxy");
+(self["webpackChunkrugbydb"] = self["webpackChunkrugbydb"] || []).push([["rdb-admin"],{
+
+/***/ "./src/js/rdb-admin.js":
+/*!*****************************!*\
+  !*** ./src/js/rdb-admin.js ***!
+  \*****************************/
+/***/ (() => {
+
+// @ts-nocheck
+/* global WDIP */
+/**
+ * Main customizer file.
+ *
+ * @author Davey Jacobson <daveyjake21 [at] geemail [dot] com>
+ */
+
+/**
+ * Initialize Admin Dashboard Modifications
+ *
+ * @since 1.0.1
+ *
+ * @param {jQuery} $ Main jQuery instance.
+ */
+(function ($) {
+  // Included globals.
+  var pageNow = window.pagenow;
+
+  // Defender
+  wpmuDefenderGeoIPLookup(pageNow);
+})(jQuery);
+
+/**
+ * Slight modification for WPMUDev Defender plugin.
+ *
+ * @since 1.0.1
+ *
+ * @see geoIPLookup
+ *
+ * @fires geoIPLookup
+ *
+ * @param {string} pagenow WordPress global variable defined in the DOM.
+ */
+function wpmuDefenderGeoIPLookup(pagenow) {
+  if ('defender-pro_page_wdf-ip-lockout' !== pagenow) {
+    return;
+  }
+  geoIPLookup();
+  var order = false,
+    orderby = false;
+  $(document.body).on('click', '.lockout-nav', function (e) {
+    e.preventDefault();
+    var query = WDIP.buildFilterQuery();
+    if (order !== false && orderby !== false) {
+      query += '&order=' + order + '&orderby=' + orderby;
+    }
+    query += '&paged=' + $(this).data('paged');
+    WDIP.ajaxPull(query, geoIPLookup);
+  });
+}
+
+/**
+ * Clicking on an IP will open a new to a Geo IP Lookup website.
+ *
+ * @since 1.0.1
+ *
+ * @see wpmuDefenderGeoIPLookup
+ */
+function geoIPLookup() {
+  $(document).ajaxComplete(function () {
+    // const geoip = 'http://geoiplookup.net/ip/';
+    var whatis = 'https://whatismyipaddress.com/ip/';
+    $('#iplockout-table .sui-accordion-item').on('click', 'td', function () {
+      var target = $(this).parent().next().find('.sui-box-body > .sui-row:nth-child(2) > .sui-col > p:last-child > a'),
+        ipAddr = target.text();
+      console.log(ipAddr);
+
+      /** @return {string} Re-linked URL to GEO IP website. */
+      return target.attr({
+        href: whatis + ipAddr,
+        target: '_blank'
+      });
+    });
+  });
+}
+
+/***/ })
+
+},
+/******/ __webpack_require__ => { // webpackRuntimeModules
+/******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+/******/ var __webpack_exports__ = (__webpack_exec__("./src/js/rdb-admin.js"));
+/******/ }
+])
 //# sourceMappingURL=rdb-admin.js.map

@@ -7,8 +7,6 @@
  * @package Rugby_Database
  */
 
-// phpcs:disable
-
 defined( 'ABSPATH' ) || exit;
 
 get_header();

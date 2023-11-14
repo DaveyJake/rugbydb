@@ -1,1 +1,1 @@
-export { Foundation } from './foundation';
+export * as Foundation from './foundation';

@@ -38,8 +38,8 @@ const singleWpcmClub = function() {
   // Column width.
   const colWidth = '25%';
 
-  // DataTables config.
-  const options = {
+  // Lineup DataTables.
+  $( '.wpcm-matches-list' ).DataTable({
     destroy: true,
     deferRender: true,
     data: JSON.parse( sessionStorage.unionMatchList ),
@@ -136,9 +136,7 @@ const singleWpcmClub = function() {
         $( row.nTr ).addClass( `wpcm-matches-list-item ${ row._aData.result.outcome }` );
       });
     }
-  };
-  // Lineup tables.
-  $( '.wpcm-matches-list' ).DataTable( options ); // eslint-disable-line
+  });
 };
 
 module.exports = { singleWpcmClub };
