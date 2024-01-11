@@ -2177,12 +2177,14 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
                     ? $team[0]->name
                     : ( is_object( $team )
                         ? $team->name
-                        : error_log( "Team missing from match {$match->ID} in API" ) ),
+                        : error_log( sprintf( 'Team missing from match %d in API', $match->ID ) )
+                ),
                 'slug' => isset( $team[0] )
                     ? $team[0]->slug
                     : ( is_object( $team )
                         ? $team->slug
-                        : error_log( "Team missing from match {$match->ID} in API" ) ),
+                        : error_log( sprintf( 'Team missing from match %d in API', $match->ID ) )
+                ),
             ),
             'permalink'   => get_the_permalink( $match ),
             'competition' => '',
@@ -2300,6 +2302,8 @@ class RDB_WPCM_REST_API extends RDB_WPCM_Post_Types {
      * Parse match venue for front-page menu.
      *
      * @since 1.0.0
+     *
+     * @global array $rdb_uk For stadiums.
      *
      * @param array $matches Match response data.
      *
