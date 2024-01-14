@@ -218,10 +218,12 @@ class RDB_WPCM_REST_API {
         // This tells the spec of JSON Schema we are using which is draft 4.
         '$schema' => 'http://json-schema.org/draft-04/schema#',
         // The title property marks the identity of the resource.
-        'title'   => '',
-        'type'    => 'object',
+        'title'       => '',
+        'description' => '',
+        'type'        => 'object',
         // In JSON Schema you can specify object properties in the properties attribute.
         'properties' => '',
+        'required'   => array(),
     );
 
     /**
