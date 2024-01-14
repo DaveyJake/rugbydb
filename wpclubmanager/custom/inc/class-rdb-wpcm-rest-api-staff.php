@@ -178,7 +178,7 @@ class RDB_WPCM_REST_API_Staff extends RDB_WPCM_REST_API implements REST_API {
      * @return array
      */
     public function schema() {
-        $this->schema_template['title']      = 'wpcm_staff';
+        $this->schema_template['title']      = 'Staff';
         $this->schema_template['properties'] = array(
             'description' => esc_html__( 'The term attached to the object in the `wpcm_staff` taxonomy.', $this->domain ),
             'type'        => 'object',

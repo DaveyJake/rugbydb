@@ -13,12 +13,9 @@ class RDB_WPCM_Post_Types {
     /**
      * Targeted taxonomies.
      *
-     * @since 1.0.0
-     * @static
-     *
      * @var array
      */
-    public static $taxes = array(
+    public $taxes = array(
         'comp'     => 'competitions',
         'jobs'     => 'jobs',
         'position' => 'positions',
@@ -30,12 +27,9 @@ class RDB_WPCM_Post_Types {
     /**
      * Targeted post types.
      *
-     * @since 1.0.0
-     * @static
-     *
      * @var array
      */
-    public static $routes = array(
+    public $routes = array(
         'club'   => 'unions',
         'match'  => 'matches',
         'player' => 'players',
@@ -50,11 +44,11 @@ class RDB_WPCM_Post_Types {
     public function __construct() {
         add_filter( 'wpclubmanager_taxonomy_objects_wpcm_venue', array( $this, 'venue_taxonomy_objects' ) );
 
-        foreach ( array_keys( self::$taxes ) as $tax ) {
+        foreach ( $this->taxes as $tax => $path ) {
             add_filter( "wpclubmanager_taxonomy_args_wpcm_{$tax}", array( $this, "wpcm_rest_api_args_{$tax}" ), 5 );
         }
 
-        foreach ( self::$routes as $type => $path ) {
+        foreach ( $this->routes as $type => $path ) {
             if ( 'sstaff' === $type ) {
                 $type = $path;
             }
@@ -76,6 +70,9 @@ class RDB_WPCM_Post_Types {
         $args['rewrite']               = $permalink ? array( 'slug' => untrailingslashit( $permalink ) ) : false;
         $args['rest_base']             = 'competitions';
         $args['rest_controller_class'] = 'WP_REST_Terms_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'competition';
+        $args['graphql_plural_name']   = 'competitions';
 
         return $args;
     }
@@ -93,6 +90,9 @@ class RDB_WPCM_Post_Types {
         $args['rewrite']               = $permalink ? array( 'slug' => untrailingslashit( $permalink ) ) : false;
         $args['rest_base']             = 'jobs';
         $args['rest_controller_class'] = 'WP_REST_Terms_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'job';
+        $args['graphql_plural_name']   = 'jobs';
 
         return $args;
     }
@@ -110,6 +110,9 @@ class RDB_WPCM_Post_Types {
         $args['rewrite']               = $permalink ? array( 'slug' => untrailingslashit( $permalink ) ) : false;
         $args['rest_base']             = 'positions';
         $args['rest_controller_class'] = 'WP_REST_Terms_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'position';
+        $args['graphql_plural_name']   = 'positions';
 
         return $args;
     }
@@ -127,6 +130,9 @@ class RDB_WPCM_Post_Types {
         $args['rewrite']               = $permalink ? array( 'slug' => untrailingslashit( $permalink ) ) : false;
         $args['rest_base']             = 'seasons';
         $args['rest_controller_class'] = 'WP_REST_Terms_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'season';
+        $args['graphql_plural_name']   = 'seasons';
 
         return $args;
     }
@@ -147,6 +153,9 @@ class RDB_WPCM_Post_Types {
         $args['rest_base']             = 'teams';
         $args['rest_controller_class'] = 'WP_REST_Terms_Controller';
         $args['show_in_nav_menus']     = true;
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'team';
+        $args['graphql_plural_name']   = 'teams';
 
         return $args;
     }
@@ -167,6 +176,9 @@ class RDB_WPCM_Post_Types {
         $args['rest_base']             = 'venues';
         $args['rest_controller_class'] = 'WP_REST_Terms_Controller';
         $args['show_in_nav_menus']     = true;
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'venue';
+        $args['graphql_plural_name']   = 'venues';
 
         return $args;
     }
@@ -225,6 +237,9 @@ class RDB_WPCM_Post_Types {
 
         $args['rest_base']             = 'unions';
         $args['rest_controller_class'] = 'WP_REST_Posts_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'union';
+        $args['graphql_plural_name']   = 'unions';
 
         return $args;
     }
@@ -241,6 +256,9 @@ class RDB_WPCM_Post_Types {
         $args['supports'][]            = 'excerpt';
         $args['rest_base']             = 'matches';
         $args['rest_controller_class'] = 'WP_REST_Posts_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'match';
+        $args['graphql_plural_name']   = 'matches';
 
         return $args;
     }
@@ -256,6 +274,9 @@ class RDB_WPCM_Post_Types {
         $args['supports'][]            = 'page-attributes';
         $args['rest_base']             = 'players';
         $args['rest_controller_class'] = 'WP_REST_Posts_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'player';
+        $args['graphql_plural_name']   = 'players';
 
         return $args;
     }
@@ -271,6 +292,9 @@ class RDB_WPCM_Post_Types {
         $args['supports'][]            = 'page-attributes';
         $args['rest_base']             = 'staff';
         $args['rest_controller_class'] = 'WP_REST_Posts_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'staffMember';
+        $args['graphql_plural_name']   = 'staffMembers';
 
         return $args;
     }
@@ -285,9 +309,12 @@ class RDB_WPCM_Post_Types {
     public function wpcm_rest_api_args_roster( $args ) {
         $args['rest_base']             = 'rosters';
         $args['rest_controller_class'] = 'WP_REST_Posts_Controller';
+        $args['show_in_graphql']       = true;
+        $args['graphql_single_name']   = 'roster';
+        $args['graphql_plural_name']   = 'rosters';
 
         return $args;
     }
 }
 
-return new RDB_WPCM_Post_Types();
+new RDB_WPCM_Post_Types();

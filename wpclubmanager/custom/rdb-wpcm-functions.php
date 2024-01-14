@@ -273,9 +273,11 @@ function rdb_wpcm_decode_address( $address ) {
     if ( false === $coordinates )
     {
         $args = array(
-            'address' => urlencode( $address ),
-            'key'     => urlencode( $api_key )
+            'address' => $address,
+            'key'     => $api_key,
         );
+        $args = array_map( 'rawurlencode', $args );
+
         $url      = add_query_arg( $args, 'https://maps.googleapis.com/maps/api/geocode/json' );
         $response = wp_remote_get( $url );
 
@@ -303,20 +305,26 @@ function rdb_wpcm_decode_address( $address ) {
                 $cache_value['place_id'] = $place_id;
 
                 // cache coordinates for 1 month
-                set_transient( $address_hash, $cache_value, 3600*24*30 );
+                set_transient( $address_hash, $cache_value, 3600*24*365 );
 
                 $coordinates = $cache_value;
             }
             elseif ( 'ZERO_RESULTS' === $data->status )
             {
+                delete_transient( $address_hash );
+
                 return __( 'No location found for the entered address.', 'wp-club-manager' );
             }
             elseif ( 'INVALID_REQUEST' === $data->status )
             {
+                delete_transient( $address_hash );
+
                 return __( 'Invalid request. Address is missing', 'wp-club-manager' );
             }
             else
             {
+                delete_transient( $address_hash );
+
                 return __( 'Something went wrong while retrieving your map.', 'wp-club-manager' );
             }
         }

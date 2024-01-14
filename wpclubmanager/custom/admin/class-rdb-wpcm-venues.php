@@ -11,6 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 class RDB_WPCM_Venues {
+
     /**
      * Target taxonomy.
      *
@@ -18,7 +19,7 @@ class RDB_WPCM_Venues {
      *
      * @var string
      */
-    public $taxonomy = 'wpcm_venue';
+    public $taxonomy;
 
     /**
      * Primary constructor.
@@ -26,9 +27,7 @@ class RDB_WPCM_Venues {
      * @return RDB_WPCM_Venues
      */
     public function __construct() {
-        if ( ! is_admin() ) {
-            return;
-        }
+        $this->taxonomy = 'wpcm_venue';
 
         add_action( 'init', array( $this, 'unset_wpcm_admin_venues' ) );
         add_action( 'before_wpcm_init', array( $this, 'reset_wpcm_admin_venues' ) );
@@ -72,11 +71,7 @@ class RDB_WPCM_Venues {
             $cat_keys = array_keys( $_POST['term_meta'] );
 
             foreach ( $cat_keys as $key ) {
-                if ( ! empty( $_POST['term_meta'][ $key ] ) ) {
-                    update_term_meta( $t_id, $key, $_POST['term_meta'][ $key ] );
-                } else {
-                    delete_term_meta( $t_id, $key );
-                }
+                update_term_meta( $t_id, $key, $_POST['term_meta'][ $key ] );
             }
         }
     }
@@ -86,10 +81,10 @@ class RDB_WPCM_Venues {
      *
      * @global RDB_WPCM_Timezone_Picker $timezone_picker
      *
-     * @param string $tag The current term.
+     * @param WP_Term|object $tag The current term.
      */
     public function venue_add_new_extra_fields( $tag ) {
-        global $pagenow, $timezone_picker;
+        global $timezone_picker;
 
         $args = array(
             'orderby'    => 'id',
@@ -98,16 +93,16 @@ class RDB_WPCM_Venues {
         );
 
         // Get latitude and longitude from the last added venue
-        $terms = get_terms( $tag, $args );
+        $terms = get_terms( 'wpcm_venue', $args );
 
         // Timezone select element.
         $field = array(
             'id'      => 'term_meta[usar_timezone]',
-            'options' => $timezone_picker->list( true ),
+            'options' => $timezone_picker::list( true ),
             'value'   => '',
         );
 
-        if ( 'edit-tags.php' !== $pagenow && $terms ) {
+        if ( $terms ) {
             $term           = reset( $terms );
             $t_id           = $term->term_id;
             $term_meta      = get_term_meta( $t_id );
@@ -170,8 +165,8 @@ class RDB_WPCM_Venues {
             <input class="place-id" name="term_meta[place_id]" id="term_meta[place_id]" type="text" value="<?php echo esc_attr( $place_id ); ?>" size="8" />
         </div>
         <div class="form-field">
-            <label for="<?php echo esc_attr( $field['id'] ); ?>"><?php esc_html_e( 'Timezone', 'rugby-database' ); ?></label>
-            <?php echo ( $t_id > 0 ) ? $timezone_picker->dropdown( $field, $t_id ) : $timezone_picker->dropdown( $field ); ?>
+            <label for="<?php esc_attr_e( $field['id'], 'wp-club-manager' ); ?>"><?php esc_html_e( 'Timezone', 'rugby-database' ); ?></label>
+            <?php echo ( $t_id > 0 ) ? $timezone_picker::dropdown( $field, $t_id ) : $timezone_picker::dropdown( $field ); ?>
         </div>
         <div class="form-field">
             <label for="term_meta[wpcm_capacity]"><?php esc_html_e( 'Venue Capacity', 'wp-club-manager' ); ?></label>
@@ -213,14 +208,14 @@ class RDB_WPCM_Venues {
 
         $field = array(
             'id'      => 'term_meta[usar_timezone]',
-            'options' => $timezone_picker->list( true ),
+            'options' => $timezone_picker::list( true ),
             'value'   => $timezone,
         );
 
         if ( $address ) {
             $coordinates = rdb_wpcm_decode_address( $address );
 
-            if ( is_array( $coordinates ) ) {
+            if ( is_array ( $coordinates ) ) {
                 $latitude  = $coordinates['lat'];
                 $longitude = $coordinates['lng'];
                 $place_id  = $coordinates['place_id'];
@@ -234,19 +229,6 @@ class RDB_WPCM_Venues {
         <tr class="form-field">
             <th scope="row" valign="top"><label for="term_meta[wr_name]"><?php esc_html_e( 'Historical Name', 'rugby-database' ); ?></label></th>
             <td><input type="text" class="wr-name" name="term_meta[wr_name]" id="term_meta[wr_name]" value="<?php echo ( isset( $term_meta['wr_name'][0] ) && ! empty( $term_meta['wr_name'][0] ) ) ? esc_attr( $term_meta['wr_name'][0] ) : ''; ?>"></td>
-        </tr>
-        <tr class="form-field">
-            <th scope="row" valign="top"><label for="term_meta[wr_former_names][]"><?php esc_html_e( 'Former Names', 'rugby-database' ); ?></label></th>
-            <td>
-                <?php if ( ! empty( $term_meta['wr_former_names'][0] ) ) : $former_names = maybe_unserialize( $term_meta['wr_former_names'][0] ); ?>
-                    <?php foreach ( $former_names as $former_name ) : ?>
-                        <p><input type="text" class="wr-former-names" name="term_meta[wr_former_names][]" id="term_meta[wr_former_names][]" value="<?php echo esc_attr( $former_name ); ?>"></p>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <p><input type="text" class="wr-former-names" name="term_meta[wr_former_names][]" id="term_meta[wr_former_names][]" placeholder="Former Name" value=""></p>
-                <?php endif; ?>
-                <p><input type="button" class="button button-primary" id="wr_former_name_btn" value="Add former name" /></p>
-            </td>
         </tr>
         <tr class="form-field">
             <th scope="row" valign="top"><label for="term_meta[wpcm_address]"><?php esc_html_e( 'Address', 'wp-club-manager' ); ?></label></th>
@@ -270,7 +252,7 @@ class RDB_WPCM_Venues {
         </tr>
         <tr class="form-field">
             <th scope="row" valign="top"><label for="term_meta[usar_timezone]"><?php esc_html_e( 'Timezone', 'rugby-database' ); ?></label></th>
-            <td><?php echo $timezone_picker->dropdown( $field, $t_id ); ?></td>
+            <td><?php echo $timezone_picker::dropdown( $field, $t_id ); ?></td>
         </tr>
         <tr class="form-field">
             <th scope="row" valign="top"><label for="term_meta[wpcm_capacity]"><?php esc_html_e( 'Venue Capacity', 'wp-club-manager' ); ?></label></th>
@@ -341,7 +323,8 @@ class RDB_WPCM_Venues {
                     'wpcm_venue' => $term->slug,
                 );
                 $count = $this->venue_match_count( $t_id );
-                echo '<a href="' . esc_url( add_query_arg( $args, admin_url( 'edit.php' ) ) ) . '">' . ( ! empty( $count ) ? $count : '0' ) . '</a>';
+                $count = ! empty( $count ) ? $count : '0';
+                echo '<a href="' . esc_url( add_query_arg( $args, admin_url( 'edit.php' ) ) ) . '">' . esc_html( $count ) . '</a>';
                 break;
             case 'ID':
                 echo $t_id;
@@ -388,7 +371,6 @@ class RDB_WPCM_Venues {
     /**
      * Get match counts for each venue.
      *
-     * @since 1.0.0
      * @access private
      *
      * @see RDB_WPCM_Venues::venue_custom_columns()
@@ -429,7 +411,7 @@ class RDB_WPCM_Venues {
     private function wpdb_view( $view_name ) {
         global $wpdb;
 
-        $sql = $wpdb->prepare( "SELECT * FROM %s", $view_name );
+        $sql = sprintf( 'SELECT * FROM %s', $view_name );
 
         return $wpdb->get_results( $sql );
     }

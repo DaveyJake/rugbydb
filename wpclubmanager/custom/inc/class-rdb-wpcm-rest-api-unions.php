@@ -215,7 +215,7 @@ class RDB_WPCM_REST_API_Unions extends RDB_WPCM_REST_API implements REST_API {
      * @return array
      */
     public function schema() {
-        $this->schema_template['title']     = 'wpcm_club';
+        $this->schema_template['title']     = 'Union';
         $this->schema_template['properties'] = array(
             '_id' => array(
                 'description' => esc_html__( 'Unique identifier for the MongoDB document.', $this->domain ),

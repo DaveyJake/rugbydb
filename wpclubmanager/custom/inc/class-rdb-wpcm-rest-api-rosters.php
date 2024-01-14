@@ -196,7 +196,7 @@ class RDB_WPCM_REST_API_Rosters extends RDB_WPCM_REST_API implements REST_API {
      * @return array
      */
     public function schema() {
-        $this->schema_template['title']      = 'wpcm_roster';
+        $this->schema_template['title']      = 'Roster';
         $this->schema_template['properties'] = array(
             'description' => esc_html__( 'The roster for any given team and season.', $this->domain ),
             'type'        => 'object',

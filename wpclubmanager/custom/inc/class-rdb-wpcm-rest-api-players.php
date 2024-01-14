@@ -226,7 +226,7 @@ class RDB_WPCM_REST_API_Players extends RDB_WPCM_REST_API implements REST_API {
      * @return array
      */
     public function schema() {
-        $this->schema_template['title']      = $this->args['post_type'];
+        $this->schema_template['title']      = 'Player';
         $this->schema_template['properties'] = array(
             'ID' => array(
                 'description'  => esc_html__( 'Unique identifier for the object.', $this->domain ),

@@ -249,7 +249,7 @@ class RDB_WPCM_REST_API_Venues extends RDB_WPCM_REST_API implements REST_API {
      * @return array
      */
     public function schema() {
-        $this->schema_template['title']      = 'wpcm_venue';
+        $this->schema_template['title']      = 'Venue';
         $this->schema_template['properties'] = array(
             'description' => esc_html__( 'The term attached to the object in the `wpcm_venue` taxonomy.', $this->domain ),
             'type'        => 'object',

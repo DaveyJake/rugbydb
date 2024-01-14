@@ -264,9 +264,11 @@ class RDB_Template_AJAX {
 
                 if ( ! is_string( $data ) && is_wp_error( $data ) ) {
                     return $data->get_error_message();
-                } else {
-                    set_transient( $transient, $data, YEAR_IN_SECONDS );
                 }
+
+                set_transient( $transient, $data, YEAR_IN_SECONDS );
+
+                return json_decode( $data );
             }
         }//end if
 

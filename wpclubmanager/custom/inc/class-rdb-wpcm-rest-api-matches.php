@@ -258,7 +258,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
      * @return array The schema definition.
      */
     public function schema() {
-        $this->schema_template['title']      = $this->args['post_type'];
+        $this->schema_template['title']      = 'Match';
         $this->schema_template['properties'] = array(
             'ID' => array(
                 'description' => esc_html__( 'Unique identifier for the object.', $this->domain ),
@@ -532,7 +532,7 @@ class RDB_WPCM_REST_API_Matches extends RDB_WPCM_REST_API implements REST_API {
                         'type'                 => 'object',
                         'properties'           => array(
                             'place_id' => array(
-                                'description' => esc_html__( 'The unique identifier of the venue as found on Google Maps.', $this->domain ),
+                                'description' => esc_html__( 'The unique identifier of the venue from Google Maps.', $this->domain ),
                                 'type'        => 'string',
                             ),
                             'world_rugby' => array(
